@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_715c0bee",
+        "filename": "repoapi/repoapi_uwsgi.ini",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-04-27T15:52:26Z",
+      "side": 1,
+      "message": "We need to set where this will be installed!\ns#/path/to/your/#/srv/????",
+      "revId": "6c0f571e865ba48e25e8e2607ab2e4a43f90cd00",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
