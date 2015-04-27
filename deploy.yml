@@ -1,0 +1,17 @@
+---
+- hosts: all
+  connection: local
+  sudo: True
+  sudo_user: root
+  tasks:
+    - name: install Debian package requirements
+      apt: name=libyaml-dev state=present
+      apt: name=python2.7-dev state=present
+      apt: name=python-virtualenv state=present
+
+- hosts: all
+  connection: local
+  tasks:
+    - name: deploy
+      shell: |
+        make deploy
