@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_919ad761",
+        "filename": "repoapi/settings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-04-27T19:39:37Z",
+      "side": 1,
+      "message": "We should find a solution how to use this in our public code vs our internal one",
+      "revId": "82dc706113bcee8e50a391749964862d1ce0fbde",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_719d2b59",
+        "filename": "repoapi/settings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-04-27T19:39:37Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "82dc706113bcee8e50a391749964862d1ce0fbde",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a2585a7_b193934e",
+        "filename": "requeriments/test.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2015-04-27T19:39:37Z",
+      "side": 1,
+      "message": "Should we mirror this too?",
+      "revId": "82dc706113bcee8e50a391749964862d1ce0fbde",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
