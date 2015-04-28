@@ -24,12 +24,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # read it from external file
-SECRET_KEY = os.path.join(BASE_DIR, '.secret_key').read().strip()
+SECRET_KEY = open(os.path.join(BASE_DIR, '.secret_key')).read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.mgm.sipwise.com']
 
 
 # Application definition
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'django_extensions',
+    'django_assets',
 ]
 INSTALLED_APPS.extend(PROJECT_APPS)
 

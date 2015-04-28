@@ -26,23 +26,25 @@ venv_prod: requirements/prod.txt
 
 test: venv_test
 	source ./venv_test/bin/activate && \
-		DJANGO_SETTINGS_MODULE="repoapi.settings.dev" ./manage.py jenkins
+		./manage.py jenkins --settings="repoapi.settings.dev"
 
 deploy: venv_prod
 	mkdir -p ./venv_prod/etc/uwsgi/vassals/
 	[ -L ./venv_prod/etc/uwsgi/vassals/repoapi_uwsgi.ini ] || \
 		ln -s $(shell pwd)/repoapi/repoapi_uwsgi.ini \
 			./venv_prod/etc/uwsgi/vassals/
+	touch ./venv_prod/etc/uwsgi/vassals/repoapi_uwsgi.ini
 
 ###################################
 
 run_dev: venv_dev
 	source ./venv_dev/bin/activate && \
-		DJANGO_SETTINGS_MODULE="repoapi.settings.dev" ./manage.py runserver_plus
+		./manage.py runserver_plus --settings="repoapi.settings.dev"
 
 run: deploy
+	mkdir -p ./venv_prod/run
+	chgrp www-data ./venv_prod/run && chmod 770 ./venv_prod/run
 	source ./venv_prod/bin/activate && \
-		DJANGO_SETTINGS_MODULE="repoapi.settings.prod" \
 		uwsgi --emperor ./venv_prod/etc/uwsgi/vassals/ \
 			--uid www-data --gid www-data
 
