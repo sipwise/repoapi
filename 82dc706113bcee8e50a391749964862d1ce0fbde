@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a3291f1_ec406b37",
+        "filename": "repoapi/settings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-04-28T08:26:37Z",
+      "side": 1,
+      "message": "Indeed. I\u0027ve created dev.py and prod.py settings.\nOn prod.py this is read from an external file",
+      "parentUuid": "5a2585a7_919ad761",
+      "revId": "82dc706113bcee8e50a391749964862d1ce0fbde",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2585a7_719d2b59",
         "filename": "repoapi/settings.py",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3a3291f1_cc3dafbd",
+        "filename": "repoapi/settings.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-04-28T08:26:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a2585a7_719d2b59",
+      "revId": "82dc706113bcee8e50a391749964862d1ce0fbde",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a2585a7_b193934e",
         "filename": "requeriments/test.txt",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2015-04-27T19:39:37Z",
       "side": 1,
       "message": "Should we mirror this too?",
+      "revId": "82dc706113bcee8e50a391749964862d1ce0fbde",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a3291f1_0c5cd724",
+        "filename": "requeriments/test.txt",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2015-04-28T08:26:37Z",
+      "side": 1,
+      "message": "Maybe in the future but still investigating what is wrong using django-nose + django-jenkins",
+      "parentUuid": "5a2585a7_b193934e",
       "revId": "82dc706113bcee8e50a391749964862d1ce0fbde",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
