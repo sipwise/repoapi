@@ -34,6 +34,13 @@ deploy: venv_prod
 		ln -s $(shell pwd)/repoapi/repoapi_uwsgi.ini \
 			./venv_prod/etc/uwsgi/vassals/
 	touch ./venv_prod/etc/uwsgi/vassals/repoapi_uwsgi.ini
+	chown jenkins:www-data -R ./venv_prod/etc/uwsgi
+	source ./venv_prod/bin/activate && \
+		./manage.py collectstatic --noinput --settings="repoapi.settings.prod"
+	chown jenkins:www-data -R ./static_media/ && chmod 660 -R ./static_media/
+	touch /var/log/uwsgi-repoapi.log && \
+		chown jenkins:www-data /var/log/uwsgi-repoapi.log && \
+		chmod 664 /var/log/uwsgi-repoapi.log
 
 ###################################
 
@@ -43,7 +50,7 @@ run_dev: venv_dev
 
 run: deploy
 	mkdir -p ./venv_prod/run
-	chgrp www-data ./venv_prod/run && chmod 770 ./venv_prod/run
+	chown jenkins:www-data ./venv_prod/run && chmod 770 ./venv_prod/run
 	source ./venv_prod/bin/activate && \
 		uwsgi --emperor ./venv_prod/etc/uwsgi/vassals/ \
 			--uid www-data --gid www-data
