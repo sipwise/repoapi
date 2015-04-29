@@ -1,0 +1,5 @@
+Makefile usr/share/repoapi
+manage.py usr/share/repoapi
+repoapi usr/share/repoapi
+requirements usr/share/repoapi
+static_media usr/share/repoapi
