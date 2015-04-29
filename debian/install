@@ -1,5 +1,6 @@
 Makefile usr/share/repoapi
 manage.py usr/share/repoapi
 repoapi usr/share/repoapi
+repoapi/repoapi_uwsgi.ini etc/uwsgi/apps-available/repoapi.ini
 requirements usr/share/repoapi
 static_media usr/share/repoapi
