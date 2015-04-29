@@ -6,3 +6,5 @@ djangorestframework
 django-rest-swagger
 markdown
 django-filter
+six
+webassets
