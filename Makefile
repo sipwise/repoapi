@@ -59,6 +59,7 @@ run: deploy
 
 # get rid of test files
 clean:
+	find . -type f -name '*.pyc' -exec rm {} \;
 	rm -rf reports install.log
 
 # also get rid of virtual environments
