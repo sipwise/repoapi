@@ -1,0 +1,3 @@
+/usr/share/repoapi
+/etc/uwsgi/apps-available
+/var/lib/repoapi
