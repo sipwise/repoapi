@@ -16,15 +16,16 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-BASE_DIR = '/srv/repoapi'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+VAR_DIR = '/var/lib/repoapi'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # read it from external file
-SECRET_KEY = open(os.path.join(BASE_DIR, '.secret_key')).read().strip()
+SECRET_KEY = open(os.path.join(VAR_DIR, '.secret_key')).read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -89,7 +90,7 @@ WSGI_APPLICATION = 'repoapi.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(VAR_DIR, 'db.sqlite3'),
     }
 }
 
