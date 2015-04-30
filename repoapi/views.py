@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from repoapi import models, serializers
+from rest_framework import filters
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -31,6 +32,9 @@ def api_root(request, format=None):
 class JenkinsBuildInfoList(generics.ListCreateAPIView):
     queryset = models.JenkinsBuildInfo.objects.all()
     serializer_class = serializers.JenkinsBuildInfoSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    # allowed fields from model
+    filter_fields = ('tag', 'projectname')
 
 
 class JenkinsBuildInfoDetail(generics.RetrieveUpdateDestroyAPIView):
