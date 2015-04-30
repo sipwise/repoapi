@@ -16,10 +16,10 @@ override_dh_auto_test:
 
 override_dh_auto_install:
 	echo "fakesecretkey" > .secret_key
-	make deploy
+	VAR_DIR=$(shell pwd) make deploy
 	make clean
 
 override_dh_fixperms:
 	dh_fixperms
-	chmod 4750 debian/repoapi/var/lib/repoapi
+	chmod 4770 debian/repoapi/var/lib/repoapi
 	chown www-data:www-data debian/repoapi/var/lib/repoapi

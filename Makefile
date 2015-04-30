@@ -1,3 +1,5 @@
+VAR_DIR ?= /var/lib/repoapi
+
 # do nothing by default
 all:
 
@@ -19,8 +21,8 @@ venv_dev: requirements/dev.txt
 .ONESHELL:
 SHELL = /bin/bash
 venv_prod: requirements/prod.txt
-	virtualenv --python=python2.7 venv_prod
-	source ./venv_prod/bin/activate && \
+	virtualenv --python=python2.7 $(VAR_DIR)/venv_prod
+	source $(VAR_DIR)/venv_prod/bin/activate && \
 		pip install -r ./requirements/prod.txt > install.log
 ###################################
 
@@ -29,7 +31,7 @@ test: venv_test
 		./manage.py jenkins --settings="repoapi.settings.dev"
 
 deploy: venv_prod
-	source ./venv_prod/bin/activate && \
+	source $(VAR_DIR)/venv_prod/bin/activate && \
 		./manage.py collectstatic --noinput --settings="repoapi.settings.prod"
 	chown www-data:www-data -R ./static_media/
 
