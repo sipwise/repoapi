@@ -1,0 +1,166 @@
+{% extends "panel/base.html" %}
+{% block title %}{{ release }}{% endblock %}
+{% block content %}
+<div class="container">
+<h2>Release {{ release }}</h2>
+<ul>
+{% for p in projects %}
+    <div class="panel panel-default" id="{{ p }}-panel">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ p }}</h3>
+        </div>
+        <div class="project panel-body">
+            <ul class="list-group list-inline build_info" id="{{ p }}">
+                <li class="list-group-item bi source" id="{{ p }}-get-code">
+                    <div class="status">{{ p }}-get-source</div>
+                </li>
+                <li class="list-group-item bi tests"  id="{{ p }}-source-tests">
+                    <div class="status">{{ p }}-source-tests</div>
+                </li>
+                <li class="list-group-item bi debs"   id="{{ p }}-source">
+                    <div class="status">{{ p }}-source</div>
+                </li>
+                <li class="list-group-item bi debs"   id="{{ p }}-binaries">
+                    <div class="status">{{ p }}-binaries</div>
+                </li>
+                <li class="list-group-item bi debs"   id="{{ p }}-repos">
+                    <div class="status">{{ p }}-repos</div>
+                </li>
+            </ul>
+        </div>
+        <div class="panel-footer error"></div>
+    </div>
+{% endfor %}
+</ul>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+$.release = {failed_projects: {},};
+
+function get_class_status(base, status) {
+    var result = base;
+    switch (status) {
+      case "SUCCESS":
+        result += "success";
+        break;
+      case "UNSTABLE":
+        result += "warning";
+        break;
+      default:
+        result += "danger";
+    }
+    return result;
+}
+
+function set_project_status(project, project_build, value) {
+  var _project = $('#' + project + '-panel');
+  var status = value.result;
+  var _class = get_class_status("panel-", status);
+
+  switch (status) {
+    case "SUCCESS":
+    case "UNSTABLE":
+      if (project_build.match(/.+-repos$/)) {
+        _project.removeClass('panel-warning panel-danger').addClass(_class);
+        console.debug(project + " OK. done");
+      }
+      else {
+        console.debug(project_build + ' nothing to do here.');
+      }
+      break;
+    default:
+      _project.addClass(_class);
+      if(! $.release.failed_projects[project]) {
+        $.release.failed_projects[project] = true;
+        console.debug(project_build + " set failed");
+      }
+  }
+}
+
+function set_build_status(project_build, value) {
+  var _project_build = $('#' + project_build);
+
+  if (value) {
+    var div_status = $('.status', _project_build);
+    var _class = get_class_status("list-group-item-", value.result);
+
+    console.log("found " + project_build);
+    _project_build.removeClass('disabled').addClass(_class);
+    _project_build.show();
+    div_status.html('<a href="' + value.job_url + value.buildnumber +'">' + project_build + '</a>');
+  }
+  else {
+    console.log("not found " + project_build);
+    _project_build.addClass('disabled');
+    _project_build.hide();
+  }
+}
+
+function update_view(project, project_build, data) {
+  var value = data.results[0];
+
+  set_build_status(project_build, value);
+
+  if (data.count == 0) {
+    if (! $.release.failed_projects[project]) {
+      if (! $.release.failed_projects[project_build]) {
+         $.release.failed_projects[project_build] = setInterval(function() {
+          update_build_info(project, project_build); }, 2000);
+         console.log("setInterval for " + project_build);
+      }
+    }
+    else {
+      console.log(project + " already failed");
+      clearInterval($.release.failed_projects[project_build]);
+      console.debug("clearInterval: " + project_build);
+      set_project_status(project, project_build, {result: "FAILED"});
+    }
+  }
+  else {
+    clearInterval($.release.failed_projects[project_build]);
+    console.debug("clearInterval: " + project_build);
+    set_project_status(project, project_build, value);
+  }
+}
+
+function update_build_info(project, project_build) {
+  var parent = $('#' + project_build).parent();
+  var div_err = $('.error', parent);
+
+  function successFunc(data, textStatus, jqXHR ) {
+    update_view(project, project_build, data);
+  }
+
+  function errorFunc(jqXHR, status, error) {
+    div_err.html(error);
+    $.release.failed_projects[project] = true;
+  }
+  if (! $.release.failed_projects[project]) {
+    $.ajax({
+      url: '/jenkinsbuildinfo/?format=json&tag={{ release}}&projectname=' + project_build,
+      method: 'GET',
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: successFunc,
+      error: errorFunc
+    });
+  }
+  else {
+    console.log("update_build_info: "+ project + " already failed");
+    clearInterval($.release.failed_projects[project_build]);
+    console.debug("clearInterval: " + project_build);
+    set_project_status(project, project_build, {result: "FAILED"});
+  }
+}
+
+$( document ).ready(function() {
+  $('.project > .build_info > .bi').each(function(){
+    var project_build = $(this).attr('id');
+    var project = $(this).parent().attr('id');
+    update_build_info(project, project_build);
+  });
+});
+</script>
+{% endblock %}
