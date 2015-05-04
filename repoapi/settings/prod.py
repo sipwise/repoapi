@@ -39,6 +39,7 @@ ALLOWED_HOSTS = ['.mgm.sipwise.com']
 # django-jenkins
 PROJECT_APPS = [
     'repoapi',
+    'panel',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
