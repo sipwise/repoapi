@@ -19,6 +19,7 @@ from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+import django_filters
 
 
 @api_view(('GET',))
@@ -29,12 +30,18 @@ def api_root(request, format=None):
     })
 
 
+class JenkinsBuildInfoFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = models.JenkinsBuildInfo
+        fields = ['tag', 'projectname', 'date']
+        order_by = ['-date',]
+
+
 class JenkinsBuildInfoList(generics.ListCreateAPIView):
     queryset = models.JenkinsBuildInfo.objects.all()
     serializer_class = serializers.JenkinsBuildInfoSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
-    # allowed fields from model
-    filter_fields = ('tag', 'projectname')
+    filter_class = JenkinsBuildInfoFilter
 
 
 class JenkinsBuildInfoDetail(generics.RetrieveUpdateDestroyAPIView):
