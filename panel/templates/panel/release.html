@@ -1,0 +1,127 @@
+{% extends "panel/base.html" %}
+{% block title %}{{ release }}{% endblock %}
+{% block content %}
+<div class="container">
+<h2>Release {{ release }}</h2>
+<ul>
+{% for p in projects %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ p }}</h3>
+        </div>
+        <div class="project panel-body">
+            <ul class="list-group list-inline build_info" id="{{ p }}">
+                <li class="list-group-item bi source" id="{{ p }}-get-source">
+                    <div class="status">{{ p }}-get-source</div>
+                </li>
+                <li class="list-group-item bi tests"  id="{{ p }}-source-tests">
+                    <div class="status">{{ p }}-source-tests</div>
+                </li>
+                <li class="list-group-item bi debs"   id="{{ p }}-source">
+                    <div class="status">{{ p }}-source</div>
+                </li>
+                <li class="list-group-item bi debs"   id="{{ p }}-binaries">
+                    <div class="status">{{ p }}-binaries</div>
+                </li>
+                <li class="list-group-item bi debs"   id="{{ p }}-repos">
+                    <div class="status">{{ p }}-repos</div>
+                </li>
+            </ul>
+        </div>
+        <div class="panel-footer error"></div>
+    </div>
+{% endfor %}
+</ul>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script type="text/javascript">
+$.release = {failed_projects: {},};
+
+function get_class_status(project, status) {
+    var result = "list-group-item-";
+    switch (status) {
+        case "SUCCESS":
+            result += "success";
+            break;
+        case "UNSTABLE":
+            result += "warning";
+            break;
+        default:
+            result += "danger";
+            $.release.failed_projects[project] = true;
+            console.log(project + " set failed");
+    }
+    return result;
+}
+
+function update_view(project, project_build, data) {
+    var _project_build = $('#' + project_build);
+    var div_status = $('.status', _project_build);
+    var value = data.results[0];
+
+    if (data.count == 1) {
+        console.log("found " + project_build);
+        _project_build.addClass(get_class_status(project, value.result));
+        div_status.html('<a href="' + value.job_url + value.buildnumber +'">' + project_build + '</a>');
+    }
+    else {
+        console.log("not found " + project_build);
+        _project_build.addClass('disabled');
+        _project_build.hide();
+        console.debug($.release.failed_projects[project]);
+        if (! $.release.failed_projects[project]) {
+            console.debug($.release.failed_projects[project_build]);
+            if (! $.release.failed_projects[project_build]) {
+               $.release.failed_projects[project_build] = setInterval(function() {
+                update_build_info(project, project_build); }, 2000);
+               console.log("setInterval for " + project_build);
+            }
+        }
+        else {
+            console.log(project + " already failed");
+            clearInterval($.release.failed_projects[project_build]);
+            console.debug("clearInterval: " + project_build);
+        }
+    }
+}
+
+function update_build_info(project, project_build) {
+    var parent = $('#' + project_build).parent();
+    var div_err = $('.error', parent);
+
+    function successFunc(data, textStatus, jqXHR ) {
+        update_view(project, project_build, data);
+    }
+
+    function errorFunc(jqXHR, status, error) {
+        div_err.html(error);
+        $.release.failed_projects[project] = true;
+    }
+    if (! $.release.failed_projects[project]) {
+        $.ajax({
+            url: '/jenkinsbuildinfo/?format=json&tag={{ release}}&projectname=' + project_build,
+            method: 'GET',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: successFunc,
+            error: errorFunc
+        });
+    }
+    else {
+        console.log("update_build_info: "+ project + " already failed");
+        clearInterval($.release.failed_projects[project_build]);
+        console.debug("clearInterval: " + project_build);
+    }
+}
+
+$( document ).ready(function() {
+    $('.project > .build_info > .bi').each(function(){
+        var project_build = $(this).attr('id');
+        var project = $(this).parent().attr('id');
+        update_build_info(project, project_build);
+    });
+});
+</script>
+{% endblock %}
