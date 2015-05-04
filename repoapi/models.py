@@ -16,6 +16,11 @@
 from django.db import models
 
 
+class JenkinsBuildInfoManager(models.Manager):
+
+    def releases(self):
+        return self.get_queryset().values('tag').distinct().values_list('tag', flat=True)
+
 class JenkinsBuildInfo(models.Model):
     tag = models.CharField(max_length=32, null=True)
     projectname = models.CharField(max_length=100)
@@ -35,6 +40,8 @@ class JenkinsBuildInfo(models.Model):
     param_ppa = models.CharField(max_length=50, null=True)
 
     repo_name = models.CharField(max_length=50, null=True)
+
+    objects = JenkinsBuildInfoManager()
 
     def save(self, *args, **kwargs):
         """ use release parameter if no tag is set """

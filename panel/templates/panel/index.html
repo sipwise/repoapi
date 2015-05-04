@@ -1,0 +1,6 @@
+<h1>Releases</h1>
+<ul>
+{% for r in releases %}
+    <li><a href="{% url 'panel:release' r %}">{{ r }}</a></li>
+{% endfor %}
+</ul>
