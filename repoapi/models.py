@@ -19,11 +19,11 @@ from django.db import models
 class JenkinsBuildInfoManager(models.Manager):
 
     def releases(self):
-        res = self.get_queryset().values('tag').distinct()
-        return res.values_list('tag', flat=True)
+        res = self.get_queryset().values('param_release').distinct()
+        return res.values_list('param_release', flat=True)
 
     def projects(self, release):
-        res = self.get_queryset().filter(tag=release).distinct()
+        res = self.get_queryset().filter(param_release=release).distinct()
         return res
 
 
@@ -48,12 +48,6 @@ class JenkinsBuildInfo(models.Model):
     repo_name = models.CharField(max_length=50, null=True)
 
     objects = JenkinsBuildInfoManager()
-
-    def save(self, *args, **kwargs):
-        """ use release parameter if no tag is set """
-        if self.param_release and self.tag is None:
-            self.tag = self.param_release
-        super(JenkinsBuildInfo, self).save(*args, **kwargs)
 
     def __str__(self):
         return "%s:%d[%s]" % (self.projectname,

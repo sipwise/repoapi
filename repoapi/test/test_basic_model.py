@@ -26,10 +26,10 @@ class JenkinsBuildInfoTestCase(TestCase):
             result='OK')
         self.assertIsNone(jbi.tag)
 
-    def test_creation_tag_from_release(self):
+    def test_empty_tag_with_release(self):
         jbi = JenkinsBuildInfo.objects.create(
             projectname='fake',
             buildnumber=1,
             result='OK',
             param_release='release-mr4.0')
-        self.assertEquals(jbi.tag, jbi.param_release)
+        self.assertIsNone(jbi.tag)
