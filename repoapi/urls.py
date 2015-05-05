@@ -26,6 +26,16 @@ api_patterns = [
     url(r'^jenkinsbuildinfo/(?P<pk>[0-9]+)/$',
         views.JenkinsBuildInfoDetail.as_view(),
         name='jenkinsbuildinfo-detail'),
+    url(r'^release/$',
+        views.ReleaseList.as_view(),
+        name='release-list'),
+    url(r'^release/(?P<release>[\w\d\.-]+)/(?P<project>[\w\d\.-]+)/$',
+        views.ProjectUUIDList.as_view(),
+        name='projectuuid-list'),
+    url(r'^release/(?P<release>[\w\d\.-]+)'
+        '/(?P<project>[\w\d\.-]+)/(?P<uuid>[\w\d-]+)/$',
+        views.UUIDInfoList.as_view(),
+        name='uuidinfo-list'),
 ]
 
 api_patterns = format_suffix_patterns(api_patterns)

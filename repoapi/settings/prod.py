@@ -16,7 +16,8 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 VAR_DIR = '/var/lib/repoapi'
 if not os.path.exists(VAR_DIR):
@@ -123,7 +124,7 @@ STATICFILES_FINDERS = (
     'django_assets.finders.AssetsFinder',
 )
 
-STATIC_ROOT= os.path.join(BASE_DIR,'static_media/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_media/')
 
 TEMPLATE_DIRS = (
     'repoapi/templates',

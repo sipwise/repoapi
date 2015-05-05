@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.forms import widgets
 from rest_framework import serializers
 import repoapi.models as models
 
@@ -22,3 +21,7 @@ class JenkinsBuildInfoSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.JenkinsBuildInfo
+
+
+class ReleaseListSerializer(serializers.Serializer):
+    param_release = serializers.CharField(max_length=50)

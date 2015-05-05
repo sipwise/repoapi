@@ -1,0 +1,86 @@
+[
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-01T12:57:54.379Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/foo-get-code/",
+            "param_branch": null,
+            "param_distribution": "wheezy",
+            "param_ppa": null,
+            "param_release": "mr3.1-fake",
+            "param_tag": null,
+            "projectname": "fake-source",
+            "repo_name": null,
+            "result": "FAILED",
+            "tag": "UUID1"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-04T10:41:53.788Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "http://fake.org/gogo",
+            "param_branch": null,
+            "param_distribution": "wheezy",
+            "param_ppa": null,
+            "param_release": "mr3.1-fake",
+            "param_tag": null,
+            "projectname": "fake-get-code",
+            "repo_name": null,
+            "result": "FAILED",
+            "tag": "UUID0"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-04T10:42:13.259Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "http://fake.org/gogo",
+            "param_branch": null,
+            "param_distribution": "wheezy",
+            "param_ppa": null,
+            "param_release": "mr3.1-fake",
+            "param_tag": null,
+            "projectname": "fake-source-tests",
+            "repo_name": null,
+            "result": "SUCCESS",
+            "tag": "UUID1"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-04T17:04:57.802Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/foo-get-code/",
+            "param_branch": null,
+            "param_distribution": "wheezy",
+            "param_ppa": null,
+            "param_release": "mr3.1-fake",
+            "param_tag": null,
+            "projectname": "fake-get-code",
+            "repo_name": null,
+            "result": "SUCCESS",
+            "tag": "UUID1"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 4
+    }
+]

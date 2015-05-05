@@ -13,10 +13,12 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.conf.urls import include, url
+from django.conf.urls import url
 from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^(?P<release>.+)/$', views.release, name='release'),
+    url(r'^(?P<release>[\w\d\.-]+)/$', views.release, name='release-view'),
+    url(r'^(?P<release>[\w\d\.-]+)/(?P<project>[\w\d-]+)/$',
+        views.project, name='project-view'),
 ]

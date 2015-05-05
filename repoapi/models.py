@@ -18,17 +18,32 @@ from django.db import models
 
 class JenkinsBuildInfoManager(models.Manager):
 
-    def releases(self):
+    def releases(self, flat=True):
         res = self.get_queryset().values('param_release').distinct()
-        return res.values_list('param_release', flat=True)
+        if flat:
+            return res.values_list('param_release', flat=True)
+        else:
+            return res.values('param_release')
 
-    def projects(self, release):
-        res = self.get_queryset().filter(param_release=release).distinct()
-        return res
+    def release_uuids_by_project(self, release, project, flat=True):
+        res = self.get_queryset().filter(
+            param_release=release, projectname__startswith=project).distinct()
+        if flat:
+            return res.values_list('tag', flat=True)
+        else:
+            return res.values('tag')
+
+    def projects_by_uuid(self, release, project, uuid, flat=True):
+        res = self.get_queryset().filter(tag=uuid, param_release=release,
+                                         projectname__startswith=project)
+        if flat:
+            return res.order_by('-date').values_list('projectname', flat=True)
+        else:
+            return res.order_by('-date').values('projectname')
 
 
 class JenkinsBuildInfo(models.Model):
-    tag = models.CharField(max_length=32, null=True)
+    tag = models.CharField(max_length=64, null=True)
     projectname = models.CharField(max_length=100)
     buildnumber = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)

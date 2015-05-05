@@ -1,16 +1,15 @@
 {% extends "panel/base.html" %}
-{% block title %}{{ release }}{% endblock %}
+{% block title %}{{ project }}{% endblock %}
 {% block content %}
 <div class="container">
-    <h2>Release {{ release }}</h2>
-    {% for project in projects %}
+    <h2>
+        <a href="{% url 'panel:release-view' release %}">
+            Release {{ release }}
+        </a>
+    </h2>
     <div class="panel panel-default project" id="{{ project }}">
         <div class="panel-heading">
-            <h3 class="panel-title">
-              <a href="{% url 'panel:project-view' release project %}">
-                {{ project }}
-              </a>
-            </h3>
+            <h3 class="panel-title">{{ project }}</h3>
         </div>
         <div class="panel-body">
             <div class="panel panel-default hidden uuid-clone">
@@ -26,13 +25,12 @@
         </div>
         <div class="panel-footer" id="{{ project}}-error"></div>
     </div>
-    {% endfor %}
 </div>
 {% endblock %}
 
 {% block extrajs %}
 <script type="text/javascript">
-$.release = {};
+$.project = {uuids: new Set(), failed: false, interval: 5000,};
 
 function get_class_status(base, status) {
     var result = base;
@@ -91,8 +89,8 @@ function set_uuid_status(project, uuid, job, value) {
       break;
     default:
       div_uuid.addClass(_class);
-      if(! $.release[project][uuid].failed) {
-        $.release[project][uuid].failed = true;
+      if(! $.project[uuid].failed) {
+        $.project[uuid].failed = true;
         console.debug(project + ' uuid: ' + uuid + ' set failed');
       }
       set_project_status(project, value);
@@ -154,8 +152,8 @@ function update_job_view(project, uuid, job, data) {
   set_job_status(project, uuid, job, value);
 
   if (data.count != 0) {
-    if ($.release[project][uuid][job].timer) {
-      clearInterval($.release[project][uuid][job].timer);
+    if ($.project[uuid][job].timer) {
+      clearInterval($.project[uuid][job].timer);
       console.debug("clearInterval uuid: "+ uuid + ' ' + job);
     }
     set_uuid_status(project, uuid, job, value);
@@ -174,11 +172,11 @@ function update_job_info(release, project, uuid, job) {
 
   function errorFunc(jqXHR, status, error) {
     $('#' + project + '-error').html(error);
-    $.release[project][uuid][job].failed = true;
+    $.project[uuid][job].failed = true;
   }
 
-  if (! $.release[project][uuid].failed) {
-    if (! $.release[project][uuid][job].failed ) {
+  if (! $.project[uuid].failed) {
+    if (! $.project[uuid][job].failed ) {
       $.ajax({
         url: '/jenkinsbuildinfo/?format=json&tag=' + uuid
           + '&param_release={{ release}}&projectname=' + job,
@@ -195,7 +193,7 @@ function update_job_info(release, project, uuid, job) {
   }
   else {
     console.debug(project + ' uuid: ' + uuid + ' already failed');
-    clearInterval($.release[project][uuid][job].timer);
+    clearInterval($.project[uuid][job].timer);
     console.debug("clearInterval uuid:" + uuid + ' ' + job);
     set_project_status(project, {result: "FAILED"});
   }
@@ -206,20 +204,20 @@ function update_uuid_info(release, project, uuid) {
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
       var job = this.projectname;
-      $.release[project][uuid].jobs.add(job);
+      $.project[uuid].jobs.add(job);
 
-      if (! $.release[project][uuid][job]) {
-        $.release[project][uuid][job] = { failed: false, };
+      if (! $.project[uuid][job]) {
+        $.project[uuid][job] = { failed: false, };
         create_new_job(project, uuid, job);
         update_job_info(release, project, uuid, job);
       }
 
-      if (! $.release[project][uuid][job].failed) {
-        if (! $.release[project][uuid][job].timer) {
-          $.release[project][uuid][job].timer = setInterval(function() {
-            update_job_info(release, project, uuid, job); }, $.release[project].interval);
+      if (! $.project[uuid][job].failed) {
+        if (! $.project[uuid][job].timer) {
+          $.project[uuid][job].timer = setInterval(function() {
+            update_job_info(release, project, uuid, job); }, $.project.interval);
           console.debug('uuid: ' + uuid +
-            ' new job: ' + job +' setInterval ' + $.release[project].interval);
+            ' new job: ' + job +' setInterval ' + $.project.interval);
         }
       }
       else {
@@ -230,10 +228,10 @@ function update_uuid_info(release, project, uuid) {
 
   function errorFunc(jqXHR, status, error) {
     $('#' + project + '-error').html(error);
-    $.release[project][uuid].failed = true;
+    $.project[uuid].failed = true;
   }
 
-  if (! $.release[project][uuid].failed) {
+  if (! $.project[uuid].failed) {
     $.ajax({
       url: '/release/{{ release }}/' + project + '/' + uuid + '/?format=json',
       method: 'GET',
@@ -245,7 +243,7 @@ function update_uuid_info(release, project, uuid) {
   }
   else {
     console.debug(project + 'uuid ' + uuid +' already failed');
-    clearInterval($.release[project][uuid].timer);
+    clearInterval($.project[uuid].timer);
   }
 }
 
@@ -258,23 +256,23 @@ function get_uuids_for_project(release, project) {
         console.warn(project + " skip null uuid");
         return;
       }
-      $.release[project].uuids.add(uuid);
-      if (! $.release[project][uuid] ) {
-        $.release[project][uuid] = { failed: false, jobs: new Set(),};
+      $.project.uuids.add(uuid);
+      if (! $.project[uuid] ) {
+        $.project[uuid] = { failed: false, jobs: new Set(),};
         create_new_uuid_panel(project, uuid);
         update_uuid_info(release, project, uuid);
       }
-      if (! $.release[project][uuid].failed ) {
-        if (! $.release[project][uuid].timer) {
-          $.release[project][uuid].timer = setInterval(function() {
-            update_uuid_info(release, project, uuid); }, $.release[project].interval);
+      if (! $.project[uuid].failed ) {
+        if (! $.project[uuid].timer) {
+          $.project[uuid].timer = setInterval(function() {
+            update_uuid_info(release, project, uuid); }, $.project.interval);
           console.debug(project + ' new uuid: ' + uuid +
-            ' setInterval ' + $.release[project].interval);
+            ' setInterval ' + $.project.interval);
         }
       }
       else {
         console.debug(project + ' uuid: ' + uuid +' already failed');
-        clearInterval($.release[project][uuid].timer);
+        clearInterval($.project[uuid].timer);
         console.debug(project + " clearInterval: " + uuid);
         set_project_status(project, {result: "FAILED"});
       }
@@ -283,7 +281,7 @@ function get_uuids_for_project(release, project) {
 
   function errorFunc(jqXHR, status, error) {
     $('#' + project + '-error').html(error);
-    $.release[project].failed = true;
+    $.project.failed = true;
   }
   $.ajax({
     url: '/release/{{ release }}/' + project + '/?format=json',
@@ -298,7 +296,6 @@ function get_uuids_for_project(release, project) {
 $( document ).ready(function() {
   $('.project').each(function(){
     var project = $(this).attr('id');
-    $.release[project] = {uuids: new Set(), failed: false, interval: 5000,};
     get_uuids_for_project('{{ release }}', project);
   });
 });

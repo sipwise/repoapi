@@ -26,3 +26,8 @@ def index(request):
 def release(request, release):
     context = {'projects':  models.PROJECTS, 'release': release}
     return render(request, 'panel/release.html', context)
+
+
+def project(request, release, project):
+    context = {'project':  project, 'release': release}
+    return render(request, 'panel/project.html', context)

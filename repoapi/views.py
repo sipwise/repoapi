@@ -13,12 +13,13 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from repoapi import models, serializers
-from rest_framework import filters
+from . import serializers
+from .models import JenkinsBuildInfo as jbi
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from rest_framework.views import APIView
 import django_filters
 
 
@@ -27,23 +28,46 @@ def api_root(request, format=None):
     return Response({
         'jenkinsbuildinfo': reverse('jenkinsbuildinfo-list',
                                     request=request, format=format),
+        'release': reverse('release-list',
+                           request=request, format=format),
     })
 
 
 class JenkinsBuildInfoFilter(django_filters.FilterSet):
 
     class Meta:
-        model = models.JenkinsBuildInfo
-        fields = ['tag', 'projectname', 'date']
+        model = jbi
+        fields = ['tag', 'projectname', 'param_release', 'date']
         order_by = ['-date', ]
 
 
 class JenkinsBuildInfoList(generics.ListCreateAPIView):
-    queryset = models.JenkinsBuildInfo.objects.all()
+    queryset = jbi.objects.all()
     serializer_class = serializers.JenkinsBuildInfoSerializer
     filter_class = JenkinsBuildInfoFilter
 
 
 class JenkinsBuildInfoDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = models.JenkinsBuildInfo.objects.all()
+    queryset = jbi.objects.all()
     serializer_class = serializers.JenkinsBuildInfoSerializer
+
+
+class ReleaseList(generics.ListAPIView):
+    queryset = jbi.objects.releases(flat=False)
+    serializer_class = serializers.ReleaseListSerializer
+
+
+class ProjectUUIDList(APIView):
+
+    def get(self, request, release, project, format=None):
+        res = jbi.objects.release_uuids_by_project(
+            release, project, flat=False)
+        return Response(res)
+
+
+class UUIDInfoList(APIView):
+
+    def get(self, request, release, project, uuid, format=None):
+        res = jbi.objects.projects_by_uuid(
+            release, project, uuid, flat=False)
+        return Response(res)

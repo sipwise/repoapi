@@ -16,7 +16,8 @@
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # Quick-start development settings - unsuitable for production
@@ -132,7 +133,7 @@ STATICFILES_FINDERS = (
     'django_assets.finders.AssetsFinder',
 )
 
-STATIC_ROOT= os.path.join(BASE_DIR,'static_media/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_media/')
 
 TEMPLATE_DIRS = (
     'repoapi/templates',
