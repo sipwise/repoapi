@@ -296,6 +296,12 @@ function get_uuids_for_project(release, project) {
 $( document ).ready(function() {
   $('.project').each(function(){
     var project = $(this).attr('id');
+
+    $.project.timer = setInterval(function() {
+      get_uuids_for_project('{{release}}', project);
+    }, $.project.interval);
+    console.log(project + ' get uuids setInterval ' + $.project.interval);
+
     get_uuids_for_project('{{ release }}', project);
   });
 });

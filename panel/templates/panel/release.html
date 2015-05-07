@@ -32,7 +32,7 @@
 
 {% block extrajs %}
 <script type="text/javascript">
-$.release = {};
+$.release = {interval: 15000,};
 
 function get_class_status(base, status) {
     var result = base;
@@ -299,6 +299,12 @@ $( document ).ready(function() {
   $('.project').each(function(){
     var project = $(this).attr('id');
     $.release[project] = {uuids: new Set(), failed: false, interval: 5000,};
+
+    $.release[project].timer = setInterval(function() {
+      get_uuids_for_project('{{release}}', project);
+    }, $.release.interval);
+    console.log(project + ' get uuids setInterval ' + $.release.interval);
+
     get_uuids_for_project('{{ release }}', project);
   });
 });
