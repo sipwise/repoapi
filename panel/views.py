@@ -15,7 +15,6 @@
 
 from django.shortcuts import render
 from repoapi.models import JenkinsBuildInfo as jbi
-from . import models
 
 
 def index(request):
