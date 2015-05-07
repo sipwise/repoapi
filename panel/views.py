@@ -24,7 +24,7 @@ def index(request):
 
 
 def release(request, release):
-    context = {'projects':  models.PROJECTS, 'release': release}
+    context = {'projects':  jbi.objects.release_projects(release), 'release': release}
     return render(request, 'panel/release.html', context)
 
 
