@@ -181,7 +181,7 @@ function update_job_info(release, project, uuid, job) {
     if (! $.release[project][uuid][job].failed ) {
       $.ajax({
         url: '/jenkinsbuildinfo/?format=json&tag=' + uuid
-          + '&param_release={{ release}}&projectname=' + job,
+          + '&param_release={{ release}}&jobname=' + job,
         method: 'GET',
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -205,7 +205,7 @@ function update_uuid_info(release, project, uuid) {
 
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
-      var job = this.projectname;
+      var job = this.jobname;
       $.release[project][uuid].jobs.add(job);
 
       if (! $.release[project][uuid][job]) {
@@ -258,6 +258,9 @@ function get_uuids_for_project(release, project) {
         console.warn(project + " skip null uuid");
         return;
       }
+      if ($.release[project].uuids.has(uuid)) {
+        return;
+      }
       $.release[project].uuids.add(uuid);
       if (! $.release[project][uuid] ) {
         $.release[project][uuid] = { failed: false, jobs: new Set(),};
@@ -285,6 +288,7 @@ function get_uuids_for_project(release, project) {
     $('#' + project + '-error').html(error);
     $.release[project].failed = true;
   }
+
   $.ajax({
     url: '/release/{{ release }}/' + project + '/?format=json',
     method: 'GET',

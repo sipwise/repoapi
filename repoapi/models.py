@@ -25,26 +25,35 @@ class JenkinsBuildInfoManager(models.Manager):
         else:
             return res.values('param_release')
 
-    def release_uuids_by_project(self, release, project, flat=True):
+    def release_projects(self, release, flat=True):
         res = self.get_queryset().filter(
-            param_release=release, projectname__startswith=project).distinct()
+            param_release=release).values('projectname').distinct()
+        if flat:
+            return res.values_list('projectname', flat=True)
+        else:
+            return res.values('projectname')
+
+    def release_project_uuids(self, release, project, flat=True):
+        res = self.get_queryset().filter(
+            param_release=release, projectname=project).distinct()
         if flat:
             return res.values_list('tag', flat=True)
         else:
             return res.values('tag')
 
-    def projects_by_uuid(self, release, project, uuid, flat=True):
+    def jobs_by_uuid(self, release, project, uuid, flat=True):
         res = self.get_queryset().filter(tag=uuid, param_release=release,
-                                         projectname__startswith=project)
+                                         projectname=project)
         if flat:
-            return res.order_by('-date').values_list('projectname', flat=True)
+            return res.order_by('-date').values_list('jobname', flat=True)
         else:
-            return res.order_by('-date').values('projectname')
+            return res.order_by('-date').values('jobname')
 
 
 class JenkinsBuildInfo(models.Model):
     tag = models.CharField(max_length=64, null=True)
     projectname = models.CharField(max_length=100)
+    jobname = models.CharField(max_length=100)
     buildnumber = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
     result = models.CharField(max_length=50)
@@ -65,5 +74,5 @@ class JenkinsBuildInfo(models.Model):
     objects = JenkinsBuildInfoManager()
 
     def __str__(self):
-        return "%s:%d[%s]" % (self.projectname,
+        return "%s:%d[%s]" % (self.jobname,
                               self.buildnumber, self.tag)

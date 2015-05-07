@@ -24,22 +24,27 @@ class JBIQueriesTestCase(TestCase):
         releases = JenkinsBuildInfo.objects.releases()
         self.assertItemsEqual(releases, ['mr3.1-fake', ])
 
-    def test_release_uuids_by_project(self):
+    def test_release_projects(self):
+        projects = ['fake', ]
+        p = JenkinsBuildInfo.objects.release_projects('mr3.1-fake')
+        self.assertItemsEqual(p, projects)
+
+    def test_release_project_uuids(self):
         projects = ['fake', ]
         uuids_ok = dict()
         uuids = dict()
 
         uuids_ok['fake'] = ['UUID1', 'UUID0']
         for p in projects:
-            uuids[p] = JenkinsBuildInfo.objects.release_uuids_by_project(
+            uuids[p] = JenkinsBuildInfo.objects.release_project_uuids(
                 'mr3.1-fake', p)
             self.assertItemsEqual(uuids_ok[p], uuids[p])
 
-    def test_projects_by_uuid(self):
-        projects = JenkinsBuildInfo.objects.projects_by_uuid(
+    def test_jobs_by_uuid(self):
+        jobs = JenkinsBuildInfo.objects.jobs_by_uuid(
             'mr3.1-fake', 'fake', 'UUID0')
-        self.assertItemsEqual(['fake-get-code', ], projects)
-        projects = JenkinsBuildInfo.objects.projects_by_uuid(
+        self.assertItemsEqual(['fake-get-code', ], jobs)
+        jobs = JenkinsBuildInfo.objects.jobs_by_uuid(
             'mr3.1-fake', 'fake', 'UUID1')
         self.assertItemsEqual(
-            ['fake-get-code', 'fake-source-tests', 'fake-source'], projects)
+            ['fake-get-code', 'fake-source-tests', 'fake-source'], jobs)

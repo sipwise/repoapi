@@ -21,7 +21,3 @@ class JenkinsBuildInfoSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.JenkinsBuildInfo
-
-
-class ReleaseListSerializer(serializers.Serializer):
-    param_release = serializers.CharField(max_length=50)

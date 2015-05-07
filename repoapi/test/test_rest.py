@@ -27,6 +27,7 @@ class TestRest(APITestCase):
     def test_jbi_creation(self):
         data = {"url": "http://127.0.0.1:8000/jenkinsbuildinfo/1/",
                 "projectname": "fake",
+                "jobname": "fake-get-code",
                 "buildnumber": 1,
                 "result": "OK",
                 "job_url": "http://fake.org/gogo", }
@@ -34,6 +35,7 @@ class TestRest(APITestCase):
             "url": "http://testserver/jenkinsbuildinfo/1/",
             "tag": None,
             "projectname": "fake",
+            "jobname": "fake-get-code",
             "buildnumber": 1,
             "result": "OK",
             "job_url": "http://fake.org/gogo",

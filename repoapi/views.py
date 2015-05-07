@@ -37,7 +37,7 @@ class JenkinsBuildInfoFilter(django_filters.FilterSet):
 
     class Meta:
         model = jbi
-        fields = ['tag', 'projectname', 'param_release', 'date']
+        fields = ['tag', 'projectname', 'jobname', 'param_release', 'date']
         order_by = ['-date', ]
 
 
@@ -52,22 +52,47 @@ class JenkinsBuildInfoDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.JenkinsBuildInfoSerializer
 
 
-class ReleaseList(generics.ListAPIView):
-    queryset = jbi.objects.releases(flat=False)
-    serializer_class = serializers.ReleaseListSerializer
+class ReleaseList(APIView):
+
+    def get(self, request, format=None):
+        res = jbi.objects.releases(flat=False)
+        for r in res:
+            r['url'] = reverse(
+                'project-list',
+                args=[r['param_release']],
+                request=request)
+        return Response(res)
+
+
+class ProjectList(APIView):
+
+    def get(self, request, release, format=None):
+        res = jbi.objects.release_projects(
+            release, flat=False)
+        for r in res:
+            r['url'] = reverse(
+                'projectuuid-list',
+                args=[release, r['projectname']],
+                request=request)
+        return Response(res)
 
 
 class ProjectUUIDList(APIView):
 
     def get(self, request, release, project, format=None):
-        res = jbi.objects.release_uuids_by_project(
+        res = jbi.objects.release_project_uuids(
             release, project, flat=False)
+        for r in res:
+            r['url'] = reverse(
+                'uuidinfo-list',
+                args=[release, project, r['tag']],
+                request=request)
         return Response(res)
 
 
 class UUIDInfoList(APIView):
 
     def get(self, request, release, project, uuid, format=None):
-        res = jbi.objects.projects_by_uuid(
+        res = jbi.objects.jobs_by_uuid(
             release, project, uuid, flat=False)
         return Response(res)

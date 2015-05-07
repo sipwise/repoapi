@@ -22,6 +22,7 @@ class JenkinsBuildInfoTestCase(TestCase):
     def test_creation_no_tag(self):
         jbi = JenkinsBuildInfo.objects.create(
             projectname='fake',
+            jobname='fake-get-code',
             buildnumber=1,
             result='OK')
         self.assertIsNone(jbi.tag)
@@ -29,6 +30,7 @@ class JenkinsBuildInfoTestCase(TestCase):
     def test_empty_tag_with_release(self):
         jbi = JenkinsBuildInfo.objects.create(
             projectname='fake',
+            jobname='fake-get-code',
             buildnumber=1,
             result='OK',
             param_release='release-mr4.0')
