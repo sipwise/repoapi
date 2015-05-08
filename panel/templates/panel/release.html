@@ -150,7 +150,7 @@ function create_new_project_panel(project) {
   div_project.attr('id', project).removeClass('project-clone').addClass('project');
 
   var div_title = $('.panel-heading > .panel-title', div_project);
-  div_title.html(project);
+  div_title.html('<a href="./' + project + '/">' + project + '</a>');
 
   $('.error', div_project).attr('id', project + '-error').removeClass('error');
   div_project.appendTo('#project-list');
