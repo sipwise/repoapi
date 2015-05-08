@@ -3,14 +3,10 @@
 {% block content %}
 <div class="container">
     <h2>Release {{ release }}</h2>
-    {% for project in projects %}
-    <div class="panel panel-default project" id="{{ project }}">
+    <div class="panel panel-default stats"></div>
+    <div class="panel panel-default project-clone hidden">
         <div class="panel-heading">
-            <h3 class="panel-title">
-              <a href="{% url 'panel:project-view' release project %}">
-                {{ project }}
-              </a>
-            </h3>
+            <h3 class="panel-title"></h3>
         </div>
         <div class="panel-body">
             <div class="panel panel-default hidden uuid-clone">
@@ -24,15 +20,15 @@
                 </div>
             </div>
         </div>
-        <div class="panel-footer" id="{{ project}}-error"></div>
+        <div class="panel-footer error"></div>
     </div>
-    {% endfor %}
+    <div id="project-list"></div>
 </div>
 {% endblock %}
 
 {% block extrajs %}
 <script type="text/javascript">
-$.release = {interval: 15000,};
+$.release = {projects: new Set(), interval: 15000,};
 
 function get_class_status(base, status) {
     var result = base;
@@ -147,6 +143,20 @@ function create_new_uuid_panel(project, uuid) {
   div_uuid.appendTo('#' + project + ' > .panel-body');
   console.debug('uuid ' + uuid + ' created for ' + project);
 }
+
+function create_new_project_panel(project) {
+  var div_project = $('.project-clone').clone();
+  div_project.removeClass('hidden');
+  div_project.attr('id', project).removeClass('project-clone').addClass('project');
+
+  var div_title = $('.panel-heading > .panel-title', div_project);
+  div_title.html(project);
+
+  $('.error', div_project).attr('id', project + '-error').removeClass('error');
+  div_project.appendTo('#project-list');
+  console.debug('project ' + project + ' created');
+}
+/******************************************************************/
 
 function update_job_view(project, uuid, job, data) {
   var value = data.results[0];
@@ -299,18 +309,49 @@ function get_uuids_for_project(release, project) {
   });
 }
 
-$( document ).ready(function() {
-  $('.project').each(function(){
-    var project = $(this).attr('id');
-    $.release[project] = {uuids: new Set(), failed: false, interval: 5000,};
+function get_projects(release) {
 
-    $.release[project].timer = setInterval(function() {
-      get_uuids_for_project('{{release}}', project);
-    }, $.release.interval);
-    console.log(project + ' get uuids setInterval ' + $.release.interval);
+  function successFunc(data, textStatus, jqXHR ) {
+    $(data).each(function() {
+      var project = this.projectname;
+      if ($.release[project]) {
+        return;
+      }
+      $.release.projects.add(project);
+      if (! $.release[project] ) {
+        $.release[project] = {uuids: new Set(), failed: false, interval: 5000,};
+        create_new_project_panel(project);
 
-    get_uuids_for_project('{{ release }}', project);
+        $.release[project].timer = setInterval(function() {
+          get_uuids_for_project(release, project);
+        }, $.release[project].interval);
+        console.log(project + ' get uuids setInterval '
+          + $.release[project].interval);
+        get_uuids_for_project(release, project);
+      }
+    });
+  }
+
+  function errorFunc(jqXHR, status, error) {
+    console.error(error);
+  }
+
+  $.ajax({
+    url: '/release/' + release + '/?format=json',
+    method: 'GET',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: successFunc,
+    error: errorFunc
   });
+}
+
+$( document ).ready(function() {
+  $.release.timer = setInterval(function(){
+    get_projects('{{release}}');
+  }, $.release.interval);
+  console.debug('projects set interval to ' + $.release.interval);
+  get_projects('{{release}}');
 });
 </script>
 {% endblock %}

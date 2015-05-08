@@ -23,10 +23,7 @@ def index(request):
 
 
 def release(request, release):
-    context = {
-        'projects':  jbi.objects.release_projects(release),
-        'release': release
-    }
+    context = {'release': release }
     return render(request, 'panel/release.html', context)
 
 
