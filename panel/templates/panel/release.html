@@ -3,7 +3,52 @@
 {% block content %}
 <div class="container">
     <h2>Release {{ release }}</h2>
-    <div class="panel panel-default stats"></div>
+    <div class="panel panel-default" id="stats">
+        <div class="panel-heading">
+            <h3 class="panel-title">statistics</h3>
+        </div>
+        <div class="panel-body">
+            <div>
+                Total projects: <span id="stats-total">0</span>
+            </div>
+            <div>
+                Failed: <span id="stats-danger">0</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-danger"
+                  role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                  aria-valuemax="100" style="min-width: 2em; width: 0%">
+                      <span id="stats-label-danger">0% Failed</span>
+                </div>
+            </div>
+            <ul class='list-group list-inline' id='stats-list-danger'>
+                <li class='list-group-item hidden list-group-item-danger stats-project-danger-clone'></li>
+            </ul>
+            <div>
+                Building: <span id="stats-created">0</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-created"
+                  role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                  aria-valuemax="100" style="min-width: 2em; width: 0%">
+                      <span id="stats-label-danger">0% Building</span>
+                </div>
+            </div>
+            <ul class='list-group list-inline' id='stats-list-created'>
+                <li class='list-group-item hidden stats-project-created-clone'></li>
+            </ul>
+            <div>
+                Success: <span id="stats-success">0</span>
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success"
+                  role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                  aria-valuemax="100" style="min-width: 2em; width: 0%">
+                      <span id="stats-label-success">0% Success</span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="panel panel-default project-clone hidden">
         <div class="panel-heading">
             <h3 class="panel-title"></h3>
@@ -28,45 +73,114 @@
 
 {% block extrajs %}
 <script type="text/javascript">
-$.release = {projects: new Set(), interval: 15000,};
+$.release = {
+  projects: new Set(),
+  stats: {
+    danger: new Set(),
+    success: new Set(),
+    created: new Set(),
+  },
+  interval: 15000,};
 
-function get_class_status(base, status) {
-    var result = base;
-    switch (status) {
-      case "SUCCESS":
-        result += "success";
-        break;
-      case "UNSTABLE":
-        result += "warning";
-        break;
-      default:
-        result += "danger";
-    }
-    return result;
+function get_label_status(status) {
+  var result;
+  switch (status) {
+    case "SUCCESS":
+      result = "success";
+      break;
+    case "UNSTABLE":
+      result = "warning";
+      break;
+    case "CREATED":
+      result = "default";
+      break;
+    default:
+      result = "danger";
+  }
+  return result;
 }
 
+function get_class_status(base, status) {
+    return base + get_label_status(status);
+}
+
+function set_project_stats(project, label)
+{
+  var labels = new Set(Object.keys($.release.stats));
+  labels.delete(label);
+
+  for (var item of labels) {
+    if ($.release.stats[item].has(project)) {
+      $.release.stats[item].delete(project);
+    }
+  }
+  create_new_project_stat(project, label);
+  if($.release.stats[label]) {
+    $.release.stats[label].add(project);
+  }
+}
+
+function update_stats_progress() {
+  var labels = new Set(Object.keys($.release.stats));
+  var total = $.release.projects.size;
+
+  for (var label of labels) {
+    var num = ($.release.stats[label].size * 100)/total;
+    var div_progress = $('.progress-bar-' + label);
+
+    div_progress.attr('aria-valuenow', num);
+    div_progress.html( num + '%').css('width', num + '%');
+    $('#stats-' + label).html($.release.stats[label].size);
+  }
+}
+
+function update_stats() {
+  for (var project of $.release.projects) {
+    var div_uuid = $('#'+ project + '-' + $.release[project].last_uuid);
+    if (div_uuid.hasClass('panel-danger')) {
+      set_project_stats(project, 'danger');
+    }
+    else if (div_uuid.hasClass('panel-success')) {
+      set_project_stats(project, 'success');
+    }
+    else {
+      set_project_stats(project, 'created');
+    }
+  }
+  update_stats_progress();
+}
+
+/*******************************************************************/
 function set_project_status(project, value) {
   var div_project = $('#' + project);
-  var div_uuid = $('.uuid:first', div_project);
-
-  console.debug('set_project_status');
+  var div_uuid = $('#'+ project + '-' + $.release[project].last_uuid);
+  var status;
 
   if (value) {
-    var status = value.result;
-    div_project.addClass(get_class_status("panel-", status));
+    if(value.created) {
+      div_project.removeClass('panel-warning panel-danger panel-success');
+      status = "CREATED";
+    }
+    else {
+      status = value.result;
+      div_project.addClass(get_class_status("panel-", status));
+    }
   }
   else {
-    console.debug('uuid that counts: ' + div_uuid.attr('id'));
     if (div_uuid.hasClass('panel-warning')) {
       div_project.addClass('panel-warning');
+      status = 'warning';
     }
     else if (div_uuid.hasClass('panel-danger')) {
       div_project.addClass('panel-danger');
+      status = 'danger';
     }
     else if (div_uuid.hasClass('panel-success')) {
       div_project.addClass('panel-success');
+      status = 'success';
     }
   }
+  update_stats();
 }
 
 function set_uuid_status(project, uuid, job, value) {
@@ -81,9 +195,6 @@ function set_uuid_status(project, uuid, job, value) {
         div_uuid.removeClass('panel-warning panel-danger').addClass(_class);
         console.debug(project + ' uuid: ' + uuid + " OK. done");
       }
-      else {
-        console.debug(job + ' nothing to do here.');
-      }
       break;
     default:
       div_uuid.addClass(_class);
@@ -91,7 +202,9 @@ function set_uuid_status(project, uuid, job, value) {
         $.release[project][uuid].failed = true;
         console.debug(project + ' uuid: ' + uuid + ' set failed');
       }
-      set_project_status(project, value);
+  }
+  if (uuid == $.release[project].last_uuid) {
+    set_project_status(project);
   }
 }
 
@@ -111,7 +224,22 @@ function set_job_status(project, uuid, job, value) {
   }
 }
 
-function create_new_job(project, uuid, job) {
+/*******************************************************************/
+function create_new_project_stat(project, label) {
+  var id = 'stats-' + project;
+  if ( $.release.stats[label].has(project) ) { return; }
+  else { $('#' + id).remove(); }
+  var div_project = $('.stats-project-' + label + '-clone').clone();
+  div_project.removeClass('hidden stats-project-' + label + '-clone');
+
+  div_project.attr('id', id);
+  div_project.html('<a href="#' + project +'"/">' + project + '</a>');
+
+  // put it on the proper place
+  div_project.appendTo('#stats-list-' + label);
+}
+
+function create_new_job_div(project, uuid, job) {
   var id = project + '-' + uuid;
   var div_job = $('#' + id + '-job').clone().removeClass('hidden');
 
@@ -137,7 +265,7 @@ function create_new_uuid_panel(project, uuid) {
   $('.job', div_uuid).attr('id', id + '-job').removeClass('job');
 
   var div_title = $('.panel-heading > .panel-title', div_uuid);
-  div_title.html(uuid);
+  div_title.html('<a name="' + id +'"/">' + uuid + '</a>');
 
   // put it on the proper place
   div_uuid.appendTo('#' + project + ' > .panel-body');
@@ -146,28 +274,83 @@ function create_new_uuid_panel(project, uuid) {
 
 function create_new_project_panel(project) {
   var div_project = $('.project-clone').clone();
+  var div_stats_total = $('#stats-total').html($.release.projects.size);
   div_project.removeClass('hidden');
   div_project.attr('id', project).removeClass('project-clone').addClass('project');
 
   var div_title = $('.panel-heading > .panel-title', div_project);
-  div_title.html('<a href="./' + project + '/">' + project + '</a>');
+  div_title.html('<a name="' + project +'" href="./' + project + '/">' + project + '</a>');
 
   $('.error', div_project).attr('id', project + '-error').removeClass('error');
   div_project.appendTo('#project-list');
   console.debug('project ' + project + ' created');
 }
 /******************************************************************/
+function create_new_job(release, project, uuid, job) {
+  $.release[project][uuid].jobs.add(job);
+
+  if (! $.release[project][uuid][job]) {
+    $.release[project][uuid][job] = { failed: false, };
+    create_new_job_div(project, uuid, job);
+    update_job_info(release, project, uuid, job);
+  }
+
+  if (!$.release[project][uuid][job].failed &&
+      !$.release[project][uuid][job].timer) {
+    $.release[project][uuid][job].timer = setInterval(function() {
+      update_job_info(release, project, uuid, job);
+    }, $.release[project].interval);
+  }
+}
+
+function create_new_uuid(release, project, uuid) {
+  if (uuid == null || $.release[project].uuids.has(uuid)) {
+    return;
+  }
+
+  $.release[project].uuids.add(uuid);
+  $.release[project].last_uuid = uuid;
+  $.release[project][uuid] = { failed: false, jobs: new Set(),};
+
+  create_new_uuid_panel(project, uuid);
+  update_uuid_info(release, project, uuid);
+  set_project_status(project, {created: true});
+
+  if (!$.release[project][uuid].failed  && !$.release[project][uuid].timer) {
+    $.release[project][uuid].timer = setInterval(function() {
+      update_uuid_info(release, project, uuid);
+    }, $.release[project].interval);
+  }
+  else {
+    clearInterval($.release[project][uuid].timer);
+    set_project_status(project, {result: "FAILED"});
+  }
+}
+
+function create_new_project(release, project) {
+  if ($.release.projects.has(project)) {
+    return;
+  }
+  $.release.projects.add(project);
+  $.release[project] = {uuids: new Set(), failed: false, interval: 5000,};
+  create_new_project_panel(project);
+
+  $.release[project].timer = setInterval(function() {
+    get_uuids_for_project(release, project);
+  }, $.release[project].interval);
+  get_uuids_for_project(release, project);
+}
+
+/******************************************************************/
 
 function update_job_view(project, uuid, job, data) {
   var value = data.results[0];
 
-  set_job_status(project, uuid, job, value);
-
   if (data.count != 0) {
     if ($.release[project][uuid][job].timer) {
       clearInterval($.release[project][uuid][job].timer);
-      console.debug("clearInterval uuid: "+ uuid + ' ' + job);
     }
+    set_job_status(project, uuid, job, value);
     set_uuid_status(project, uuid, job, value);
   }
   else {
@@ -187,26 +370,21 @@ function update_job_info(release, project, uuid, job) {
     $.release[project][uuid][job].failed = true;
   }
 
-  if (! $.release[project][uuid].failed) {
-    if (! $.release[project][uuid][job].failed ) {
-      $.ajax({
-        url: '/jenkinsbuildinfo/?format=json&tag=' + uuid
-          + '&param_release={{ release}}&jobname=' + job,
-        method: 'GET',
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: successFunc,
-        error: errorFunc
-      });
-    }
-    else {
-      console.debug('uuid: ' + uuid + ' job: ' + job + ' already failed');
-    }
+  if (!$.release[project][uuid].failed &&
+      ! $.release[project][uuid][job].failed )
+  {
+    $.ajax({
+      url: '/jenkinsbuildinfo/?format=json&tag=' + uuid
+        + '&param_release={{ release}}&jobname=' + job,
+      method: 'GET',
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: successFunc,
+      error: errorFunc
+    });
   }
   else {
-    console.debug(project + ' uuid: ' + uuid + ' already failed');
     clearInterval($.release[project][uuid][job].timer);
-    console.debug("clearInterval uuid:" + uuid + ' ' + job);
     set_project_status(project, {result: "FAILED"});
   }
 }
@@ -215,26 +393,7 @@ function update_uuid_info(release, project, uuid) {
 
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
-      var job = this.jobname;
-      $.release[project][uuid].jobs.add(job);
-
-      if (! $.release[project][uuid][job]) {
-        $.release[project][uuid][job] = { failed: false, };
-        create_new_job(project, uuid, job);
-        update_job_info(release, project, uuid, job);
-      }
-
-      if (! $.release[project][uuid][job].failed) {
-        if (! $.release[project][uuid][job].timer) {
-          $.release[project][uuid][job].timer = setInterval(function() {
-            update_job_info(release, project, uuid, job); }, $.release[project].interval);
-          console.debug('uuid: ' + uuid +
-            ' new job: ' + job +' setInterval ' + $.release[project].interval);
-        }
-      }
-      else {
-        console.debug('uuid: ' + job +' already failed');
-      }
+      create_new_job(release, project, uuid, this.jobname);
     });
   }
 
@@ -254,7 +413,6 @@ function update_uuid_info(release, project, uuid) {
     });
   }
   else {
-    console.debug(project + 'uuid ' + uuid +' already failed');
     clearInterval($.release[project][uuid].timer);
   }
 }
@@ -263,40 +421,12 @@ function get_uuids_for_project(release, project) {
 
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
-      var uuid = this.tag;
-      if (uuid == null) {
-        console.warn(project + " skip null uuid");
-        return;
-      }
-      if ($.release[project].uuids.has(uuid)) {
-        return;
-      }
-      $.release[project].uuids.add(uuid);
-      if (! $.release[project][uuid] ) {
-        $.release[project][uuid] = { failed: false, jobs: new Set(),};
-        create_new_uuid_panel(project, uuid);
-        update_uuid_info(release, project, uuid);
-      }
-      if (! $.release[project][uuid].failed ) {
-        if (! $.release[project][uuid].timer) {
-          $.release[project][uuid].timer = setInterval(function() {
-            update_uuid_info(release, project, uuid); }, $.release[project].interval);
-          console.debug(project + ' new uuid: ' + uuid +
-            ' setInterval ' + $.release[project].interval);
-        }
-      }
-      else {
-        console.debug(project + ' uuid: ' + uuid +' already failed');
-        clearInterval($.release[project][uuid].timer);
-        console.debug(project + " clearInterval: " + uuid);
-        set_project_status(project, {result: "FAILED"});
-      }
+      create_new_uuid(release, project, this.tag);
     });
   }
 
   function errorFunc(jqXHR, status, error) {
     $('#' + project + '-error').html(error);
-    $.release[project].failed = true;
   }
 
   $.ajax({
@@ -313,22 +443,7 @@ function get_projects(release) {
 
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
-      var project = this.projectname;
-      if ($.release[project]) {
-        return;
-      }
-      $.release.projects.add(project);
-      if (! $.release[project] ) {
-        $.release[project] = {uuids: new Set(), failed: false, interval: 5000,};
-        create_new_project_panel(project);
-
-        $.release[project].timer = setInterval(function() {
-          get_uuids_for_project(release, project);
-        }, $.release[project].interval);
-        console.log(project + ' get uuids setInterval '
-          + $.release[project].interval);
-        get_uuids_for_project(release, project);
-      }
+      create_new_project(release, this.projectname)
     });
   }
 
@@ -350,7 +465,6 @@ $( document ).ready(function() {
   $.release.timer = setInterval(function(){
     get_projects('{{release}}');
   }, $.release.interval);
-  console.debug('projects set interval to ' + $.release.interval);
   get_projects('{{release}}');
 });
 </script>

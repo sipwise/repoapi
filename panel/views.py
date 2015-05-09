@@ -23,7 +23,7 @@ def index(request):
 
 
 def release(request, release):
-    context = {'release': release }
+    context = {'release': release}
     return render(request, 'panel/release.html', context)
 
 
