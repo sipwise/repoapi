@@ -19,7 +19,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from repoapi import views
 
 api_patterns = [
-    url(r'^$', views.api_root),
+    url(r'^$', views.api_root, name='index'),
     url(r'^jenkinsbuildinfo/$',
         views.JenkinsBuildInfoList.as_view(),
         name='jenkinsbuildinfo-list'),

@@ -1,12 +1,11 @@
 {% extends "panel/base.html" %}
 {% block title %}{{ project }}{% endblock %}
+{% block navlist%}
+    <li><a href="{% url 'panel:release-view' release %}">{{ release }}</a></li>
+    <li class="active"><a href="#">{{ project }}</a></li>
+{% endblock %}
 {% block content %}
 <div class="container">
-    <h2>
-        <a href="{% url 'panel:release-view' release %}">
-            Release {{ release }}
-        </a>
-    </h2>
     <div class="panel panel-default project" id="{{ project }}">
         <div class="panel-heading">
             <h3 class="panel-title">{{ project }}</h3>

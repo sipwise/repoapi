@@ -1,9 +1,10 @@
 {% extends "panel/base.html" %}
 {% block title %}{{ release }}{% endblock %}
+{% block navlist%}
+    <li class="active"><a href="#">{{ release }}</a></li>
+{% endblock %}
 {% block content %}
-<nav class="navbar navbar-default navbar-fixed-top">
 <div class="container">
-    <h2>Release {{ release }}</h2>
     <div class="panel panel-default" id="stats">
         <div class="panel-heading">
             <h3 class="panel-title">statistics</h3>
@@ -70,7 +71,6 @@
     </div>
     <div id="project-list"></div>
 </div>
-</nav>
 {% endblock %}
 
 {% block extrajs %}
