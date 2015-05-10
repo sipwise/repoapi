@@ -1,6 +1,7 @@
 {% extends "panel/base.html" %}
 {% block title %}{{ release }}{% endblock %}
 {% block content %}
+<nav class="navbar navbar-default navbar-fixed-top">
 <div class="container">
     <h2>Release {{ release }}</h2>
     <div class="panel panel-default" id="stats">
@@ -69,6 +70,7 @@
     </div>
     <div id="project-list"></div>
 </div>
+</nav>
 {% endblock %}
 
 {% block extrajs %}
@@ -134,11 +136,11 @@ function update_stats_progress() {
   var total = $.release.projects.size;
 
   for (var label of labels) {
-    var num = ($.release.stats[label].size * 100)/total;
+    var num = (($.release.stats[label].size * 100)/total).toPrecision(3);
     var div_progress = $('.progress-bar-' + label);
 
     div_progress.attr('aria-valuenow', num);
-    div_progress.html( num + '%').css('width', num.toPrecision(3) + '%');
+    div_progress.html( num + '%').css('width', num + '%');
     $('#stats-' + label).html($.release.stats[label].size);
   }
 }
