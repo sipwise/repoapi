@@ -138,7 +138,7 @@ function update_stats_progress() {
     var div_progress = $('.progress-bar-' + label);
 
     div_progress.attr('aria-valuenow', num);
-    div_progress.html( num + '%').css('width', num + '%');
+    div_progress.html( num + '%').css('width', num.toPrecision(3) + '%');
     $('#stats-' + label).html($.release.stats[label].size);
   }
 }
