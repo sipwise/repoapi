@@ -223,7 +223,7 @@ function create_new_uuid_panel(project, uuid) {
     ' <span class="badge">' + $.release[project][uuid].jobs.size + '</span></a>');
 
   // put it on the proper place
-  div_uuid.appendTo('#' + project + ' > .panel-body');
+  div_uuid.prependTo('#' + project + ' > .panel-body');
   console.debug('uuid ' + uuid + ' created for ' + project);
 }
 
@@ -258,6 +258,26 @@ function create_new_job(release, project, uuid, job) {
   }
 }
 
+function clean_uuids(release, project) {
+  if ($.release.max_uuids == 0) { return; }
+  if ($.release[project].uuids.size >= $.release.max_uuids) {
+    var step = $.release[project].uuids.size - $.release.max_uuids;
+    for (var uuid of $.release[project].uuids) {
+      if (step==0) { return; }
+      console.debug(uuid);
+      if (uuid != $.release[project].last_uuid)
+      {
+        if($.release[project][uuid] && $.release[project][uuid].timer)
+        {
+          clearInterval($.release[project][uuid].timer);
+        }
+        $('#' + project + '-' + uuid).remove();
+        step--;
+      }
+    }
+  }
+}
+
 function create_new_uuid(release, project, uuid) {
   if (uuid == null || $.release[project].uuids.has(uuid)) {
     return;
@@ -267,6 +287,7 @@ function create_new_uuid(release, project, uuid) {
   $.release[project].last_uuid = uuid;
   $.release[project][uuid] = { failed: false, jobs: new Set(),};
 
+  clean_uuids(release, project);
   create_new_uuid_panel(project, uuid);
   update_uuid_info(release, project, uuid);
   set_project_status(project, {created: true});
