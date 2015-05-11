@@ -7,6 +7,7 @@
   stats: {
     danger: new Set(),
     success: new Set(),
+    warning: new Set(),
     created: new Set(),
   },
   interval: 15000,
@@ -79,6 +80,9 @@ function update_stats() {
     if (div_uuid.hasClass('panel-danger')) {
       set_project_stats(project, 'danger');
     }
+    else if (div_uuid.hasClass('panel-warning')) {
+      set_project_stats(project, 'warning');
+    }
     else if (div_uuid.hasClass('panel-success')) {
       set_project_stats(project, 'success');
     }
@@ -129,18 +133,23 @@ function set_uuid_status(project, uuid, job, value) {
   var jobs = $.release[project][uuid].jobs.size;
 
   switch (status) {
-    case "SUCCESS":
     case "UNSTABLE":
+    case "SUCCESS":
       if (job.match(/.+-repos$/)) {
         div_uuid.removeClass('panel-warning panel-danger').addClass(_class);
         console.debug(project + ' uuid: ' + uuid + " OK. done");
       }
       break;
     default:
-      div_uuid.addClass(_class);
-      if(! $.release[project][uuid].failed) {
-        $.release[project][uuid].failed = true;
-        console.debug(project + ' uuid: ' + uuid + ' set failed');
+      if (job.match(/.+piuparts$/)) {
+        div_uuid.addClass('panel-warning').removeClass('panel-success panel-danger');
+      }
+      else {
+        div_uuid.addClass(_class);
+        if(! $.release[project][uuid].failed) {
+          $.release[project][uuid].failed = true;
+          console.debug(project + ' uuid: ' + uuid + ' set failed');
+        }
       }
   }
   $('.badge', div_uuid).html(jobs);
