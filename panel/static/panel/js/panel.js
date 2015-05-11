@@ -183,11 +183,16 @@ function create_new_project_stat(project, label) {
   if ( $.release.stats[label].has(project) ) { return; }
   else { $('#' + id).remove(); }
   var div_project = $('.stats-project-' + label + '-clone').clone();
+  var jobs = 0;
+
   div_project.removeClass('hidden stats-project-' + label + '-clone');
 
+  if( $.release[project][uuid] && $.release[project][uuid].jobs) {
+    jobs = $.release[project][uuid].jobs.size;
+  }
   div_project.attr('id', id);
   div_project.html('<a href="#' + project +'"/">' + project +
-    ' <span class="badge">' + $.release[project][uuid].jobs.size + '</span></a>');
+    ' <span class="badge">' + jobs + '</span></a>');
 
   // put it on the proper place
   div_project.appendTo('#stats-list-' + label);
@@ -242,20 +247,12 @@ function create_new_project_panel(project) {
 }
 /******************************************************************/
 function create_new_job(release, project, uuid, job) {
+  if($.release[project][uuid].jobs.has(job)) { return; }
+
   $.release[project][uuid].jobs.add(job);
-
-  if (! $.release[project][uuid][job]) {
-    $.release[project][uuid][job] = { failed: false, };
-    create_new_job_div(project, uuid, job);
-    update_job_info(release, project, uuid, job);
-  }
-
-  if (!$.release[project][uuid][job].failed &&
-      !$.release[project][uuid][job].timer) {
-    $.release[project][uuid][job].timer = setInterval(function() {
-      update_job_info(release, project, uuid, job);
-    }, $.release[project].interval);
-  }
+  $.release[project][uuid][job] = { failed: false, };
+  create_new_job_div(project, uuid, job);
+  update_job_info(release, project, uuid, job);
 }
 
 function clean_uuids(release, project) {
@@ -267,10 +264,6 @@ function clean_uuids(release, project) {
       console.debug(uuid);
       if (uuid != $.release[project].last_uuid)
       {
-        if($.release[project][uuid] && $.release[project][uuid].timer)
-        {
-          clearInterval($.release[project][uuid].timer);
-        }
         $('#' + project + '-' + uuid).remove();
         step--;
       }
@@ -291,16 +284,6 @@ function create_new_uuid(release, project, uuid) {
   create_new_uuid_panel(project, uuid);
   update_uuid_info(release, project, uuid);
   set_project_status(project, {created: true});
-
-  if (!$.release[project][uuid].failed  && !$.release[project][uuid].timer) {
-    $.release[project][uuid].timer = setInterval(function() {
-      update_uuid_info(release, project, uuid);
-    }, $.release[project].interval);
-  }
-  else {
-    clearInterval($.release[project][uuid].timer);
-    set_project_status(project, {result: "FAILED"});
-  }
 }
 
 function create_new_project(release, project) {
@@ -311,9 +294,6 @@ function create_new_project(release, project) {
   $.release[project] = {uuids: new Set(), failed: false, interval: 5000,};
   create_new_project_panel(project);
 
-  $.release[project].timer = setInterval(function() {
-    get_uuids_for_project(release, project);
-  }, $.release[project].interval);
   get_uuids_for_project(release, project);
 }
 
@@ -323,9 +303,6 @@ function update_job_view(project, uuid, job, data) {
   var value = data.results[0];
 
   if (data.count != 0) {
-    if ($.release[project][uuid][job].timer) {
-      clearInterval($.release[project][uuid][job].timer);
-    }
     set_job_status(project, uuid, job, value);
     set_uuid_status(project, uuid, job, value);
   }
@@ -346,30 +323,24 @@ function update_job_info(release, project, uuid, job) {
     $.release[project][uuid][job].failed = true;
   }
 
-  if (!$.release[project][uuid].failed &&
-      ! $.release[project][uuid][job].failed )
-  {
-    $.ajax({
-      url: '/jenkinsbuildinfo/?format=json&tag=' + uuid
-        + '&param_release=' + release + '&jobname=' + job,
-      method: 'GET',
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      success: successFunc,
-      error: errorFunc
-    });
-  }
-  else {
-    clearInterval($.release[project][uuid][job].timer);
-    set_project_status(project, {result: "FAILED"});
-  }
+  $.ajax({
+    url: '/jenkinsbuildinfo/?format=json&tag=' + uuid
+      + '&param_release=' + release + '&jobname=' + job,
+    method: 'GET',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: successFunc,
+    error: errorFunc
+  });
 }
 
 function update_uuid_info(release, project, uuid) {
 
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
-      create_new_job(release, project, uuid, this.jobname);
+      if (!$.release[project][uuid].jobs.has(this.jobname)) {
+        create_new_job(release, project, uuid, this.jobname);
+      }
     });
   }
 
@@ -378,26 +349,23 @@ function update_uuid_info(release, project, uuid) {
     $.release[project][uuid].failed = true;
   }
 
-  if (! $.release[project][uuid].failed) {
-    $.ajax({
-      url: '/release/' + release + '/' + project + '/' + uuid + '/?format=json',
-      method: 'GET',
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      success: successFunc,
-      error: errorFunc
-    });
-  }
-  else {
-    clearInterval($.release[project][uuid].timer);
-  }
+  $.ajax({
+    url: '/release/' + release + '/' + project + '/' + uuid + '/?format=json',
+    method: 'GET',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: successFunc,
+    error: errorFunc
+  });
 }
 
 function get_uuids_for_project(release, project) {
 
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
-      create_new_uuid(release, project, this.tag);
+      if (!$.release[project].uuids.has(this.tag)) {
+        create_new_uuid(release, project, this.tag);
+      }
     });
   }
 
@@ -419,7 +387,9 @@ function get_projects(release) {
 
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
-      create_new_project(release, this.projectname);
+      if (!$.release.projects.has(this.projectname)) {
+        create_new_project(release, this.projectname);
+      }
     });
   }
 
@@ -435,4 +405,11 @@ function get_projects(release) {
     success: successFunc,
     error: errorFunc
   });
+}
+
+function update_info(release) {
+  get_projects(release);
+  for (var project of $.release.projects) {
+    get_uuids_for_project(release, project);
+  }
 }

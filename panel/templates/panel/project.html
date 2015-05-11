@@ -32,6 +32,9 @@
 <script type="text/javascript">
 $( document ).ready(function() {
   $.release.max_uuids = 0;
+  $.release.timer = setInterval(function(){
+    get_uuids_for_project('{{release}}', '{{ project }}');
+  }, $.release.interval);
   create_new_project('{{ release }}', '{{ project }}');
 });
 </script>
