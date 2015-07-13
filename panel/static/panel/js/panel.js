@@ -341,6 +341,10 @@ function update_uuid_info(release, project, uuid) {
       if (!$.release[project][uuid].jobs.has(this.jobname)) {
         create_new_job(release, project, uuid, this.jobname);
       }
+      else if (!$.release[project][uuid].failed &&
+        !$.release[project][uuid][this.jobname].failed ) {
+        update_job_info(release, project, uuid, this.jobname);
+      }
     });
   }
 
@@ -349,14 +353,16 @@ function update_uuid_info(release, project, uuid) {
     $.release[project][uuid].failed = true;
   }
 
-  $.ajax({
-    url: '/release/' + release + '/' + project + '/' + uuid + '/?format=json',
-    method: 'GET',
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    success: successFunc,
-    error: errorFunc
-  });
+  if (!$.release[project][uuid].failed) {
+    $.ajax({
+      url: '/release/' + release + '/' + project + '/' + uuid + '/?format=json',
+      method: 'GET',
+      contentType: "application/json; charset=utf-8",
+      dataType: "json",
+      success: successFunc,
+      error: errorFunc
+    });
+  }
 }
 
 function get_uuids_for_project(release, project) {
@@ -365,6 +371,9 @@ function get_uuids_for_project(release, project) {
     $(data).each(function() {
       if (!$.release[project].uuids.has(this.tag)) {
         create_new_uuid(release, project, this.tag);
+      }
+      else if (!$.release[project][this.tag].failed) {
+        update_uuid_info(release, project, this.tag);
       }
     });
   }
