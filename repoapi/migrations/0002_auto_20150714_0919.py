@@ -14,10 +14,13 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='jenkinsbuildinfo',
             name='param_release',
-            field=models.CharField(max_length=50, null=True, db_index=True),
+            field=models.CharField(max_length=50,
+                                   null=True, db_index=True),
         ),
         migrations.AlterIndexTogether(
             name='jenkinsbuildinfo',
-            index_together=set([('param_release', 'projectname', 'tag'), ('param_release', 'projectname')]),
+            index_together=set(
+                [('param_release', 'projectname', 'tag'),
+                 ('param_release', 'projectname')]),
         ),
     ]
