@@ -341,10 +341,6 @@ function update_uuid_info(release, project, uuid) {
       if (!$.release[project][uuid].jobs.has(this.jobname)) {
         create_new_job(release, project, uuid, this.jobname);
       }
-      else if (!$.release[project][uuid].failed &&
-        !$.release[project][uuid][this.jobname].failed ) {
-        update_job_info(release, project, uuid, this.jobname);
-      }
     });
   }
 
