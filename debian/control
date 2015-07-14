@@ -3,7 +3,7 @@ Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends: debhelper (>= 8~),
                python-dev,
-               python-virtualenv
+               virtualenv
 Standards-Version: 3.9.6
 Section: python
 Homepage: http://sipwise.com/
@@ -13,7 +13,7 @@ Section: python
 Architecture: all
 Depends: make,
          python,
-         python-virtualenv,
+         virtualenv,
          sqlite3,
          uwsgi-plugin-python,
          ${misc:Depends}
