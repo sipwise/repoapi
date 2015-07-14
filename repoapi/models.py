@@ -65,13 +65,20 @@ class JenkinsBuildInfo(models.Model):
 
     param_tag = models.CharField(max_length=50, null=True)
     param_branch = models.CharField(max_length=50, null=True)
-    param_release = models.CharField(max_length=50, null=True)
+    param_release = models.CharField(max_length=50, null=True,
+                                     db_index=True)
     param_distribution = models.CharField(max_length=50, null=True)
     param_ppa = models.CharField(max_length=50, null=True)
 
     repo_name = models.CharField(max_length=50, null=True)
 
     objects = JenkinsBuildInfoManager()
+
+    class Meta:
+        index_together = [
+            ["param_release", "projectname"],
+            ["param_release", "projectname", "tag"],
+        ]
 
     def __str__(self):
         return "%s:%d[%s]" % (self.jobname,
