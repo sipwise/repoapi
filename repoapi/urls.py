@@ -32,10 +32,10 @@ api_patterns = [
     url(r'^release/(?P<release>[\w\d\.-]+)/$',
         views.ProjectList.as_view(),
         name='project-list'),
-    url(r'^release/(?P<release>[\w\d\.-]+)/(?P<project>[\w\d\.-]+)/$',
+    url(r'^project/(?P<release>[\w\d\.-]+)/(?P<project>[\w\d\.-]+)/$',
         views.ProjectUUIDList.as_view(),
         name='projectuuid-list'),
-    url(r'^release/(?P<release>[\w\d\.-]+)'
+    url(r'^uuid/(?P<release>[\w\d\.-]+)'
         '/(?P<project>[\w\d\.-]+)/(?P<uuid>[\w\d-]+)/$',
         views.UUIDInfoList.as_view(),
         name='uuidinfo-list'),

@@ -351,7 +351,7 @@ function update_uuid_info(release, project, uuid) {
 
   if (!$.release[project][uuid].failed) {
     $.ajax({
-      url: '/release/' + release + '/' + project + '/' + uuid + '/?format=json',
+      url: '/uuid/' + release + '/' + project + '/' + uuid + '/?format=json',
       method: 'GET',
       contentType: "application/json; charset=utf-8",
       dataType: "json",
@@ -379,7 +379,7 @@ function get_uuids_for_project(release, project) {
   }
 
   $.ajax({
-    url: '/release/' + release +'/' + project + '/?format=json',
+    url: '/project/' + release +'/' + project + '/?format=json',
     method: 'GET',
     contentType: "application/json; charset=utf-8",
     dataType: "json",
