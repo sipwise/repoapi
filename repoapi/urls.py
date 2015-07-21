@@ -29,14 +29,14 @@ api_patterns = [
     url(r'^release/$',
         views.ReleaseList.as_view(),
         name='release-list'),
-    url(r'^release/(?P<release>[\w\d\.-]+)/$',
+    url(r'^release/(?P<release>[^/]+)/$',
         views.ProjectList.as_view(),
         name='project-list'),
-    url(r'^release/(?P<release>[\w\d\.-]+)/(?P<project>[\w\d\.-]+)/$',
+    url(r'^release/(?P<release>[^/]+)/(?P<project>[^/]+)/$',
         views.ProjectUUIDList.as_view(),
         name='projectuuid-list'),
-    url(r'^release/(?P<release>[\w\d\.-]+)'
-        '/(?P<project>[\w\d\.-]+)/(?P<uuid>[\w\d-]+)/$',
+    url(r'^release/(?P<release>[^/]+)'
+        '/(?P<project>[^/]+)/(?P<uuid>[^/]+)/$',
         views.UUIDInfoList.as_view(),
         name='uuidinfo-list'),
 ]
