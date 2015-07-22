@@ -20,3 +20,8 @@ from repoapi import models
 @admin.register(models.JenkinsBuildInfo)
 class JenkinsBuildInfoAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(models.GerritRepoInfo)
+class GerritRepoInfoAdmin(admin.ModelAdmin):
+    pass

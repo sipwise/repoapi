@@ -14,6 +14,10 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.db import models
+from django.db.models import signals
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class JenkinsBuildInfoManager(models.Manager):
@@ -83,3 +87,47 @@ class JenkinsBuildInfo(models.Model):
     def __str__(self):
         return "%s:%d[%s]" % (self.jobname,
                               self.buildnumber, self.tag)
+
+
+class GerritRepoInfo(models.Model):
+    param_ppa = models.CharField(max_length=50, unique=True, null=False)
+    count = models.IntegerField(default=1)
+
+
+def gerrit_repo_add(instance):
+    gri = GerritRepoInfo.objects
+    ppa, created = gri.get_or_create(param_ppa=instance.param_ppa)
+    if not created:
+        ppa.count = ppa.count + 1
+        ppa.save()
+        logging.info("+1")
+    else:
+        logging.info("created")
+
+
+def gerrit_repo_del(instance):
+    gri = GerritRepoInfo.objects
+    try:
+        ppa = gri.get(param_ppa=instance.param_ppa)
+        ppa.count = ppa.count - 1
+        if ppa.count > 0:
+            ppa.save()
+        else:
+            ppa.delete()
+            logger.info("call jenkins: %s" % instance.param_ppa)
+    except GerritRepoInfo.DoesNotExist:
+        pass
+
+
+def gerrit_repo_manage(sender, **kwargs):
+    if kwargs["created"]:
+        instance = kwargs["instance"]
+        if instance.jobname.endswith("-repos") and \
+                instance.result == "SUCCESS":
+            logger.info("we need to count this %s", instance.param_ppa)
+            if instance.gerrit_eventtype == "patchset-created":
+                gerrit_repo_add(instance)
+            elif instance.gerrit_eventtype == "change-merged":
+                gerrit_repo_del(instance)
+
+signals.post_save.connect(gerrit_repo_manage, sender=JenkinsBuildInfo)
