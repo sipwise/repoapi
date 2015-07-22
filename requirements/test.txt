@@ -4,3 +4,4 @@ git+https://github.com/linuxmaniac/django-jenkins.git@vseva/nose#egg=django-jenk
 flake8
 pylint
 coverage
+mock

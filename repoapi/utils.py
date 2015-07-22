@@ -12,16 +12,26 @@
 
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import urllib2, logging
+from django.conf import settings
 
-from django.contrib import admin
-from repoapi import models
+logger = logging.getLogger(__name__)
 
+def openurl(URL):
+    req = urllib2.Request(URL)
+    response = urllib2.urlopen(req)
+    if response.code is 200:
+        print "OK"
+        return 0
+    else:
+        print "Error retrieving %s" % URL
+        return 1
 
-@admin.register(models.JenkinsBuildInfo)
-class JenkinsBuildInfoAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(models.GerritRepoInfo)
-class GerritRepoInfoAdmin(admin.ModelAdmin):
-    pass
+def jenkins_remove_ppa(repo):
+    url = "%s/job/remove-reprepro-codename/buildWithParameters?"\
+        "token=%s&repository=%s" % \
+        (settings.JENKINS_URL, settings.JENKINS_TOKEN, repo)
+    if settings.DEBUG:
+        logger.info("I would call %s" % url)
+    else:
+        openurl(url)
