@@ -146,3 +146,6 @@ SWAGGER_SETTINGS = {
         'title': 'RepoApi',
     },
 }
+
+JENKINS_URL = "https://jenkins.mgm.sipwise.com"
+JENKINS_TOKEN = "sipwise_jenkins_ci"
