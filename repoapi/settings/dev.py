@@ -155,3 +155,6 @@ SWAGGER_SETTINGS = {
         'title': 'RepoApi',
     },
 }
+
+JENKINS_URL = "http://localhost"
+JENKINS_TOKEN = "sipwise_jenkins_ci"
