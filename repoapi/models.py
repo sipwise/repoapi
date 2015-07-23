@@ -91,35 +91,36 @@ class JenkinsBuildInfo(models.Model):
 
 
 class GerritRepoInfo(models.Model):
-    param_ppa = models.CharField(max_length=50, unique=True, null=False)
-    count = models.IntegerField(default=1)
+    param_ppa = models.CharField(max_length=50, null=False)
+    gerrit_change = models.CharField(max_length=50, null=False)
+
+    class Meta:
+        unique_together = ["param_ppa", "gerrit_change"]
+
+    def __str__(self):
+        return "%s:%s" % (self.param_ppa, self.gerrit_change)
 
 
 def gerrit_repo_add(instance):
     gri = GerritRepoInfo.objects
-    ppa, created = gri.get_or_create(param_ppa=instance.param_ppa)
-    if not created:
-        ppa.count = ppa.count + 1
-        ppa.save()
-        logging.info("+1")
-    else:
-        logging.info("created")
+    ppa, created = gri.get_or_create(
+        param_ppa=instance.param_ppa,
+        gerrit_change=instance.gerrit_change)
+    if created:
+        logging.info("%s created" % ppa)
 
 
 def gerrit_repo_del(instance):
     gri = GerritRepoInfo.objects
     try:
-        ppa = gri.get(param_ppa=instance.param_ppa)
-        ppa.count = ppa.count - 1
-        if ppa.count > 0:
-            ppa.save()
-            logger.info("-1")
-        else:
-            ppa.delete()
-            logger.info("removed")
-            utils.jenkins_remove_ppa(instance.param_ppa)
+        ppa = gri.get(param_ppa=instance.param_ppa,
+                      gerrit_change=instance.gerrit_change)
+        ppa.delete()
+        logger.info("removed %s" % ppa)
     except GerritRepoInfo.DoesNotExist:
         pass
+    if gri.filter(param_ppa=instance.param_ppa).count() == 0:
+        utils.jenkins_remove_ppa(instance.param_ppa)
 
 
 def gerrit_repo_manage(sender, **kwargs):
