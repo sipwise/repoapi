@@ -1,7 +1,9 @@
 {% extends "panel/base.html" %}
 {% load jsonify %}
+{% load staticfiles %}
 {% block title %}{{ release }}{% endblock %}
 {% block navlist %}
+    <li><a href="{% url 'panel:index' %}">Panel</a></li>
     <li class="active"><a href="#">{{ release }}</a></li>
 {% endblock %}
 {% block content %}
@@ -17,6 +19,7 @@
 {% endblock %}
 
 {% block extrajs %}
+<script src="{% static "panel/js/panel.js" %}"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
   $.panel = 'release';

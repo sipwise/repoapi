@@ -1,6 +1,8 @@
 {% extends "panel/base.html" %}
 {% block title %}{{ project }}{% endblock %}
-{% block navlist%}{% endblock %}
+{% block navlist %}
+    <li><a href="{% url 'panel:index' %}">Panel</a></li>
+{% endblock %}
 {% block content %}
 <div class="container">
     <div class="panel panel-default">
