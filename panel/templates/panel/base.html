@@ -31,7 +31,9 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="/docs/">API docs</a></li>
             <li><a href="https://jenkins.mgm.sipwise.com">Jenkins</a></li>
-            <li><a href="http://jenkins.mgm.sipwise.com:5000/">Release Dashboard</a></li>
+            {% block applist%}
+            <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+            {% endblock %}
           </ul>
         </nav>
       </div>

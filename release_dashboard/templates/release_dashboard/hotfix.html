@@ -1,0 +1,58 @@
+{% extends "release_dashboard/base.html" %}
+{% load staticfiles %}
+{% block title %}Hotfixes{% endblock %}
+{% block navlist %}
+    <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+    <li><a href="{% url 'release_dashboard:hotfix'%}">Hotfixes</a></li>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Version</th>
+                <th>Push</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <form class="form-inline">{% csrf_token %}</form>
+      {% for p in projects %}
+          <tr class="repo">
+            <th><label for="version_{{ p.name }}">{{ p.name }}</label></th>
+            <td class="version">
+                <select id="version_{{ p.name }}" name="version_{{ p.name }}">
+                    <option value="ignore">ignore</option>
+                {% for t in p.tags %}
+                    <option value="tag/{{ t }}">tag/{{ t }}</option>
+                {% endfor %}
+                {% for b in p.branches %}
+                    <option value="branch/{{ b }}">branch/{{ b }}</option>
+                {% endfor %}
+                </select>
+            </td>
+            <td>
+              <select class="form-control" id="push_{{ p.name }}">
+                <option value="yes" selected="selected">yes</option>
+                <option value="no">no</option>
+              </select>
+            </td>
+            <td>
+              <button type="button" id="hotfix_{{ p.name }}" class="btn btn-warning hotfix" disabled="disabled">Select branch to hotfix</button>
+            </td>
+            <td>
+              <span class="text-danger" id="hotfix_error_{{ p.name }}"></span>
+            </td>
+          </tr>
+      {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}
+{% block extrajs %}
+<script src="{% static "release_dashboard/js/csrf.js" %}"></script>
+<script src="{% static "release_dashboard/js/hotfix.js" %}"></script>
+{% endblock %}
