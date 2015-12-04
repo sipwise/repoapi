@@ -61,6 +61,8 @@ DJANGO_LOG_LEVEL = 'DEBUG'
 
 JENKINS_URL = "http://localhost"
 GERRIT_URL = "https://gerrit.local/{}"
+GERRIT_REST_HTTP_USER = 'jenkins'
+GERRIT_REST_HTTP_PASSWD = 'verysecrethttppasswd'
 GITWEB_URL = "https://git.local/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR, '.workfront.ini')
 
