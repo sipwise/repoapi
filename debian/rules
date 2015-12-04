@@ -16,6 +16,7 @@ override_dh_auto_test:
 
 override_dh_auto_install:
 	echo "fakesecretkey" > .secret_key
+	echo "fakeHTTPpass" > .gerrit_pass
 	VAR_DIR=$(shell pwd) make deploy
 	make clean
 
