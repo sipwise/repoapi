@@ -1,0 +1,53 @@
+{% extends "release_dashboard/base.html" %}
+{% load staticfiles %}
+{% block title %}Hotfixes{% endblock %}
+{% block navlist %}
+    <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+    <li><a href="{% url 'release_dashboard:refresh_all'%}">Refresh Info</a></li>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Actions</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-inline">{% csrf_token %}
+                <div class="form-group">
+                  <button type="button" class="btn btn-danger" id="refresh_all">Refresh All</button>
+                  <span style="display:none" id="refresh_all_error"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <form class="form-inline">{% csrf_token %}</form>
+      {% for p in projects %}
+          <tr class="repo">
+            <th><label for="version_{{ p.name }}">{{ p.name }}</label></th>
+            <td>
+              <button type="button" class="btn btn-info refresh" id="refresh_{{ p.name }}" class="refresh">Refresh</button>
+            </td>
+            <td>
+              <span style="display:none" class="text-danger" id="refresh_error_{{ p.name }}"></span>
+            </td>
+          </tr>
+      {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}
+{% block extrajs %}
+<script src="{% static "release_dashboard/js/csrf.js" %}"></script>
+<script src="{% static "release_dashboard/js/refresh_info.js" %}"></script>
+{% endblock %}
