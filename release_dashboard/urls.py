@@ -13,16 +13,15 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+from django.conf.urls import url
+from . import views
 
-# pylint: disable=W0401,W0614,C0413
-from .test import *
-
-LOGGING['loggers']['release_dashboard']['level'] = os.getenv('DJANGO_LOG_LEVEL', 'DEBUG')
-
-# celery
-BROKER_BACKEND = 'amqp'
-CELERY_ALWAYS_EAGER = False
-BROKER_URL = 'amqp://guest:guest@rabbit'
-JBI_BASEDIR = os.path.join(BASE_DIR, 'jbi_files')
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+    url(r'^build_deps$', views.build_deps, name='build_deps'),
+    url(r'^build$', views.build_release, name='build_release'),
+    url(r'^hotfix/(?P<branch>[^/]+)/(?P<project>[^/]+)/$',
+        views.hotfix, name='hotfix'),
+    url(r'^refresh/$', views.refresh_all, name='refresh_all'),
+    url(r'^refresh/(?P<project>[^/]+)/$', views.refresh, name='refresh'),
+]

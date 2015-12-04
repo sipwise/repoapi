@@ -16,6 +16,9 @@ override_dh_auto_test:
 
 override_dh_auto_install:
 	echo "fakesecretkey" > .secret_key
+	echo "[gerrit]" > gerrit.ini
+	echo "HTTP_USER=fake" >> gerrit.ini
+	echo "HTTP_PASSWD=fakeHTTPpass" >> gerrit.ini
 	VAR_DIR=$(shell pwd) make deploy
 	make clean
 
