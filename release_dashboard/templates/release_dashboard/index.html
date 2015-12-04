@@ -1,0 +1,32 @@
+{% extends "release_dashboard/base.html" %}
+{% block title %}Release Dashboard{% endblock %}
+{% block navlist %}
+    <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Build Actions</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group">
+            <!-- Not implemented
+                <li class="list-group-item">
+                    <a href="{% url 'release_dashboard:build_deps'%}">
+                    Build release dependences</a>
+                </li>
+                <li class="list-group-item">
+                    <a href="{% url 'release_dashboard:build_release'%}">
+                    Build release</a>
+                </li>
+            -->
+                <li class="list-group-item">
+                    <a href="{% url 'release_dashboard:hotfix'%}">
+                    Hotfixes</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
