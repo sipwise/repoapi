@@ -15,6 +15,7 @@
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from ConfigParser import RawConfigParser
 # pylint: disable=W0401,W0614
 from .common import *
 
@@ -53,6 +54,12 @@ LOGGING['loggers']['repoapi']['level'] = os.getenv('DJANGO_LOG_LEVEL', 'INFO')
 
 JENKINS_URL = "https://jenkins.mgm.sipwise.com"
 GERRIT_URL = "https://gerrit.mgm.sipwise.com/{}"
+
+gerrit_config = RawConfigParser()
+gerrit_config.read(os.path.join(VAR_DIR, 'gerrit.ini'))
+GERRIT_REST_HTTP_USER = gerrit_config.get('gerrit', 'HTTP_USER')
+GERRIT_REST_HTTP_PASSWD = gerrit_config.get('gerrit', 'HTTP_PASSWD')
+
 GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR,
                                      '/etc/jenkins_jobs/workfront.ini')
