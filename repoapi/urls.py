@@ -57,4 +57,6 @@ urlpatterns = [
     url(r'^docs/', views.schema_view),
     url(r'^panel/', include('panel.urls',
                             namespace='panel')),
+    url(r'^release_panel/',
+        include('release_dashboard.urls', namespace='release_dashboard')),
 ]

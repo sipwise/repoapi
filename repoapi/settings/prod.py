@@ -53,6 +53,10 @@ LOGGING['loggers']['repoapi']['level'] = os.getenv('DJANGO_LOG_LEVEL', 'INFO')
 
 JENKINS_URL = "https://jenkins.mgm.sipwise.com"
 GERRIT_URL = "https://gerrit.mgm.sipwise.com/{}"
+GERRIT_REST_HTTP_USER = 'jenkins'
+GERRIT_REST_HTTP_PASSWD = open(
+    os.path.join(VAR_DIR, '.gerrit_pass')).read().strip()
+
 GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR,
                                      '/etc/jenkins_jobs/workfront.ini')

@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016 The Sipwise Team - http://sipwise.com
 
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,17 +12,19 @@
 
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import absolute_import
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+import logging
+from celery import shared_task
+from release_dashboard.models import Project
+from .utils import get_gerrit_tags, get_gerrit_branches
 
-# pylint: disable=W0401,W0614,C0413
-from .test import *
+logger = logging.getLogger(__name__)
 
-LOGGING['loggers']['release_dashboard']['level'] = os.getenv('DJANGO_LOG_LEVEL', 'DEBUG')
 
-# celery
-BROKER_BACKEND = 'amqp'
-CELERY_ALWAYS_EAGER = False
-BROKER_URL = 'amqp://guest:guest@rabbit'
-JBI_BASEDIR = os.path.join(BASE_DIR, 'jbi_files')
+@shared_task(ignore_result=True)
+def gerrit_fetch_info(projectname):
+    project = Project.objects.get_or_create(name=projectname)
+    project.tags = get_gerrit_tags(projectname)
+    project.branches = get_gerrit_branches(projectname)
+    project.save()
