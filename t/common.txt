@@ -1,0 +1,10 @@
+Django==1.8
+django-extensions
+yuicompressor
+django-assets
+djangorestframework
+django-rest-swagger
+markdown
+django-filter
+six
+webassets

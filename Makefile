@@ -1,23 +1,9 @@
 VAR_DIR ?= /var/lib/repoapi
-
+RESULTS ?= ./reports
 # do nothing by default
 all:
 
 # virtual environments #############
-.ONESHELL:
-SHELL = /bin/bash
-venv_test: requirements/test.txt
-	virtualenv --python=python2.7 venv_test
-	source ./venv_test/bin/activate && \
-		pip install -r ./requirements/test.txt | tee install.log
-
-.ONESHELL:
-SHELL = /bin/bash
-venv_dev: requirements/dev.txt
-	virtualenv --python=python2.7 venv_dev
-	source ./venv_dev/bin/activate && \
-		pip install -r ./requirements/dev.txt | tee install.log
-
 .ONESHELL:
 SHELL = /bin/bash
 venv_prod: requirements/prod.txt
@@ -26,9 +12,8 @@ venv_prod: requirements/prod.txt
 		pip install -r ./requirements/prod.txt | tee install.log
 ###################################
 
-test: venv_test
-	source ./venv_test/bin/activate && \
-		./manage.py jenkins --settings="repoapi.settings.dev"
+test:
+	./manage.py jenkins --output-dir $(RESULTS) --settings="repoapi.settings.dev"
 
 deploy: venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
@@ -42,9 +27,8 @@ migrate: venv_prod
 
 ###################################
 
-run_dev: venv_dev
-	source ./venv_dev/bin/activate && \
-		./manage.py runserver_plus --settings="repoapi.settings.dev"
+run_dev:
+	./manage.py runserver_plus --settings="repoapi.settings.dev"
 
 ###################################
 

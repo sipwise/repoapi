@@ -1,0 +1,7 @@
+-r common.txt
+django-nose
+git+https://github.com/linuxmaniac/django-jenkins.git@vseva/nose#egg=django-jenkins
+flake8==2.4.1
+pylint
+coverage==3.7.1
+mock
