@@ -111,6 +111,9 @@ def gerrit_repo_add(instance):
 
 
 def gerrit_repo_del(instance):
+    if instance.param_ppa == '$ppa':
+        logger.warn("ppa unset, skip removal")
+        return
     gri = GerritRepoInfo.objects
     try:
         ppa = gri.get(param_ppa=instance.param_ppa,
