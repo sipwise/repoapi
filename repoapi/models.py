@@ -136,5 +136,10 @@ def gerrit_repo_manage(sender, **kwargs):
                 gerrit_repo_add(instance)
             elif instance.gerrit_eventtype == "change-merged":
                 gerrit_repo_del(instance)
+        elif instance.jobname.endswith("-cleanup") and \
+                instance.result == "SUCCESS" and \
+                instance.gerrit_eventtype == "change-abandoned":
+            logger.info("we need to count this %s", instance.param_ppa)
+            gerrit_repo_del(instance)
 
 signals.post_save.connect(gerrit_repo_manage, sender=JenkinsBuildInfo)
