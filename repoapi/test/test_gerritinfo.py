@@ -348,3 +348,48 @@ class GerritRepoInfoTestCase(TestCase):
             param_ppa="gerrit_MT10339_review2054")
         self.assertEquals(gri.count(), 0)
         utils.assert_called_with("gerrit_MT10339_review2054")
+
+    @patch('repoapi.utils.jenkins_remove_ppa')
+    def test_abandoned_review_del(self, utils):
+        JenkinsBuildInfo.objects.create(
+            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
+            projectname="kamailio",
+            jobname="kamailio-repos",
+            buildnumber=897,
+            result="SUCCESS",
+            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
+            gerrit_patchset="1",
+            gerrit_change="2054",
+            gerrit_eventtype="patchset-created",
+            param_tag="none",
+            param_branch="master",
+            param_release="none",
+            param_distribution="wheezy",
+            param_ppa="gerrit_MT10339_review2054")
+
+        gri = GerritRepoInfo.objects.filter(
+            param_ppa="gerrit_MT10339_review2054")
+        self.assertEquals(gri.count(), 1)
+        utils.assert_not_called()
+
+        JenkinsBuildInfo.objects.create(
+            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
+            projectname="kamailio",
+            jobname="kamailio-manage-docker",
+            buildnumber=898,
+            result="SUCCESS",
+            job_url="https://jenkins.mgm.sipwise.com/job/"
+                "kamailio-manage-docker/",
+            gerrit_patchset="2",
+            gerrit_change="2054",
+            gerrit_eventtype="change-abandoned",
+            param_tag="none",
+            param_branch="master",
+            param_release="none",
+            param_distribution="wheezy",
+            param_ppa="gerrit_MT10339_review2054")
+
+        gri = GerritRepoInfo.objects.filter(
+            param_ppa="gerrit_MT10339_review2054")
+        self.assertEquals(gri.count(), 0)
+        utils.assert_called_with("gerrit_MT10339_review2054")
