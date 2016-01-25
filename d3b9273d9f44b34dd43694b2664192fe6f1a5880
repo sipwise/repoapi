@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a6a9dd7_660580c1",
+        "filename": "repoapi/models.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-01-25T08:52:20Z",
+      "side": 1,
+      "message": "indenting looks strange (tabs vs spaces?)",
+      "revId": "d3b9273d9f44b34dd43694b2664192fe6f1a5880",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
