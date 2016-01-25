@@ -16,6 +16,24 @@
       "revId": "d3b9273d9f44b34dd43694b2664192fe6f1a5880",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a6a9dd7_c6ed6cf1",
+        "filename": "repoapi/models.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-01-25T09:19:28Z",
+      "side": 1,
+      "message": "there is no mix of tabs and spaces here.\n\nWhat is strange here?",
+      "parentUuid": "9a6a9dd7_660580c1",
+      "revId": "d3b9273d9f44b34dd43694b2664192fe6f1a5880",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
