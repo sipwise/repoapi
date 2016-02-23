@@ -4,7 +4,7 @@ Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends: debhelper (>= 8~),
                python-dev,
                virtualenv
-Standards-Version: 3.9.6
+Standards-Version: 3.9.7
 Section: python
 Homepage: http://sipwise.com/
 
