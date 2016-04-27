@@ -128,6 +128,7 @@ function set_project_status(project, value) {
 
 function set_uuid_status(project, uuid, job, value) {
   var div_uuid = $('#' + project + '-' + uuid);
+  var div_uuid_date = $('#' + project + '-' + uuid + '-date');
   var status = value.result;
   var _class = get_class_status("panel-", status);
   var jobs = $.release[project][uuid].jobs.size;
@@ -152,6 +153,7 @@ function set_uuid_status(project, uuid, job, value) {
         }
       }
   }
+  div_uuid_date.html(new Date(value.date));
   $('.badge', div_uuid).html(jobs);
   if (uuid == $.release[project].last_uuid) {
     set_project_status(project);
@@ -224,8 +226,9 @@ function create_new_uuid_panel(project, uuid) {
   $('.job', div_uuid).attr('id', id + '-job').removeClass('job');
 
   var div_title = $('.panel-heading > .panel-title', div_uuid);
-  div_title.html('<a name="' + id +'"/">' + uuid +
-    ' <span class="badge">' + $.release[project][uuid].jobs.size + '</span></a>');
+    div_title.html('<div class="row"><div class="col-md-4"><a name="' + id +'"/">' + uuid +
+    '</a></div><div id="' + id + '-date" class="col-md-4 text-info">date</div>' +
+    '<div class="col-md-4 test-info"><span class="badge">' + $.release[project][uuid].jobs.size + '</span></div>');
 
   // put it on the proper place
   div_uuid.prependTo('#' + project + ' > .panel-body');
