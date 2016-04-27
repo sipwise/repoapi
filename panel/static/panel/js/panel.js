@@ -213,7 +213,7 @@ function create_new_job_div(project, uuid, job) {
  * be sure to create proper ids and remove the classes
  * you use to select them
  */
-function create_new_uuid_panel(project, uuid) {
+function create_new_uuid_panel(project, uuid, date) {
   var id = project + '-' + uuid;
   var div_uuid = $('#' + project +' > .panel-body .uuid-clone').clone();
   div_uuid.removeClass('hidden');
@@ -224,11 +224,12 @@ function create_new_uuid_panel(project, uuid) {
   $('.job', div_uuid).attr('id', id + '-job').removeClass('job');
 
   var div_title = $('.panel-heading > .panel-title', div_uuid);
-  div_title.html('<a name="' + id +'"/">' + uuid +
-    ' <span class="badge">' + $.release[project][uuid].jobs.size + '</span></a>');
+  div_title.html('<div class="row"><div class="col-md-4"><a name="' + id +'"/">' + uuid +
+    '</a></div><div class="col-md-4">' + date + '</div>' +
+    '<div class="col-md-4 test-info"><span class="badge">' + $.release[project][uuid].jobs.size + '</span></div>');
 
   // put it on the proper place
-  div_uuid.prependTo('#' + project + ' > .panel-body');
+  div_uuid.appendTo('#' + project + ' > .panel-body');
   console.debug('uuid ' + uuid + ' created for ' + project);
 }
 
@@ -271,17 +272,17 @@ function clean_uuids(release, project) {
   }
 }
 
-function create_new_uuid(release, project, uuid) {
+function create_new_uuid(release, project, uuid, date) {
   if (uuid == null || $.release[project].uuids.has(uuid)) {
     return;
   }
-
+  var date_format = new Date(date);
   $.release[project].uuids.add(uuid);
   $.release[project].last_uuid = uuid;
-  $.release[project][uuid] = { failed: false, jobs: new Set(),};
+  $.release[project][uuid] = { failed: false, jobs: new Set(), date: date_format};
 
   clean_uuids(release, project);
-  create_new_uuid_panel(project, uuid);
+  create_new_uuid_panel(project, uuid, date_format);
   update_uuid_info(release, project, uuid);
   set_project_status(project, {created: true});
 }
@@ -366,7 +367,7 @@ function get_uuids_for_project(release, project) {
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
       if (!$.release[project].uuids.has(this.tag)) {
-        create_new_uuid(release, project, this.tag);
+        create_new_uuid(release, project, this.tag, this.date);
       }
       else if (!$.release[project][this.tag].failed) {
         update_uuid_info(release, project, this.tag);
