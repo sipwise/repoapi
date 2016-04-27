@@ -127,7 +127,9 @@ function set_project_status(project, value) {
 }
 
 function set_uuid_status(project, uuid, job, value) {
-  var div_uuid = $('#' + project + '-' + uuid);
+  var id = project + '-' + uuid;
+  var div_uuid = $('#' + id);
+  var div_uuid_date = $('#' + id + '-date');
   var status = value.result;
   var _class = get_class_status("panel-", status);
   var jobs = $.release[project][uuid].jobs.size;
@@ -152,7 +154,8 @@ function set_uuid_status(project, uuid, job, value) {
         }
       }
   }
-  $('.badge', div_uuid).html(jobs);
+  div_uuid_date.html(new Date(value.date));
+  $('#' + id + '-badge').html(jobs);
   if (uuid == $.release[project].last_uuid) {
     set_project_status(project);
     // update badge
@@ -224,8 +227,12 @@ function create_new_uuid_panel(project, uuid) {
   $('.job', div_uuid).attr('id', id + '-job').removeClass('job');
 
   var div_title = $('.panel-heading > .panel-title', div_uuid);
-  div_title.html('<a name="' + id +'"/">' + uuid +
-    ' <span class="badge">' + $.release[project][uuid].jobs.size + '</span></a>');
+  var div_uuid_name = $('.uuid-name', div_title).attr('id', id + '-name').removeClass('uuid-name');
+  div_uuid_name.attr('name', id).html(uuid);
+  var div_uuid_date = $('.uuid-date', div_title).attr('id', id + '-date').removeClass('uuid-date');
+  div_uuid_date.html('date');
+  var div_uuid_badge = $('.uuid-badge', div_title).attr('id', id + '-badge').removeClass('uuid-badge');
+  div_uuid_badge.html($.release[project][uuid].jobs.size);
 
   // put it on the proper place
   div_uuid.prependTo('#' + project + ' > .panel-body');
@@ -238,8 +245,8 @@ function create_new_project_panel(project) {
   div_project.removeClass('hidden');
   div_project.attr('id', project).removeClass('project-clone').addClass('project');
 
-  var div_title = $('.panel-heading > .panel-title', div_project);
-  div_title.html('<a name="' + project +'" href="./' + project + '/">' + project + '</a>');
+  var div_title = $('.project-name', div_project);
+  div_title.html('<a name="' + project +'" href="./' + project + '">' + project + '</a>');
 
   $('.error', div_project).attr('id', project + '-error').removeClass('error');
   div_project.appendTo('#project-list');
@@ -257,14 +264,15 @@ function create_new_job(release, project, uuid, job) {
 
 function clean_uuids(release, project) {
   if ($.release.max_uuids == 0) { return; }
-  if ($.release[project].uuids.size >= $.release.max_uuids) {
+  if ($.release[project].uuids.size > $.release.max_uuids) {
     var step = $.release[project].uuids.size - $.release.max_uuids;
     for (var uuid of $.release[project].uuids) {
       if (step==0) { return; }
-      console.debug(uuid);
       if (uuid != $.release[project].last_uuid)
       {
         $('#' + project + '-' + uuid).remove();
+        $.release[project].uuids.delete(uuid);
+        $.release[project].removed_uuids.add(uuid);
         step--;
       }
     }
@@ -277,7 +285,6 @@ function create_new_uuid(release, project, uuid) {
   }
 
   $.release[project].uuids.add(uuid);
-  $.release[project].last_uuid = uuid;
   $.release[project][uuid] = { failed: false, jobs: new Set(),};
 
   clean_uuids(release, project);
@@ -291,7 +298,8 @@ function create_new_project(release, project) {
     return;
   }
   $.release.projects.add(project);
-  $.release[project] = {uuids: new Set(), failed: false, interval: 5000,};
+  $.release[project] = {uuids: new Set(), failed: false,
+    interval: 5000, last_uuid: null, removed_uuids: new Set()};
   create_new_project_panel(project);
 
   get_uuids_for_project(release, project);
@@ -361,12 +369,48 @@ function update_uuid_info(release, project, uuid) {
   }
 }
 
+function get_latest_uuid_for_project(release, project) {
+
+  function showLatest(project, uuid) {
+    var div_project = $('#' + project);
+    $('.uuid-latest', project).addClass('hidden');
+    var div_uuid_name = $('#' + project + '-' + uuid);
+    $('.uuid-latest', div_uuid_name).removeClass('hidden');
+  }
+
+  function successFunc(data, textStatus, jqXHR ) {
+    $(data).each(function() {
+      if ($.release[project].last_uuid != this.tag) {
+        $.release[project].last_uuid = this.tag;
+        console.debug(project + ".latest_uuid:" + $.release[project].last_uuid);
+        showLatest(project, this.tag);
+      }
+    });
+  }
+
+  function errorFunc(jqXHR, status, error) {
+    $('#' + project + '-error').html(error);
+  }
+
+  $.ajax({
+    url: '/release/' + release +'/' + project + '/latest/?format=json',
+    method: 'GET',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: successFunc,
+    error: errorFunc
+  });
+}
+
 function get_uuids_for_project(release, project) {
 
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
       if (!$.release[project].uuids.has(this.tag)) {
-        create_new_uuid(release, project, this.tag);
+        if(!$.release[project].removed_uuids.has(this.tag)) {
+          create_new_uuid(release, project, this.tag);
+          get_latest_uuid_for_project(release, project);
+        }
       }
       else if (!$.release[project][this.tag].failed) {
         update_uuid_info(release, project, this.tag);

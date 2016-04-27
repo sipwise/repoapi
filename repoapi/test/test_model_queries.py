@@ -15,7 +15,7 @@
 
 from django.test import TestCase
 from repoapi.models import JenkinsBuildInfo
-
+from django.utils.dateparse import parse_datetime
 
 class JBIQueriesTestCase(TestCase):
     fixtures = ['test_model_queries.json']
@@ -48,3 +48,7 @@ class JBIQueriesTestCase(TestCase):
             'mr3.1-fake', 'fake', 'UUID1')
         self.assertItemsEqual(
             ['fake-get-code', 'fake-source-tests', 'fake-source'], jobs)
+
+    def test_latest_uuid(self):
+        date = parse_datetime("2015-05-04T17:04:57.802Z")
+        self.assertEquals(JenkinsBuildInfo.objects.latest_uuid('mr3.1-fake', 'fake'), {'tag': 'UUID1', 'date': date})

@@ -54,6 +54,12 @@ class JenkinsBuildInfoManager(models.Manager):
         else:
             return res.values('jobname')
 
+    def latest_uuid(self, release, project):
+        qs = self.get_queryset()
+        latest_uuid = qs.filter(
+            param_release=release, projectname=project).latest('date')
+        return {'tag': latest_uuid.tag, 'date': latest_uuid.date}
+
 
 class JenkinsBuildInfo(models.Model):
     tag = models.CharField(max_length=64, null=True)

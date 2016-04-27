@@ -96,3 +96,9 @@ class UUIDInfoList(APIView):
         res = jbi.objects.jobs_by_uuid(
             release, project, uuid, flat=False)
         return Response(res)
+
+class LatestUUID(APIView):
+
+    def get(self, request, release, project, format=None):
+        res = jbi.objects.latest_uuid(release, project)
+        return Response(res)
