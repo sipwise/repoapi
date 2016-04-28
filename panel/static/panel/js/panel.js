@@ -253,13 +253,15 @@ function create_new_project_panel(project) {
   console.debug('project ' + project + ' created');
 }
 /******************************************************************/
-function create_new_job(release, project, uuid, job) {
+function create_new_job(release, project, uuid, data) {
+  var job = data.jobname;
   if($.release[project][uuid].jobs.has(job)) { return; }
 
   $.release[project][uuid].jobs.add(job);
   $.release[project][uuid][job] = { failed: false, };
   create_new_job_div(project, uuid, job);
-  update_job_info(release, project, uuid, job);
+  set_job_status(project, uuid, job, data);
+  set_uuid_status(project, uuid, job, data);
 }
 
 function clean_uuids(release, project) {
@@ -307,47 +309,12 @@ function create_new_project(release, project) {
 
 /******************************************************************/
 
-function update_job_view(project, uuid, job, data) {
-  var value = data.results[0];
-
-  if (data.count != 0) {
-    set_job_status(project, uuid, job, value);
-    set_uuid_status(project, uuid, job, value);
-  }
-  else {
-    console.error(job + ' not found');
-    // this should not happend!!
-  }
-}
-
-function update_job_info(release, project, uuid, job) {
-
-  function successFunc(data, textStatus, jqXHR ) {
-    update_job_view(project, uuid, job, data);
-  }
-
-  function errorFunc(jqXHR, status, error) {
-    $('#' + project + '-error').html(error);
-    $.release[project][uuid][job].failed = true;
-  }
-
-  $.ajax({
-    url: '/jenkinsbuildinfo/?format=json&tag=' + uuid
-      + '&param_release=' + release + '&jobname=' + job,
-    method: 'GET',
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    success: successFunc,
-    error: errorFunc
-  });
-}
-
 function update_uuid_info(release, project, uuid) {
 
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
       if (!$.release[project][uuid].jobs.has(this.jobname)) {
-        create_new_job(release, project, uuid, this.jobname);
+        create_new_job(release, project, uuid, this);
       }
     });
   }

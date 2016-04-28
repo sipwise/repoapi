@@ -17,7 +17,7 @@
 {% block extrajs %}
 <script type="text/javascript">
 $( document ).ready(function() {
-  $.release.max_uuids = 2;
+  $.release.max_uuids = 15;
   $.release.timer = setInterval(function(){
     get_uuids_for_project('{{release}}', '{{ project }}');
   }, $.release.interval);
