@@ -46,13 +46,9 @@ class JenkinsBuildInfoManager(models.Manager):
         else:
             return res.order_by('projectname').values('tag')
 
-    def jobs_by_uuid(self, release, project, uuid, flat=True):
-        res = self.get_queryset().filter(tag=uuid, param_release=release,
+    def jobs_by_uuid(self, release, project, uuid):
+        return self.get_queryset().filter(tag=uuid, param_release=release,
                                          projectname=project).order_by('date')
-        if flat:
-            return res.values_list('jobname', flat=True)
-        else:
-            return res.values('jobname')
 
     def latest_uuid(self, release, project):
         qs = self.get_queryset()
