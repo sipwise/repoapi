@@ -28,7 +28,8 @@ migrate: venv_prod
 ###################################
 
 run_dev:
-	./manage.py runserver_plus --settings="repoapi.settings.dev"
+	IP=$(shell ip a show dev eth0 scope global | grep inet | awk '{print $$2}' | cut -d/ -f1); \
+	./manage.py runserver_plus $$IP:8000 --settings="repoapi.settings.dev"
 
 ###################################
 
