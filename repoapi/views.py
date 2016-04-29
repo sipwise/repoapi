@@ -82,11 +82,16 @@ class ProjectUUIDList(APIView):
     def get(self, request, release, project, format=None):
         res = jbi.objects.release_project_uuids(
             release, project, flat=False)
+        latest = jbi.objects.latest_uuid(release, project)
         for r in res:
             r['url'] = reverse(
                 'uuidinfo-list',
                 args=[release, project, r['tag']],
                 request=request)
+            if r['tag'] == latest['tag']:
+                r['latest'] = True
+            else:
+                r['latest'] = False
         return Response(res)
 
 

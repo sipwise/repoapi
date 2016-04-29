@@ -19,6 +19,7 @@
 <script type="text/javascript">
 $( document ).ready(function() {
   $.release.max_uuids = 1;
+  $.release.interval = 30000;
   $.release.timer = setInterval(function(){
     update_info('{{release}}');
   }, $.release.interval);
