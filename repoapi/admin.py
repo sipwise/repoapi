@@ -19,7 +19,7 @@ from repoapi import models
 
 @admin.register(models.JenkinsBuildInfo)
 class JenkinsBuildInfoAdmin(admin.ModelAdmin):
-    pass
+    list_filter = ('param_release', 'projectname')
 
 
 @admin.register(models.GerritRepoInfo)
