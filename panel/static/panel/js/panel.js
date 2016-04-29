@@ -336,52 +336,32 @@ function update_uuid_info(release, project, uuid) {
   }
 }
 
-function get_latest_uuid_for_project(release, project) {
-
-  function showLatest(project, uuid) {
-    var div_project = $('#' + project);
-    $('.uuid-latest', project).addClass('hidden');
-    var div_uuid_name = $('#' + project + '-' + uuid);
-    $('.uuid-latest', div_uuid_name).removeClass('hidden');
-  }
-
-  function successFunc(data, textStatus, jqXHR ) {
-    $(data).each(function() {
-      if ($.release[project].last_uuid != this.tag) {
-        $.release[project].last_uuid = this.tag;
-        console.debug(project + ".latest_uuid:" + $.release[project].last_uuid);
-        showLatest(project, this.tag);
-      }
-    });
-  }
-
-  function errorFunc(jqXHR, status, error) {
-    $('#' + project + '-error').html(error);
-  }
-
-  $.ajax({
-    url: '/release/' + release +'/' + project + '/latest/?format=json',
-    method: 'GET',
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    success: successFunc,
-    error: errorFunc
-  });
+function showLatestUUID(project, uuid) {
+  var div_project = $('#' + project);
+  $('.uuid-latest', project).addClass('hidden');
+  var div_uuid_name = $('#' + project + '-' + uuid);
+  $('.uuid-latest', div_uuid_name).removeClass('hidden');
 }
 
 function get_uuids_for_project(release, project) {
 
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
-      if (!$.release[project].uuids.has(this.tag)) {
-        if(!$.release[project].removed_uuids.has(this.tag)) {
-          create_new_uuid(release, project, this.tag);
-          get_latest_uuid_for_project(release, project);
-        }
+      if (this.latest && $.release[project].last_uuid != this.tag) {
+        $.release[project].last_uuid = this.tag;
+        console.debug(project + ".latest_uuid:" + $.release[project].last_uuid);
       }
-      else if (!$.release[project][this.tag].failed) {
+      if (!$.release[project].uuids.has(this.tag) &&
+          !$.release[project].removed_uuids.has(this.tag))
+      {
+          create_new_uuid(release, project, this.tag);
+      }
+      else if (!$.release[project][this.tag].failed &&
+        !$.release[project].last_uuid == this.tag)
+      {
         update_uuid_info(release, project, this.tag);
       }
+      if (this.latest) showLatestUUID(project, this.tag);
     });
   }
 

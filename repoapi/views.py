@@ -82,11 +82,16 @@ class ProjectUUIDList(APIView):
     def get(self, request, release, project, format=None):
         res = jbi.objects.release_project_uuids(
             release, project, flat=False)
+        latest = jbi.objects.latest_uuid(release, project)
         for r in res:
             r['url'] = reverse(
                 'uuidinfo-list',
                 args=[release, project, r['tag']],
                 request=request)
+            if r['tag'] == latest['tag']:
+                r['latest'] = True
+            else:
+                r['latest'] = False
         return Response(res)
 
 
@@ -94,12 +99,13 @@ class UUIDInfoList(APIView):
 
     def get(self, request, release, project, uuid, format=None):
         res = list()
+        jbis = serializers.JenkinsBuildInfoSerializer
         jobs = jbi.objects.jobs_by_uuid(release, project, uuid)
         for job in jobs:
-            serializer = serializers.JenkinsBuildInfoSerializer(job,
-                context={'request': request})
+            serializer = jbis(job, context={'request': request})
             res.append(serializer.data)
         return Response(res)
+
 
 class LatestUUID(APIView):
 
