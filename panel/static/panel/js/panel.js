@@ -168,7 +168,7 @@ function set_job_status(project, uuid, job, value) {
   var div_job = $('#' + id);
 
   if (value) {
-    console.debug(job + ' found');
+    //console.debug(job + ' found');
     div_job.addClass(get_class_status("list-group-item-", value.result));
     div_job.html('<a href="' + value.job_url + value.buildnumber
       + '">' + job + '</a>');
@@ -208,7 +208,7 @@ function create_new_job_div(project, uuid, job) {
   div_job.attr('id', id + '-' + job).html(job);
   // put it on the proper place
   div_job.appendTo('#' + id + '-list');
-  console.debug('job ' + job + ' created for ' + project + ' uuid: ' + uuid);
+  //console.debug('job ' + job + ' created for ' + project + ' uuid: ' + uuid);
 }
 
 /**
@@ -281,15 +281,20 @@ function clean_uuids(release, project) {
   }
 }
 
-function create_new_uuid(release, project, uuid) {
+function create_new_uuid(release, project, values) {
+  var uuid = values.tag;
   if (uuid == null || $.release[project].uuids.has(uuid)) {
+    return;
+  }
+  // no need to add to remove later
+  if (!values.latest &&
+      $.release[project].uuids.size > $.release.max_uuids ) {
     return;
   }
 
   $.release[project].uuids.add(uuid);
   $.release[project][uuid] = { failed: false, jobs: new Set(),};
 
-  clean_uuids(release, project);
   create_new_uuid_panel(project, uuid);
   update_uuid_info(release, project, uuid);
   set_project_status(project, {created: true});
@@ -336,53 +341,34 @@ function update_uuid_info(release, project, uuid) {
   }
 }
 
-function get_latest_uuid_for_project(release, project) {
-
-  function showLatest(project, uuid) {
-    var div_project = $('#' + project);
-    $('.uuid-latest', project).addClass('hidden');
-    var div_uuid_name = $('#' + project + '-' + uuid);
-    $('.uuid-latest', div_uuid_name).removeClass('hidden');
-  }
-
-  function successFunc(data, textStatus, jqXHR ) {
-    $(data).each(function() {
-      if ($.release[project].last_uuid != this.tag) {
-        $.release[project].last_uuid = this.tag;
-        console.debug(project + ".latest_uuid:" + $.release[project].last_uuid);
-        showLatest(project, this.tag);
-      }
-    });
-  }
-
-  function errorFunc(jqXHR, status, error) {
-    $('#' + project + '-error').html(error);
-  }
-
-  $.ajax({
-    url: '/release/' + release +'/' + project + '/latest/?format=json',
-    method: 'GET',
-    contentType: "application/json; charset=utf-8",
-    dataType: "json",
-    success: successFunc,
-    error: errorFunc
-  });
+function showLatestUUID(project, uuid) {
+  var div_project = $('#' + project);
+  $('.uuid-latest', project).addClass('hidden');
+  var div_uuid_name = $('#' + project + '-' + uuid);
+  $('.uuid-latest', div_uuid_name).removeClass('hidden');
 }
 
 function get_uuids_for_project(release, project) {
 
   function successFunc(data, textStatus, jqXHR ) {
     $(data).each(function() {
-      if (!$.release[project].uuids.has(this.tag)) {
-        if(!$.release[project].removed_uuids.has(this.tag)) {
-          create_new_uuid(release, project, this.tag);
-          get_latest_uuid_for_project(release, project);
-        }
+      if (this.latest && $.release[project].last_uuid != this.tag) {
+        $.release[project].last_uuid = this.tag;
+        console.debug(project + ".latest_uuid:" + $.release[project].last_uuid);
       }
-      else if (!$.release[project][this.tag].failed) {
+      if (!$.release[project].uuids.has(this.tag) &&
+          !$.release[project].removed_uuids.has(this.tag))
+      {
+          create_new_uuid(release, project, this);
+      }
+      else if (!$.release[project][this.tag].failed &&
+        !$.release[project].last_uuid == this.tag)
+      {
         update_uuid_info(release, project, this.tag);
       }
+      if (this.latest) showLatestUUID(project, this.tag);
     });
+    clean_uuids(release, project);
   }
 
   function errorFunc(jqXHR, status, error) {

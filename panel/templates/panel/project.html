@@ -18,6 +18,7 @@
 <script type="text/javascript">
 $( document ).ready(function() {
   $.release.max_uuids = 15;
+  $.release.interval = 30000;
   $.release.timer = setInterval(function(){
     get_uuids_for_project('{{release}}', '{{ project }}');
   }, $.release.interval);
