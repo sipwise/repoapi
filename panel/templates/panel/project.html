@@ -10,19 +10,26 @@
     <div class="panel panel-default project-clone hidden">
         {% include "panel/base_project.html" %}
     </div>
-    <div id="project-list"></div>
+    <div id="project-list">
+      {% include "panel/template_project.html" %}
+    </div>
 </div>
 {% endblock %}
 
 {% block extrajs %}
 <script type="text/javascript">
 $( document ).ready(function() {
+  var values;
   $.release.max_uuids = 15;
   $.release.interval = 30000;
   $.release.timer = setInterval(function(){
-    get_uuids_for_project('{{release}}', '{{ project }}');
+    get_uuids_for_project('{{ release }}', '{{ project }}');
   }, $.release.interval);
   create_new_project('{{ release }}', '{{ project }}');
+{% for uuid in uuids %}
+   values = {tag: '{{ uuid.tag }}', latest: false }
+  create_new_uuid('{{ release }}', '{{ project }}', values);
+{% endfor %}
 });
 </script>
 {% endblock %}

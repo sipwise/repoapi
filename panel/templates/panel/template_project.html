@@ -1,0 +1,35 @@
+{% for project in projects %}
+<div class="panel panel-default project" id="{{ project }}">
+<div class="panel-heading">
+    <h3 class="panel-title project-name">
+    <a name="{{ project }}" href="./{{ project }}">{{ project }}</a></h3>
+</div>
+<div class="panel-body">
+    {% for uuid in uuids.project %}
+    <div class="panel panel-default uuid" id="{{ project }}-{{ uuid }}">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+              <div class="row">
+                <div class="col-md-4">
+                  <a class="uuid-name" id="{{ project }}-{{ uuid }}-name">{{ uuid }}</a>
+                  <span class="label label-primary uuid-latest hidden">Latest</span>
+                </div>
+                <div class="col-md-4 text-info uuid-date" id="{{ project }}-{{ uuid }}-date">date</div>
+                <div class="col-md-4 test-info">
+                  <span class="badge uuid-badge" id="{{ project }}-{{ uuid }}-badge"></span>
+                </div>
+              </div>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group list-inline"  id="{{ project }}-{{ uuid }}-list">
+              {% for job in jobs %}
+                <li class="list-group-item hidden job"></li>
+              {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="panel-footer error"></div>
+{% endfor %}
