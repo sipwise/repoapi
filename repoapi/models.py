@@ -38,6 +38,11 @@ class JenkinsBuildInfoManager(models.Manager):
         else:
             return res.values('projectname')
 
+    def release_project_uuids_set(self, release, project):
+        res = self.get_queryset().filter(
+            param_release=release, projectname=project).distinct()
+        return res.order_by('projectname')
+
     def release_project_uuids(self, release, project, flat=True):
         res = self.get_queryset().filter(
             param_release=release, projectname=project).distinct()

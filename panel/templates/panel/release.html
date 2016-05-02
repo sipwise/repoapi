@@ -23,7 +23,9 @@ $( document ).ready(function() {
   $.release.timer = setInterval(function(){
     update_info('{{release}}');
   }, $.release.interval);
-  get_projects('{{release}}');
+{% for project in projects %}
+  create_new_project('{{ release }}', '{{ project.projectname }}');
+{% endfor %}
 });
 </script>
 {% endblock %}
