@@ -14,9 +14,20 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import urllib2
 import logging
+import subprocess
+import sys
 from django.conf import settings
 
 logger = logging.getLogger(__name__)
+
+
+def executeAndReturnOutput(command, env=None):
+    p = subprocess.Popen(command, stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE, env=env)
+    stdoutdata, stderrdata = p.communicate()
+    print(stdoutdata, file=sys.stdout)
+    print(stderrdata, file=sys.stderr)
+    return p.returncode, stdoutdata, stderrdata
 
 
 def openurl(URL):
@@ -38,3 +49,17 @@ def jenkins_remove_ppa(repo):
         logger.info("I would call %s" % url)
     else:
         openurl(url)
+
+
+def workfront_note_send(_id, message):
+    command = [
+        "/usr/bin/workfront-post-note",
+        "--taskid=%s" % _id,
+        '--message="%s"' % message
+    ]
+    logger.debug("workfront-port-note command: %s" % command)
+    res = executeAndReturnOutput(command)
+    if res[0] != 0:
+        logger.error("can't post workfront note. %s. %s" % (res[1], res[2]))
+        return False
+    return True
