@@ -38,3 +38,8 @@ def jenkins_remove_ppa(repo):
         logger.info("I would call %s" % url)
     else:
         openurl(url)
+
+
+def workfront_note_send(_id, message):
+    """TODO"""
+    pass
