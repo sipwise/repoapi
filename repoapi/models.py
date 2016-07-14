@@ -53,7 +53,7 @@ class JenkinsBuildInfoManager(models.Manager):
 
     def jobs_by_uuid(self, release, project, uuid):
         return self.get_queryset().filter(tag=uuid, param_release=release,
-                                         projectname=project).order_by('date')
+                                          projectname=project).order_by('date')
 
     def latest_uuid(self, release, project):
         qs = self.get_queryset()
@@ -83,6 +83,7 @@ class JenkinsBuildInfo(models.Model):
     param_ppa = models.CharField(max_length=50, null=True)
 
     repo_name = models.CharField(max_length=50, null=True)
+    git_commit = models.TextField(null=True)
 
     objects = JenkinsBuildInfoManager()
 
