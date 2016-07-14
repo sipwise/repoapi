@@ -147,5 +147,25 @@ SWAGGER_SETTINGS = {
     },
 }
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}
+
 JENKINS_URL = "https://jenkins.mgm.sipwise.com"
 JENKINS_TOKEN = "sipwise_jenkins_ci"
+GERRIT_URL = "https://gerrit.mgm.sipwise.com/{}"
+GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
+WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR,
+                                     '/etc/jenkins_jobs/workfront.ini')
