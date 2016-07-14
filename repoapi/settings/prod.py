@@ -149,3 +149,7 @@ SWAGGER_SETTINGS = {
 
 JENKINS_URL = "https://jenkins.mgm.sipwise.com"
 JENKINS_TOKEN = "sipwise_jenkins_ci"
+GERRIT_URL = "https://gerrit.mgm.sipwise.com/{}"
+GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
+WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR,
+                                     '/etc/jenkins_jobs/workfront.ini')
