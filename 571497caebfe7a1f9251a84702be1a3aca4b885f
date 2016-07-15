@@ -141,6 +141,30 @@
       "revId": "571497caebfe7a1f9251a84702be1a3aca4b885f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_fcc6ed48",
+        "filename": "repoapi/utils.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-07-15T10:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ab8dda7_5c2cd94a",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 34
+      },
+      "revId": "571497caebfe7a1f9251a84702be1a3aca4b885f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
