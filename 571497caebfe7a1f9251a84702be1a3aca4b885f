@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_bc687588",
+        "filename": "repoapi/test/test_workfrontnote.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-07-15T09:29:29Z",
+      "side": 1,
+      "message": "does it mean we will report to workfront every new patchset?\n\nIMHO the first patchset should be reported only. What do you thing?",
+      "range": {
+        "startLine": 72,
+        "startChar": 1,
+        "endLine": 72,
+        "endChar": 48
+      },
+      "revId": "571497caebfe7a1f9251a84702be1a3aca4b885f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab8dda7_9c6b3185",
+        "filename": "repoapi/utils.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-07-15T09:29:29Z",
+      "side": 1,
+      "message": "I believe we should add private flag here too",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 34
+      },
+      "revId": "571497caebfe7a1f9251a84702be1a3aca4b885f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
