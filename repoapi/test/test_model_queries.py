@@ -14,8 +14,8 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.test import TestCase
-from repoapi.models import JenkinsBuildInfo
 from django.utils.dateparse import parse_datetime
+from repoapi.models import JenkinsBuildInfo
 
 
 class JBIQueriesTestCase(TestCase):
@@ -27,8 +27,8 @@ class JBIQueriesTestCase(TestCase):
 
     def test_release_projects(self):
         projects = ['fake', ]
-        p = JenkinsBuildInfo.objects.release_projects('mr3.1-fake')
-        self.assertItemsEqual(p, projects)
+        check = JenkinsBuildInfo.objects.release_projects('mr3.1-fake')
+        self.assertItemsEqual(check, projects)
 
     def test_release_project_uuids(self):
         projects = ['fake', ]
@@ -36,10 +36,10 @@ class JBIQueriesTestCase(TestCase):
         uuids = dict()
 
         uuids_ok['fake'] = ['UUID1', 'UUID0']
-        for p in projects:
-            uuids[p] = JenkinsBuildInfo.objects.release_project_uuids(
-                'mr3.1-fake', p)
-            self.assertItemsEqual(uuids_ok[p], uuids[p])
+        for project in projects:
+            uuids[project] = JenkinsBuildInfo.objects.release_project_uuids(
+                'mr3.1-fake', project)
+            self.assertItemsEqual(uuids_ok[project], uuids[project])
 
     def test_jobs_by_uuid(self):
         jobs = JenkinsBuildInfo.objects.jobs_by_uuid(

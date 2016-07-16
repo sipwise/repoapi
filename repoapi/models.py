@@ -12,17 +12,17 @@
 
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import logging
+import re
 
 from django.db import models
 from django.db.models import signals
 from django.conf import settings
 from repoapi import utils
-import logging
-import re
 
 logger = logging.getLogger(__name__)
-workfront_re = re.compile('TT#(\d+)')
-commit_re = re.compile('^(\w{7}) ')
+workfront_re = re.compile(r"TT#(\d+)")
+commit_re = re.compile(r"^(\w{7}) ")
 
 
 class JenkinsBuildInfoManager(models.Manager):
@@ -119,7 +119,7 @@ def gerrit_repo_add(instance):
         param_ppa=instance.param_ppa,
         gerrit_change=instance.gerrit_change)
     if created:
-        logging.info("%s created" % ppa)
+        logging.info("%s created", ppa)
 
 
 def gerrit_repo_del(instance):
@@ -131,7 +131,7 @@ def gerrit_repo_del(instance):
         ppa = gri.get(param_ppa=instance.param_ppa,
                       gerrit_change=instance.gerrit_change)
         ppa.delete()
-        logger.info("removed %s" % ppa)
+        logger.info("removed %s", ppa)
     except GerritRepoInfo.DoesNotExist:
         pass
     if gri.filter(param_ppa=instance.param_ppa).count() == 0:

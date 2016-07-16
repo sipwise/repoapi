@@ -22,15 +22,14 @@ def index(request):
     return render(request, 'panel/index.html', context)
 
 
-def release(request, release):
-    projects = jbi.objects.release_projects(release, flat=False)
-    context = {'release': release,
+def release(request, _release):
+    projects = jbi.objects.release_projects(_release, flat=False)
+    context = {'release': _release,
                'projects': projects}
     return render(request, 'panel/release.html', context)
 
 
-def project(request, release, project):
-    projects = [project, ]
-    uuids = jbi.objects.release_project_uuids_set(release, project)
-    context = {'project':  project, 'release': release, 'uuids': uuids}
+def project(request, _release, _project):
+    uuids = jbi.objects.release_project_uuids_set(_release, _project)
+    context = {'project':  _project, 'release': _release, 'uuids': uuids}
     return render(request, 'panel/project.html', context)

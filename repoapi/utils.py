@@ -12,33 +12,33 @@
 
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from __future__ import print_function
+
 import urllib2
 import logging
 import subprocess
-import sys
 from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
 
 def executeAndReturnOutput(command, env=None):
-    p = subprocess.Popen(command, stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE, env=env)
-    stdoutdata, stderrdata = p.communicate()
-    print(stdoutdata, file=sys.stdout)
-    print(stderrdata, file=sys.stderr)
-    return p.returncode, stdoutdata, stderrdata
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE,
+                            stderr=subprocess.PIPE, env=env)
+    stdoutdata, stderrdata = proc.communicate()
+    logger.debug("<stdout>%s</stdout>", stdoutdata)
+    logger.debug("<strerr>%s</stderr>", stderrdata)
+    return proc.returncode, stdoutdata, stderrdata
 
 
-def openurl(URL):
-    req = urllib2.Request(URL)
+def openurl(url):
+    req = urllib2.Request(url)
+    logger.debug("url:[%s]", url)
     response = urllib2.urlopen(req)
     if response.code is 200:
-        print("OK")
+        logger.debug("OK")
         return 0
     else:
-        print("Error retrieving %s" % URL)
+        logger.error("Error retrieving %s", url)
         return 1
 
 
@@ -47,7 +47,7 @@ def jenkins_remove_ppa(repo):
         "token=%s&repository=%s" % \
         (settings.JENKINS_URL, settings.JENKINS_TOKEN, repo)
     if settings.DEBUG:
-        logger.info("I would call %s" % url)
+        logger.info("I would call %s", url)
     else:
         openurl(url)
 
@@ -60,9 +60,9 @@ def workfront_note_send(_id, message):
         "--taskid=%s" % _id,
         '--message="%s"' % message
     ]
-    logger.debug("workfront-port-note command: %s" % command)
+    logger.debug("workfront-port-note command: %s", command)
     res = executeAndReturnOutput(command)
     if res[0] != 0:
-        logger.error("can't post workfront note. %s. %s" % (res[1], res[2]))
+        logger.error("can't post workfront note. %s. %s", res[1], res[2])
         return False
     return True

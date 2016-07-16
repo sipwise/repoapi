@@ -20,24 +20,28 @@ from mock import patch
 
 class GerritRepoInfoTestCase(TestCase):
 
+    def get_defaults(self):
+        defaults = {
+            'tag': "edc90cd9-37f3-4613-9748-ed05a32031c2",
+            'projectname': "kamailio",
+            'jobname': "kamailio-repos",
+            'buildnumber': 897,
+            'result': "SUCCESS",
+            'job_url': "https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
+            'gerrit_patchset': "1",
+            'gerrit_change': "2054",
+            'gerrit_eventtype': "patchset-created",
+            'param_tag': "none",
+            'param_branch': "master",
+            'param_release': "none",
+            'param_distribution': "wheezy",
+            'param_ppa': "gerrit_MT10339_review2054"
+        }
+        return defaults
+
     @patch('repoapi.utils.jenkins_remove_ppa')
     def test_creation(self, utils):
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-repos",
-            buildnumber=897,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2054",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
-
+        JenkinsBuildInfo.objects.create(**self.get_defaults())
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
         self.assertEquals(gri.count(), 1)
@@ -45,42 +49,9 @@ class GerritRepoInfoTestCase(TestCase):
 
     @patch('repoapi.utils.jenkins_remove_ppa')
     def test_creation_deletion(self, utils):
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-repos",
-            buildnumber=897,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2054",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
-
-        gri = GerritRepoInfo.objects.filter(
-            param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 1)
-        utils.assert_not_called()
-
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-repos",
-            buildnumber=897,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2054",
-            gerrit_eventtype="change-merged",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
+        param = self.get_defaults()
+        param['gerrit_eventtype'] = "change-merged"
+        JenkinsBuildInfo.objects.create(**param)
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
@@ -89,21 +60,9 @@ class GerritRepoInfoTestCase(TestCase):
 
     @patch('repoapi.utils.jenkins_remove_ppa')
     def test_no_creation(self, utils):
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-get-code",
-            buildnumber=897,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2054",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
+        param = self.get_defaults()
+        param['jobname'] = "kamailio-get-code"
+        JenkinsBuildInfo.objects.create(**param)
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
@@ -112,42 +71,9 @@ class GerritRepoInfoTestCase(TestCase):
 
     @patch('repoapi.utils.jenkins_remove_ppa')
     def test_creation_review(self, utils):
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-repos",
-            buildnumber=897,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2054",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
-
-        gri = GerritRepoInfo.objects.filter(
-            param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 1)
-        utils.assert_not_called()
-
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-repos",
-            buildnumber=898,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2054",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
+        param = self.get_defaults()
+        param['buildnumber'] = 898
+        JenkinsBuildInfo.objects.create(**param)
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
@@ -156,42 +82,18 @@ class GerritRepoInfoTestCase(TestCase):
 
     @patch('repoapi.utils.jenkins_remove_ppa')
     def test_creation_multi_review(self, utils):
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-repos",
-            buildnumber=897,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2054",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
-
+        param = self.get_defaults()
+        JenkinsBuildInfo.objects.create(**param)
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
         self.assertEquals(gri.count(), 1)
         utils.assert_not_called()
 
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="fake",
-            jobname="fake-repos",
-            buildnumber=8,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/fake-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
+        param['projectname'] = "fake"
+        param['jobname'] = "fake-repos"
+        param['buildnumber'] = 8
+        param['gerrit_change'] = 2
+        JenkinsBuildInfo.objects.create(**param)
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
@@ -200,63 +102,28 @@ class GerritRepoInfoTestCase(TestCase):
 
     @patch('repoapi.utils.jenkins_remove_ppa')
     def test_creation_multi_review_no_del(self, utils):
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-repos",
-            buildnumber=897,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2054",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
-
+        param = self.get_defaults()
+        JenkinsBuildInfo.objects.create(**param)
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
         self.assertEquals(gri.count(), 1)
         utils.assert_not_called()
 
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="fake",
-            jobname="fake-repos",
-            buildnumber=8,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/fake-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
+        param_fake = self.get_defaults()
+        param_fake['projectname'] = "fake"
+        param_fake['jobname'] = "fake-repos"
+        param_fake['buildnumber'] = 8
+        param_fake['gerrit_change'] = 2
+        JenkinsBuildInfo.objects.create(**param_fake)
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
         self.assertEquals(gri.count(), 2)
         utils.assert_not_called()
 
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-repos",
-            buildnumber=898,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="2",
-            gerrit_change="2054",
-            gerrit_eventtype="change-merged",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
+        param['gerrit_eventtype'] = "change-merged"
+        param['buildnumber'] = 898
+        JenkinsBuildInfo.objects.create(**param)
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
@@ -265,84 +132,37 @@ class GerritRepoInfoTestCase(TestCase):
 
     @patch('repoapi.utils.jenkins_remove_ppa')
     def test_creation_multi_review_del(self, utils):
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-repos",
-            buildnumber=897,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2054",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
-
+        param = self.get_defaults()
+        JenkinsBuildInfo.objects.create(**param)
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
         self.assertEquals(gri.count(), 1)
         utils.assert_not_called()
 
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="fake",
-            jobname="fake-repos",
-            buildnumber=8,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/fake-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
+        param_fake = self.get_defaults()
+        param_fake['projectname'] = "fake"
+        param_fake['jobname'] = "fake-repos"
+        param_fake['buildnumber'] = 8
+        param_fake['gerrit_change'] = 2
+        JenkinsBuildInfo.objects.create(**param_fake)
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
         self.assertEquals(gri.count(), 2)
         utils.assert_not_called()
 
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-repos",
-            buildnumber=898,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="2",
-            gerrit_change="2054",
-            gerrit_eventtype="change-merged",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
+        param['gerrit_eventtype'] = "change-merged"
+        param['buildnumber'] = 898
+        JenkinsBuildInfo.objects.create(**param)
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
         self.assertEquals(gri.count(), 1)
         utils.assert_not_called()
 
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="fake",
-            jobname="fake-repos",
-            buildnumber=9,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/fake-repos/",
-            gerrit_patchset="2",
-            gerrit_change="2",
-            gerrit_eventtype="change-merged",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
+        param_fake['buildnumber'] = 9
+        param_fake['gerrit_eventtype'] = "change-merged"
+        JenkinsBuildInfo.objects.create(**param_fake)
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
@@ -351,43 +171,17 @@ class GerritRepoInfoTestCase(TestCase):
 
     @patch('repoapi.utils.jenkins_remove_ppa')
     def test_abandoned_review_del(self, utils):
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-repos",
-            buildnumber=897,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/kamailio-repos/",
-            gerrit_patchset="1",
-            gerrit_change="2054",
-            gerrit_eventtype="patchset-created",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
-
+        param = self.get_defaults()
+        JenkinsBuildInfo.objects.create(**param)
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
         self.assertEquals(gri.count(), 1)
         utils.assert_not_called()
 
-        JenkinsBuildInfo.objects.create(
-            tag="edc90cd9-37f3-4613-9748-ed05a32031c2",
-            projectname="kamailio",
-            jobname="kamailio-cleanup",
-            buildnumber=898,
-            result="SUCCESS",
-            job_url="https://jenkins.mgm.sipwise.com/job/"
-                "kamailio-cleanup/",
-            gerrit_patchset="2",
-            gerrit_change="2054",
-            gerrit_eventtype="change-abandoned",
-            param_tag="none",
-            param_branch="master",
-            param_release="none",
-            param_distribution="wheezy",
-            param_ppa="gerrit_MT10339_review2054")
+        param['jobname'] = "kamailio-cleanup"
+        param['gerrit_eventtype'] = "change-abandoned"
+        param['buildnumber'] = 898
+        JenkinsBuildInfo.objects.create(**param)
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")

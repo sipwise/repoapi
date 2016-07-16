@@ -13,7 +13,8 @@ venv_prod: requirements/prod.txt
 ###################################
 
 test:
-	./manage.py jenkins --output-dir $(RESULTS) --settings="repoapi.settings.dev"
+	./manage.py jenkins --enable-coverage --noinput --output-dir $(RESULTS) \
+		--settings="repoapi.settings.dev"
 
 deploy: venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
