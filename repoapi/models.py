@@ -19,6 +19,7 @@ from django.db import models
 from django.db.models import signals
 from django.conf import settings
 from repoapi import utils
+from .tasks import get_jbi_files
 
 logger = logging.getLogger(__name__)
 workfront_re = re.compile(r"TT#(\d+)")
@@ -101,6 +102,12 @@ class JenkinsBuildInfo(models.Model):
         return "%s:%d[%s]" % (self.jobname,
                               self.buildnumber, self.tag)
 
+def jbi_manage(sender, **kwargs):
+    if kwargs["created"]:
+        instance = kwargs["instance"]
+        get_jbi_files.delay(instance.jobname, instance.buildnumber)
+
+signals.post_save.connect(jbi_manage, sender=JenkinsBuildInfo)
 
 class GerritRepoInfo(models.Model):
     param_ppa = models.CharField(max_length=50, null=False)
