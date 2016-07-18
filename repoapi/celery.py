@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016 The Sipwise Team - http://sipwise.com
 
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,15 +12,19 @@
 
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import absolute_import
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from celery import Celery
 
-# pylint: disable=W0401,W0614,C0413
-from .test import *
+# set the default Django settings module for the 'celery' program.
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'repoapi.settings.prod')
+# pylint: disable=C0413
+from django.conf import settings  # noqa
 
-# celery
-BROKER_BACKEND = 'amqp'
-CELERY_ALWAYS_EAGER = False
-BROKER_URL = 'amqp://guest:guest@rabbit'
-JBI_BASEDIR = os.path.join(BASE_DIR, 'jbi_files')
+app = Celery('repoapi')
+
+# Using a string here means the worker will not have to
+# pickle the object when using Windows.
+app.config_from_object('django.conf:settings')
+app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
