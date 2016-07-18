@@ -12,13 +12,19 @@
 
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from __future__ import absolute_import
 
-import urllib2
+from distutils.dir_util import mkpath
 import logging
+import os
 import subprocess
+import urllib2
 from django.conf import settings
 
 logger = logging.getLogger(__name__)
+
+JBI_CONSOLE_URL = "{}/job/{}/{}/consoleText"
+JBI_JOB_URL = "{}/job/{}/{}/api/json"
 
 
 def executeAndReturnOutput(command, env=None):
@@ -28,6 +34,16 @@ def executeAndReturnOutput(command, env=None):
     logger.debug("<stdout>%s</stdout>", stdoutdata)
     logger.debug("<strerr>%s</stderr>", stderrdata)
     return proc.returncode, stdoutdata, stderrdata
+
+
+def dlfile(url, path):
+    if settings.DEBUG:
+        logger.info("I would call %s", url)
+    else:
+        remote_file = urllib2.urlopen(url)
+        logger.debug("url:[%s]", url)
+        with open(path, "wb") as local_file:
+            local_file.write(remote_file.read())
 
 
 def openurl(url):
@@ -50,6 +66,35 @@ def jenkins_remove_ppa(repo):
         logger.info("I would call %s", url)
     else:
         openurl(url)
+
+
+def _jenkins_get(url, base_path, filename):
+    mkpath(base_path)
+    path = os.path.join(base_path, filename)
+    logger.info("url:[%s] path[%s]", url, path)
+    dlfile(url, path)
+
+
+def jenkins_get_console(jobname, buildnumber):
+    url = JBI_CONSOLE_URL.format(
+        settings.JENKINS_URL,
+        jobname,
+        buildnumber
+    )
+    base_path = os.path.join(settings.JBI_BASEDIR,
+                             jobname, str(buildnumber))
+    _jenkins_get(url, base_path, 'console.txt')
+
+
+def jenkins_get_job(jobname, buildnumber):
+    url = JBI_JOB_URL.format(
+        settings.JENKINS_URL,
+        jobname,
+        buildnumber
+    )
+    base_path = os.path.join(settings.JBI_BASEDIR,
+                             jobname, str(buildnumber))
+    _jenkins_get(url, base_path, 'job.json')
 
 
 def workfront_note_send(_id, message):

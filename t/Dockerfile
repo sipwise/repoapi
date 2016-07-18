@@ -5,10 +5,10 @@ FROM docker.mgm.sipwise.com/sipwise-jessie:latest
 # is updated with the current date. It will force refresh of all
 # of the base images and things like `apt-get update` won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2016-07-18
+ENV REFRESHED_AT 2016-07-19
 
 RUN apt-get update
-RUN apt-get install --assume-yes python2.7 python2.7-dev python-distribute python-pip git
+RUN apt-get install --assume-yes python2.7 python2.7-dev python-distribute python-pip git screen
 
 # Get pip to download and install requirements:
 COPY dev.txt test.txt common.txt /tmp/
@@ -33,5 +33,11 @@ WORKDIR /code/
 #   ./t/testrunner
 #
 # Run django inside docker:
-#   make run_dev
+# % pip install -r t/dev.txt && make run_dev
+#
+# We need a working rabbit server, so in another terminal:
+# % docker run --rm --hostname repoapi-rabbit --name repoapi-rabbit rabbitmq:3
+#
+# use screen to get a working worker in the background:
+# % make worker_dev
 ################################################################################
