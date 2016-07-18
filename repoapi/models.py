@@ -160,9 +160,10 @@ signals.post_save.connect(gerrit_repo_manage, sender=JenkinsBuildInfo)
 class WorkfrontNoteInfo(models.Model):
     workfront_id = models.CharField(max_length=50, null=False)
     gerrit_change = models.CharField(max_length=50, null=False)
+    eventtype = models.CharField(max_length=50, null=False)
 
     class Meta:
-        unique_together = ["workfront_id", "gerrit_change"]
+        unique_together = ["workfront_id", "gerrit_change", "eventtype"]
 
     @staticmethod
     def getIds(git_comment):
@@ -198,12 +199,15 @@ def workfront_note_add(instance, message):
         if not instance.gerrit_eventtype:
             change = WorkfrontNoteInfo.getCommit(instance.git_commit_msg)
             url = settings.GITWEB_URL.format(instance.projectname, change)
+            eventtype = 'git-commit'
         else:
             change = instance.gerrit_change
             url = settings.GERRIT_URL.format(instance.gerrit_change)
+            eventtype = instance.gerrit_eventtype
         note, created = wni.get_or_create(
             workfront_id=wid,
-            gerrit_change=change)
+            gerrit_change=change,
+            eventtype=eventtype)
         if created:
             if not utils.workfront_note_send(wid, "%s %s" % (message, url)):
                 logger.error("remove releated WorkfrontNoteInfo")
