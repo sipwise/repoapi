@@ -20,23 +20,24 @@ from .common import *
 
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-VAR_DIR = '/var/lib/repoapi'
-if not os.path.exists(VAR_DIR):
-    VAR_DIR = BASE_DIR
+os.environ.setdefault('RESULTS', '/tmp')
+RESULTS_DIR = os.environ['RESULTS']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# read it from external file
-SECRET_KEY = open(os.path.join(VAR_DIR, '.secret_key')).read().strip()
+SECRET_KEY = ')+0h68-(g30hg1awc6!y65cwws6j^qd5=&pc2@h430=9x@bf%2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['.mgm.sipwise.com']
+ALLOWED_HOSTS = []
 
+TESTING_APPS = [
+    'django_jenkins',
+]
+INSTALLED_APPS.extend(TESTING_APPS)
 INSTALLED_APPS.extend(PROJECT_APPS)
 
 # Database
@@ -45,17 +46,25 @@ INSTALLED_APPS.extend(PROJECT_APPS)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(VAR_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
-LOGGING['loggers']['repoapi']['level'] = os.getenv('DJANGO_LOG_LEVEL', 'INFO')
+# django-jenkins
+JENKINS_TASKS = (
+    'django_jenkins.tasks.run_pylint',
+    'django_jenkins.tasks.run_flake8',
+)
+PYLINT_RCFILE = 'pylint.cfg'
 
-JENKINS_URL = "https://jenkins.mgm.sipwise.com"
-GERRIT_URL = "https://gerrit.mgm.sipwise.com/{}"
-GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
-WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR,
-                                     '/etc/jenkins_jobs/workfront.ini')
+DJANGO_LOG_LEVEL = 'DEBUG'
+
+JENKINS_URL = "http://localhost"
+GERRIT_URL = "https://gerrit.local/{}"
+GITWEB_URL = "https://git.local/gitweb/?p={}.git;a=commit;h={}"
+WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR, '.workfront.ini')
+
 # celery
-BROKER_URL = 'amqp://guest:guest@rabbit'
-JBI_BASEDIR = os.path.join(VAR_DIR, 'jbi_files')
+BROKER_BACKEND = 'memory'
+CELERY_ALWAYS_EAGER = True
+JBI_BASEDIR = os.path.join(RESULTS_DIR, 'jbi_files')
