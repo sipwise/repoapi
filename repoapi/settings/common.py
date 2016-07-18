@@ -135,3 +135,7 @@ LOGGING = {
 }
 
 JENKINS_TOKEN = "sipwise_jenkins_ci"
+
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT=['json']

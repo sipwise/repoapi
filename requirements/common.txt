@@ -8,3 +8,4 @@ markdown
 django-filter
 six
 webassets
+celery

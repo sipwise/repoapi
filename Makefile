@@ -32,6 +32,10 @@ run_dev:
 	IP=$(shell ip a show dev eth0 scope global | grep inet | awk '{print $$2}' | cut -d/ -f1); \
 	./manage.py runserver_plus $$IP:8000 --settings="repoapi.settings.dev"
 
+worker_dev:
+	DJANGO_SETTINGS_MODULE="repoapi.settings.dev" \
+		celery -A repoapi worker --loglevel=info
+
 ###################################
 
 # get rid of test files
