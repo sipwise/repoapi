@@ -61,3 +61,6 @@ JENKINS_URL = "http://localhost"
 GERRIT_URL = "https://gerrit.local/{}"
 GITWEB_URL = "https://git.local/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR, '.workfront.ini')
+
+# celery
+BROKER_URL = 'amqp://guest:guest@rabbit'

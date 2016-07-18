@@ -32,6 +32,15 @@ run_dev:
 	IP=$(shell ip a show dev eth0 scope global | grep inet | awk '{print $$2}' | cut -d/ -f1); \
 	./manage.py runserver_plus $$IP:8000 --settings="repoapi.settings.dev"
 
+worker_dev:
+	./manage.py celery worker --loglevel=info --settings="repoapi.settings.dev"
+
+makemigrations_dev:
+	./manage.py makemigrations --settings="repoapi.settings.dev"
+
+migrate_dev:
+	./manage.py migrate --settings="repoapi.settings.dev"
+
 ###################################
 
 # get rid of test files

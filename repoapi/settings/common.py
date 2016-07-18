@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'django_extensions',
     'django_assets',
+    'djcelery',
 ]
 
 MIDDLEWARE_CLASSES = (
@@ -135,3 +136,8 @@ LOGGING = {
 }
 
 JENKINS_TOKEN = "sipwise_jenkins_ci"
+
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT=['json']
+CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
