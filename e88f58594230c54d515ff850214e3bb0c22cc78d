@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab8dda7_faa26899",
+        "filename": "repoapi/settings/prod.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2016-07-19T12:39:27Z",
+      "side": 1,
+      "message": "hm, we should discuss whether that\u0027s something we can leave as-is or if that should come from puppet\u0027s hiera instead, at least for the production instance?",
+      "revId": "e88f58594230c54d515ff850214e3bb0c22cc78d",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
