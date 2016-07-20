@@ -18,7 +18,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'^(?P<release>[^/]+)/$', views.release, name='release-view'),
-    url(r'^(?P<release>[^/]+)/(?P<project>[^/]+)/$',
+    url(r'^(?P<_release>[^/]+)/$', views.release, name='release-view'),
+    url(r'^(?P<_release>[^/]+)/(?P<_project>[^/]+)/$',
         views.project, name='project-view'),
 ]
