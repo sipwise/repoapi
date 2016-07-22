@@ -37,7 +37,7 @@ def gerrit_repo_add(instance):
         param_ppa=instance.param_ppa,
         gerrit_change=instance.gerrit_change)
     if created:
-        logging.info("%s created", ppa)
+        logging.debug("%s created", ppa)
 
 
 def gerrit_repo_del(instance):
@@ -49,7 +49,7 @@ def gerrit_repo_del(instance):
         ppa = gri.get(param_ppa=instance.param_ppa,
                       gerrit_change=instance.gerrit_change)
         ppa.delete()
-        logger.info("removed %s", ppa)
+        logger.debug("removed %s", ppa)
     except GerritRepoInfo.DoesNotExist:
         pass
     if gri.filter(param_ppa=instance.param_ppa).count() == 0:
@@ -61,7 +61,7 @@ def gerrit_repo_manage(sender, **kwargs):
         instance = kwargs["instance"]
         if instance.jobname.endswith("-repos") and \
                 instance.result == "SUCCESS":
-            logger.info("we need to count this %s", instance.param_ppa)
+            logger.debug("we need to count this %s", instance.param_ppa)
             if instance.gerrit_eventtype == "patchset-created":
                 gerrit_repo_add(instance)
             elif instance.gerrit_eventtype == "change-merged":
@@ -69,5 +69,5 @@ def gerrit_repo_manage(sender, **kwargs):
         elif instance.jobname.endswith("-cleanup") and \
                 instance.result == "SUCCESS" and \
                 instance.gerrit_eventtype == "change-abandoned":
-            logger.info("we need to count this %s", instance.param_ppa)
+            logger.debug("we need to count this %s", instance.param_ppa)
             gerrit_repo_del(instance)

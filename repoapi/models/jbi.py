@@ -16,9 +16,6 @@ import logging
 import re
 
 from django.db import models
-
-from django.conf import settings
-from repoapi import utils
 from repoapi.tasks import get_jbi_files
 
 logger = logging.getLogger(__name__)

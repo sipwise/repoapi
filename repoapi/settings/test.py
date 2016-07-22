@@ -67,4 +67,5 @@ WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR, '.workfront.ini')
 # celery
 BROKER_BACKEND = 'memory'
 CELERY_ALWAYS_EAGER = True
+# CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
 JBI_BASEDIR = os.path.join(RESULTS_DIR, 'jbi_files')

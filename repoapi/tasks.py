@@ -14,11 +14,25 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import absolute_import
 
+import json
+import logging
 from celery import shared_task
-from .utils import jenkins_get_console, jenkins_get_job
+from .utils import jenkins_get_console, jenkins_get_job, jenkins_get_artifact
+
+logger = logging.getLogger(__name__)
 
 
-@shared_task
+@shared_task(ignore_result=True)
+def jbi_get_artifact(jobname, buildnumber, artifact_info):
+    jenkins_get_artifact(jobname, buildnumber, artifact_info)
+
+
+@shared_task(ignore_result=True)
 def get_jbi_files(jobname, buildnumber):
     jenkins_get_console(jobname, buildnumber)
-    jenkins_get_job(jobname, buildnumber)
+    path = jenkins_get_job(jobname, buildnumber)
+    with open(path) as data_file:
+        data = json.load(data_file)
+    logger.debug("job_info:%s", data)
+    for artifact in data['artifacts']:
+        jbi_get_artifact.delay(jobname, buildnumber, artifact)
