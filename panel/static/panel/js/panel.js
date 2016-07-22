@@ -219,6 +219,7 @@ function create_new_job_div(project, uuid, job) {
 function create_new_uuid_panel(project, uuid) {
   var id = project + '-' + uuid;
   var div_uuid = $('#' + project +' > .panel-body .uuid-clone').clone();
+  var uuid_url;
   div_uuid.removeClass('hidden');
   div_uuid.attr('id', id).removeClass('uuid-clone').addClass('uuid');
 
@@ -228,7 +229,15 @@ function create_new_uuid_panel(project, uuid) {
 
   var div_title = $('.panel-heading > .panel-title', div_uuid);
   var div_uuid_name = $('.uuid-name', div_title).attr('id', id + '-name').removeClass('uuid-name');
-  div_uuid_name.attr('name', id).html(uuid);
+  if ($.panel == 'project_uuid') {
+    uuid_url = '#';
+  } else if ($.panel == 'release') {
+    uuid_url = project + '/' + uuid;
+  } else {
+    uuid_url = uuid;
+  }
+  div_uuid_name.attr('name', id).html(
+    '<a href="' + uuid_url + '">' + uuid + '</a>');
   var div_uuid_date = $('.uuid-date', div_title).attr('id', id + '-date').removeClass('uuid-date');
   div_uuid_date.html('date');
   var div_uuid_badge = $('.uuid-badge', div_title).attr('id', id + '-badge').removeClass('uuid-badge');

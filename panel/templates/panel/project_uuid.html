@@ -1,9 +1,11 @@
 {% extends "panel/base.html" %}
+{% load jsonify %}
 {% block title %}{{ project }}{% endblock %}
 {% block navlist %}
     <!-- hello -->
     <li><a href="{% url 'panel:release-view' release %}">{{ release }}</a></li>
-    <li class="active"><a href="#">{{ project }}</a></li>
+    <li><a href="{% url 'panel:project-view' release project %}">{{ project }}</a></li>
+    <li class="active"><a href="#">{{ uuid }}</a></li>
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -18,16 +20,18 @@
 <script type="text/javascript">
 $( document ).ready(function() {
   var values;
-  $.panel = 'project';
-  $.release.max_uuids = 15;
-  $.release.interval = 30000;
+  $.panel = 'project_uuid';
+  $.release.max_uuids = 1;
+  $.release.interval = 3000;
   $.release.timer = setInterval(function(){
-    get_uuids_for_project('{{ release }}', '{{ project }}');
+    update_uuid_info('{{ release }}', '{{ project }}', '{{ uuid }}');
   }, $.release.interval);
   create_new_project('{{ release }}', '{{ project }}', false);
-{% for uuid in uuids %}
-  values = {tag: '{{ uuid.tag }}', latest: false };
-  create_new_uuid('{{ release }}', '{{ project }}', values);{% endfor %}
+  create_new_uuid('{{ release }}', '{{ project }}', {{ latest_uuid|jsonify }});
+  {% if latest_uuid.latest %}
+  $.release['{{ project }}'].last_uuid = '{{ uuid }}';
+  showLatestUUID('{{ project }}', '{{ uuid }}');
+  {% endif %}
 });
 </script>
 {% endblock %}

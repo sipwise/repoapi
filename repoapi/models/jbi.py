@@ -80,15 +80,31 @@ class JenkinsBuildInfoManager(models.Manager):
         return self.get_queryset().filter(tag=uuid, param_release=release,
                                           projectname=project).order_by('date')
 
-    def latest_uuid(self, release, project):
+    def _latest_uuid(self, release, project):
         qs = self.get_queryset()
         res = qs.filter(
             param_release=release,
             projectname=project,
             tag__isnull=False)
-        if res:
-            latest_uuid = res.latest('date')
-            return {'tag': latest_uuid.tag, 'date': latest_uuid.date}
+        if res is not None:
+            return res.latest('date')
+
+    def latest_uuid(self, release, project):
+        res = self._latest_uuid(release, project)
+        if res is not None:
+            return {'tag': res.tag, 'date': res.date}
+
+    def latest_uuid_js(self, release, project):
+        res = self._latest_uuid(release, project)
+        if res is not None:
+            return {'tag': res.tag, 'latest': True}
+
+    def is_latest_uuid_js(self, release, project, uuid):
+        res = self._latest_uuid(release, project)
+        latest_uuid = {'tag': uuid, 'latest': False}
+        if res is not None:
+            latest_uuid['latest'] = (res.tag == uuid)
+        return latest_uuid
 
 
 class JenkinsBuildInfo(models.Model):
