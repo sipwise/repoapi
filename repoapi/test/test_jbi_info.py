@@ -19,8 +19,20 @@ import shutil
 from django.test import TestCase
 from django.conf import settings
 from repoapi.models import JenkinsBuildInfo
-from repoapi.utils import JBI_CONSOLE_URL, JBI_JOB_URL
-from mock import patch, call
+from repoapi.utils import JBI_CONSOLE_URL, JBI_JOB_URL, JBI_ARTIFACT_URL
+from mock import patch, call, mock_open
+
+
+artifacts_json = """{
+    "artifacts": [
+        {
+            "displayPath": "builddeps.list",
+            "fileName": "builddeps.list",
+            "relativePath": "builddeps.list"
+        }
+    ]
+}"""
+
 
 class TestJBICelery(TestCase):
 
@@ -49,13 +61,15 @@ class TestJBICelery(TestCase):
         if os.path.exists(settings.JBI_BASEDIR):
             shutil.rmtree(settings.JBI_BASEDIR)
 
+    @patch('__builtin__.open', mock_open(read_data=artifacts_json))
     @patch('repoapi.utils.dlfile')
     def test_jbi_path_creation(self, dlfile):
         param = self.get_defaults()
         jbi = JenkinsBuildInfo.objects.create(**param)
         base_path = os.path.join(settings.JBI_BASEDIR,
                                  jbi.jobname, str(jbi.buildnumber))
-        self.assertTrue(os.path.exists(settings.JBI_BASEDIR), settings.JBI_BASEDIR)
+        self.assertTrue(
+            os.path.exists(settings.JBI_BASEDIR), settings.JBI_BASEDIR)
         self.assertTrue(os.path.exists(base_path))
         path = os.path.join(base_path, 'console.txt')
         url = JBI_CONSOLE_URL.format(
@@ -63,7 +77,7 @@ class TestJBICelery(TestCase):
             jbi.jobname,
             jbi.buildnumber
         )
-        calls = [call(url, path),]
+        calls = [call(url, path), ]
         url = JBI_JOB_URL.format(
             settings.JENKINS_URL,
             jbi.jobname,
@@ -71,4 +85,35 @@ class TestJBICelery(TestCase):
         )
         path = os.path.join(base_path, 'job.json')
         calls.append(call(url, path))
+        dlfile.assert_has_calls(calls)
+        url = JBI_ARTIFACT_URL.format(
+            settings.JENKINS_URL,
+            jbi.jobname,
+            jbi.buildnumber,
+            "builddeps.list"
+        )
+        artifact_base_path = os.path.join(base_path, 'artifact')
+        path = os.path.join(artifact_base_path, 'builddeps.list')
+        self.assertNotIn(call(url, path), dlfile.call_args_list)
+
+    @patch('__builtin__.open', mock_open(read_data=artifacts_json))
+    @patch('repoapi.utils.dlfile')
+    def test_jbi_artifact(self, dlfile):
+        param = self.get_defaults()
+        param['jobname'] = 'fake-release-tools-runner'
+        jbi = JenkinsBuildInfo.objects.create(**param)
+        base_path = os.path.join(settings.JBI_BASEDIR,
+                                 jbi.jobname, str(jbi.buildnumber))
+        self.assertTrue(
+            os.path.exists(settings.JBI_BASEDIR), settings.JBI_BASEDIR)
+        self.assertTrue(os.path.exists(base_path))
+        url = JBI_ARTIFACT_URL.format(
+            settings.JENKINS_URL,
+            jbi.jobname,
+            jbi.buildnumber,
+            "builddeps.list"
+        )
+        artifact_base_path = os.path.join(base_path, 'artifact')
+        path = os.path.join(artifact_base_path, 'builddeps.list')
+        calls = [call(url, path), ]
         dlfile.assert_has_calls(calls)

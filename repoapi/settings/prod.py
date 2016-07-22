@@ -59,3 +59,6 @@ WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR,
 # celery
 BROKER_URL = 'amqp://guest:guest@localhost'
 JBI_BASEDIR = os.path.join(VAR_DIR, 'jbi_files')
+JBI_ARTIFACT_JOBS = [
+    'release-tools-runner',
+]

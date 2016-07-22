@@ -17,6 +17,7 @@ from __future__ import absolute_import
 from distutils.dir_util import mkpath
 import logging
 import os
+import shutil
 import subprocess
 import urllib2
 from django.conf import settings
@@ -25,6 +26,7 @@ logger = logging.getLogger(__name__)
 
 JBI_CONSOLE_URL = "{}/job/{}/{}/consoleText"
 JBI_JOB_URL = "{}/job/{}/{}/api/json"
+JBI_ARTIFACT_URL = "{}/job/{}/{}/artifact/{}"
 
 
 def executeAndReturnOutput(command, env=None):
@@ -43,7 +45,7 @@ def dlfile(url, path):
         remote_file = urllib2.urlopen(url)
         logger.debug("url:[%s]", url)
         with open(path, "wb") as local_file:
-            local_file.write(remote_file.read())
+            shutil.copyfileobj(remote_file, local_file)
 
 
 def openurl(url):
@@ -63,7 +65,7 @@ def jenkins_remove_ppa(repo):
         "token=%s&repository=%s" % \
         (settings.JENKINS_URL, settings.JENKINS_TOKEN, repo)
     if settings.DEBUG:
-        logger.info("I would call %s", url)
+        logger.debug("I would call %s", url)
     else:
         openurl(url)
 
@@ -71,8 +73,9 @@ def jenkins_remove_ppa(repo):
 def _jenkins_get(url, base_path, filename):
     mkpath(base_path)
     path = os.path.join(base_path, filename)
-    logger.info("url:[%s] path[%s]", url, path)
+    logger.debug("url:[%s] path[%s]", url, path)
     dlfile(url, path)
+    return path
 
 
 def jenkins_get_console(jobname, buildnumber):
@@ -83,7 +86,7 @@ def jenkins_get_console(jobname, buildnumber):
     )
     base_path = os.path.join(settings.JBI_BASEDIR,
                              jobname, str(buildnumber))
-    _jenkins_get(url, base_path, 'console.txt')
+    return _jenkins_get(url, base_path, 'console.txt')
 
 
 def jenkins_get_job(jobname, buildnumber):
@@ -94,7 +97,19 @@ def jenkins_get_job(jobname, buildnumber):
     )
     base_path = os.path.join(settings.JBI_BASEDIR,
                              jobname, str(buildnumber))
-    _jenkins_get(url, base_path, 'job.json')
+    return _jenkins_get(url, base_path, 'job.json')
+
+
+def jenkins_get_artifact(jobname, buildnumber, artifact_info):
+    url = JBI_ARTIFACT_URL.format(
+        settings.JENKINS_URL,
+        jobname,
+        buildnumber,
+        artifact_info["relativePath"]
+    )
+    base_path = os.path.join(settings.JBI_BASEDIR,
+                             jobname, str(buildnumber), 'artifact')
+    return _jenkins_get(url, base_path, artifact_info["fileName"])
 
 
 def workfront_note_send(_id, message):
