@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 JBI_CONSOLE_URL = "{}/job/{}/{}/consoleText"
 JBI_JOB_URL = "{}/job/{}/{}/api/json"
 JBI_ARTIFACT_URL = "{}/job/{}/{}/artifact/{}"
+JBI_ENVVARS_URL = "{}/job/{}/{}/injectedEnvVars/api/json"
 
 
 def executeAndReturnOutput(command, env=None):
@@ -98,6 +99,17 @@ def jenkins_get_job(jobname, buildnumber):
     base_path = os.path.join(settings.JBI_BASEDIR,
                              jobname, str(buildnumber))
     return _jenkins_get(url, base_path, 'job.json')
+
+
+def jenkins_get_env(jobname, buildnumber):
+    url = JBI_ENVVARS_URL.format(
+        settings.JENKINS_URL,
+        jobname,
+        buildnumber
+    )
+    base_path = os.path.join(settings.JBI_BASEDIR,
+                             jobname, str(buildnumber))
+    return _jenkins_get(url, base_path, 'envVars.json')
 
 
 def jenkins_get_artifact(jobname, buildnumber, artifact_info):

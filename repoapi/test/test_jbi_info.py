@@ -16,10 +16,11 @@
 import os
 import shutil
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.conf import settings
 from repoapi.models import JenkinsBuildInfo
 from repoapi.utils import JBI_CONSOLE_URL, JBI_JOB_URL, JBI_ARTIFACT_URL
+from repoapi.utils import JBI_ENVVARS_URL
 from mock import patch, call, mock_open
 
 
@@ -34,6 +35,7 @@ artifacts_json = """{
 }"""
 
 
+@override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True)
 class TestJBICelery(TestCase):
 
     def get_defaults(self):
@@ -65,27 +67,51 @@ class TestJBICelery(TestCase):
     @patch('repoapi.utils.dlfile')
     def test_jbi_path_creation(self, dlfile):
         param = self.get_defaults()
+        param['jobname'] = 'fake-me'
         jbi = JenkinsBuildInfo.objects.create(**param)
         base_path = os.path.join(settings.JBI_BASEDIR,
                                  jbi.jobname, str(jbi.buildnumber))
-        self.assertTrue(
-            os.path.exists(settings.JBI_BASEDIR), settings.JBI_BASEDIR)
-        self.assertTrue(os.path.exists(base_path))
+        self.assertTrue(os.path.isdir(base_path), base_path)
+
+    @patch('__builtin__.open', mock_open(read_data=artifacts_json))
+    @patch('repoapi.utils.dlfile')
+    def test_jbi_console(self, dlfile):
+        param = self.get_defaults()
+        jbi = JenkinsBuildInfo.objects.create(**param)
+        base_path = os.path.join(settings.JBI_BASEDIR,
+                                 jbi.jobname, str(jbi.buildnumber))
+
         path = os.path.join(base_path, 'console.txt')
         url = JBI_CONSOLE_URL.format(
             settings.JENKINS_URL,
             jbi.jobname,
             jbi.buildnumber
         )
-        calls = [call(url, path), ]
+        dlfile.assert_any_call(url, path)
+        url = JBI_ARTIFACT_URL.format(
+            settings.JENKINS_URL,
+            jbi.jobname,
+            jbi.buildnumber,
+            "builddeps.list"
+        )
+        artifact_base_path = os.path.join(base_path, 'artifact')
+        path = os.path.join(artifact_base_path, 'builddeps.list')
+        self.assertNotIn(call(url, path), dlfile.call_args_list)
+
+    @patch('__builtin__.open', mock_open(read_data=artifacts_json))
+    @patch('repoapi.utils.dlfile')
+    def test_jbi_jobinfo(self, dlfile):
+        param = self.get_defaults()
+        jbi = JenkinsBuildInfo.objects.create(**param)
+        base_path = os.path.join(settings.JBI_BASEDIR,
+                                 jbi.jobname, str(jbi.buildnumber))
         url = JBI_JOB_URL.format(
             settings.JENKINS_URL,
             jbi.jobname,
             jbi.buildnumber
         )
         path = os.path.join(base_path, 'job.json')
-        calls.append(call(url, path))
-        dlfile.assert_has_calls(calls)
+        dlfile.assert_any_call(url, path)
         url = JBI_ARTIFACT_URL.format(
             settings.JENKINS_URL,
             jbi.jobname,
@@ -104,9 +130,6 @@ class TestJBICelery(TestCase):
         jbi = JenkinsBuildInfo.objects.create(**param)
         base_path = os.path.join(settings.JBI_BASEDIR,
                                  jbi.jobname, str(jbi.buildnumber))
-        self.assertTrue(
-            os.path.exists(settings.JBI_BASEDIR), settings.JBI_BASEDIR)
-        self.assertTrue(os.path.exists(base_path))
         url = JBI_ARTIFACT_URL.format(
             settings.JENKINS_URL,
             jbi.jobname,
@@ -115,5 +138,19 @@ class TestJBICelery(TestCase):
         )
         artifact_base_path = os.path.join(base_path, 'artifact')
         path = os.path.join(artifact_base_path, 'builddeps.list')
-        calls = [call(url, path), ]
-        dlfile.assert_has_calls(calls)
+        dlfile.assert_any_call(url, path)
+
+    @patch('__builtin__.open', mock_open(read_data=artifacts_json))
+    @patch('repoapi.utils.dlfile')
+    def test_jbi_envVars(self, dlfile):
+        param = self.get_defaults()
+        jbi = JenkinsBuildInfo.objects.create(**param)
+        base_path = os.path.join(settings.JBI_BASEDIR,
+                                 jbi.jobname, str(jbi.buildnumber))
+        url = JBI_ENVVARS_URL.format(
+            settings.JENKINS_URL,
+            jbi.jobname,
+            jbi.buildnumber
+        )
+        path = os.path.join(base_path, 'envVars.json')
+        dlfile.assert_any_call(url, path)
