@@ -30,6 +30,22 @@ def release(request, _release):
 
 
 def project(request, _release, _project):
+    latest_uuid = jbi.objects.latest_uuid_js(_release, _project)
     uuids = jbi.objects.release_project_uuids_set(_release, _project)
-    context = {'project':  _project, 'release': _release, 'uuids': uuids}
+    context = {
+        'project':  _project,
+        'release': _release,
+        'uuids': uuids,
+        'latest_uuid': latest_uuid}
     return render(request, 'panel/project.html', context)
+
+
+def uuid(request, _release, _project, _uuid):
+    latest_uuid = jbi.objects.is_latest_uuid_js(_release, _project, _uuid)
+    context = {
+        'project':  _project,
+        'release': _release,
+        'uuid': _uuid,
+        'latest_uuid': latest_uuid,
+    }
+    return render(request, 'panel/project_uuid.html', context)

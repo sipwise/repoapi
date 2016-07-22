@@ -19,6 +19,7 @@
 {% block extrajs %}
 <script type="text/javascript">
 $( document ).ready(function() {
+  $.panel = 'release';
   $.release.max_uuids = 1;
   $.release.interval = 30000;
   $.release.timer = setInterval(function(){
