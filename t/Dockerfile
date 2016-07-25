@@ -8,7 +8,8 @@ FROM docker.mgm.sipwise.com/sipwise-jessie:latest
 ENV REFRESHED_AT 2016-08-02
 
 RUN apt-get update
-RUN apt-get install --assume-yes python2.7 python2.7-dev python-distribute python-pip git screen
+RUN apt-get install --assume-yes python2.7 python2.7-dev \
+	python-distribute python-pip python-debian git screen
 
 # Get pip to download and install requirements:
 COPY dev.txt test.txt common.txt /tmp/
