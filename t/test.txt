@@ -1,6 +1,6 @@
 -r common.txt
-django-jenkins
-flake8
+django-jenkins==0.19
+flake8==2.6
 pep8
 pylint
 coverage
