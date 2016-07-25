@@ -120,4 +120,6 @@ class JenkinsBuildInfo(models.Model):
 def jbi_manage(sender, **kwargs):
     if kwargs["created"]:
         instance = kwargs["instance"]
-        get_jbi_files.delay(instance.jobname, instance.buildnumber)
+        get_jbi_files.delay(instance.pk,
+                            instance.jobname,
+                            instance.buildnumber)
