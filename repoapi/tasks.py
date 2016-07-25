@@ -16,8 +16,10 @@ from __future__ import absolute_import
 
 import json
 import logging
+from os.path import basename
 from celery import shared_task
 from django.conf import settings
+from .celery import jbi_parse_hotfix
 from .utils import jenkins_get_console, jenkins_get_job, jenkins_get_artifact
 from .utils import jenkins_get_env
 
@@ -25,12 +27,14 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task(ignore_result=True)
-def jbi_get_artifact(jobname, buildnumber, artifact_info):
-    jenkins_get_artifact(jobname, buildnumber, artifact_info)
+def jbi_get_artifact(jbi_id, jobname, buildnumber, artifact_info):
+    path = jenkins_get_artifact(jobname, buildnumber, artifact_info)
+    if basename(path) == settings.HOTFIX_ARTIFACT:
+        jbi_parse_hotfix.delay(jbi_id, path)
 
 
 @shared_task(ignore_result=True)
-def get_jbi_files(jobname, buildnumber):
+def get_jbi_files(jbi_id, jobname, buildnumber):
     jenkins_get_console(jobname, buildnumber)
     jenkins_get_env(jobname, buildnumber)
     path = jenkins_get_job(jobname, buildnumber)
@@ -39,6 +43,6 @@ def get_jbi_files(jobname, buildnumber):
             data = json.load(data_file)
         logger.debug("job_info:%s", data)
         for artifact in data['artifacts']:
-            jbi_get_artifact.delay(jobname, buildnumber, artifact)
+            jbi_get_artifact.delay(jbi_id, jobname, buildnumber, artifact)
     else:
         logger.debug("skip artifacts download for jobname: %s", jobname)

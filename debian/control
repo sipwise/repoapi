@@ -13,6 +13,7 @@ Section: python
 Architecture: all
 Depends: make,
          python,
+         python-debian,
          virtualenv,
          sqlite3,
          uwsgi-plugin-python,
