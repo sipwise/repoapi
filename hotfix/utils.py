@@ -13,23 +13,19 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import absolute_import
+import logging
+from debian.changelog import Changelog
+from .models import WorkfrontNoteInfo
 
-import os
-from celery import Celery
-
-# set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'repoapi.settings.prod')
-# pylint: disable=C0413
-from django.conf import settings  # noqa
-
-app = Celery('repoapi')
-
-# Using a string here means the worker will not have to
-# pickle the object when using Windows.
-app.config_from_object('django.conf:settings')
-app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+logger = logging.getLogger(__name__)
 
 
-@app.task()
-def jbi_parse_hotfix(jbi_id, path):
-    app.send_task('hotfix_released', jbi_id, path)
+def parse_changelog(path):
+    changelog = Changelog()
+    with open(path, 'r') as file_changelog:
+        changelog.parse_changelog(file_changelog.read())
+    set_ids = set()
+    for block in changelog:
+        for change in block.changes():
+            set_ids = set_ids.union(WorkfrontNoteInfo.getIds(change))
+    return (set_ids, changelog)
