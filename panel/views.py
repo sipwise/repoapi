@@ -23,7 +23,7 @@ def index(request):
 
 
 def release(request, _release):
-    projects = jbi.objects.release_projects(_release, flat=False)
+    projects = jbi.objects.release_projects_full(_release)
     context = {'release': _release,
                'projects': projects}
     return render(request, 'panel/release.html', context)

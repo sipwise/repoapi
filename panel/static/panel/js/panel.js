@@ -281,7 +281,7 @@ function clean_uuids(release, project) {
   }
 }
 
-function create_new_uuid(release, project, values) {
+function create_new_uuid(release, project, values, update=true) {
   var uuid = values.tag;
   if (uuid == null || $.release[project].uuids.has(uuid)) {
     return;
@@ -296,11 +296,18 @@ function create_new_uuid(release, project, values) {
   $.release[project][uuid] = { failed: false, jobs: new Set(),};
 
   create_new_uuid_panel(project, uuid);
-  update_uuid_info(release, project, uuid);
+  if(update) {
+    update_uuid_info(release, project, uuid);
+  } else {
+    if(values.latest) {
+      $.release[project].last_uuid = uuid;
+      showLatestUUID(project, uuid);
+    }
+  }
   set_project_status(project, {created: true});
 }
 
-function create_new_project(release, project) {
+function create_new_project(release, project, update=true) {
   if ($.release.projects.has(project)) {
     return;
   }
@@ -309,7 +316,9 @@ function create_new_project(release, project) {
     interval: 5000, last_uuid: null, removed_uuids: new Set()};
   create_new_project_panel(project);
 
-  get_uuids_for_project(release, project);
+  if (update) {
+    get_uuids_for_project(release, project);
+  }
 }
 
 /******************************************************************/
