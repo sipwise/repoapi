@@ -1,4 +1,5 @@
 {% extends "panel/base.html" %}
+{% load jsonify %}
 {% block title %}{{ release }}{% endblock %}
 {% block navlist %}
     <li class="active"><a href="#">{{ release }}</a></li>
@@ -23,9 +24,24 @@ $( document ).ready(function() {
   $.release.timer = setInterval(function(){
     update_info('{{release}}');
   }, $.release.interval);
-{% for project in projects %}
-  create_new_project('{{ release }}', '{{ project.projectname }}');
+{% for projectname, project in projects.iteritems %}
+  create_new_project('{{ release }}', '{{ projectname }}', false);
+  {% for uuid, uuid_value in project.iteritems %}
+    {% if uuid_value.latest %}
+    values = {tag: '{{ uuid }}', latest: true };
+    {% else %}
+    values = {tag: '{{ uuid }}', latest: false };
+    {% endif %}
+    create_new_uuid('{{ release }}', '{{ projectname }}', values, false);
+    {% for jobname, job in uuid_value.iteritems %}
+    {% if jobname != 'latest' %}
+    data = {{ job|jsonify }};
+    create_new_job('{{ release }}', '{{ projectname }}', '{{ uuid }}', data);
+    {% endif %}
+    {% endfor %}
+  {% endfor %}
 {% endfor %}
+  update_stats();
 });
 </script>
 {% endblock %}

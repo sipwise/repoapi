@@ -86,6 +86,13 @@ class ProjectList(APIView):
         return Response(projects)
 
 
+class ProjectFullList(APIView):
+
+    def get(self, request, release, _format=None):
+        projects = jbi.objects.release_projects_full(release)
+        return Response(projects)
+
+
 class ProjectUUIDList(APIView):
 
     def get(self, request, release, project, _format=None):
