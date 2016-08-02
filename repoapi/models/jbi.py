@@ -16,6 +16,7 @@ import logging
 import re
 
 from django.db import models
+from django.forms.models import model_to_dict
 from repoapi.tasks import get_jbi_files
 
 logger = logging.getLogger(__name__)
@@ -24,6 +25,22 @@ commit_re = re.compile(r"^(\w{7}) ")
 
 
 class JenkinsBuildInfoManager(models.Manager):
+
+    def release_projects_full(self, release):
+        res = dict()
+        for project in self.release_projects(release):
+            res[project] = dict()
+            uuids = self.release_project_uuids(release, project)
+            for uuid in uuids:
+                res[project][uuid] = dict()
+                jobs = self.jobs_by_uuid(release, project, uuid)
+                for job in jobs:
+                    res[project][uuid][job.jobname] = model_to_dict(job)
+                    # date is not editable... so not in the result
+                    res[project][uuid][job.jobname]['date'] = job.date
+            uuid = self.latest_uuid(release, project)['tag']
+            res[project][uuid]['latest'] = True
+        return res
 
     def releases(self, flat=True):
         res = self.get_queryset().values('param_release').distinct()

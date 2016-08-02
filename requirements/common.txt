@@ -10,3 +10,4 @@ six
 webassets
 django-celery
 flower
+django-jsonify

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'django_assets',
     'djcelery',
+    'jsonify',
 ]
 
 MIDDLEWARE_CLASSES = (
