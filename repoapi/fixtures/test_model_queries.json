@@ -86,5 +86,27 @@
         },
         "model": "repoapi.jenkinsbuildinfo",
         "pk": 4
+    },
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-04T17:04:57.802Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/release-update-deb-symlinks/",
+            "param_branch": null,
+            "param_distribution": "wheezy",
+            "param_ppa": null,
+            "param_release": "mr3.1-fake",
+            "param_tag": null,
+            "projectname": "release-update-deb-symlinks",
+            "jobname": "release-update-deb-symlinks",
+            "repo_name": null,
+            "result": "SUCCESS",
+            "tag": null
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 5
     }
 ]

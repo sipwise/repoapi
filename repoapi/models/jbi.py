@@ -38,8 +38,9 @@ class JenkinsBuildInfoManager(models.Manager):
                     res[project][uuid][job.jobname] = model_to_dict(job)
                     # date is not editable... so not in the result
                     res[project][uuid][job.jobname]['date'] = job.date
-            uuid = self.latest_uuid(release, project)['tag']
-            res[project][uuid]['latest'] = True
+            uuid = self.latest_uuid(release, project)
+            if uuid:
+                res[project][uuid['tag']]['latest'] = True
         return res
 
     def releases(self, flat=True):
@@ -51,7 +52,8 @@ class JenkinsBuildInfoManager(models.Manager):
 
     def release_projects(self, release, flat=True):
         res = self.get_queryset().filter(
-            param_release=release).values('projectname').distinct()
+            param_release=release,
+            tag__isnull=False).values('projectname').distinct()
         if flat:
             return res.values_list('projectname', flat=True)
         else:
@@ -59,12 +61,16 @@ class JenkinsBuildInfoManager(models.Manager):
 
     def release_project_uuids_set(self, release, project):
         res = self.get_queryset().filter(
-            param_release=release, projectname=project).distinct()
+            param_release=release,
+            projectname=project,
+            tag__isnull=False).distinct()
         return res.order_by('projectname')
 
     def release_project_uuids(self, release, project, flat=True):
         res = self.get_queryset().filter(
-            param_release=release, projectname=project).distinct()
+            param_release=release,
+            projectname=project,
+            tag__isnull=False).distinct()
         if flat:
             return res.order_by('projectname').values_list('tag', flat=True)
         else:
@@ -76,9 +82,13 @@ class JenkinsBuildInfoManager(models.Manager):
 
     def latest_uuid(self, release, project):
         qs = self.get_queryset()
-        latest_uuid = qs.filter(
-            param_release=release, projectname=project).latest('date')
-        return {'tag': latest_uuid.tag, 'date': latest_uuid.date}
+        res = qs.filter(
+            param_release=release,
+            projectname=project,
+            tag__isnull=False)
+        if res:
+            latest_uuid = res.latest('date')
+            return {'tag': latest_uuid.tag, 'date': latest_uuid.date}
 
 
 class JenkinsBuildInfo(models.Model):
