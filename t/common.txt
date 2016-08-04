@@ -11,3 +11,4 @@ webassets
 django-celery
 flower
 django-jsonify
+python-debian

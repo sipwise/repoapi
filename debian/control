@@ -15,7 +15,6 @@ Architecture: all
 Depends:
  make,
  python,
- python-debian,
  sqlite3,
  uwsgi-plugin-python,
  virtualenv,
