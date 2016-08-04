@@ -384,8 +384,7 @@ function get_uuids_for_project(release, project) {
       {
           create_new_uuid(release, project, this);
       }
-      else if (!$.release[project][this.tag].failed &&
-        !$.release[project].last_uuid == this.tag)
+      else if (!$.release[project][this.tag].failed)
       {
         update_uuid_info(release, project, this.tag);
       }
