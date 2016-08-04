@@ -45,26 +45,42 @@ class JenkinsBuildInfoManager(models.Manager):
 
     def releases(self, flat=True):
         res = self.get_queryset().values('param_release').distinct()
-        if flat:
-            return res.values_list('param_release', flat=True)
-        else:
-            return res.values('param_release')
+        if res.exists():
+            if flat:
+                return res.values_list('param_release', flat=True)
+            else:
+                return res.values('param_release')
+
+    def is_release(self, release):
+        res = self.get_queryset().filter(
+            param_release=release,
+            tag__isnull=False)
+        return res.exists()
 
     def release_projects(self, release, flat=True):
         res = self.get_queryset().filter(
             param_release=release,
             tag__isnull=False).values('projectname').distinct()
-        if flat:
-            return res.values_list('projectname', flat=True)
-        else:
-            return res.values('projectname')
+        if res.exists():
+            if flat:
+                return res.values_list('projectname', flat=True)
+            else:
+                return res.values('projectname')
+
+    def is_project(self, release, project):
+        res = self.get_queryset().filter(
+            param_release=release,
+            projectname=project,
+            tag__isnull=False)
+        return res.exists()
 
     def release_project_uuids_set(self, release, project):
         res = self.get_queryset().filter(
             param_release=release,
             projectname=project,
             tag__isnull=False).distinct()
-        return res.order_by('projectname')
+        if res.exists():
+            return res.order_by('projectname')
 
     def release_project_uuids(self, release, project, flat=True):
         res = self.get_queryset().filter(
@@ -76,6 +92,13 @@ class JenkinsBuildInfoManager(models.Manager):
         else:
             return res.order_by('projectname').values('tag')
 
+    def is_uuid(self, release, project, uuid):
+        res = self.get_queryset().filter(
+            param_release=release,
+            projectname=project,
+            tag=uuid)
+        return res.exists()
+
     def jobs_by_uuid(self, release, project, uuid):
         return self.get_queryset().filter(tag=uuid, param_release=release,
                                           projectname=project).order_by('date')
@@ -86,7 +109,7 @@ class JenkinsBuildInfoManager(models.Manager):
             param_release=release,
             projectname=project,
             tag__isnull=False)
-        if res is not None:
+        if res.exists():
             return res.latest('date')
 
     def latest_uuid(self, release, project):

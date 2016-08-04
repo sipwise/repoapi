@@ -154,7 +154,7 @@ function set_uuid_status(project, uuid, job, value) {
         }
       }
   }
-  div_uuid_date.html(new Date(value.date));
+  div_uuid_date.html(new Date(value.date).toUTCString());
   $('#' + id + '-badge').html(jobs);
   if (uuid == $.release[project].last_uuid) {
     set_project_status(project);
@@ -257,6 +257,15 @@ function create_new_project_panel(project) {
   var div_title = $('.project-name', div_project);
   div_title.html('<a name="' + project +'" href="./' + project + '">' + project + '</a>');
 
+  var latest_uuid_url;
+  if ($.panel == 'project_uuid') {
+    latest_uuid_url = '../latest';
+  } else if ($.panel == 'release') {
+    latest_uuid_url = project + '/latest';
+  } else {
+    latest_uuid_url = 'latest';
+  }
+  $('.latest-uuid-url', div_project).attr('href', latest_uuid_url);
   $('.error', div_project).attr('id', project + '-error').removeClass('error');
   div_project.appendTo('#project-list');
   console.debug('project ' + project + ' created');

@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.shortcuts import render
+from django.http import HttpResponseNotFound
 from repoapi.models import JenkinsBuildInfo as jbi
 
 
@@ -23,29 +24,55 @@ def index(request):
 
 
 def release(request, _release):
-    projects = jbi.objects.release_projects_full(_release)
-    context = {'release': _release,
-               'projects': projects}
-    return render(request, 'panel/release.html', context)
+    if jbi.objects.is_release(_release):
+        projects = jbi.objects.release_projects_full(_release)
+        context = {'release': _release,
+                   'projects': projects}
+        return render(request, 'panel/release.html', context)
+    else:
+        return HttpResponseNotFound('release {} not found'.format(_release))
 
 
 def project(request, _release, _project):
-    latest_uuid = jbi.objects.latest_uuid_js(_release, _project)
-    uuids = jbi.objects.release_project_uuids_set(_release, _project)
-    context = {
-        'project':  _project,
-        'release': _release,
-        'uuids': uuids,
-        'latest_uuid': latest_uuid}
-    return render(request, 'panel/project.html', context)
+    if jbi.objects.is_project(_release, _project):
+        latest_uuid = jbi.objects.latest_uuid_js(_release, _project)
+        uuids = jbi.objects.release_project_uuids_set(_release, _project)
+        context = {
+            'project':  _project,
+            'release': _release,
+            'uuids': uuids,
+            'latest_uuid': latest_uuid}
+        return render(request, 'panel/project.html', context)
+    else:
+        return HttpResponseNotFound('project {} not found'.format(_project))
 
 
 def uuid(request, _release, _project, _uuid):
-    latest_uuid = jbi.objects.is_latest_uuid_js(_release, _project, _uuid)
-    context = {
-        'project':  _project,
-        'release': _release,
-        'uuid': _uuid,
-        'latest_uuid': latest_uuid,
-    }
-    return render(request, 'panel/project_uuid.html', context)
+    if jbi.objects.is_uuid(_release, _project, _uuid):
+        latest_uuid = jbi.objects.is_latest_uuid_js(_release, _project, _uuid)
+        context = {
+            'project':  _project,
+            'release': _release,
+            'uuid': _uuid,
+            'latest_uuid': latest_uuid,
+        }
+        return render(request, 'panel/project_uuid.html', context)
+    else:
+        return HttpResponseNotFound('uuid {} not found'.format(_uuid))
+
+
+def latest_uuid(request, _release, _project):
+    if jbi.objects.is_project(_release, _project):
+        latest_uuid = jbi.objects.latest_uuid_js(_release, _project)
+        if latest_uuid is not None:
+            context = {
+                'project':  _project,
+                'release': _release,
+                'uuid': latest_uuid['tag'],
+                'latest_uuid': latest_uuid,
+            }
+            return render(request, 'panel/project_uuid.html', context)
+        else:
+            return HttpResponseNotFound('no latest uuid')
+    else:
+        return HttpResponseNotFound('project {} not found'.format(_project))

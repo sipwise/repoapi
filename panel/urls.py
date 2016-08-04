@@ -21,6 +21,8 @@ urlpatterns = [
     url(r'^(?P<_release>[^/]+)/$', views.release, name='release-view'),
     url(r'^(?P<_release>[^/]+)/(?P<_project>[^/]+)/$',
         views.project, name='project-view'),
+    url(r'^(?P<_release>[^/]+)/(?P<_project>[^/]+)/latest/$',
+        views.latest_uuid, name='latest_uuid-view'),
     url(r'^(?P<_release>[^/]+)/(?P<_project>[^/]+)/(?P<_uuid>[^/]+)/$',
         views.uuid, name='uuid-view'),
 ]
