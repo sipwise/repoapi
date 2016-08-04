@@ -1,3 +1,79 @@
+repoapi (0.1.1) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [8fe0fcc] MT#12487 debian: fixes
+  * [4fe357f] MT#12487 fixes
+  * [b09339a] MT#7247 allow basic filter
+  * [78debd0] MT#7247 add panel app. Initial version
+  * [f82463c] MT#7247 don't set tag from param_release
+  * [2231de1] MT#7247 use param_release not tag for filter release
+  * [d8fba8a] MT#7247 panel: update uuids without refresh
+  * [282c1a2] MT#7247 add jobname field
+  * [72d06cb] MT#7247 panel: dynamic projects
+  * [689bf47] MT#7247 fix indentation for tap-test
+  * [ab81d9d] MT#7247 fix order of jobs
+  * [b2ed94d] MT#7247 release.html: dynamic projects
+  * [f572e62] MT#7247 release.html: restore link for project.html
+  * [3907c8d] MT#7247 release.html: Initial version of statistics
+  * [9f8fe6d] MT#7247 release.html: sort stat project lists
+  * [feb38ab] MT#7247 release.html: set precision of percentages
+  * [b26ed5e] MT#7247 fix last commit
+  * [2120cd0] MT#7247 panel: add navigation bar
+  * [2da86fb] MT#7247 release.html: badges
+  * [f2cd907] MT#7247 move js part to external panel.js file. Sync release.html and project.html
+  * [d28eb56] MT#7247 base.html: add link to API docs
+  * [b8095a8] MT#7247 release.html: add warning
+  * [4f14fa6] MT#7247 max_uuids and order uuid
+  * [1143e54] MT#7247 optimization: use one timer only per page
+  * [c68f8b9] MT#7247 optimization: fix last commit
+  * [f109c70] MT#7247 optimization: add indexes
+  * [4cd4be2] MT#7247 fix tap-test
+  * [2e9aa0d] MT#7247 fix dependences for jessie
+  * [a44d442] MT#7247 optimization: jobs do not need to refresh their info
+  * [cfef83e] MT#7247 change api URLs. Make this simpler to detect
+  * [1d2cc1f] MT#7247 Makefile: be verbose running virtualenv
+  * [cc86ab1] Revert "MT#7247 change api URLs. Make this simpler to detect"
+  * [32f88cd] MT#7247 simpler regex for urls
+  * [0f49b45] MT#6975 call jenkins when gerrit ppa is not needed any longer
+  * [88f3e1e] MT#6975 fixing logic of gerrit ppa repos removal
+  * [d463e80] MT#6975 set flake8 and coverage supported versions
+  * [f300533] MT#6975 don't trigger jenkins_remove_ppa if ppa == '$ppa'
+  * [a7cb2a2] MT#6259 support unittest at docker environment
+  * [72d8c33] MT#17293 Switch Dockerfile to use a sipwise-jessie image
+  * [8e9320a] MT#16891 support changed-abandoned
+  * [92a18d3] MT#17689 panel/release.html: remove automatic refresh of projects
+  * [e3ad46b] MT#7247 improvements
+  * [648e85a] MT#7247 reduce AJAX queries
+  * [be9513d] Revert "MT#17689 panel/release.html: remove automatic refresh of projects"
+  * [9365df9] MT#7247 docker: add dev requirements to run django inside docker easily
+  * [e547d5d] MT#7247 remove latest query
+  * [37f8e82] MT#7247 admin: add some default filters
+  * [fa4f6b3] MT#7247 reduce initial load
+  * [58f9d52] TT#1734 repoapi: add git_commit_msg field
+  * [35d2c97] TT#1734 repoapi: workfront notes
+  * [784cda3] MT#19235 TT#1740 upgrade to django 1.9
+  * [a432b04] TT#1739 repoapi: fix 'change-merge' note to workfront
+  * [e88f585] TT#1735 use celery to deal with tasks
+  * [fbf020a] TT#1735 add flower to monitor celery
+  * [9a8b06d] TT#1740 panel: fix url name parameters intreduced at 784cda3e02
+  * [0c5594c] TT#1906 repoapi: split models file
+  * [f5153bd] TT#1906 repoapi: get artifacts for specific jobs
+  * [f9159bb] TT#1735 repoapi: get envVars.json info
+  * [1689bab] MT#7247 reduce initial load, take two
+  * [975a7e2] MT#7247 remove internal jobs (no uuid) from panel
+  * [30cfa2e] MT#7247 fix Exception
+  * [80970c9] MT#7247 add uuid panel
+  * [d85f9e0] TT#1951 hotfix notes for workfront
+  * [7f3af60] MT#7247 fix dynamic jobs for latest uuid
+
+  [ Michael Prokop ]
+  * [cc8b104] MT#17699 Bump Standards-Version to 3.9.7
+
+  [ Alexander Lutay ]
+  * [20e309c] MT#19327 Increase default amount of uWSGI workers
+
+ -- Victor Seva <vseva@debian.org>  Thu, 04 Aug 2016 13:22:12 +0200
+
 repoapi (0.1.0) unstable; urgency=low
 
   * Initial Release.
