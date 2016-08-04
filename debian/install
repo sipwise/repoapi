@@ -1,4 +1,5 @@
 Makefile usr/share/repoapi
+hotfix usr/share/repoapi
 manage.py usr/share/repoapi
 panel usr/share/repoapi
 repoapi usr/share/repoapi

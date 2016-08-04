@@ -1,9 +1,10 @@
 Source: repoapi
 Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
-Build-Depends: debhelper (>= 8~),
-               python-dev,
-               virtualenv
+Build-Depends:
+ debhelper (>= 8~),
+ python-dev,
+ virtualenv,
 Standards-Version: 3.9.7
 Section: python
 Homepage: http://sipwise.com/
@@ -11,12 +12,13 @@ Homepage: http://sipwise.com/
 Package: repoapi
 Section: python
 Architecture: all
-Depends: make,
-         python,
-         python-debian,
-         virtualenv,
-         sqlite3,
-         uwsgi-plugin-python,
-         ${misc:Depends}
+Depends:
+ make,
+ python,
+ python-debian,
+ sqlite3,
+ uwsgi-plugin-python,
+ virtualenv,
+ ${misc:Depends},
 Description: REST API webapp
  This package provides repoapi webapp.
