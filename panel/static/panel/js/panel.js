@@ -255,7 +255,11 @@ function create_new_project_panel(project) {
 /******************************************************************/
 function create_new_job(release, project, uuid, data) {
   var job = data.jobname;
-  if($.release[project][uuid].jobs.has(job)) { return; }
+  if($.release[project][uuid] == null ||
+     $.release[project][uuid].jobs.has(job)) {
+    console.debug('project ' + project + ' has no uuid:' + uuid);
+    return;
+  }
 
   $.release[project][uuid].jobs.add(job);
   $.release[project][uuid][job] = { failed: false, };
@@ -274,6 +278,7 @@ function clean_uuids(release, project) {
       {
         $('#' + project + '-' + uuid).remove();
         $.release[project].uuids.delete(uuid);
+        console.debug('project ' + project + ' ' + uuid +' removed');
         $.release[project].removed_uuids.add(uuid);
         step--;
       }
