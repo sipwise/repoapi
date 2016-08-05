@@ -3,6 +3,7 @@ Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends:
  debhelper (>= 8~),
+ dh-systemd (>= 1.5),
  python-dev,
  virtualenv,
 Standards-Version: 3.9.7

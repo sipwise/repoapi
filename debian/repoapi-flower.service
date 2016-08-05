@@ -1,0 +1,16 @@
+[Unit]
+Description=Celery Flower Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+Environment=DJANGO_SETTINGS_MODULE=repoapi.settings.prod
+WorkingDirectory=/usr/share/repoapi
+ExecStart=/var/lib/repoapi/venv_prod/bin/python ./manage.py celery flower \
+	--db=/var/lib/repoapi/flower.db --persistent --xheaders \
+	--url_prefix=flower --unix_socket=/var/lib/repoapi/celery-flower.socket
+
+[Install]
+WantedBy=multi-user.target
