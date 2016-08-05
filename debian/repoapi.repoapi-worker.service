@@ -1,0 +1,16 @@
+[Unit]
+Description=Celery Service
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+Environment=DJANGO_SETTINGS_MODULE=repoapi.settings.prod
+PIDFile=/var/lib/repoapi/celery-worker.pid
+WorkingDirectory=/usr/share/repoapi
+ExecStart=/var/lib/repoapi/venv_prod/bin/python ./manage.py celery worker \
+        --pidfile=/var/lib/repoapi/celery-worker.pid --loglevel=INFO
+
+[Install]
+WantedBy=multi-user.target
