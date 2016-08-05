@@ -22,9 +22,9 @@ $( document ).ready(function() {
   var values;
   $.panel = 'project_uuid';
   $.release.max_uuids = 1;
-  $.release.interval = 3000;
+  $.release.interval = 15000;
   $.release.timer = setInterval(function(){
-    update_uuid_info('{{ release }}', '{{ project }}', '{{ uuid }}');
+    get_uuids_for_project('{{ release }}', '{{ project }}');
   }, $.release.interval);
   create_new_project('{{ release }}', '{{ project }}', false);
   create_new_uuid('{{ release }}', '{{ project }}', {{ latest_uuid|jsonify }});
