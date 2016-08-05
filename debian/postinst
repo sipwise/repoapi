@@ -1,0 +1,50 @@
+#!/bin/sh
+
+set -e
+
+USR_DIR=/usr/share/repoapi
+LIB_DIR=/var/lib/repoapi
+
+# summary of how this script can be called:
+#        * <postinst> `configure' <most-recently-configured-version>
+#        * <old-postinst> `abort-upgrade' <new version>
+#        * <conflictor's-postinst> `abort-remove' `in-favour' <package>
+#          <new-version>
+#        * <postinst> `abort-remove'
+#        * <deconfigured's-postinst> `abort-deconfigure' `in-favour'
+#          <failed-install-package> <version> `removing'
+#          <conflicting-package> <version>
+# for details, see http://www.debian.org/doc/debian-policy/ or
+# the debian-policy package
+
+mk_dj_secret() {
+  python -c "import random,string;print '%s'%''.join([random.SystemRandom().choice(\"{}{}{}\".format(string.ascii_letters, string.digits, string.punctuation)) for i in range(63)])" ;
+}
+
+case "$1" in
+
+  configure)
+    if ! [ -f "${LIB_DIR}/.secret_key" ] ; then
+      mk_dj_secret > "${LIB_DIR}/.secret_key"
+      chmod 600 "${LIB_DIR}/.secret_key"
+      chown www-data:www-data "${LIB_DIR}/.secret_key"
+      echo "generated secret_key"
+    fi
+    cd "${USR_DIR}" && make venv_prod
+    service uwsgi restart repoapi || true
+  ;;
+
+  abort-upgrade|abort-remove|abort-deconfigure)
+    exit 0
+  ;;
+
+  *)
+    echo "postinst called with unknown argument \`$1'" >&2
+    exit 1
+  ;;
+
+esac
+
+#DEBHELPER#
+
+exit 0
