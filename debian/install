@@ -1,5 +1,7 @@
-Makefile usr/share/repoapi
+celery.ini etc/uwsgi/apps-available
+flower.ini etc/uwsgi/apps-available
 hotfix usr/share/repoapi
+Makefile usr/share/repoapi
 manage.py usr/share/repoapi
 panel usr/share/repoapi
 repoapi usr/share/repoapi
