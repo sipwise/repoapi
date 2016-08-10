@@ -34,8 +34,8 @@ $( document ).ready(function() {
     values = {tag: '{{ uuid }}', latest: false };
     {% endif %}
     create_new_uuid('{{ release }}', '{{ projectname }}', values, false);
-    {% for jobname, job in uuid_value.iteritems %}
-    {% if jobname != 'latest' %}
+    {% for key, job in uuid_value.iteritems %}
+    {% if key != 'latest' %}
     data = {{ job|jsonify }};
     create_new_job('{{ release }}', '{{ projectname }}', '{{ uuid }}', data);
     {% endif %}

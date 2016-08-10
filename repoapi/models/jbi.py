@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import logging
 import re
+from collections import OrderedDict
 
 from django.db import models
 from django.forms.models import model_to_dict
@@ -32,12 +33,13 @@ class JenkinsBuildInfoManager(models.Manager):
             res[project] = dict()
             uuids = self.release_project_uuids(release, project)
             for uuid in uuids:
-                res[project][uuid] = dict()
+                res[project][uuid] = OrderedDict()
                 jobs = self.jobs_by_uuid(release, project, uuid)
                 for job in jobs:
-                    res[project][uuid][job.jobname] = model_to_dict(job)
+                    key = str(job.date)
+                    res[project][uuid][key] = model_to_dict(job)
                     # date is not editable... so not in the result
-                    res[project][uuid][job.jobname]['date'] = job.date
+                    res[project][uuid][key]['date'] = job.date
             uuid = self.latest_uuid(release, project)
             if uuid:
                 res[project][uuid['tag']]['latest'] = True
