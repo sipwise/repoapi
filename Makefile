@@ -28,6 +28,10 @@ migrate: venv_prod
 		./manage.py migrate --settings="repoapi.settings.prod"
 	chown www-data:www-data $(VAR_DIR)/db.sqlite3
 
+shell_dev: venv_prod
+	source $(VAR_DIR)/venv_prod/bin/activate && \
+		./manage.py shell --settings="repoapi.settings.prod"
+
 ###################################
 
 run_dev:

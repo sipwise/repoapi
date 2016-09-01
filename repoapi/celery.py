@@ -32,4 +32,4 @@ app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 
 @app.task()
 def jbi_parse_hotfix(jbi_id, path):
-    app.send_task('hotfix_released', jbi_id, path)
+    app.send_task('hotfix_released', args=[jbi_id, path])
