@@ -1,6 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: repoapi
-Source: git://git.mgm.sipwise.com/repoapi
+Source: https://github.com/sipwise/repoapi.git
 
 Files: *
 Copyright: 2015 Sipwise GmbH, Austria
