@@ -21,7 +21,6 @@ override_dh_auto_install:
 
 override_dh_fixperms:
 	dh_fixperms
-	chmod 4770 debian/repoapi/var/lib/repoapi
 	chown www-data:www-data debian/repoapi/var/lib/repoapi
 
 override_dh_systemd_enable:
