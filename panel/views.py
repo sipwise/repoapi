@@ -35,13 +35,13 @@ def release(request, _release):
 
 def project(request, _release, _project):
     if jbi.objects.is_project(_release, _project):
-        latest_uuid = jbi.objects.latest_uuid_js(_release, _project)
+        _latest_uuid = jbi.objects.latest_uuid_js(_release, _project)
         uuids = jbi.objects.release_project_uuids_set(_release, _project)
         context = {
             'project':  _project,
             'release': _release,
             'uuids': uuids,
-            'latest_uuid': latest_uuid}
+            'latest_uuid': _latest_uuid}
         return render(request, 'panel/project.html', context)
     else:
         return HttpResponseNotFound('project {} not found'.format(_project))
@@ -49,12 +49,12 @@ def project(request, _release, _project):
 
 def uuid(request, _release, _project, _uuid):
     if jbi.objects.is_uuid(_release, _project, _uuid):
-        latest_uuid = jbi.objects.is_latest_uuid_js(_release, _project, _uuid)
+        _latest_uuid = jbi.objects.is_latest_uuid_js(_release, _project, _uuid)
         context = {
             'project':  _project,
             'release': _release,
             'uuid': _uuid,
-            'latest_uuid': latest_uuid,
+            'latest_uuid': _latest_uuid,
         }
         return render(request, 'panel/project_uuid.html', context)
     else:
@@ -63,13 +63,13 @@ def uuid(request, _release, _project, _uuid):
 
 def latest_uuid(request, _release, _project):
     if jbi.objects.is_project(_release, _project):
-        latest_uuid = jbi.objects.latest_uuid_js(_release, _project)
-        if latest_uuid is not None:
+        _latest_uuid = jbi.objects.latest_uuid_js(_release, _project)
+        if _latest_uuid is not None:
             context = {
                 'project':  _project,
                 'release': _release,
-                'uuid': latest_uuid['tag'],
-                'latest_uuid': latest_uuid,
+                'uuid': _latest_uuid['tag'],
+                'latest_uuid': _latest_uuid,
             }
             return render(request, 'panel/project_uuid.html', context)
         else:

@@ -16,8 +16,6 @@ import logging
 import re
 
 from django.db import models
-from django.db.models.signals import post_save
-from django.conf import settings
 
 logger = logging.getLogger(__name__)
 workfront_re = re.compile(r"TT#(\d+)")

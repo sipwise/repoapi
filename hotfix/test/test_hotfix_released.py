@@ -13,11 +13,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os
-import shutil
-
 from django.test import TestCase, override_settings
-from django.conf import settings
 from mock import patch, call, mock_open
 from hotfix import tasks, utils, models
 from repoapi.models import JenkinsBuildInfo

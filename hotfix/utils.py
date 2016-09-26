@@ -15,8 +15,8 @@
 from __future__ import absolute_import
 import logging
 from debian.changelog import Changelog
-from .models import WorkfrontNoteInfo
 from repoapi import utils
+from .models import WorkfrontNoteInfo
 
 logger = logging.getLogger(__name__)
 
@@ -40,5 +40,5 @@ def create_note(wid, projectname, version):
         projectname=projectname,
         version=version)
     if created:
-        msg = "hotfix %s %s triggered" % (projectname, version)
+        msg = "hotfix %s %s triggered" % (note.projectname, note.version)
         utils.workfront_note_send(wid, msg)
