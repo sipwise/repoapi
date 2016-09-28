@@ -25,3 +25,13 @@ $('select#common_select').change(function() {
   $('#select_text_info').text(text);
   $('input#version_release').val("release-" + version);
 });
+
+$('#main').click(function(e){
+  var version = $('#version_release');
+  if (version.val().length == 0) {
+    alert("release version empty");
+    version.focus();
+    // don't send the form
+    e.preventDefault();
+  }
+});

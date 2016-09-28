@@ -1,0 +1,32 @@
+{% extends "release_dashboard/base.html" %}
+{% load staticfiles %}
+{% block title %}Build release{% endblock %}
+{% block navlist %}
+    <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+    <li><a href="{% url 'panel:release-view' release %}">Panel {{release}}</a></li>
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+          <h3 class="panel-title">Results {{release}}</h3>
+      </div>
+      <div class="panel-body">
+{% if error %}
+        <p class="bg-danger">{{ error }}</p>
+{% endif %}
+{% for project in projects %}
+{% if project.url %}
+        <p class="bg-success">
+          <a href="{% url 'panel:project-view' release project.name %}">{{ project.name }}</a>
+        </p>
+{% else %}
+        <p class="bg-danger">
+          {{ project.name }}: Not triggered
+        </p>
+{% endif %}
+{% endfor %}
+      </div>
+    </div>
+</div>
+{% endblock %}
