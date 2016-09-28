@@ -21,8 +21,9 @@ from django.http import HttpResponseNotFound, JsonResponse
 from django.conf import settings
 from django.views.decorators.http import require_http_methods
 from release_dashboard.models import Project
-from .utils import get_tags, get_branches, trigger_hotfix
+from .utils import get_tags, get_branches, trigger_hotfix, trigger_build
 from .tasks import gerrit_fetch_info, gerrit_fetch_all
+from .forms import BuildDepForm, BuildReleaseForm
 
 rd_settings = settings.RELEASE_DASHBOARD_SETTINGS
 logger = logging.getLogger(__name__)
@@ -86,16 +87,57 @@ def hotfix_build(request, branch, project):
     return JsonResponse({'url': url})
 
 
+def _hash_versions(data, projects):
+    result = {}
+    for i in projects:
+        try:
+            result[i] = data["version_{0}".format(i)]
+        except (KeyError, AttributeError):
+            pass
+    return result
+
+
+def _build_logic(form, projects):
+    version_release = form.cleaned_data['version_release']
+    distribution = form.cleaned_data['distribution']
+    result = _hash_versions(form.cleaned_data, projects)
+    context = {'projects': [], 'release': version_release}
+    for pro in projects:
+        try:
+            logger.debug(
+                "trying to trigger release %s, project %s",
+                version_release, pro)
+            url = trigger_build("%s-get-code" % pro,
+                                version_release, result[pro],
+                                distribution)
+            context['projects'].append(
+                {'name': pro, 'url': url})
+        except KeyError:
+            logger.error("Houston, we have a problem with"
+                         "trigger for %s" % pro)
+            context['projects'].append(
+                {'name': pro, 'url': None})
+    return context
+
+
 def build_deps(request):
-    context = {
-        'projects': _projects_versions(
-            rd_settings['build_deps'],
-            regex_mr
-        ),
-        'debian': rd_settings['debian_supported'],
-    }
-    _common_versions(context)
-    return render(request, 'release_dashboard/build_deps.html', context)
+    if request.method == "POST":
+        form = BuildDepForm(request.POST)
+        if form.is_valid():
+            context = _build_logic(form, rd_settings['build_deps'])
+        else:
+            context = {'error': 'form validation error'}
+        return render(request, 'release_dashboard/build_result.html', context)
+    else:
+        context = {
+            'projects': _projects_versions(
+                rd_settings['build_deps'],
+                regex_mr
+            ),
+            'debian': rd_settings['debian_supported'],
+        }
+        _common_versions(context)
+        return render(request, 'release_dashboard/build_deps.html', context)
 
 
 def hotfix(request):
@@ -109,15 +151,23 @@ def hotfix(request):
 
 
 def build_release(request):
-    context = {
-        'projects': _projects_versions(
-            rd_settings['projects'],
-            regex_mr
-        ),
-        'debian': rd_settings['debian_supported'],
-    }
-    _common_versions(context)
-    return render(request, 'release_dashboard/build.html', context)
+    if request.method == "POST":
+        form = BuildReleaseForm(request.POST)
+        if form.is_valid():
+            context = _build_logic(form, rd_settings['projects'])
+        else:
+            context = {'error': 'form validation error'}
+        return render(request, 'release_dashboard/build_result.html', context)
+    else:
+        context = {
+            'projects': _projects_versions(
+                rd_settings['projects'],
+                regex_mr
+            ),
+            'debian': rd_settings['debian_supported'],
+        }
+        _common_versions(context)
+        return render(request, 'release_dashboard/build.html', context)
 
 
 def refresh_all(request):
