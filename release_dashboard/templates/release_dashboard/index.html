@@ -11,7 +11,6 @@
         </div>
         <div class="panel-body">
             <ul class="list-group">
-            <!-- Not implemented
                 <li class="list-group-item">
                     <a href="{% url 'release_dashboard:build_deps'%}">
                     Build release dependences</a>
@@ -20,7 +19,10 @@
                     <a href="{% url 'release_dashboard:build_release'%}">
                     Build release</a>
                 </li>
-            -->
+                <li class="list-group-item">
+                    <a href="{% url 'release_dashboard:build_release_tag'%}">
+                    Build release by tag</a>
+                </li>
                 <li class="list-group-item">
                     <a href="{% url 'release_dashboard:hotfix'%}">
                     Hotfixes</a>
