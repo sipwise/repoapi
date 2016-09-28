@@ -53,12 +53,12 @@ def openurl(url):
     req = urllib2.Request(url)
     logger.debug("url:[%s]", url)
     response = urllib2.urlopen(req)
-    if response.code is 200:
-        logger.debug("OK")
-        return 0
+    if response.code > 199 and response.code < 300:
+        logger.debug("OK[%d] url: %s", url, response.code)
+        return True
     else:
-        logger.error("Error retrieving %s", url)
-        return 1
+        logger.error("Error[%d] retrieving %s", url, response.code)
+        return False
 
 
 def jenkins_remove_ppa(repo):

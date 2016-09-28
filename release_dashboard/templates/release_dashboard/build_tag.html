@@ -1,9 +1,9 @@
 {% extends "release_dashboard/base.html" %}
 {% load staticfiles %}
-{% block title %}Build dependences{% endblock %}
+{% block title %}Build release{% endblock %}
 {% block navlist %}
     <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
-    <li><a href="{% url 'release_dashboard:build_deps'%}">Build dependences</a></li>
+    <li><a href="{% url 'release_dashboard:build_release_tag'%}">Build Release by tag</a></li>
 {% endblock %}
 {% block content %}
 {% include "release_dashboard/build_content.html" %}
