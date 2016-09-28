@@ -46,7 +46,8 @@ class JenkinsBuildInfoManager(models.Manager):
         return res
 
     def releases(self, flat=True):
-        res = self.get_queryset().values('param_release').distinct()
+        qs = self.get_queryset().filter(tag__isnull=False)
+        res = qs.values('param_release').distinct()
         if res.exists():
             if flat:
                 return res.values_list('param_release', flat=True)
