@@ -22,6 +22,24 @@ $('select#common_select').change(function() {
   selected.each(function(){ $(this).change(); });
   $('tr.repo option[value="'+ selected_version + '"]').closest('tr').children('td,th').css('background-color','white');
   var text = "Selected " + selected.length + " of " + ignored.length;
-  $('#select_text_info').text(text);
+  $('#select_text_info').html(text);
   $('input#version_release').val("release-" + version);
+});
+
+$('#main').click(function(e){
+  var version = $('#version_release');
+  if (version.val().length == 0) {
+    alert("release version empty");
+    version.focus();
+    // don't send the form
+    e.preventDefault();
+  }
+});
+
+$( document ).ready(function() {
+  var common_select = $('select#common_select option:selected');
+  var value = common_select.val();
+  if (value != 'ignore') {
+    common_select.change();
+  }
 });

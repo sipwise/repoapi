@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^build_deps/$', views.build_deps, name='build_deps'),
     url(r'^build/$', views.build_release, name='build_release'),
+    url(r'^build_tag/$', views.build_release,
+        {'tag_only': True}, name='build_release_tag'),
     url(r'^hotfix/$', views.hotfix, name='hotfix'),
     url(r'^hotfix/(?P<branch>[^/]+)/(?P<project>[^/]+)/$',
         views.hotfix_build),
