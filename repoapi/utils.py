@@ -25,7 +25,7 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 JBI_CONSOLE_URL = "{}/job/{}/{}/consoleText"
-JBI_JOB_URL = "{}/job/{}/{}/api/json"
+JBI_BUILD_URL = "{}/job/{}/{}/api/json"
 JBI_ARTIFACT_URL = "{}/job/{}/{}/artifact/{}"
 JBI_ENVVARS_URL = "{}/job/{}/{}/injectedEnvVars/api/json"
 
@@ -90,15 +90,15 @@ def jenkins_get_console(jobname, buildnumber):
     return _jenkins_get(url, base_path, 'console.txt')
 
 
-def jenkins_get_job(jobname, buildnumber):
-    url = JBI_JOB_URL.format(
+def jenkins_get_build(jobname, buildnumber):
+    url = JBI_BUILD_URL.format(
         settings.JENKINS_URL,
         jobname,
         buildnumber
     )
     base_path = os.path.join(settings.JBI_BASEDIR,
                              jobname, str(buildnumber))
-    return _jenkins_get(url, base_path, 'job.json')
+    return _jenkins_get(url, base_path, 'build.json')
 
 
 def jenkins_get_env(jobname, buildnumber):

@@ -20,8 +20,8 @@ from os.path import basename
 from celery import shared_task
 from django.conf import settings
 from .celery import jbi_parse_hotfix
-from .utils import jenkins_get_console, jenkins_get_job, jenkins_get_artifact
-from .utils import jenkins_get_env
+from .utils import jenkins_get_console, jenkins_get_artifact
+from .utils import jenkins_get_build, jenkins_get_env
 
 logger = logging.getLogger(__name__)
 
@@ -37,9 +37,9 @@ def jbi_get_artifact(jbi_id, jobname, buildnumber, artifact_info):
 def get_jbi_files(jbi_id, jobname, buildnumber):
     jenkins_get_console(jobname, buildnumber)
     jenkins_get_env(jobname, buildnumber)
-    path = jenkins_get_job(jobname, buildnumber)
+    path_build = jenkins_get_build(jobname, buildnumber)
     if jobname in settings.JBI_ARTIFACT_JOBS:
-        with open(path) as data_file:
+        with open(path_build) as data_file:
             data = json.load(data_file)
         logger.debug("job_info:%s", data)
         for artifact in data['artifacts']:

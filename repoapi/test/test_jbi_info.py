@@ -19,7 +19,7 @@ import shutil
 from django.test import TestCase, override_settings
 from django.conf import settings
 from repoapi.models import JenkinsBuildInfo
-from repoapi.utils import JBI_CONSOLE_URL, JBI_JOB_URL, JBI_ARTIFACT_URL
+from repoapi.utils import JBI_CONSOLE_URL, JBI_BUILD_URL, JBI_ARTIFACT_URL
 from repoapi.utils import JBI_ENVVARS_URL
 from mock import patch, call, mock_open
 
@@ -100,17 +100,17 @@ class TestJBICelery(TestCase):
 
     @patch('__builtin__.open', mock_open(read_data=artifacts_json))
     @patch('repoapi.utils.dlfile')
-    def test_jbi_jobinfo(self, dlfile):
+    def test_jbi_buildinfo(self, dlfile):
         param = self.get_defaults()
         jbi = JenkinsBuildInfo.objects.create(**param)
         base_path = os.path.join(settings.JBI_BASEDIR,
                                  jbi.jobname, str(jbi.buildnumber))
-        url = JBI_JOB_URL.format(
+        url = JBI_BUILD_URL.format(
             settings.JENKINS_URL,
             jbi.jobname,
             jbi.buildnumber
         )
-        path = os.path.join(base_path, 'job.json')
+        path = os.path.join(base_path, 'build.json')
         dlfile.assert_any_call(url, path)
         url = JBI_ARTIFACT_URL.format(
             settings.JENKINS_URL,
