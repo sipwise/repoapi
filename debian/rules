@@ -19,6 +19,10 @@ override_dh_auto_install:
 	echo "[gerrit]" > gerrit.ini
 	echo "HTTP_USER=fake" >> gerrit.ini
 	echo "HTTP_PASSWD=fakeHTTPpass" >> gerrit.ini
+	echo "[server]" > server.ini
+	echo "JENKINS_URL=fake" >> server.ini
+	echo "GERRIT_URL=fake" >> server.ini
+	echo "BROKER_URL=fake" >> server.ini
 	VAR_DIR=$(shell pwd) make deploy
 	make clean
 

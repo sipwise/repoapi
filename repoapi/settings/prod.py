@@ -52,8 +52,10 @@ DATABASES = {
 
 LOGGING['loggers']['repoapi']['level'] = os.getenv('DJANGO_LOG_LEVEL', 'INFO')
 
-JENKINS_URL = "https://jenkins.mgm.sipwise.com"
-GERRIT_URL = "https://gerrit.mgm.sipwise.com/{}"
+server_config = RawConfigParser()
+server_config.read(os.path.join(VAR_DIR, 'server.ini'))
+JENKINS_URL = server_config.get('server', 'JENKINS_URL')
+GERRIT_URL = server_config.get('server', 'GERRIT_URL')
 
 gerrit_config = RawConfigParser()
 gerrit_config.read(os.path.join(VAR_DIR, 'gerrit.ini'))
@@ -64,7 +66,7 @@ GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR,
                                      '/etc/jenkins_jobs/workfront.ini')
 # celery
-BROKER_URL = 'amqp://guest:guest@localhost'
+BROKER_URL = server_config.get('server', 'BROKER_URL')
 JBI_BASEDIR = os.path.join(VAR_DIR, 'jbi_files')
 JBI_ARTIFACT_JOBS = [
     'release-tools-runner',
