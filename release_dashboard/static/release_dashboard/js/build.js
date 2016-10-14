@@ -6,10 +6,18 @@ $('select#common_select').change(function() {
   var ignored = $('.version option[value="ignore"]' );
   var version = "";
   if(selected_version.match(/^branch/)) {
-    version = selected_version.replace(
-      /^branch\/(mr[0-9]+\.[0-9]+(\.[0-9]+)?)$/g, "$1");
+    if(selected_version.match(/^branch\/master/)) {
+      var distribution = $('select#distribution option:selected').val();
+      if(!distribution.match(/^auto/)) {
+        version = 'trunk' + '-' + distribution;
+      }
+    }
+    else {
+      version = selected_version.replace(
+        /^branch\/(mr[0-9]+\.[0-9]+(\.[0-9]+)?)$/g, "$1");
+    }
   }
-  else {
+  else if(selected_version.match(/^tag/)) {
     version = selected_version.replace(
       /^tag\/(mr[0-9]+\.[0-9]+\.[0-9]+)(\.[0-9]+)?$/g, "$1");
   }
@@ -23,7 +31,11 @@ $('select#common_select').change(function() {
   $('tr.repo option[value="'+ selected_version + '"]').closest('tr').children('td,th').css('background-color','white');
   var text = "Selected " + selected.length + " of " + ignored.length;
   $('#select_text_info').html(text);
-  $('input#version_release').val("release-" + version);
+  if(version.length > 0) {
+    $('input#version_release').val("release-" + version);
+  } else {
+    $('input#version_release').val('');
+  }
 });
 
 $('#main').click(function(e){

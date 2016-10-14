@@ -25,11 +25,14 @@ from release_dashboard.models import Project
 from .utils import get_tags, get_branches, trigger_hotfix, trigger_build
 from .tasks import gerrit_fetch_info, gerrit_fetch_all
 from .forms import BuildDepForm, BuildReleaseForm
+from .forms import BuildTrunkDepForm, BuildTrunkReleaseForm
+from .forms import trunk_projects, trunk_build_deps
 
 rd_settings = settings.RELEASE_DASHBOARD_SETTINGS
 logger = logging.getLogger(__name__)
 regex_hotfix = re.compile(r'^mr[0-9]+\.[0-9]+\.[0-9]+$')
 regex_mr = re.compile(r'^mr.+$')
+regex_master = re.compile(r'^master$')
 
 
 def index(request):
@@ -197,3 +200,50 @@ def refresh_all(request):
 def refresh(request, project):
     res = gerrit_fetch_info.delay(project)
     return JsonResponse({'url': '/flower/task/%s' % res.id})
+
+
+def build_trunk_deps(request):
+    if request.method == "POST":
+        form = BuildTrunkDepForm(request.POST)
+        if form.is_valid():
+            context = _build_logic(form, trunk_build_deps)
+        else:
+            context = {'error': 'form validation error'}
+        return render(request, 'release_dashboard/build_result.html', context)
+    else:
+        context = {
+            'projects': _projects_versions(
+                trunk_build_deps,
+                regex_master,
+            ),
+            'common_versions': {
+                'tags': [],
+                'branches': ['master', ]
+            },
+            'debian': rd_settings['debian_supported'],
+        }
+        return render(request,
+                      'release_dashboard/build_trunk_deps.html', context)
+
+
+def build_trunk_release(request):
+    if request.method == "POST":
+        form = BuildTrunkReleaseForm(request.POST)
+        if form.is_valid():
+            context = _build_logic(form, trunk_projects)
+        else:
+            context = {'error': 'form validation error'}
+        return render(request, 'release_dashboard/build_result.html', context)
+    else:
+        context = {
+            'projects': _projects_versions(
+                trunk_projects,
+                regex_master,
+            ),
+            'common_versions': {
+                'tags': [],
+                'branches': ['master', ]
+            },
+            'debian': rd_settings['debian_supported'],
+        }
+        return render(request, 'release_dashboard/build_trunk.html', context)
