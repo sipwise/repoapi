@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a3f45e8_6ed80d54",
+        "filename": "repoapi/settings/common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2016-10-14T11:12:39Z",
+      "side": 1,
+      "message": "is it discontinued? for trunk?\nshould you specify somehow WHEN it was discontinued...\n\nP.S. we should merge it with config.sh in release-tools somehow.",
+      "range": {
+        "startLine": 245,
+        "startChar": 5,
+        "endLine": 245,
+        "endChar": 14
+      },
+      "revId": "ecba3fa88c59799cac456875e4e339a4c7f6bf6c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
