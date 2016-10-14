@@ -22,6 +22,30 @@
       "revId": "ecba3fa88c59799cac456875e4e339a4c7f6bf6c",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a3f45e8_0e950940",
+        "filename": "repoapi/settings/common.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2016-10-14T11:59:29Z",
+      "side": 1,
+      "message": "\u003e is it discontinued? for trunk?\nfor trunk, yes\n\n\u003e should you specify somehow WHEN it was discontinued...\n\u003e P.S. we should merge it with config.sh in release-tools somehow.\n\nMy initial idea was to put that info in repos-scripts/config/\u003crelease\u003e.yml and make repoapi read that info to build the build_deps/build views so we don\u0027t have to show all the projects",
+      "parentUuid": "5a3f45e8_6ed80d54",
+      "range": {
+        "startLine": 245,
+        "startChar": 5,
+        "endLine": 245,
+        "endChar": 14
+      },
+      "revId": "ecba3fa88c59799cac456875e4e339a4c7f6bf6c",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
