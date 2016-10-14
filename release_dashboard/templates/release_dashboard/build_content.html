@@ -5,6 +5,7 @@
           <h3 class="panel-title">Actions</h3>
       </div>
       <div class="panel-body">
+{% if common_versions %}
         <div class="form-group">
             <label for="common_select">Common selection</label>
             <select class="form-control" id="common_select"
@@ -18,6 +19,7 @@
             {% endfor %}
             </select>
         </div>
+{% endif %}
         <div class="form-group">
             <label for="version_release">Release version</label>
             <input class="form-control" id="version_release"

@@ -17,6 +17,10 @@ from django import forms
 from django.conf import settings
 
 rd_settings = settings.RELEASE_DASHBOARD_SETTINGS
+trunk_projects = sorted(set(rd_settings['projects']) - \
+    set(rd_settings['abandoned']) - set(rd_settings['build_deps']))
+trunk_build_deps = sorted(set(rd_settings['build_deps']) - \
+    set(rd_settings['abandoned']))
 
 
 class BuildForm(forms.Form):
@@ -41,5 +45,25 @@ class BuildReleaseForm(BuildForm):
         super(BuildReleaseForm, self).__init__(*args, **kwargs)
 
         for project in rd_settings['projects']:
+            self.fields['version_%s' %
+                        project] = forms.CharField(max_length=15)
+
+
+class BuildTrunkDepForm(BuildForm):
+
+    def __init__(self, *args, **kwargs):
+        super(BuildTrunkDepForm, self).__init__(*args, **kwargs)
+
+        for project in trunk_build_deps:
+            self.fields['version_%s' %
+                        project] = forms.CharField(max_length=15)
+
+
+class BuildTrunkReleaseForm(BuildForm):
+
+    def __init__(self, *args, **kwargs):
+        super(BuildTrunkReleaseForm, self).__init__(*args, **kwargs)
+
+        for project in trunk_projects:
             self.fields['version_%s' %
                         project] = forms.CharField(max_length=15)
