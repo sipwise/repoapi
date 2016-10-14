@@ -34,7 +34,7 @@ $('select#common_select').change(function() {
   if(version.length > 0) {
     $('input#version_release').val("release-" + version);
   } else {
-    $('input#version_release').val('');
+    $('input#version_release').val('none');
   }
 });
 
