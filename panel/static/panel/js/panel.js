@@ -259,11 +259,11 @@ function create_new_project_panel(project) {
 
   var latest_uuid_url;
   if ($.panel == 'project_uuid') {
-    latest_uuid_url = '../latest';
+    latest_uuid_url = '../latest/';
   } else if ($.panel == 'release') {
-    latest_uuid_url = project + '/latest';
+    latest_uuid_url = project + '/latest/';
   } else {
-    latest_uuid_url = 'latest';
+    latest_uuid_url = 'latest/';
   }
   $('.latest-uuid-url', div_project).attr('href', latest_uuid_url);
   $('.error', div_project).attr('id', project + '-error').removeClass('error');

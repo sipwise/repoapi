@@ -1,5 +1,6 @@
 {% extends "panel/base.html" %}
 {% load jsonify %}
+{% load staticfiles %}
 {% block title %}{{ project }}{% endblock %}
 {% block navlist %}
     <!-- hello -->
@@ -17,6 +18,7 @@
 {% endblock %}
 
 {% block extrajs %}
+<script src="{% static "panel/js/panel.js" %}"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
   var values;
