@@ -8,6 +8,7 @@ markdown
 django-filter
 six
 webassets
+celery<4.0
 django-celery
 flower
 django-jsonify
