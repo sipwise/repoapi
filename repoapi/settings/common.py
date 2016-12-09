@@ -188,6 +188,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "hylafaxplus",
         "iaxmodem",
         "installer",
+        "janus-client",
         "kamailio",
         "kamailio-config-tests",
         "keyring",
