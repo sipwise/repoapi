@@ -65,6 +65,7 @@ GERRIT_REST_HTTP_USER = 'jenkins'
 GERRIT_REST_HTTP_PASSWD = 'verysecrethttppasswd'
 GITWEB_URL = "https://git.local/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR, '.workfront.ini')
+WORKFRONT_NOTE = True
 
 # celery
 BROKER_BACKEND = 'memory'

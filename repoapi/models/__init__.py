@@ -13,10 +13,13 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.db.models import signals
+from django.conf import settings
 from .jbi import JenkinsBuildInfo, jbi_manage
 from .gri import GerritRepoInfo, gerrit_repo_manage
 from .wni import WorkfrontNoteInfo, workfront_note_manage
 
-signals.post_save.connect(jbi_manage, sender=JenkinsBuildInfo)
-signals.post_save.connect(gerrit_repo_manage, sender=JenkinsBuildInfo)
-signals.post_save.connect(workfront_note_manage, sender=JenkinsBuildInfo)
+post_save = signals.post_save.connect
+post_save(jbi_manage, sender=JenkinsBuildInfo)
+post_save(gerrit_repo_manage, sender=JenkinsBuildInfo)
+if settings.WORKFRONT_NOTE:
+    post_save(workfront_note_manage, sender=JenkinsBuildInfo)
