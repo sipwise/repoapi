@@ -16,11 +16,13 @@
 from django.core.urlresolvers import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
+from repoapi.test.base import BaseTest
 
 
-class TestRest(APITestCase):
+class TestRest(BaseTest, APITestCase):
 
     def setUp(self):
+        super(TestRest, self).setUp()
         self.url = dict()
         self.url['jbi'] = reverse('jenkinsbuildinfo-list')
 

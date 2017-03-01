@@ -17,6 +17,7 @@ from django.test import TestCase, override_settings
 from mock import patch, call, mock_open
 from hotfix import tasks, utils, models
 from repoapi.models import JenkinsBuildInfo
+from repoapi.test.base import BaseTest
 
 debian_changelog = """ngcp-fake (3.8.7.4+0~mr3.8.7.4) unstable; urgency=medium
 
@@ -34,7 +35,7 @@ debian_changelog = """ngcp-fake (3.8.7.4+0~mr3.8.7.4) unstable; urgency=medium
 
 
 @override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True)
-class TestHotfixReleased(TestCase):
+class TestHotfixReleased(BaseTest):
 
     def get_defaults(self):
         defaults = {
