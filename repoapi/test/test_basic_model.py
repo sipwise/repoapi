@@ -15,9 +15,10 @@
 
 from django.test import TestCase
 from repoapi.models import JenkinsBuildInfo
+from repoapi.test.base import BaseTest
 
 
-class JenkinsBuildInfoTestCase(TestCase):
+class JenkinsBuildInfoTestCase(BaseTest):
 
     def test_creation_no_tag(self):
         jbi = JenkinsBuildInfo.objects.create(

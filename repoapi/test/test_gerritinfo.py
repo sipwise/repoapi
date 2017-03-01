@@ -15,10 +15,11 @@
 
 from django.test import TestCase
 from repoapi.models import JenkinsBuildInfo, GerritRepoInfo
+from repoapi.test.base import BaseTest
 from mock import patch
 
 
-class GerritRepoInfoTestCase(TestCase):
+class GerritRepoInfoTestCase(BaseTest):
 
     def get_defaults(self):
         defaults = {

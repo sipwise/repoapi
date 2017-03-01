@@ -14,7 +14,6 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import os
-import shutil
 
 from django.test import TestCase, override_settings
 from django.conf import settings
@@ -22,7 +21,7 @@ from repoapi.models import JenkinsBuildInfo
 from repoapi.utils import JBI_CONSOLE_URL, JBI_BUILD_URL, JBI_ARTIFACT_URL
 from repoapi.utils import JBI_ENVVARS_URL
 from mock import patch, call, mock_open
-
+from repoapi.test.base import BaseTest
 
 artifacts_json = """{
     "artifacts": [
@@ -36,7 +35,7 @@ artifacts_json = """{
 
 
 @override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True)
-class TestJBICelery(TestCase):
+class TestJBICelery(BaseTest):
 
     def get_defaults(self):
         defaults = {
@@ -54,14 +53,6 @@ class TestJBICelery(TestCase):
             'git_commit_msg': "7fg4567 TT#0001 whatever",
         }
         return defaults
-
-    def setUp(self):
-        if not os.path.exists(settings.JBI_BASEDIR):
-            os.makedirs(settings.JBI_BASEDIR)
-
-    def tearDown(self):
-        if os.path.exists(settings.JBI_BASEDIR):
-            shutil.rmtree(settings.JBI_BASEDIR)
 
     @patch('__builtin__.open', mock_open(read_data=artifacts_json))
     @patch('repoapi.utils.dlfile')

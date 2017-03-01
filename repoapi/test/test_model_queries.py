@@ -16,9 +16,10 @@
 from django.test import TestCase
 from django.utils.dateparse import parse_datetime
 from repoapi.models import JenkinsBuildInfo
+from repoapi.test.base import BaseTest
 
 
-class JBIQueriesTestCase(TestCase):
+class JBIQueriesTestCase(BaseTest):
     fixtures = ['test_model_queries.json']
 
     def test_releases(self):

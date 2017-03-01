@@ -16,10 +16,11 @@
 from django.test import TestCase
 from django.conf import settings
 from repoapi.models import JenkinsBuildInfo, WorkfrontNoteInfo
+from repoapi.test.base import BaseTest
 from mock import patch
 
 
-class WorkfrontNoteTestCase(TestCase):
+class WorkfrontNoteTestCase(BaseTest):
 
     def test_getID(self):
         res = WorkfrontNoteInfo.getIds("jojo TT#0891 whatever")
