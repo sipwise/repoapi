@@ -36,6 +36,14 @@ debian_changelog = """ngcp-fake (3.8.7.4+0~mr3.8.7.4) unstable; urgency=medium
 @override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True)
 class TestHotfixReleased(TestCase):
 
+    def setUp(self):
+        if not os.path.exists(settings.JBI_BASEDIR):
+            os.makedirs(settings.JBI_BASEDIR)
+
+    def tearDown(self):
+        if os.path.exists(settings.JBI_BASEDIR):
+            shutil.rmtree(settings.JBI_BASEDIR)
+
     def get_defaults(self):
         defaults = {
             'tag': "edc90cd9-37f3-4613-9748-ed05a32031c2",
