@@ -21,12 +21,6 @@ mk_dj_secret() {
   python -c "import random,string;print '%s'%''.join([random.SystemRandom().choice(\"{}{}{}\".format(string.ascii_letters, string.digits, string.punctuation)) for i in range(63)])" ;
 }
 
-rename_job_json() {
-  find ${LIB_DIR}/jbi_files -mindepth 2 -name 'job.json'| while read -r f; do
-    mv -v "$f" "$(echo "$f" | sed 's/job\.json/build.json/')"
-  done
-}
-
 case "$1" in
 
   configure)
@@ -38,7 +32,6 @@ case "$1" in
     fi
     cd "${USR_DIR}" && make venv_prod
     service uwsgi restart repoapi || true
-    rename_job_json
   ;;
 
   abort-upgrade|abort-remove|abort-deconfigure)
