@@ -126,13 +126,12 @@ def jenkins_get_artifact(jobname, buildnumber, artifact_info):
 
 def workfront_note_send(_id, message):
     command = [
-        "/usr/bin/workfront-post-note",
+        "/usr/bin/workfront-jenkins-update",
         "--credfile=%s" % settings.WORKFRONT_CREDENTIALS,
-        "--private",
         "--taskid=%s" % _id,
         '--message="%s"' % message
     ]
-    logger.debug("workfront-port-note command: %s", command)
+    logger.debug("workfront-jenkins-update command: %s", command)
     res = executeAndReturnOutput(command)
     if res[0] != 0:
         logger.error("can't post workfront note. %s. %s", res[1], res[2])
