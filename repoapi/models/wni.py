@@ -76,7 +76,7 @@ def workfront_note_add(instance, message):
             gerrit_change=change,
             eventtype=eventtype)
         if created:
-            if not utils.workfront_note_send(wid, "%s %s" % (message, url)):
+            if not utils.workfront_note_send(wid, "%s %s " % (message, url)):
                 logger.error("remove releated WorkfrontNoteInfo")
                 note.delete()
 
