@@ -65,7 +65,7 @@ GERRIT_REST_HTTP_PASSWD = gerrit_config.get('gerrit', 'HTTP_PASSWD')
 GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR,
                                      '/etc/jenkins_jobs/workfront.ini')
-WORKFRONT_NOTE = False
+WORKFRONT_NOTE = True
 # celery
 BROKER_URL = server_config.get('server', 'BROKER_URL')
 JBI_BASEDIR = os.path.join(VAR_DIR, 'jbi_files')

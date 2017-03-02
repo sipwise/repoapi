@@ -83,7 +83,9 @@ class WorkfrontNoteTestCase(BaseTest):
             workfront_id="0001",
             gerrit_change="2054")
         self.assertEquals(gri.count(), 1)
-        msg = "review created %s" % settings.GERRIT_URL.format("2054")
+        msg = "[%s] review created %s" % (
+            param['param_branch'],
+            settings.GERRIT_URL.format("2054"))
         utils.assert_called_once_with("0001", msg)
 
     @patch('repoapi.utils.workfront_note_send')
@@ -109,7 +111,9 @@ class WorkfrontNoteTestCase(BaseTest):
             workfront_id="0001",
             gerrit_change="7fg4567")
         self.assertEquals(gri.count(), 0)
-        msg = "review created %s" % settings.GERRIT_URL.format("2054")
+        msg = "[%s] review created %s" % (
+            param['param_branch'],
+            settings.GERRIT_URL.format("2054"))
         utils.assert_called_once_with("0001", msg)
 
         param['jobname'] = "kamailio-get-code"
@@ -126,7 +130,9 @@ class WorkfrontNoteTestCase(BaseTest):
             workfront_id="0001",
             gerrit_change="2054")
         self.assertEquals(gri.count(), 2)
-        msg = "review merged %s" % settings.GERRIT_URL.format("2054")
+        msg = "[%s] review merged %s" % (
+            param['param_branch'],
+            settings.GERRIT_URL.format("2054"))
         utils.assert_called_with("0001", msg)
 
     @patch('repoapi.utils.workfront_note_send')
@@ -148,6 +154,7 @@ class WorkfrontNoteTestCase(BaseTest):
             workfront_id="0001",
             gerrit_change="7fg4567")
         self.assertEquals(gri.count(), 1)
-        msg = "commit created %s" % settings.GITWEB_URL.format(
-            "kamailio", "7fg4567")
+        msg = "[%s] commit created %s" % (
+            param['param_branch'],
+            settings.GITWEB_URL.format("kamailio", "7fg4567"))
         utils.assert_called_once_with("0001", msg)

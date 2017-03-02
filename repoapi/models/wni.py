@@ -91,9 +91,9 @@ def workfront_note_manage(sender, **kwargs):
         if instance.jobname.endswith("-get-code") and \
                 instance.result == "SUCCESS":
             if instance.gerrit_eventtype == 'change-merged':
-                msg = "review merged"
+                msg = "[%s] review merged"
             elif instance.gerrit_eventtype == 'patchset-created':
-                msg = "review created"
+                msg = "[%s] review created"
             else:
-                msg = "commit created"
-            workfront_note_add(instance, msg)
+                msg = "[%s] commit created"
+            workfront_note_add(instance, msg % (instance.param_branch))
