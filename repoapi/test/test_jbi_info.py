@@ -44,7 +44,9 @@ class TestJBICelery(BaseTest):
             'jobname': "real-fake-gerrit",
             'buildnumber': 1,
             'result': "SUCCESS",
-            'job_url': "https://jenkins.mgm.sipwise.com/job/real-fake-gerrit/",
+            'job_url':
+                "https://jenkins-dev.mgm.sipwise.com/job"
+                "/real-fake-gerrit/",
             'param_tag': "none",
             'param_branch': "master",
             'param_release': "none",

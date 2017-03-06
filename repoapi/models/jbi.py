@@ -18,7 +18,9 @@ from collections import OrderedDict
 
 from django.db import models
 from django.forms.models import model_to_dict
+from django.conf import settings
 from repoapi.tasks import get_jbi_files
+from urlparse import urlparse
 
 logger = logging.getLogger(__name__)
 workfront_re = re.compile(r"TT#(\d+)")
@@ -164,6 +166,13 @@ class JenkinsBuildInfo(models.Model):
             ["param_release", "projectname", "tag"],
         ]
 
+    def is_job_url_allowed(self):
+        if self.job_url:
+            parsed = urlparse(self.job_url)
+            if parsed.netloc in settings.JBI_ALLOWED_HOSTS:
+                return True
+        return False
+
     def __str__(self):
         return "%s:%d[%s]" % (self.jobname,
                               self.buildnumber, self.tag)
@@ -172,6 +181,7 @@ class JenkinsBuildInfo(models.Model):
 def jbi_manage(sender, **kwargs):
     if kwargs["created"]:
         instance = kwargs["instance"]
-        get_jbi_files.delay(instance.pk,
-                            instance.jobname,
-                            instance.buildnumber)
+        if instance.is_job_url_allowed():
+            get_jbi_files.delay(instance.pk,
+                                instance.jobname,
+                                instance.buildnumber)

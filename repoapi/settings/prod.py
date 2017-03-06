@@ -72,3 +72,4 @@ JBI_BASEDIR = os.path.join(VAR_DIR, 'jbi_files')
 JBI_ARTIFACT_JOBS = [
     'release-tools-runner',
 ]
+JBI_ALLOWED_HOSTS = ['jenkins.mgm.sipwise.com']
