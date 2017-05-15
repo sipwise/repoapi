@@ -14,15 +14,13 @@
 
 override_dh_auto_test:
 
+override_dh_auto_build:
+	# fake files needed to deploy
+	cp debian/secret_key .secret_key
+	cp debian/gerrit.ini gerrit.ini
+	cp debian/server.ini server.ini
+
 override_dh_auto_install:
-	echo "fakesecretkey" > .secret_key
-	echo "[gerrit]" > gerrit.ini
-	echo "HTTP_USER=fake" >> gerrit.ini
-	echo "HTTP_PASSWD=fakeHTTPpass" >> gerrit.ini
-	echo "[server]" > server.ini
-	echo "JENKINS_URL=fake" >> server.ini
-	echo "GERRIT_URL=fake" >> server.ini
-	echo "BROKER_URL=fake" >> server.ini
 	VAR_DIR=$(shell pwd) make deploy
 	make clean
 
