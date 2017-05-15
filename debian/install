@@ -1,5 +1,5 @@
-hotfix usr/share/repoapi
 Makefile usr/share/repoapi
+hotfix usr/share/repoapi
 manage.py usr/share/repoapi
 panel usr/share/repoapi
 release_dashboard usr/share/repoapi
