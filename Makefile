@@ -10,6 +10,13 @@ venv_prod: requirements/prod.txt
 	virtualenv --python=python2.7 $(VAR_DIR)/venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
 		pip install -r ./requirements/prod.txt | tee install.log
+
+.ONESHELL:
+SHELL = /bin/bash
+venv_deploy: requirements/common.txt
+	virtualenv --python=python2.7 $(VAR_DIR)/venv_prod
+	source $(VAR_DIR)/venv_prod/bin/activate && \
+		pip install -r ./requirements/common.txt | tee install.log
 ###################################
 
 test:
@@ -18,7 +25,7 @@ test:
 
 ###################################
 
-deploy: venv_prod
+deploy: venv_deploy
 	source $(VAR_DIR)/venv_prod/bin/activate && \
 		./manage.py collectstatic --noinput --settings="repoapi.settings.prod"
 	chown www-data:www-data -R ./static_media/
