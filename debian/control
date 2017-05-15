@@ -4,6 +4,7 @@ Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends:
  debhelper (>= 8~),
  dh-systemd (>= 1.5),
+ libpq-dev,
  python-dev,
  virtualenv,
 Standards-Version: 3.9.7
@@ -14,9 +15,11 @@ Package: repoapi
 Section: python
 Architecture: all
 Depends:
+ build-essential,
+ libpq-dev,
  make,
+ postgresql,
  python,
- sqlite3,
  uwsgi,
  uwsgi-plugin-python,
  virtualenv,

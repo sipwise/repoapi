@@ -40,22 +40,26 @@ ALLOWED_HOSTS = ['.mgm.sipwise.com']
 
 INSTALLED_APPS.extend(PROJECT_APPS)
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(VAR_DIR, 'db.sqlite3'),
-    }
-}
-
 LOGGING['loggers']['repoapi']['level'] = os.getenv('DJANGO_LOG_LEVEL', 'INFO')
 
 server_config = RawConfigParser()
 server_config.read(os.path.join(VAR_DIR, 'server.ini'))
 JENKINS_URL = server_config.get('server', 'JENKINS_URL')
 GERRIT_URL = server_config.get('server', 'GERRIT_URL')
+
+# Database
+# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': server_config.get('server', 'DB_NAME'),
+        'USER': server_config.get('server', 'DB_USER'),
+        'PASSWORD': server_config.get('server', 'DB_PWD'),
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
 
 gerrit_config = RawConfigParser()
 gerrit_config.read(os.path.join(VAR_DIR, 'gerrit.ini'))
