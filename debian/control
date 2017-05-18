@@ -2,12 +2,12 @@ Source: repoapi
 Priority: extra
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Build-Depends:
- debhelper (>= 8~),
+ debhelper (>= 9~),
  dh-systemd (>= 1.5),
  libpq-dev,
  python-dev,
  virtualenv,
-Standards-Version: 3.9.7
+Standards-Version: 3.9.8
 Section: python
 Homepage: http://sipwise.com/
 
@@ -21,6 +21,7 @@ Depends:
  postgresql,
  python,
  python-dev,
+ sipwise-repos-scripts-helpers,
  uwsgi,
  uwsgi-plugin-python,
  virtualenv,
