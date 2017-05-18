@@ -137,3 +137,33 @@ def workfront_note_send(_id, message):
         logger.error("can't post workfront note. %s. %s", res[1], res[2])
         return False
     return True
+
+
+def get_next_release(branch):
+    command = [
+        "/usr/bin/meta-release-helper",
+        "--next-release",
+        branch
+    ]
+    logger.debug("meta-release-helper command: %s", command)
+    res = executeAndReturnOutput(command)
+    if res[0] != 0:
+        logger.error(
+            "can't find out next release version. %s. %s", res[1], res[2])
+        return None
+    return res[1].rstrip()
+
+
+def workfront_set_release_target(_id, release):
+    command = [
+        "/usr/bin/workfront-target-task",
+        "--credfile=%s" % settings.WORKFRONT_CREDENTIALS,
+        "--taskid=%s" % _id,
+        '--release="%s"' % release
+    ]
+    logger.debug("workfront-target-task command: %s", command)
+    res = executeAndReturnOutput(command)
+    if res[0] != 0:
+        logger.error("can't set release target. %s. %s", res[1], res[2])
+        return False
+    return True
