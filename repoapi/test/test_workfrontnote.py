@@ -65,8 +65,10 @@ class WorkfrontNoteTestCase(BaseTest):
         del defaults['gerrit_eventtype']
         return defaults
 
+    @patch('repoapi.utils.workfront_set_release_target')
+    @patch('repoapi.utils.get_next_release')
     @patch('repoapi.utils.workfront_note_send')
-    def test_note_gerrit(self, utils):
+    def test_note_gerrit(self, wns, gnr, wsrt):
         param = self.get_defaults()
         JenkinsBuildInfo.objects.create(**param)
 
@@ -87,10 +89,14 @@ class WorkfrontNoteTestCase(BaseTest):
             param['projectname'],
             param['param_branch'],
             settings.GERRIT_URL.format("2054"))
-        utils.assert_called_once_with("0001", msg)
+        wsrt.assert_not_called()
+        gnr.assert_not_called()
+        wns.assert_called_once_with("0001", msg)
 
+    @patch('repoapi.utils.workfront_set_release_target')
+    @patch('repoapi.utils.get_next_release')
     @patch('repoapi.utils.workfront_note_send')
-    def test_note_merge(self, utils):
+    def test_note_merge(self, wns, gnr, wsrt):
         param = self.get_defaults()
         JenkinsBuildInfo.objects.create(**param)
 
@@ -116,11 +122,14 @@ class WorkfrontNoteTestCase(BaseTest):
             param['projectname'],
             param['param_branch'],
             settings.GERRIT_URL.format("2054"))
-        utils.assert_called_once_with("0001", msg)
+        wsrt.assert_not_called()
+        gnr.assert_not_called()
+        wns.assert_called_once_with("0001", msg)
 
         param['jobname'] = "kamailio-get-code"
         param['buildnumber'] = 898
         param['gerrit_eventtype'] = "change-merged"
+        gnr.return_value = "mr5.5.1"
         JenkinsBuildInfo.objects.create(**param)
 
         gri = WorkfrontNoteInfo.objects.filter(
@@ -136,12 +145,17 @@ class WorkfrontNoteTestCase(BaseTest):
             param['projectname'],
             param['param_branch'],
             settings.GERRIT_URL.format("2054"))
-        utils.assert_called_with("0001", msg)
+        wsrt.assert_called_once_with("0001", "mr5.5.1")
+        gnr.assert_called_once_with("master")
+        wns.assert_called_with("0001", msg)
 
+    @patch('repoapi.utils.workfront_set_release_target')
+    @patch('repoapi.utils.get_next_release')
     @patch('repoapi.utils.workfront_note_send')
-    def test_note_commit(self, utils):
+    def test_note_commit(self, wns, gnr, wsrt):
         param = self.get_non_gerrit_defaults()
         param['jobname'] = 'kamailio-get-code'
+        gnr.return_value = "mr5.5.1"
         JenkinsBuildInfo.objects.create(**param)
 
         gri = WorkfrontNoteInfo.objects.filter(
@@ -161,4 +175,6 @@ class WorkfrontNoteTestCase(BaseTest):
             param['projectname'],
             param['param_branch'],
             settings.GITWEB_URL.format("kamailio", "7fg4567"))
-        utils.assert_called_once_with("0001", msg)
+        wsrt.assert_called_once_with("0001", "mr5.5.1")
+        gnr.assert_called_once_with("master")
+        wns.assert_called_once_with("0001", msg)

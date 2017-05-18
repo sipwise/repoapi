@@ -21,6 +21,7 @@ from repoapi import utils
 
 logger = logging.getLogger(__name__)
 workfront_re = re.compile(r"TT#(\d+)")
+workfront_re_branch = re.compile('^mr[0-9]+\.[0-9]+\.[0-9]+$')
 commit_re = re.compile(r"^(\w{7}) ")
 
 
@@ -58,7 +59,16 @@ class WorkfrontNoteInfo(models.Model):
         return "%s:%s" % (self.workfront_id, self.gerrit_change)
 
 
-def workfront_note_add(instance, message):
+def workfront_release_target(instance, wid):
+    branch = instance.param_branch
+    if workfront_re_branch.search(branch):
+        release = branch
+    else:
+        release = utils.get_next_release(branch)
+    utils.workfront_set_release_target(wid, release)
+
+
+def workfront_note_add(instance, message, release_target=False):
     wni = WorkfrontNoteInfo.objects
     workfront_ids = WorkfrontNoteInfo.getIds(instance.git_commit_msg)
 
@@ -79,6 +89,8 @@ def workfront_note_add(instance, message):
             if not utils.workfront_note_send(wid, "%s %s " % (message, url)):
                 logger.error("remove releated WorkfrontNoteInfo")
                 note.delete()
+            if release_target:
+                workfront_release_target(instance, wid)
 
 
 def workfront_note_manage(sender, **kwargs):
@@ -90,11 +102,14 @@ def workfront_note_manage(sender, **kwargs):
         instance = kwargs["instance"]
         if instance.jobname.endswith("-get-code") and \
                 instance.result == "SUCCESS":
+            set_release_target = True
             if instance.gerrit_eventtype == 'change-merged':
                 msg = "%s[%s] review merged"
             elif instance.gerrit_eventtype == 'patchset-created':
                 msg = "%s[%s] review created"
+                set_release_target = False
             else:
                 msg = "%s[%s] commit created"
             workfront_note_add(instance, msg % (instance.projectname,
-                                                instance.param_branch))
+                                                instance.param_branch),
+                               set_release_target)
