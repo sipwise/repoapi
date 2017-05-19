@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_067ebce4",
+        "filename": "repoapi/utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-19T09:17:39Z",
+      "side": 1,
+      "message": "JFYI, are there any difference in Python about quotes \" or \u0027 ?",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 32
+      },
+      "revId": "3619113e56724c2609a8ed6dee3e4e3ebdffcd3a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
