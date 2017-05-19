@@ -240,3 +240,36 @@ class WorkfrontNoteTestCase(BaseTest):
         wsrt.assert_called_once_with("0001", "mr5.5.2")
         gnr.assert_not_called()
         wns.assert_called_once_with("0001", msg)
+
+    @patch('repoapi.utils.workfront_set_release_target')
+    @patch('repoapi.utils.get_next_release')
+    @patch('repoapi.utils.workfront_note_send')
+    def test_note_commit_next_distri(self, wns, gnr, wsrt):
+        param = self.get_non_gerrit_defaults()
+        param['jobname'] = 'kamailio-get-code'
+        param['param_branch'] = 'stretch/master'
+        param['param_distribution'] = 'stretch'
+        gnr.return_value = ''
+        JenkinsBuildInfo.objects.create(**param)
+
+        gri = WorkfrontNoteInfo.objects.filter(
+            workfront_id="0001",
+            gerrit_change="7fg4567")
+        self.assertEquals(gri.count(), 1)
+
+        param['jobname'] = "kamailio-binaries"
+        param['buildnumber'] = 897
+        JenkinsBuildInfo.objects.create(**param)
+
+        gri = WorkfrontNoteInfo.objects.filter(
+            workfront_id="0001",
+            gerrit_change="7fg4567")
+        self.assertEquals(gri.count(), 1)
+        msg = "%s[%s] commit created %s " % (
+            param['projectname'],
+            param['param_branch'],
+            settings.GITWEB_URL.format("kamailio", "7fg4567"))
+        gnr.assert_called_once_with("stretch/master")
+        self.assertItemsEqual(wsrt.mock_calls, [])
+        wsrt.assert_not_called()
+        wns.assert_called_once_with("0001", msg)

@@ -39,3 +39,9 @@ class UtilsTestCase(BaseTest):
         ear.return_value = [0, "mr5.4.2\n", ""]
         val = utils.get_next_release("mr5.4")
         self.assertEquals(val, 'mr5.4.2')
+
+    @patch('repoapi.utils.executeAndReturnOutput')
+    def test_get_next_release0(self, ear):
+        ear.return_value = [0, "\n", ""]
+        val = utils.get_next_release("mr5.4")
+        self.assertEquals(val, None)
