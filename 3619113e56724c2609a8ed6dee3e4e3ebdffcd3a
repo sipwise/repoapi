@@ -22,6 +22,30 @@
       "revId": "3619113e56724c2609a8ed6dee3e4e3ebdffcd3a",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a106d94_a66c0838",
+        "filename": "repoapi/utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2017-05-19T09:29:55Z",
+      "side": 1,
+      "message": "https://docs.python.org/2.7/reference/lexical_analysis.html#literals\n\n\"u%s\" and \u0027u%s\u0027 are the same",
+      "parentUuid": "1a106d94_067ebce4",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 32
+      },
+      "revId": "3619113e56724c2609a8ed6dee3e4e3ebdffcd3a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
