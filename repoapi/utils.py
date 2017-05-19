@@ -151,7 +151,11 @@ def get_next_release(branch):
         logger.error(
             "can't find out next release version. %s. %s", res[1], res[2])
         return None
-    return res[1].rstrip()
+    val = res[1].rstrip()
+    if len(val) > 0:
+        return val
+    else:
+        return None
 
 
 def workfront_set_release_target(_id, release):

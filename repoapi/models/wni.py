@@ -65,7 +65,8 @@ def workfront_release_target(instance, wid):
         release = branch
     else:
         release = utils.get_next_release(branch)
-    utils.workfront_set_release_target(wid, release)
+    if release:
+        utils.workfront_set_release_target(wid, release)
 
 
 def workfront_note_add(instance, message, release_target=False):
