@@ -13,10 +13,13 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import absolute_import
+import re
 import logging
 from debian.changelog import Changelog
 from repoapi import utils
 from .models import WorkfrontNoteInfo
+
+hotfix_re_release = re.compile('.+~(mr[0-9]+\.[0-9]+\.[0-9]+).[0-9]+$')
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +35,12 @@ def parse_changelog(path):
     return (set_ids, changelog)
 
 
+def get_target_release(version):
+    match = hotfix_re_release.search(version)
+    if match:
+        return match.group(1)
+
+
 def create_note(wid, projectname, version):
     wni = WorkfrontNoteInfo.objects
 
@@ -42,3 +51,6 @@ def create_note(wid, projectname, version):
     if created:
         msg = "hotfix %s %s triggered" % (note.projectname, note.version)
         utils.workfront_note_send(wid, msg)
+        target_release = get_target_release(note.version)
+        if target_release:
+            utils.workfront_set_release_target(wid, target_release)

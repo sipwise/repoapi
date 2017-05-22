@@ -61,10 +61,19 @@ class TestHotfixReleased(BaseTest):
         self.assertEquals(changelog.full_version, "3.8.7.4+0~mr3.8.7.4")
         self.assertEquals(changelog.package, "ngcp-fake")
 
+    def test_get_target_release(self):
+        val = utils.get_target_release("3.8.7.4+0~mr3.8.7.4")
+        self.assertEquals(val, "mr3.8.7")
+
+    def test_get_target_release_ko(self):
+        val = utils.get_target_release("3.8.7.4-1")
+        self.assertIsNone(val)
+
     @patch('__builtin__.open', mock_open(read_data=debian_changelog))
     @patch('repoapi.utils.dlfile')
+    @patch('repoapi.utils.workfront_set_release_target')
     @patch('repoapi.utils.workfront_note_send')
-    def test_hotfixreleased(self, wns, dlfile):
+    def test_hotfixreleased(self, wns, wsrt, dlfile):
         param = self.get_defaults()
         jbi = JenkinsBuildInfo.objects.create(**param)
         tasks.hotfix_released.delay(jbi.pk, "/tmp/fake.txt")
@@ -89,3 +98,4 @@ class TestHotfixReleased(BaseTest):
         msg = "hotfix %s %s triggered" % (projectname, version)
         calls.append(call("123", msg))
         wns.assert_has_calls(calls)
+        wsrt.assert_has_calls([call("345", "mr3.8.7"), call("123", "mr3.8.7")])
