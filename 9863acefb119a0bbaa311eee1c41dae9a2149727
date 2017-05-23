@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a106d94_0ccc1b35",
+        "filename": "hotfix/test/test_hotfix_released.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-05-23T08:39:45Z",
+      "side": 1,
+      "message": "I suspect we will set mr3.8.7 in a ticket, right?\nI wrote twive in a ticket to set full hotfix version. mr3.8.7.4 in this case. Can we do this?\n\nP.S. this will highlight that changes were not available in mr3.8.7.1 and has been hotfixed. WF reports works well with mr3.8.7.4",
+      "range": {
+        "startLine": 66,
+        "startChar": 32,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "9863acefb119a0bbaa311eee1c41dae9a2149727",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
