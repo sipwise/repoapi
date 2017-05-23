@@ -19,7 +19,7 @@ from debian.changelog import Changelog
 from repoapi import utils
 from .models import WorkfrontNoteInfo
 
-hotfix_re_release = re.compile('.+~(mr[0-9]+\.[0-9]+\.[0-9]+).[0-9]+$')
+hotfix_re_release = re.compile('.+~(mr[0-9]+\.[0-9]+\.[0-9]+.[0-9]+)$')
 
 logger = logging.getLogger(__name__)
 

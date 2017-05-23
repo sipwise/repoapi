@@ -63,7 +63,7 @@ class TestHotfixReleased(BaseTest):
 
     def test_get_target_release(self):
         val = utils.get_target_release("3.8.7.4+0~mr3.8.7.4")
-        self.assertEquals(val, "mr3.8.7")
+        self.assertEquals(val, "mr3.8.7.4")
 
     def test_get_target_release_ko(self):
         val = utils.get_target_release("3.8.7.4-1")
@@ -98,4 +98,5 @@ class TestHotfixReleased(BaseTest):
         msg = "hotfix %s %s triggered" % (projectname, version)
         calls.append(call("123", msg))
         wns.assert_has_calls(calls)
-        wsrt.assert_has_calls([call("345", "mr3.8.7"), call("123", "mr3.8.7")])
+        wsrt.assert_has_calls(
+            [call("345", "mr3.8.7.4"), call("123", "mr3.8.7.4")])
