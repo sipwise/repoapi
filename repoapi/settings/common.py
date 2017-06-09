@@ -26,6 +26,7 @@ PROJECT_APPS = [
     'hotfix',
     'panel',
     'release_dashboard',
+    'build',
 ]
 
 INSTALLED_APPS = [
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework_api_key',
     'rest_framework_swagger',
     'django_extensions',
     'django_assets',

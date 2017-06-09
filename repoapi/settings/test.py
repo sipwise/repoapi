@@ -94,6 +94,9 @@ DOCKER_IMAGES = {
     ],
 }
 
+# build app
+BUILD_KEY_AUTH = True
+
 # celery
 BROKER_BACKEND = 'memory'
 CELERY_ALWAYS_EAGER = True
