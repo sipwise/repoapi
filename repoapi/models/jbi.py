@@ -157,6 +157,7 @@ class JenkinsBuildInfo(models.Model):
 
     repo_name = models.CharField(max_length=50, null=True)
     git_commit_msg = models.TextField(null=True)
+    release_uuid = models.CharField(max_length=64, null=True)
 
     objects = JenkinsBuildInfoManager()
 
@@ -164,6 +165,7 @@ class JenkinsBuildInfo(models.Model):
         index_together = [
             ["param_release", "projectname"],
             ["param_release", "projectname", "tag"],
+            ["release_uuid", "tag"],
         ]
 
     def is_job_url_allowed(self):
@@ -174,7 +176,7 @@ class JenkinsBuildInfo(models.Model):
         return False
 
     def __str__(self):
-        return "%s:%d[%s]" % (self.jobname,
+        return "[%s]%s:%d[%s]" % (self.release_uuid, self.jobname,
                               self.buildnumber, self.tag)
 
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
 
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,20 +13,10 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+from django.contrib import admin
+from . import models
 
-# pylint: disable=W0401,W0614,C0413
-from .test import *
 
-LOGGING['loggers']['release_dashboard']['level'] = \
-    os.getenv('DJANGO_LOG_LEVEL', 'DEBUG')
-
-# build app
-BUILD_KEY_AUTH = False
-
-# celery
-BROKER_BACKEND = 'amqp'
-CELERY_ALWAYS_EAGER = False
-BROKER_URL = 'amqp://guest:guest@rabbit'
-JBI_BASEDIR = os.path.join(BASE_DIR, 'jbi_files')
+@admin.register(models.BuildRelease)
+class JenkinsBuildInfoAdmin(admin.ModelAdmin):
+    list_filter = ('release',)
