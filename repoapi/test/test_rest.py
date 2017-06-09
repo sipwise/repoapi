@@ -47,6 +47,7 @@ class TestRest(BaseTest, APITestCase):
             "param_tag": None,
             "param_branch": None,
             "param_release": None,
+            "param_release_uuid": None,
             "param_distribution": None,
             "param_ppa": None,
             "repo_name": None,

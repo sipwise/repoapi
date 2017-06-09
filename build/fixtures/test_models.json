@@ -1,0 +1,15 @@
+[
+{
+  "model": "build.buildrelease",
+  "pk": 1,
+  "fields": {
+    "uuid": "dbe569f7-eab6-4532-a6d1-d31fb559649b",
+    "start_date": "2017-07-14T07:55:11.714Z",
+    "tag": "",
+    "branch": "mr5.5",
+    "release": "release-mr5.5",
+    "distribution": "auto",
+    "projects": "kamailio,lua-ngcp-kamailio,ngcp-panel"
+  }
+}
+]
