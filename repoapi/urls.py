@@ -45,6 +45,8 @@ api_patterns = [
         '/(?P<project>[^/]+)/(?P<uuid>[^/]+)/$',
         views.UUIDInfoList.as_view(),
         name='uuidinfo-list'),
+    url(r'^build/',
+        include('build.urls', namespace='build')),
 ]
 
 api_patterns = format_suffix_patterns(api_patterns)

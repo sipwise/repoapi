@@ -52,7 +52,7 @@ class TestJBICelery(BaseTest):
             'param_release': "none",
             'param_distribution': "wheezy",
             'param_ppa': "gerrit_MT10339_review2054",
-            'git_commit_msg': "7fg4567 TT#0001 whatever",
+            'git_commit_msg': "7fg4567 TT#0001 whatever"
         }
         return defaults
 
