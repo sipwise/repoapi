@@ -67,6 +67,9 @@ GITWEB_URL = "https://git.local/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR, '.workfront.ini')
 WORKFRONT_NOTE = True
 
+# build app
+BUILD_KEY_AUTH = True
+
 # celery
 BROKER_BACKEND = 'memory'
 CELERY_ALWAYS_EAGER = True

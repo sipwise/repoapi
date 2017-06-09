@@ -22,6 +22,9 @@ from .test import *
 LOGGING['loggers']['release_dashboard']['level'] = \
     os.getenv('DJANGO_LOG_LEVEL', 'DEBUG')
 
+# build app
+BUILD_KEY_AUTH = False
+
 # celery
 BROKER_BACKEND = 'amqp'
 CELERY_ALWAYS_EAGER = False

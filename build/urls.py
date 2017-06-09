@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
 
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,12 +13,12 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from rest_framework import serializers
-import repoapi.models as models
+from django.conf.urls import url
+from . import views
 
-
-class JenkinsBuildInfoSerializer(serializers.HyperlinkedModelSerializer):
-
-    class Meta:
-        model = models.JenkinsBuildInfo
-        fields = '__all__'
+urlpatterns = [
+    url(r'^$', views.BuildReleaseList.as_view(),
+        name='list'),
+    url(r'^(?P<pk>[0-9]+)/?$', views.BuildReleaseDetail.as_view(),
+        name='detail'),
+]

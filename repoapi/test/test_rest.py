@@ -50,7 +50,8 @@ class TestRest(BaseTest, APITestCase):
             "param_distribution": None,
             "param_ppa": None,
             "repo_name": None,
-            "git_commit_msg": None
+            "git_commit_msg": None,
+            "release_uuid": None
         }
         response = self.client.post(self.url['jbi'], data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)

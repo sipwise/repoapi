@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
 
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -14,11 +14,18 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from rest_framework import serializers
-import repoapi.models as models
+from . import models
 
 
-class JenkinsBuildInfoSerializer(serializers.HyperlinkedModelSerializer):
+class BuildReleaseSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = models.JenkinsBuildInfo
+        model = models.BuildRelease
         fields = '__all__'
+
+    def validate_projects(self, value):
+        projects = [x.strip() for x in value.split(',')]
+        if len(projects) <= 0:
+            raise serializers.ValidationError(
+                "projects is not a list of coma separate elements")
+        return ','.join(projects)
