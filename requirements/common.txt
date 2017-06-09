@@ -3,6 +3,7 @@ django-extensions
 yuicompressor
 django-assets
 djangorestframework==3.4
+drfapikey
 django-rest-swagger
 markdown
 django-filter

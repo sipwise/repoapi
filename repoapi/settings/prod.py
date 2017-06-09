@@ -72,6 +72,9 @@ WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR,
                                      '/etc/jenkins_jobs/workfront.ini')
 WORKFRONT_NOTE = True
 
+# build app
+BUILD_KEY_AUTH = True
+
 # celery
 BROKER_URL = server_config.get('server', 'BROKER_URL')
 JBI_BASEDIR = os.path.join(VAR_DIR, 'jbi_files')

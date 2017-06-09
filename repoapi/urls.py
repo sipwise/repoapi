@@ -55,6 +55,8 @@ api_patterns = [
     url(r'^docker/tag/(?P<pk>[0-9]+)/$',
         docker.DockerTagDetail.as_view(),
         name='dockertag-detail'),
+    url(r'^build/',
+        include('build.urls', namespace='build')),
 ]
 
 api_patterns = format_suffix_patterns(api_patterns)
