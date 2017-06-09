@@ -152,6 +152,7 @@ class JenkinsBuildInfo(models.Model):
     param_branch = models.CharField(max_length=50, null=True)
     param_release = models.CharField(max_length=50, null=True,
                                      db_index=True)
+    param_release_uuid = models.CharField(max_length=64, null=True)
     param_distribution = models.CharField(max_length=50, null=True)
     param_ppa = models.CharField(max_length=50, null=True)
 
@@ -164,6 +165,7 @@ class JenkinsBuildInfo(models.Model):
         index_together = [
             ["param_release", "projectname"],
             ["param_release", "projectname", "tag"],
+            ["param_release_uuid", "tag"],
         ]
 
     def is_job_url_allowed(self):
@@ -174,8 +176,8 @@ class JenkinsBuildInfo(models.Model):
         return False
 
     def __str__(self):
-        return "%s:%d[%s]" % (self.jobname,
-                              self.buildnumber, self.tag)
+        return "[%s]%s:%d[%s]" % (self.param_release_uuid, self.jobname,
+                                  self.buildnumber, self.tag)
 
 
 def jbi_manage(sender, **kwargs):
