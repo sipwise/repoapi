@@ -31,4 +31,6 @@ urlpatterns = [
         views.hotfix_build),
     url(r'^refresh/$', views.refresh_all, name='refresh_all'),
     url(r'^refresh/(?P<project>[^/]+)/$', views.refresh, name='refresh'),
+    url(r'^build_docker/$', views.build_docker_images,
+        name='build_docker_images'),
 ]

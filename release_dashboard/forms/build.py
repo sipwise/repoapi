@@ -14,15 +14,8 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django import forms
-from django.conf import settings
-
-rd_settings = settings.RELEASE_DASHBOARD_SETTINGS
-trunk_projects = sorted(set(rd_settings['projects']) -
-                        set(rd_settings['abandoned']) -
-                        set(rd_settings['build_deps']))
-trunk_build_deps = sorted(set(rd_settings['build_deps']) -
-                          set(rd_settings['abandoned']))
-
+from . import rd_settings
+from . import trunk_projects, trunk_build_deps
 
 class BuildForm(forms.Form):
     common_select = forms.CharField(max_length=50)

@@ -20,6 +20,7 @@
             </select>
         </div>
 {% endif %}
+{% if not docker %}
         <div class="form-group">
             <label for="version_release">Release version</label>
             <input class="form-control" id="version_release"
@@ -35,6 +36,7 @@
             {% endfor %}
             </select>
         </div>
+{% endif %}
         <button id="main" type="submit" class="btn btn-default">Submit</button>
       </div>
       <div id="select_text_info" class="panel-footer"></div>

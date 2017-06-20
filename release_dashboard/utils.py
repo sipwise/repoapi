@@ -34,6 +34,9 @@ hotfix_url = ("{base}/job/release-tools-runner/buildWithParameters?"
               "PROJECTNAME={project}&repository={project}&"
               "push={push}&uuid={uuid}")
 
+docker_url = ("{base}/job/build-project-docker/buildWithParameters?"
+              "token={token}&project={project}&branch={branch}")
+
 
 def get_response(url):
     auth = HTTPDigestAuth(
@@ -98,6 +101,27 @@ def trigger_build(project, trigger_release=None,
     else:
         openurl(url)
     return "{base}/job/{job}/".format(**params)
+
+
+def trigger_docker_build(project, branch):
+    if branch == "ignore":
+        logger.debug("ignoring request to trigger project %s due"
+                     " to request of version 'ignore'", project)
+        return
+    branch = branch.split("branch/")[1]
+    params = {
+        'base': settings.JENKINS_URL,
+        'token': urllib.quote(settings.JENKINS_TOKEN),
+        'project': project,
+        'branch': urllib.quote(branch),
+    }
+
+    url = docker_url.format(**params)
+    if settings.DEBUG:
+        logger.debug("Debug mode, would trigger: %s", url)
+    else:
+        openurl(url)
+    return "{base}/job/build-project-docker/".format(**params)
 
 
 def get_gerrit_info(url):
