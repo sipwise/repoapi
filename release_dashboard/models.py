@@ -33,16 +33,13 @@ class Project(models.Model):
         res = set()
 
         for value in values:
-            logger.debug("ref[%s]", value["ref"])
             match = re.search(val_ok_filter, value["ref"])
             if match:
                 val_ok = match.group(1)
                 if regex is not None:
                     if re.search(regex, val_ok):
                         res.add(val_ok)
-                        logger.debug("val_ok[%s] regex", val_ok)
                 else:
-                    logger.debug("val_ok[%s]", val_ok)
                     res.add(val_ok)
         return sorted(res, reverse=True)
 
@@ -51,7 +48,6 @@ class Project(models.Model):
         """gerrit responds with malformed json
            https://gerrit-review.googlesource.com/Documentation/rest-api.html#output
         """
-        logging.debug("json[:5]: %s", text[:5])
         return json.loads(text[5:])
 
     def __str__(self):
