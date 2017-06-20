@@ -3,7 +3,11 @@
 {% block title %}Build release{% endblock %}
 {% block navlist %}
     <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+{% if release %}
     <li><a href="{% url 'panel:release-view' release %}">Panel {{release}}</a></li>
+{% else %}
+    <li><a href="{% url 'release_dashboard:build_docker_images'%}">Build project docker images</a></li>
+{% endif %}
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -18,7 +22,11 @@
 {% for project in projects %}
 {% if project.url %}
         <p class="bg-success">
+{% if release %}
           <a href="{% url 'panel:project-view' release project.name %}">{{ project.name }}</a>
+{% else %}
+          <a href="{{ project.url }}">{{ project.name }}</a>
+{% endif %}
         </p>
 {% else %}
         <p class="bg-danger">
