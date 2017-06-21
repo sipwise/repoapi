@@ -21,3 +21,4 @@ class JenkinsBuildInfoSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = models.JenkinsBuildInfo
+        fields = '__all__'
