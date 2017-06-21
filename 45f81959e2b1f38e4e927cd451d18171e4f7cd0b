@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bad4c104_e3c70c63",
+        "filename": "repoapi/settings/common.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-06-21T08:30:33Z",
+      "side": 1,
+      "message": "Why no to have default list? the jobs which has no docker - will just exit... we will always forget to add it to the list here when we commit Dockerfile. Nope?",
+      "revId": "45f81959e2b1f38e4e927cd451d18171e4f7cd0b",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
