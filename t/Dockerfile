@@ -36,7 +36,7 @@ WORKDIR /code/
 #   ./t/testrunner
 #
 # Run django inside docker:
-# % pip install -r t/dev.txt && make run_dev
+# % pip install -r requirements/dev.txt && make run_dev
 #
 # We need a working rabbit server, so in another terminal:
 # % docker run --rm --hostname repoapi-rabbit --name repoapi-rabbit rabbitmq:3

@@ -8,7 +8,7 @@ $('select#common_select').change(function() {
   if(selected_version.match(/^branch/)) {
     if(selected_version.match(/^branch\/master/)) {
       var distribution = $('select#distribution option:selected').val();
-      if(!distribution.match(/^auto/)) {
+      if(distribution && !distribution.match(/^auto/)) {
         version = 'trunk' + '-' + distribution;
       }
     }

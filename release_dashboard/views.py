@@ -42,7 +42,7 @@ def index(request):
 
 
 def _projects_versions(projects, regex=None,
-                       tags=True, branches=True):
+                       tags=True, branches=True, master=False):
     res = []
     for project in projects:
         info = {
@@ -52,6 +52,8 @@ def _projects_versions(projects, regex=None,
             info['tags'] = get_tags(project, regex)
         if branches:
             info['branches'] = get_branches(project, regex)
+        if master:
+            info['branches'].append('master')
         res.append(info)
     logger.debug(res)
     return res
@@ -286,10 +288,11 @@ def build_docker_images(request):
                 regex_mr,
                 False,
                 True,
+                True,
             ),
             'common_versions': {
                 'tags': [],
-                'branches': []
+                'branches': ['master', ]
             },
             'docker': True,
         }
