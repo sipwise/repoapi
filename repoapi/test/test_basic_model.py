@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.test import TestCase
 from repoapi.models import JenkinsBuildInfo
 from django.test import override_settings
 from repoapi.test.base import BaseTest
@@ -42,7 +41,6 @@ class JenkinsBuildInfoTestCase(BaseTest):
 
     @override_settings(JBI_ALLOWED_HOSTS=['jenkins-dev.local'])
     def test_job_url_not_allowed(self):
-        base = "https://%s/job/fake-gerrit/"
         job = JenkinsBuildInfo.objects.create(
             projectname='fake',
             jobname='fake-get-code',
@@ -55,7 +53,6 @@ class JenkinsBuildInfoTestCase(BaseTest):
 
     @override_settings(JBI_ALLOWED_HOSTS=[])
     def test_job_url_not_allowed_empty(self):
-        base = "https://%s/job/fake-gerrit/"
         job = JenkinsBuildInfo.objects.create(
             projectname='fake',
             jobname='fake-get-code',
@@ -74,10 +71,10 @@ class JenkinsBuildInfoTestCase(BaseTest):
         job = JenkinsBuildInfo.objects.create(
             projectname='fake',
             jobname='fake-get-code',
-            job_url=JBI_HOST % 'jenkins-dev.local',
             buildnumber=1,
             result='OK',
             param_release='release-mr4.0')
+        job.job_url = JBI_HOST % 'jenkins-dev.local'
         self.assertTrue(job.is_job_url_allowed())
         job.job_url = JBI_HOST % 'jenkins.local'
         self.assertTrue(job.is_job_url_allowed())

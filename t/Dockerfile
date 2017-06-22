@@ -40,6 +40,8 @@ WORKDIR /code/
 #
 # We need a working rabbit server, so in another terminal:
 # % docker run --rm --hostname repoapi-rabbit --name repoapi-rabbit rabbitmq:3
+# and link both containers:
+# % docker run --rm -i -t --link repoapi-rabbit:rabbit -v $(pwd):/code:rw docker.mgm.sipwise.com/repoapi-jessie:latest bash
 #
 # use screen to get a working worker in the background:
 # % make worker_dev
