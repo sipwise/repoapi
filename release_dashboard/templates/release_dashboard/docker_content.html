@@ -1,0 +1,40 @@
+<div class="container">
+    <form method="POST" class="form-inline">{% csrf_token %}
+    <div class="panel panel-default">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Data</h3>
+      </div>
+      <div class="panel-body">
+        <table class="table table-condensed">
+          <thead>
+              <tr>
+                  <th>Image</th>
+                  <th>Project</th>
+                  <th>Tags</th>
+              </tr>
+          </thead>
+          <tbody>
+        {% for i in images %}
+            <tr>
+              <th><label>{{ i.name }}</label></th>
+              <td>{{ i.project.name }}</td>
+              <td>
+              {% for tag in i.tags %}
+                <a href="{{URL_BASE}}{{i.name}}/manifest/{{tag}}">
+                {% if tag|length > 10 %}
+                  <span class="label label-warning">{{ tag }}</span>
+                {% else %}
+                  <span class="label label-success">{{ tag }}</span>
+                {% endif %}
+                </a>
+              {% endfor %}
+              </td>
+            </tr>
+        {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </form>
+</div>

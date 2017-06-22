@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.test import TestCase
 from repoapi.test.base import BaseTest
 from mock import patch
 
@@ -35,13 +34,13 @@ class UtilsTestCase(BaseTest):
         self.assertEquals(val, 'mr5.5.1')
 
     @patch('repoapi.utils.executeAndReturnOutput')
-    def test_get_next_release0(self, ear):
+    def test_get_next_release1(self, ear):
         ear.return_value = [0, "mr5.4.2\n", ""]
         val = utils.get_next_release("mr5.4")
         self.assertEquals(val, 'mr5.4.2')
 
     @patch('repoapi.utils.executeAndReturnOutput')
-    def test_get_next_release0(self, ear):
+    def test_get_next_release2(self, ear):
         ear.return_value = [0, "\n", ""]
         val = utils.get_next_release("mr5.4")
         self.assertEquals(val, None)
