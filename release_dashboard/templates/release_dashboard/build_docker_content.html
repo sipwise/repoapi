@@ -5,7 +5,6 @@
           <h3 class="panel-title">Actions</h3>
       </div>
       <div class="panel-body">
-{% if common_versions %}
         <div class="form-group">
             <label for="common_select">Common selection</label>
             <select class="form-control" id="common_select"
@@ -14,28 +13,10 @@
             {% for v in common_versions.branches %}
                 <option value="branch/{{ v }}">branch/{{ v }}</option>
             {% endfor %}
-            {% for v in common_versions.tags %}
-                <option value="tag/{{ v }}">tag/{{ v }}</option>
-            {% endfor %}
-            </select>
-        </div>
-{% endif %}
-        <div class="form-group">
-            <label for="version_release">Release version</label>
-            <input class="form-control" id="version_release"
-                name="version_release" type="text"
-                value="none">
-        </div>
-        <div class="form-group">
-            <label for="distribution">Debian release</label>
-            <select class="form-control" id="distribution"
-                name="distribution">
-            {% for d in debian %}
-                <option value="{{ d }}">{{ d }}</option>
-            {% endfor %}
             </select>
         </div>
         <button id="main" type="submit" class="btn btn-default">Submit</button>
+        <button id="docker" type="submit" class="btn">Refresh</button>
       </div>
       <div id="select_text_info" class="panel-footer"></div>
     </div>
@@ -47,25 +28,27 @@
         <table class="table table-condensed">
           <thead>
               <tr>
-                  <th>Project</th>
-                  <th>Version</th>
+                  <th class="col-md-2">Project</th>
+                  <th class="col-md-2">Version</th>
+                  <th class="col-md-8">Docker Tags</th>
               </tr>
           </thead>
           <tbody>
         {% for p in projects %}
             <tr class="repo">
-              <th><label for="version_{{ p.name }}">{{ p.name }}</label></th>
-              <td class="version">
-                  <select class="form-control" id="version_{{ p.name }}" name="version_{{ p.name }}">
+              <th class="col-md-2">
+                <label for="version_{{ p.name }}">{{ p.name }}</label>
+              </th>
+              <td class="version col-md-2">
+                  <select class="form-control select-version" id="version_{{ p.name }}" name="version_{{ p.name }}"
+                  project="{{ p.name }}">
                       <option value="ignore">ignore</option>
-                  {% for t in p.tags %}
-                      <option value="tag/{{ t }}">tag/{{ t }}</option>
-                  {% endfor %}
                   {% for b in p.branches %}
                       <option value="branch/{{ b }}">branch/{{ b }}</option>
                   {% endfor %}
                   </select>
               </td>
+              <td class="col-md-8" id="docker_tag_{{ p.name }}"></td>
             </tr>
         {% endfor %}
           </tbody>
@@ -73,4 +56,5 @@
       </div>
     </div>
     </form>
+    <div class="list-group col-md-4 hidden" id="docker_image"></div>
 </div>

@@ -46,6 +46,7 @@ server_config = RawConfigParser()
 server_config.read(os.path.join(VAR_DIR, 'server.ini'))
 JENKINS_URL = server_config.get('server', 'JENKINS_URL')
 GERRIT_URL = server_config.get('server', 'GERRIT_URL')
+DOCKER_REGISTRY_URL = server_config('server', 'DOCKER_REGISTRY_URL')
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -70,6 +71,7 @@ GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR,
                                      '/etc/jenkins_jobs/workfront.ini')
 WORKFRONT_NOTE = True
+
 # celery
 BROKER_URL = server_config.get('server', 'BROKER_URL')
 JBI_BASEDIR = os.path.join(VAR_DIR, 'jbi_files')

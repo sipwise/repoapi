@@ -17,6 +17,7 @@ import logging
 import uuid
 import urllib
 import requests
+import json
 from requests.auth import HTTPDigestAuth
 from django.conf import settings
 from repoapi.utils import openurl
@@ -152,3 +153,51 @@ def get_gerrit_tags(project, regex=None):
 def get_gerrit_branches(project, regex=None):
     url = settings.GERRIT_URL.format("a/projects/%s/branches/" % project)
     return get_gerrit_info(url)
+
+
+def get_docker_info(url):
+    """
+    if settings.DEBUG:
+        logger.debug("Debug mode, would trigger: %s", url)
+        return r")]}'\n[]"
+    else:
+    """
+    logger.debug("trigger: %s", url)
+    response = requests.get(url)
+    logger.debug("response: %s" % response)
+    response.raise_for_status()
+    return response.text
+
+
+def get_docker_repositories():
+    if settings.DEBUG:
+        result = json.loads(settings.DOCKER_REGISTRY)
+        return result['repositories']
+    else:
+        url = settings.DOCKER_REGISTRY_URL.format("_catalog")
+        try:
+            info = get_docker_info(url)
+            logger.debug("response: %s" % info)
+            result = json.loads(info)
+            return result['repositories']
+        except Exception as e:
+            logger.error(e)
+            return []
+
+
+def get_docker_tags(image):
+    if settings.DEBUG:
+        try:
+            return settings.DOCKER_IMAGES[image]
+        except Exception as e:
+            return []
+    else:
+        url = settings.DOCKER_REGISTRY_URL.format("%s/tags/list" % image)
+        try:
+            info = get_docker_info(url)
+            logger.debug("response: %s" % info)
+            result = json.loads(info)
+            return result['tags']
+        except Exception as e:
+            logger.error(e)
+            return []
