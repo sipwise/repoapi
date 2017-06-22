@@ -15,6 +15,7 @@
 import logging
 import re
 import json
+from datetime import datetime
 from django.db import models
 from django_extensions.db.fields.json import JSONField
 from django_extensions.db.fields import ModificationDateTimeField
@@ -77,8 +78,61 @@ class Project(models.Model):
         return Project._filter_values(self.json_branches,
                                       '^refs/heads/(.+)$', regex)
 
+    def filter_docker_images(self, images):
+        r = re.compile(self.name)
+        return filter(r.search, images)
+
     def branches_mrXX(self):
         return self.filter_branches(r'^mr[0-9]+\.[0-9]+$')
 
     def branches_mrXXX(self):
         return self.filter_branches(r'^mr[0-9]+\.[0-9]+\.[0-9]+$')
+
+
+class DockerImageManager(models.Manager):
+
+    def images_with_tags(self):
+        qs = self.get_queryset().filter(dockertag__isnull=False)
+        return qs.distinct()
+
+
+class DockerImage(models.Model):
+    name = models.CharField(max_length=50, unique=True, null=False)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    objects = DockerImageManager()
+
+    def __str__(self):
+        return "%s[%s]" % (self.name, self.project.name)
+
+    @property
+    def tags(self):
+        res = self.dockertag_set.all().values_list('name', flat=True)
+        return res
+
+
+class DockerTag(models.Model):
+    name = models.CharField(max_length=50, null=False)
+    manifests = JSONField(null=False)
+    image = models.ForeignKey(DockerImage, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (("name", "image"),)
+
+    def __str__(self):
+        return "%s:%s" % (self.image.name, self.name)
+
+    @property
+    def date(self):
+        if self.manifests is None:
+            return None
+        try:
+            value = self.manifests['history'][-1]['v1Compatibility']
+            time = json.loads(value)
+            created = time['created'].split('.')
+            return datetime.strptime(
+                created[0],
+                '%Y-%m-%dT%H:%M:%S')
+        except Exception as e:
+            logger.error(e)
+            return None

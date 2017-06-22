@@ -1,0 +1,491 @@
+[
+{
+    "model": "release_dashboard.project",
+    "pk": 1,
+    "fields": {
+        "name": "comx-fileshare-service",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.296Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 2,
+    "fields": {
+        "name": "data-hal",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.307Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 3,
+    "fields": {
+        "name": "documentation",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.323Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 4,
+    "fields": {
+        "name": "janus-admin",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.337Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 5,
+    "fields": {
+        "name": "janus-client",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.352Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 6,
+    "fields": {
+        "name": "kamailio-config-tests",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.373Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 7,
+    "fields": {
+        "name": "libswrate",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.386Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 8,
+    "fields": {
+        "name": "libtcap",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.403Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 9,
+    "fields": {
+        "name": "lua-ngcp-kamailio",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.421Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 10,
+    "fields": {
+        "name": "ngcp-csc",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.435Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 11,
+    "fields": {
+        "name": "ngcp-panel",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.450Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 12,
+    "fields": {
+        "name": "ngcp-rtcengine",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.472Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 13,
+    "fields": {
+        "name": "ngcpcfg",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.485Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 14,
+    "fields": {
+        "name": "rate-o-mat",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.502Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 15,
+    "fields": {
+        "name": "snmp-agent",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.519Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 16,
+    "fields": {
+        "name": "system-tools",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.535Z"
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 45,
+    "fields": {
+        "name": "data-hal-jessie",
+        "project": 2
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 46,
+    "fields": {
+        "name": "documentation-jessie",
+        "project": 3
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 47,
+    "fields": {
+        "name": "janus-admin-jessie",
+        "project": 4
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 48,
+    "fields": {
+        "name": "janus-client-jessie",
+        "project": 5
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 49,
+    "fields": {
+        "name": "kamailio-config-tests-jessie",
+        "project": 6
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 50,
+    "fields": {
+        "name": "libswrate-jessie",
+        "project": 7
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 51,
+    "fields": {
+        "name": "libtcap-jessie",
+        "project": 8
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 52,
+    "fields": {
+        "name": "lua-ngcp-kamailio",
+        "project": 9
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 53,
+    "fields": {
+        "name": "lua-ngcp-kamailio-jenkins",
+        "project": 9
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 54,
+    "fields": {
+        "name": "lua-ngcp-kamailio-jessie",
+        "project": 9
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 55,
+    "fields": {
+        "name": "ngcp-csc-jessie",
+        "project": 10
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 56,
+    "fields": {
+        "name": "ngcp-panel-selenium",
+        "project": 11
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 57,
+    "fields": {
+        "name": "ngcp-panel-tests-rest-api-jessie",
+        "project": 11
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 58,
+    "fields": {
+        "name": "ngcp-panel-tests-selenium-jessie",
+        "project": 11
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 59,
+    "fields": {
+        "name": "ngcp-rtcengine-test-jessie",
+        "project": 12
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 60,
+    "fields": {
+        "name": "ngcp-rtcengine-tests-selenium-jessie",
+        "project": 12
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 61,
+    "fields": {
+        "name": "ngcp-rtcengine-tests-selenium-stretch",
+        "project": 12
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 62,
+    "fields": {
+        "name": "ngcpcfg-jessie",
+        "project": 13
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 63,
+    "fields": {
+        "name": "ngcp-rate-o-mat-unit-tests-jessie",
+        "project": 14
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 64,
+    "fields": {
+        "name": "rate-o-mat-functional-tests-jessie",
+        "project": 14
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 65,
+    "fields": {
+        "name": "rate-o-mat-jessie",
+        "project": 14
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 66,
+    "fields": {
+        "name": "system-tools-jessie",
+        "project": 16
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 35,
+    "fields": {
+        "name": "If53a93f4b6d1c82fd7af5672e8b02087e646b507",
+        "manifests": "{}",
+        "image": 46
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 36,
+    "fields": {
+        "name": "latest",
+        "manifests": "{}",
+        "image": 46
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 37,
+    "fields": {
+        "name": "mr5.2",
+        "manifests": "{}",
+        "image": 46
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 38,
+    "fields": {
+        "name": "mr5.3.1",
+        "manifests": "{}",
+        "image": 46
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 39,
+    "fields": {
+        "name": "mr5.3",
+        "manifests": "{}",
+        "image": 46
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 40,
+    "fields": {
+        "name": "Ia9b03983d174a1546631f5b42e605235809711ef",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 41,
+    "fields": {
+        "name": "If508e72c01d9bc78836a40204e508585d1dc3555",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 42,
+    "fields": {
+        "name": "latest",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 43,
+    "fields": {
+        "name": "mr5.2",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 44,
+    "fields": {
+        "name": "mr5.3.1",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 45,
+    "fields": {
+        "name": "mr5.3",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 46,
+    "fields": {
+        "name": "I5c5c351e36da15db71fe3addbed4603007e8c304",
+        "manifests": "{}",
+        "image": 57
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 47,
+    "fields": {
+        "name": "latest",
+        "manifests": "{}",
+        "image": 56
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 48,
+    "fields": {
+        "name": "I3a899b8945688c2ef3a4be6ba6c4c1d4cbf6d548",
+        "manifests": "{}",
+        "image": 58
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 49,
+    "fields": {
+        "name": "latest",
+        "manifests": "{\"signatures\": [{\"header\": {\"alg\": \"ES256\", \"jwk\": {\"y\": \"BtJFnEj4LvklXpx9azu2uOUsa5HL92jBuz0L5z1UY90\", \"x\": \"4OyXD6I8jNMoFpJnLtoC61UurDDJETaRIk_si31JNnI\", \"crv\": \"P-256\", \"kty\": \"EC\", \"kid\": \"HUYC:FG7N:RY7F:3N3H:DCIG:SMR5:NGDY:3HYM:PG2Z:6UOK:2EUZ:WOXA\"}}, \"protected\": \"eyJmb3JtYXRMZW5ndGgiOjU5MDEyLCJmb3JtYXRUYWlsIjoiQ24wIiwidGltZSI6IjIwMTctMDYtMjZUMTA6MTE6MTNaIn0\", \"signature\": \"FyohXMh1XPuKgZ91RUc_t618x_v_KG7lZGnRnF2DJa73YFu_oicq7UuFpCjqZdYin9UB94_ji4qSGYL2qXcjag\"}], \"name\": \"ngcp-panel-tests-selenium-jessie\", \"fsLayers\": [{\"blobSum\": \"sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4\"}, {\"blobSum\": \"sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4\"}, {\"blobSum\": \"sha256:71fa96d563ec53da4650b23657bb84312c23694aa82b54e7667665f56244fa2c\"}, {\"blobSum\": \"sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4\"}, {\"blobSum\": \"sha256:5cb4fff5facba6b3ca4a94e2419b7b24ace177799acabdda34ec8a8d73419a0b\"}, {\"blobSum\": \"sha256:68a5c58ed87c832a9f52603ffe9f5cf400e60f03ee221cc09d810ae594af38c9\"}, {\"blobSum\": \"sha256:8fe2b7213de307792dd81a9ce3c5381be0d475c21977cfebe5588fa0843d951c\"}, {\"blobSum\": \"sha256:2400a3e7d50faa5120b743aca083eee762e09e535c58fa5fee55a5c03f483eec\"}, {\"blobSum\": \"sha256:d93e1f786d451855607e84686c20a43362af86d8a1ceb733544e3513e0620126\"}, {\"blobSum\": \"sha256:f66c0093f4ffc0fb8ebbffec81eadc6a26eea0948af18a2ab2b26af4deaacb8f\"}, {\"blobSum\": \"sha256:2e695d3ffcba061d77cee2be1de9eede4b8e9766002e73cf9cab800ece3a1049\"}, {\"blobSum\": \"sha256:657a46ed6a644065c3b81437c3adae03a2d55a829841889110698fcb562942f0\"}, {\"blobSum\": \"sha256:62d7e24372e0bb9e60f452bd4abaf79afe593c80ec652ec27f7eb402d15e88a9\"}, {\"blobSum\": \"sha256:36b33b4e23edb49636885d0fa95b425ddac48fcf563c94949335792455e6a759\"}, {\"blobSum\": \"sha256:d02dbe939f87092d0901ae018c9538902f31270c351b88bfd1dc1bb7831ed52d\"}, {\"blobSum\": \"sha256:27eabcd6743d61b50e119fd0da996c890b0d27eefda86457e96b14ea2f976718\"}, {\"blobSum\": \"sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4\"}, {\"blobSum\": \"sha256:cbe415e9e3720b3cb6adcb8aa0f93a5de30b4c4cc72e0a69f66fed35d9143560\"}, {\"blobSum\": \"sha256:c81f70bbc8faee78cc60ad35bd535b94a1c819180838a01bc21b1b8b6cca35b6\"}, {\"blobSum\": \"sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4\"}, {\"blobSum\": \"sha256:9e65626c5a7e462596740901ee66869cc2fb262f8d4a642863b2e2a4c8ec97dc\"}, {\"blobSum\": \"sha256:f4640bd523a0f01a1cf404ad1acff781125eb2757f2aed1caaad6a7ef014514a\"}, {\"blobSum\": \"sha256:7d95de8e5ff96d02a0291e71874786daaa922699f6a3f788debb176cceb5d08a\"}, {\"blobSum\": \"sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4\"}, {\"blobSum\": \"sha256:05182215676d9362b18dcba40afd8ebfd5e55528a173e8ae79a7ff94386c84d4\"}, {\"blobSum\": \"sha256:a447a2cd6adbd50e37f9f2e227112cc1dbc20159b70e0818c6d797453baa9469\"}, {\"blobSum\": \"sha256:d76f4e5646635d156f79981182546797262e9ffe8fc6a38280b9e272787b9eed\"}, {\"blobSum\": \"sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4\"}, {\"blobSum\": \"sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4\"}, {\"blobSum\": \"sha256:a3ed95caeb02ffe68cdd9fd84406680ae93d633cb16422d00e8a7c22955b46d4\"}, {\"blobSum\": \"sha256:386a066cd84a33a04d560c42bef66d1dd64ebfc76de78550e5fd0f8d57778bca\"}], \"schemaVersion\": 1, \"history\": [{\"v1Compatibility\": \"{\\\"id\\\":\\\"53eb054e17c001c9974a35100c64c930439c463f71d822fb2c6eeedc00986059\\\",\\\"parent\\\":\\\"ab410de121c7680b48452803740a97fd1d3a8c53aefd00c31ab8c1780918e177\\\",\\\"created\\\":\\\"2017-06-21T16:03:37.745580191Z\\\",\\\"container\\\":\\\"15bfcf9526ef6b7f58369ac216e12b3a4ea616deda5c33c22e125d86ff447722\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":{\\\"5999/tcp\\\":{}},\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) WORKDIR /home/selenium\\\"],\\\"Image\\\":\\\"ab410de121c7680b48452803740a97fd1d3a8c53aefd00c31ab8c1780918e177\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/home/selenium\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":{\\\"5999/tcp\\\":{}},\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"ab410de121c7680b48452803740a97fd1d3a8c53aefd00c31ab8c1780918e177\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/home/selenium\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":0}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"53eb054e17c001c9974a35100c64c930439c463f71d822fb2c6eeedc00986059\\\",\\\"parent\\\":\\\"ab410de121c7680b48452803740a97fd1d3a8c53aefd00c31ab8c1780918e177\\\",\\\"created\\\":\\\"2017-06-21T16:03:37.745580191Z\\\",\\\"container\\\":\\\"15bfcf9526ef6b7f58369ac216e12b3a4ea616deda5c33c22e125d86ff447722\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":{\\\"5999/tcp\\\":{}},\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) WORKDIR /home/selenium\\\"],\\\"Image\\\":\\\"ab410de121c7680b48452803740a97fd1d3a8c53aefd00c31ab8c1780918e177\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/home/selenium\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":{\\\"5999/tcp\\\":{}},\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"ab410de121c7680b48452803740a97fd1d3a8c53aefd00c31ab8c1780918e177\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/home/selenium\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":0}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"ab410de121c7680b48452803740a97fd1d3a8c53aefd00c31ab8c1780918e177\\\",\\\"parent\\\":\\\"64897358c4ba83a53b1ec1958f64f1b5f037f23f499bef34a8d8b7de6f21bf3f\\\",\\\"created\\\":\\\"2017-06-21T16:03:37.049045129Z\\\",\\\"container\\\":\\\"44cc64a92081e3ae88106ffa4fe9993b24f9612af0cd7871a832b0afa9c2d0e8\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":{\\\"5999/tcp\\\":{}},\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) COPY file:0161aa24ec9b04d33c4dda759ebb5ad3cdda7183b3d6476dba55d9565b2256ec in /home/selenium/\\\"],\\\"Image\\\":\\\"64897358c4ba83a53b1ec1958f64f1b5f037f23f499bef34a8d8b7de6f21bf3f\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":{\\\"5999/tcp\\\":{}},\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"64897358c4ba83a53b1ec1958f64f1b5f037f23f499bef34a8d8b7de6f21bf3f\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":174}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"64897358c4ba83a53b1ec1958f64f1b5f037f23f499bef34a8d8b7de6f21bf3f\\\",\\\"parent\\\":\\\"4984d1be72d1a0ca09b980f87394e215e717ea71c584f5084a37ead46b3046fd\\\",\\\"created\\\":\\\"2017-06-21T16:03:36.246267153Z\\\",\\\"container\\\":\\\"49d5b2c0943e1ebd6f8dc611afc2f458cd2cecd422e1b8fb25404b2833dbe5b1\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":{\\\"5999/tcp\\\":{}},\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) EXPOSE 5999/tcp\\\"],\\\"Image\\\":\\\"4984d1be72d1a0ca09b980f87394e215e717ea71c584f5084a37ead46b3046fd\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":{\\\"5999/tcp\\\":{}},\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"4984d1be72d1a0ca09b980f87394e215e717ea71c584f5084a37ead46b3046fd\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":0}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"4984d1be72d1a0ca09b980f87394e215e717ea71c584f5084a37ead46b3046fd\\\",\\\"parent\\\":\\\"83f0eb7ce01e0068d73a242348d81bcb9d6641101827fa7a3a0b8258f0a98218\\\",\\\"created\\\":\\\"2017-06-21T16:03:35.509458462Z\\\",\\\"container\\\":\\\"506bb54d7e55c040a40573411aa22da970ac29d8534f77a4b7f59ce2fab4cc03\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"echo \\\\\\\"su - selenium\\\\\\\" \\\\u003e/root/.bash_history\\\"],\\\"Image\\\":\\\"83f0eb7ce01e0068d73a242348d81bcb9d6641101827fa7a3a0b8258f0a98218\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"83f0eb7ce01e0068d73a242348d81bcb9d6641101827fa7a3a0b8258f0a98218\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":14}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"83f0eb7ce01e0068d73a242348d81bcb9d6641101827fa7a3a0b8258f0a98218\\\",\\\"parent\\\":\\\"476ff57d3b16b21009de018d1deba2ccb3c9827208efb13f79f417f9c840e99d\\\",\\\"created\\\":\\\"2017-06-21T16:03:34.629651465Z\\\",\\\"container\\\":\\\"3e30124912265f37262557498c93c32ed7a1d397d529089ea48bc5541c012b71\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"echo \\\\\\\"cd /code \\\\u0026\\\\u0026 ./t/selenium/testrunner 1.2.3.4\\\\\\\" \\\\u003e/home/selenium/.bash_history\\\"],\\\"Image\\\":\\\"476ff57d3b16b21009de018d1deba2ccb3c9827208efb13f79f417f9c840e99d\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"476ff57d3b16b21009de018d1deba2ccb3c9827208efb13f79f417f9c840e99d\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":44}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"476ff57d3b16b21009de018d1deba2ccb3c9827208efb13f79f417f9c840e99d\\\",\\\"parent\\\":\\\"97f6cefff28b3f5a14627467d64531533521f099560d5ba4cf195d8229c5dfd5\\\",\\\"created\\\":\\\"2017-06-21T16:03:33.589693789Z\\\",\\\"container\\\":\\\"28835a5fb8859a27a36cac6880e30bed03c32eae63e16dc0c361e38ee9847ad0\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"apt-get --assume-yes -f install\\\"],\\\"Image\\\":\\\"97f6cefff28b3f5a14627467d64531533521f099560d5ba4cf195d8229c5dfd5\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"97f6cefff28b3f5a14627467d64531533521f099560d5ba4cf195d8229c5dfd5\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":2601900}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"97f6cefff28b3f5a14627467d64531533521f099560d5ba4cf195d8229c5dfd5\\\",\\\"parent\\\":\\\"f4147fce86029f69bef21de154e36890cf8db9a6b2116c41566bf013e5fb5184\\\",\\\"created\\\":\\\"2017-06-21T16:03:22.209963663Z\\\",\\\"container\\\":\\\"d7f9ed6b5a7bc06d1b46d41ffe67cd0859b828b926663fb38a81d1b8b8c99e97\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"dpkg --force-depends -i libtest-pretty-perl_0.31-1~bpo80+1_all.deb\\\"],\\\"Image\\\":\\\"f4147fce86029f69bef21de154e36890cf8db9a6b2116c41566bf013e5fb5184\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"f4147fce86029f69bef21de154e36890cf8db9a6b2116c41566bf013e5fb5184\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":2423828}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"f4147fce86029f69bef21de154e36890cf8db9a6b2116c41566bf013e5fb5184\\\",\\\"parent\\\":\\\"91d0fbf23bcf4c4251acbbff45e5e801d2dd6b8aef76b407f066ccf89c72cfed\\\",\\\"created\\\":\\\"2017-06-21T16:03:19.189800803Z\\\",\\\"container\\\":\\\"ceddaebdc7ec02785a0d87d9b6f33c9474654636b26799c91ce2f245070ca94d\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"wget http://deb.sipwise.com/files/libtest-pretty-perl_0.31-1~bpo80+1_all.deb\\\"],\\\"Image\\\":\\\"91d0fbf23bcf4c4251acbbff45e5e801d2dd6b8aef76b407f066ccf89c72cfed\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"91d0fbf23bcf4c4251acbbff45e5e801d2dd6b8aef76b407f066ccf89c72cfed\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":18878}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"91d0fbf23bcf4c4251acbbff45e5e801d2dd6b8aef76b407f066ccf89c72cfed\\\",\\\"parent\\\":\\\"b4800734f0ff1ff6962d7dac2fd2cd7eb2c3a806b263dc9b984539a6a4cfa301\\\",\\\"created\\\":\\\"2017-06-21T16:03:17.925698349Z\\\",\\\"container\\\":\\\"fe8f5cbfd8f74afce79afa640e44db4e6481cbca8946b0d4fa965c8bcc445651\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"apt-get --assume-yes -f install\\\"],\\\"Image\\\":\\\"b4800734f0ff1ff6962d7dac2fd2cd7eb2c3a806b263dc9b984539a6a4cfa301\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"b4800734f0ff1ff6962d7dac2fd2cd7eb2c3a806b263dc9b984539a6a4cfa301\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":7166714}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"b4800734f0ff1ff6962d7dac2fd2cd7eb2c3a806b263dc9b984539a6a4cfa301\\\",\\\"parent\\\":\\\"e8176966932da7eac83c1e0358116d09ccd39a6cc43e96e2a37251b72344a33f\\\",\\\"created\\\":\\\"2017-06-21T16:02:56.4304732Z\\\",\\\"container\\\":\\\"763e7bd64eb2f5f45cb7285db07a5920bcaa8b212b0dad5ce9e6577e9c714840\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"dpkg --force-depends -i libselenium-remote-driver-perl_0.26-1~bpo80+1_all.deb\\\"],\\\"Image\\\":\\\"e8176966932da7eac83c1e0358116d09ccd39a6cc43e96e2a37251b72344a33f\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"e8176966932da7eac83c1e0358116d09ccd39a6cc43e96e2a37251b72344a33f\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":5442466}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"e8176966932da7eac83c1e0358116d09ccd39a6cc43e96e2a37251b72344a33f\\\",\\\"parent\\\":\\\"db9f23514797f504a61120af7225969e1ec8dbeafdaad79b916cba95686c7ca3\\\",\\\"created\\\":\\\"2017-06-21T16:02:52.193645558Z\\\",\\\"container\\\":\\\"1aa57e606314910cc3a44b9d20fc75cee0c2a50c437ab6a6a156a981fc817b10\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"wget http://deb.sipwise.com/files/libselenium-remote-driver-perl_0.26-1~bpo80+1_all.deb\\\"],\\\"Image\\\":\\\"db9f23514797f504a61120af7225969e1ec8dbeafdaad79b916cba95686c7ca3\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"db9f23514797f504a61120af7225969e1ec8dbeafdaad79b916cba95686c7ca3\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":2478694}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"db9f23514797f504a61120af7225969e1ec8dbeafdaad79b916cba95686c7ca3\\\",\\\"parent\\\":\\\"9ef2d755ee29397a37b4cbcb9c7ae000180ef196ee239d9f705e5d9b287f013d\\\",\\\"created\\\":\\\"2017-06-21T16:02:50.853619482Z\\\",\\\"container\\\":\\\"5598905ffbd18fd79cc5a4f2ac1bc556cd06606169c2eeced80a3670e968dbb3\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"apt-get --assume-yes -f install\\\"],\\\"Image\\\":\\\"9ef2d755ee29397a37b4cbcb9c7ae000180ef196ee239d9f705e5d9b287f013d\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"9ef2d755ee29397a37b4cbcb9c7ae000180ef196ee239d9f705e5d9b287f013d\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":4167572}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"9ef2d755ee29397a37b4cbcb9c7ae000180ef196ee239d9f705e5d9b287f013d\\\",\\\"parent\\\":\\\"be0a9716cd20d77aaaf5020cb2008c2114937fddfb50215adc601d62507283a4\\\",\\\"created\\\":\\\"2017-06-21T16:02:23.721801822Z\\\",\\\"container\\\":\\\"1052eb2ec5103e6acb8a43b789a2fe8bae2a7ee3be29acdeb1bb760ef04863b7\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"dpkg --force-depends -i /tmp/ngcp-panel-tests-selenium-build-deps_1.0_all.deb\\\"],\\\"Image\\\":\\\"be0a9716cd20d77aaaf5020cb2008c2114937fddfb50215adc601d62507283a4\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"be0a9716cd20d77aaaf5020cb2008c2114937fddfb50215adc601d62507283a4\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":1498270}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"be0a9716cd20d77aaaf5020cb2008c2114937fddfb50215adc601d62507283a4\\\",\\\"parent\\\":\\\"1a8d225db735872cd890c7c4503aeb4c0532b8efb6ff33f5aa9394e98b889a46\\\",\\\"created\\\":\\\"2017-06-21T16:02:22.249594991Z\\\",\\\"container\\\":\\\"05d925868f9e7c03be03ee079c75d9ca30dd9875e352f93726e13f9adc066cfe\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"mk-build-deps /tmp/control\\\"],\\\"Image\\\":\\\"1a8d225db735872cd890c7c4503aeb4c0532b8efb6ff33f5aa9394e98b889a46\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"1a8d225db735872cd890c7c4503aeb4c0532b8efb6ff33f5aa9394e98b889a46\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":2060}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"1a8d225db735872cd890c7c4503aeb4c0532b8efb6ff33f5aa9394e98b889a46\\\",\\\"parent\\\":\\\"65a1e9e1277df7f424fe068cdd52b8a1388ce001fd72303d0e6671738cd6cf1c\\\",\\\"created\\\":\\\"2017-06-21T16:02:19.528691848Z\\\",\\\"container\\\":\\\"71c165c987a9702517b5e8516ea56baf069fa9c094b39fe0bbdaebb8d5281770\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) COPY file:4b2f7643dbcd6a0ffbd4e2d066b922a7fe9237a0d81833aaefeb142d575c3c2f in /tmp/\\\"],\\\"Image\\\":\\\"65a1e9e1277df7f424fe068cdd52b8a1388ce001fd72303d0e6671738cd6cf1c\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp/\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"65a1e9e1277df7f424fe068cdd52b8a1388ce001fd72303d0e6671738cd6cf1c\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp/\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":116}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"65a1e9e1277df7f424fe068cdd52b8a1388ce001fd72303d0e6671738cd6cf1c\\\",\\\"parent\\\":\\\"1f9b6ac734106cdb6d57a354afce86f52bd05c03a949b07d0308c0b31970ca4c\\\",\\\"created\\\":\\\"2017-06-21T16:02:18.788021933Z\\\",\\\"container\\\":\\\"4f25053c470c48f6895739500ceb9bd0846576343f53e80cd620024e425d1839\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) WORKDIR /tmp/\\\"],\\\"Image\\\":\\\"1f9b6ac734106cdb6d57a354afce86f52bd05c03a949b07d0308c0b31970ca4c\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp/\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"1f9b6ac734106cdb6d57a354afce86f52bd05c03a949b07d0308c0b31970ca4c\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/tmp/\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":0}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"1f9b6ac734106cdb6d57a354afce86f52bd05c03a949b07d0308c0b31970ca4c\\\",\\\"parent\\\":\\\"72fb9761354b0f053b5547aa5d0a1957c294f734fbad991049763613a487a32d\\\",\\\"created\\\":\\\"2017-06-21T16:02:18.045534344Z\\\",\\\"container\\\":\\\"e371fecb724b4840b9bc6bfe0b7d2a9e0a7f0a4a655dd6873241a860e640cae8\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"ln -s selenium-server-standalone-2.47.1.jar selenium-server-standalone.jar\\\"],\\\"Image\\\":\\\"72fb9761354b0f053b5547aa5d0a1957c294f734fbad991049763613a487a32d\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/home/selenium\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"72fb9761354b0f053b5547aa5d0a1957c294f734fbad991049763613a487a32d\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/home/selenium\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":37}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"72fb9761354b0f053b5547aa5d0a1957c294f734fbad991049763613a487a32d\\\",\\\"parent\\\":\\\"e3e323be79b3bc0eb2d79d6db28ca93dce816a24ba95ad1b4ddec450ba2fef68\\\",\\\"created\\\":\\\"2017-06-21T16:02:15.661885093Z\\\",\\\"container\\\":\\\"9453cff4caf07c23f8947463e7021e607d8073ebc0f805ad43e3134c092d82e5\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"wget -O selenium-server-standalone-2.47.1.jar http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar\\\"],\\\"Image\\\":\\\"e3e323be79b3bc0eb2d79d6db28ca93dce816a24ba95ad1b4ddec450ba2fef68\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/home/selenium\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"e3e323be79b3bc0eb2d79d6db28ca93dce816a24ba95ad1b4ddec450ba2fef68\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/home/selenium\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":31785433}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"e3e323be79b3bc0eb2d79d6db28ca93dce816a24ba95ad1b4ddec450ba2fef68\\\",\\\"parent\\\":\\\"05f9fe4cfc237de248fb0952d22e88915efde909f47b26cad4a550c0c68744be\\\",\\\"created\\\":\\\"2017-06-21T16:02:13.660965575Z\\\",\\\"container\\\":\\\"e7cf1ab3750e404977bcf30abd27ed405c9e9da02868c4c4d66e308ded57d01a\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) WORKDIR /home/selenium\\\"],\\\"Image\\\":\\\"05f9fe4cfc237de248fb0952d22e88915efde909f47b26cad4a550c0c68744be\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/home/selenium\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"05f9fe4cfc237de248fb0952d22e88915efde909f47b26cad4a550c0c68744be\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"/home/selenium\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":0}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"05f9fe4cfc237de248fb0952d22e88915efde909f47b26cad4a550c0c68744be\\\",\\\"parent\\\":\\\"98bc2588262b355a2d53d970b94658bc5d17a24ea8f49e2807b189139b236b20\\\",\\\"created\\\":\\\"2017-06-21T16:02:12.942215274Z\\\",\\\"container\\\":\\\"3be1c2ab4c620abcc07167e807819f5490dc9ff72f64ac32b598a6d9c09480d4\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"adduser --disabled-password --gecos=Selenium-User selenium\\\"],\\\"Image\\\":\\\"98bc2588262b355a2d53d970b94658bc5d17a24ea8f49e2807b189139b236b20\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"98bc2588262b355a2d53d970b94658bc5d17a24ea8f49e2807b189139b236b20\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":336716}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"98bc2588262b355a2d53d970b94658bc5d17a24ea8f49e2807b189139b236b20\\\",\\\"parent\\\":\\\"981855ff178f542df04086693af60f07ddf12b52159993909b15603f779f6bec\\\",\\\"created\\\":\\\"2017-06-21T16:01:40.213669669Z\\\",\\\"container\\\":\\\"946ed2c671ecf3b14edd3065565688b442d8ec6645c81474be9c80575eea898c\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"apt-get install --assume-yes \\\\u0009devscripts         fluxbox         git         iceweasel         libtap-formatter-junit-perl         lsof         net-tools         openjdk-7-jre-headless         vim-tiny         vnc4server         wget         xterm\\\"],\\\"Image\\\":\\\"981855ff178f542df04086693af60f07ddf12b52159993909b15603f779f6bec\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"981855ff178f542df04086693af60f07ddf12b52159993909b15603f779f6bec\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":867773859}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"981855ff178f542df04086693af60f07ddf12b52159993909b15603f779f6bec\\\",\\\"parent\\\":\\\"237c09b9792fc8db5dbfe44332924bf3af950c3adee298f2d4481bb47e37cd69\\\",\\\"created\\\":\\\"2017-06-21T13:41:14.325478815Z\\\",\\\"container\\\":\\\"6d6550ba046a1281caf32ad984000b42f55ba1753b77b8d9e84ab22a00042445\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"apt-get update\\\"],\\\"Image\\\":\\\"237c09b9792fc8db5dbfe44332924bf3af950c3adee298f2d4481bb47e37cd69\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"237c09b9792fc8db5dbfe44332924bf3af950c3adee298f2d4481bb47e37cd69\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":10316577}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"237c09b9792fc8db5dbfe44332924bf3af950c3adee298f2d4481bb47e37cd69\\\",\\\"parent\\\":\\\"76060937e021e214288d5128761cccb1adfc2161e0b4fa0a6266c6f7317fee74\\\",\\\"created\\\":\\\"2017-06-21T09:02:38.664708211Z\\\",\\\"container\\\":\\\"cde9ba3e1a2738cea9f5dddee54135a50d0c46466d5724a8409b4b4a02aaba17\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) ENV REFRESHED_AT=2017-06-21\\\"],\\\"Image\\\":\\\"76060937e021e214288d5128761cccb1adfc2161e0b4fa0a6266c6f7317fee74\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2017-06-21\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"76060937e021e214288d5128761cccb1adfc2161e0b4fa0a6266c6f7317fee74\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":0}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"76060937e021e214288d5128761cccb1adfc2161e0b4fa0a6266c6f7317fee74\\\",\\\"parent\\\":\\\"b0ba887ad096d91b6dd52d58daea6284c04f1865c0f07c613654d70c61a4cc64\\\",\\\"created\\\":\\\"2016-12-02T18:36:16.07880217Z\\\",\\\"container\\\":\\\"2819e2a802bc9138bbd181db05d1315caddda852b4dbddf8e63251fbb45a374e\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2016-12-02\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"wget -O ngcp-keyring-latest.deb https://deb.sipwise.com/spce/ngcp-keyring-latest.deb \\\\u0026\\\\u0026 dpkg -i ngcp-keyring-latest.deb \\\\u0026\\\\u0026 rm -f ngcp-keyring-latest.deb\\\"],\\\"Image\\\":\\\"b0ba887ad096d91b6dd52d58daea6284c04f1865c0f07c613654d70c61a4cc64\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"author\\\":\\\"Sipwise Team \\\\u003csupport@sipwise.com\\\\u003e\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2016-12-02\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"b0ba887ad096d91b6dd52d58daea6284c04f1865c0f07c613654d70c61a4cc64\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":351695}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"b0ba887ad096d91b6dd52d58daea6284c04f1865c0f07c613654d70c61a4cc64\\\",\\\"parent\\\":\\\"df8ab06928d596a1e1aff46276c1b3a871bbc3b6bfb0bad688e1db4b3617e6cc\\\",\\\"created\\\":\\\"2016-12-02T18:36:14.01115126Z\\\",\\\"container\\\":\\\"01c15f1d53327c5b847d5bd00c5ced814ec8dad15fc7285ed0e26ad9a1840aeb\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2016-12-02\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) ADD file:becb4428460f6cd469978906fe58ec0960bd5e6459d045662a555dcf8bea76ee in /etc/apt/sources.list\\\"],\\\"Image\\\":\\\"df8ab06928d596a1e1aff46276c1b3a871bbc3b6bfb0bad688e1db4b3617e6cc\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"author\\\":\\\"Sipwise Team \\\\u003csupport@sipwise.com\\\\u003e\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2016-12-02\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"df8ab06928d596a1e1aff46276c1b3a871bbc3b6bfb0bad688e1db4b3617e6cc\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":311}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"df8ab06928d596a1e1aff46276c1b3a871bbc3b6bfb0bad688e1db4b3617e6cc\\\",\\\"parent\\\":\\\"22b4cba04ae11612aaf24c329a84a4f9f4cf083da2e773f105b4443522e84a21\\\",\\\"created\\\":\\\"2016-12-02T18:36:12.982972296Z\\\",\\\"container\\\":\\\"0013039ae501c266b16c9c4459af63074019bf153051b7c9b8476fa627f6516c\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2016-12-02\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"apt-get update \\\\u0026\\\\u0026 apt-get -y install apt-transport-https wget\\\"],\\\"Image\\\":\\\"22b4cba04ae11612aaf24c329a84a4f9f4cf083da2e773f105b4443522e84a21\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"author\\\":\\\"Sipwise Team \\\\u003csupport@sipwise.com\\\\u003e\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2016-12-02\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"22b4cba04ae11612aaf24c329a84a4f9f4cf083da2e773f105b4443522e84a21\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":56962219}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"22b4cba04ae11612aaf24c329a84a4f9f4cf083da2e773f105b4443522e84a21\\\",\\\"parent\\\":\\\"7d290281986e6463e00f58a595412a4a4b846554dff1dacf891db4ee1eb7a3dc\\\",\\\"created\\\":\\\"2016-12-02T18:35:34.367275205Z\\\",\\\"container\\\":\\\"4a1884f4235cc6531a00ee285553cbf9edef6b74c781751ee562e07110dafc29\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2016-12-02\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) ENV REFRESHED_AT=2016-12-02\\\"],\\\"Image\\\":\\\"7d290281986e6463e00f58a595412a4a4b846554dff1dacf891db4ee1eb7a3dc\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"author\\\":\\\"Sipwise Team \\\\u003csupport@sipwise.com\\\\u003e\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\",\\\"REFRESHED_AT=2016-12-02\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"7d290281986e6463e00f58a595412a4a4b846554dff1dacf891db4ee1eb7a3dc\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":0}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"7d290281986e6463e00f58a595412a4a4b846554dff1dacf891db4ee1eb7a3dc\\\",\\\"parent\\\":\\\"1f025ed91d793309ed890735fa973c97a27fcf78a15f21bd43003159a8e1b979\\\",\\\"created\\\":\\\"2016-11-10T13:58:18.745212238Z\\\",\\\"container\\\":\\\"d126f7c4fede44ef15f5f8997a1f6f67288a16155b5f32be5536c30c49a0dae2\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) MAINTAINER Sipwise Team \\\\u003csupport@sipwise.com\\\\u003e\\\"],\\\"Image\\\":\\\"1f025ed91d793309ed890735fa973c97a27fcf78a15f21bd43003159a8e1b979\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.6.2\\\",\\\"author\\\":\\\"Sipwise Team \\\\u003csupport@sipwise.com\\\\u003e\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"1f025ed91d793309ed890735fa973c97a27fcf78a15f21bd43003159a8e1b979\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":[],\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":0}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"1f025ed91d793309ed890735fa973c97a27fcf78a15f21bd43003159a8e1b979\\\",\\\"parent\\\":\\\"385b367e1f474ad8f3e0dcb6a3ae22895b0cdf7bf58106cdd799fc3a3bbdf6c7\\\",\\\"created\\\":\\\"2016-11-07T20:30:26.295992141Z\\\",\\\"container\\\":\\\"f138a26aeb14324a4ec22c8cd8624b1563dbadc074281c038b3d63c2ccdd6d07\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\"],\\\"Cmd\\\":[\\\"/bin/sh\\\",\\\"-c\\\",\\\"#(nop) \\\",\\\"CMD [\\\\\\\"/bin/bash\\\\\\\"]\\\"],\\\"Image\\\":\\\"sha256:8bcdc1ed6effe6932b3e02b39c0c4802a2d3af65381e4f710ba3f8f061e27967\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":null,\\\"Labels\\\":{}},\\\"docker_version\\\":\\\"1.12.3\\\",\\\"config\\\":{\\\"Hostname\\\":\\\"6b3797ab1e90\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":[\\\"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin\\\"],\\\"Cmd\\\":[\\\"/bin/bash\\\"],\\\"Image\\\":\\\"sha256:8bcdc1ed6effe6932b3e02b39c0c4802a2d3af65381e4f710ba3f8f061e27967\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":null,\\\"Labels\\\":{}},\\\"architecture\\\":\\\"amd64\\\",\\\"os\\\":\\\"linux\\\",\\\"Size\\\":0}\\n\"}, {\"v1Compatibility\": \"{\\\"id\\\":\\\"385b367e1f474ad8f3e0dcb6a3ae22895b0cdf7bf58106cdd799fc3a3bbdf6c7\\\",\\\"created\\\":\\\"2016-11-07T20:30:25.741961434Z\\\",\\\"container_config\\\":{\\\"Hostname\\\":\\\"\\\",\\\"Domainname\\\":\\\"\\\",\\\"User\\\":\\\"\\\",\\\"Memory\\\":0,\\\"MemorySwap\\\":0,\\\"CpuShares\\\":0,\\\"Cpuset\\\":\\\"\\\",\\\"AttachStdin\\\":false,\\\"AttachStdout\\\":false,\\\"AttachStderr\\\":false,\\\"PortSpecs\\\":null,\\\"ExposedPorts\\\":null,\\\"Tty\\\":false,\\\"OpenStdin\\\":false,\\\"StdinOnce\\\":false,\\\"Env\\\":null,\\\"Cmd\\\":[\\\"/bin/sh -c #(nop) ADD file:41ea5187c50116884c38d9ec51d920d79cfaeb2a61c52e07a97f457419a10a4f in / \\\"],\\\"Image\\\":\\\"\\\",\\\"Volumes\\\":null,\\\"WorkingDir\\\":\\\"\\\",\\\"Entrypoint\\\":null,\\\"NetworkDisabled\\\":false,\\\"MacAddress\\\":\\\"\\\",\\\"OnBuild\\\":null,\\\"Labels\\\":null},\\\"Size\\\":123035276}\\n\"}], \"tag\": \"latest\", \"architecture\": \"amd64\"}",
+        "image": 58
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 50,
+    "fields": {
+        "name": "I89e9acd846132508e135f7443482c0371c80d2b2",
+        "manifests": "{}",
+        "image": 57
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 51,
+    "fields": {
+        "name": "latest",
+        "manifests": "{}",
+        "image": 57
+    }
+}
+]
