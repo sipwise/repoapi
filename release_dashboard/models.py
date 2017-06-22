@@ -77,8 +77,22 @@ class Project(models.Model):
         return Project._filter_values(self.json_branches,
                                       '^refs/heads/(.+)$', regex)
 
+    def filter_docker_images(self, images):
+        r = re.compile(self.name)
+        return filter(r.search, images)
+
     def branches_mrXX(self):
         return self.filter_branches(r'^mr[0-9]+\.[0-9]+$')
 
     def branches_mrXXX(self):
         return self.filter_branches(r'^mr[0-9]+\.[0-9]+\.[0-9]+$')
+
+
+class DockerImage(models.Model):
+    name = models.CharField(max_length=50, unique=True, null=False)
+    tags = JSONField(null=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    modified = ModificationDateTimeField(null=True)
+
+    def __str__(self):
+        return "%s[%s]" % (self.name, self.project.name)

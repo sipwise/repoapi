@@ -17,10 +17,10 @@ import logging
 import uuid
 import urllib
 import requests
+import json
 from requests.auth import HTTPDigestAuth
 from django.conf import settings
 from repoapi.utils import openurl
-from release_dashboard.models import Project
 
 logger = logging.getLogger(__name__)
 
@@ -33,9 +33,6 @@ hotfix_url = ("{base}/job/release-tools-runner/buildWithParameters?"
               "token={token}&action={action}&branch={branch}&"
               "PROJECTNAME={project}&repository={project}&"
               "push={push}&uuid={uuid}")
-
-docker_url = ("{base}/job/build-project-docker/buildWithParameters?"
-              "token={token}&project={project}&branch={branch}")
 
 
 def get_response(url):
@@ -103,27 +100,6 @@ def trigger_build(project, trigger_release=None,
     return "{base}/job/{job}/".format(**params)
 
 
-def trigger_docker_build(project, branch):
-    if branch == "ignore":
-        logger.debug("ignoring request to trigger project %s due"
-                     " to request of version 'ignore'", project)
-        return
-    branch = branch.split("branch/")[1]
-    params = {
-        'base': settings.JENKINS_URL,
-        'token': urllib.quote(settings.JENKINS_TOKEN),
-        'project': project,
-        'branch': urllib.quote(branch),
-    }
-
-    url = docker_url.format(**params)
-    if settings.DEBUG:
-        logger.debug("Debug mode, would trigger: %s", url)
-    else:
-        openurl(url)
-    return "{base}/job/build-project-docker/".format(**params)
-
-
 def get_gerrit_info(url):
     if settings.DEBUG:
         logger.debug("Debug mode, would trigger: %s", url)
@@ -132,16 +108,6 @@ def get_gerrit_info(url):
         response = get_response(url)
         response.raise_for_status()
         return response.text
-
-
-def get_tags(projectname, regex=None):
-    project, _ = Project.objects.get_or_create(name=projectname)
-    return project.filter_tags(regex)
-
-
-def get_branches(projectname, regex=None):
-    project, _ = Project.objects.get_or_create(name=projectname)
-    return project.filter_branches(regex)
 
 
 def get_gerrit_tags(project, regex=None):
