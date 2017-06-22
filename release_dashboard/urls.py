@@ -14,23 +14,23 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf.urls import url
-from . import views
+from views import build, docker
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^build_deps/$', views.build_deps, name='build_deps'),
-    url(r'^build/$', views.build_release, name='build_release'),
-    url(r'^build_trunk_deps/$', views.build_trunk_deps,
+    url(r'^$', build.index, name='index'),
+    url(r'^build_deps/$', build.build_deps, name='build_deps'),
+    url(r'^build/$', build.build_release, name='build_release'),
+    url(r'^build_trunk_deps/$', build.build_trunk_deps,
         name='build_trunk_deps'),
-    url(r'^build_trunk/$', views.build_trunk_release,
+    url(r'^build_trunk/$', build.build_trunk_release,
         name='build_trunk_release'),
-    url(r'^build_tag/$', views.build_release,
+    url(r'^build_tag/$', build.build_release,
         {'tag_only': True}, name='build_release_tag'),
-    url(r'^hotfix/$', views.hotfix, name='hotfix'),
+    url(r'^hotfix/$', build.hotfix, name='hotfix'),
     url(r'^hotfix/(?P<branch>[^/]+)/(?P<project>[^/]+)/$',
-        views.hotfix_build),
-    url(r'^refresh/$', views.refresh_all, name='refresh_all'),
-    url(r'^refresh/(?P<project>[^/]+)/$', views.refresh, name='refresh'),
-    url(r'^build_docker/$', views.build_docker_images,
+        build.hotfix_build),
+    url(r'^refresh/$', build.refresh_all, name='refresh_all'),
+    url(r'^refresh/(?P<project>[^/]+)/$', build.refresh, name='refresh'),
+    url(r'^build_docker/$', docker.build_docker_images,
         name='build_docker_images'),
 ]
