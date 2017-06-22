@@ -1,0 +1,56 @@
+[
+{
+    "model": "release_dashboard.project",
+    "pk": 10,
+    "fields": {
+        "name": "ngcp-csc",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.435Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 11,
+    "fields": {
+        "name": "ngcp-panel",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.450Z"
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 56,
+    "fields": {
+        "name": "ngcp-panel-selenium",
+        "project": 11
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 57,
+    "fields": {
+        "name": "ngcp-panel-tests-rest-api-jessie",
+        "project": 11
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 50,
+    "fields": {
+        "name": "I89e9acd846132508e135f7443482c0371c80d2b2",
+        "manifests": "{}",
+        "image": 57
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 51,
+    "fields": {
+        "name": "latest",
+        "manifests": "{}",
+        "image": 57
+    }
+}
+]

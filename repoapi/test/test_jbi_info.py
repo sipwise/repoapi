@@ -15,7 +15,7 @@
 
 import os
 
-from django.test import TestCase, override_settings
+from django.test import override_settings
 from django.conf import settings
 from repoapi.models import JenkinsBuildInfo
 from repoapi.utils import JBI_CONSOLE_URL, JBI_BUILD_URL, JBI_ARTIFACT_URL

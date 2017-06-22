@@ -3,11 +3,8 @@
 {% block title %}Build docker images per project{% endblock %}
 {% block navlist %}
     <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
-    <li><a href="{% url 'release_dashboard:build_docker_images'%}">Build Docker Images</a></li>
+    <li><a href="{% url 'release_dashboard:docker_images'%}">Docker Images</a></li>
 {% endblock %}
 {% block content %}
-{% include "release_dashboard/build_docker_content.html" %}
-{% endblock %}
-{% block extrajs %}
-<script src="{% static "release_dashboard/js/build.js" %}"></script>
+{% include "release_dashboard/docker_content.html" %}
 {% endblock %}

@@ -1,0 +1,491 @@
+[
+{
+    "model": "release_dashboard.project",
+    "pk": 1,
+    "fields": {
+        "name": "comx-fileshare-service",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.296Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 2,
+    "fields": {
+        "name": "data-hal",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.307Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 3,
+    "fields": {
+        "name": "documentation",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.323Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 4,
+    "fields": {
+        "name": "janus-admin",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.337Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 5,
+    "fields": {
+        "name": "janus-client",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.352Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 6,
+    "fields": {
+        "name": "kamailio-config-tests",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.373Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 7,
+    "fields": {
+        "name": "libswrate",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.386Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 8,
+    "fields": {
+        "name": "libtcap",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.403Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 9,
+    "fields": {
+        "name": "lua-ngcp-kamailio",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.421Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 10,
+    "fields": {
+        "name": "ngcp-csc",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.435Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 11,
+    "fields": {
+        "name": "ngcp-panel",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.450Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 12,
+    "fields": {
+        "name": "ngcp-rtcengine",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.472Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 13,
+    "fields": {
+        "name": "ngcpcfg",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.485Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 14,
+    "fields": {
+        "name": "rate-o-mat",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.502Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 15,
+    "fields": {
+        "name": "snmp-agent",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.519Z"
+    }
+},
+{
+    "model": "release_dashboard.project",
+    "pk": 16,
+    "fields": {
+        "name": "system-tools",
+        "json_tags": "{}",
+        "json_branches": "{}",
+        "modified": "2017-06-26T06:58:55.535Z"
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 45,
+    "fields": {
+        "name": "data-hal-jessie",
+        "project": 2
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 46,
+    "fields": {
+        "name": "documentation-jessie",
+        "project": 3
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 47,
+    "fields": {
+        "name": "janus-admin-jessie",
+        "project": 4
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 48,
+    "fields": {
+        "name": "janus-client-jessie",
+        "project": 5
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 49,
+    "fields": {
+        "name": "kamailio-config-tests-jessie",
+        "project": 6
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 50,
+    "fields": {
+        "name": "libswrate-jessie",
+        "project": 7
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 51,
+    "fields": {
+        "name": "libtcap-jessie",
+        "project": 8
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 52,
+    "fields": {
+        "name": "lua-ngcp-kamailio",
+        "project": 9
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 53,
+    "fields": {
+        "name": "lua-ngcp-kamailio-jenkins",
+        "project": 9
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 54,
+    "fields": {
+        "name": "lua-ngcp-kamailio-jessie",
+        "project": 9
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 55,
+    "fields": {
+        "name": "ngcp-csc-jessie",
+        "project": 10
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 56,
+    "fields": {
+        "name": "ngcp-panel-selenium",
+        "project": 11
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 57,
+    "fields": {
+        "name": "ngcp-panel-tests-rest-api-jessie",
+        "project": 11
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 58,
+    "fields": {
+        "name": "ngcp-panel-tests-selenium-jessie",
+        "project": 11
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 59,
+    "fields": {
+        "name": "ngcp-rtcengine-test-jessie",
+        "project": 12
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 60,
+    "fields": {
+        "name": "ngcp-rtcengine-tests-selenium-jessie",
+        "project": 12
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 61,
+    "fields": {
+        "name": "ngcp-rtcengine-tests-selenium-stretch",
+        "project": 12
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 62,
+    "fields": {
+        "name": "ngcpcfg-jessie",
+        "project": 13
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 63,
+    "fields": {
+        "name": "ngcp-rate-o-mat-unit-tests-jessie",
+        "project": 14
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 64,
+    "fields": {
+        "name": "rate-o-mat-functional-tests-jessie",
+        "project": 14
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 65,
+    "fields": {
+        "name": "rate-o-mat-jessie",
+        "project": 14
+    }
+},
+{
+    "model": "release_dashboard.dockerimage",
+    "pk": 66,
+    "fields": {
+        "name": "system-tools-jessie",
+        "project": 16
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 35,
+    "fields": {
+        "name": "If53a93f4b6d1c82fd7af5672e8b02087e646b507",
+        "manifests": "{}",
+        "image": 46
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 36,
+    "fields": {
+        "name": "latest",
+        "manifests": "{}",
+        "image": 46
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 37,
+    "fields": {
+        "name": "mr5.2",
+        "manifests": "{}",
+        "image": 46
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 38,
+    "fields": {
+        "name": "mr5.3.1",
+        "manifests": "{}",
+        "image": 46
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 39,
+    "fields": {
+        "name": "mr5.3",
+        "manifests": "{}",
+        "image": 46
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 40,
+    "fields": {
+        "name": "Ia9b03983d174a1546631f5b42e605235809711ef",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 41,
+    "fields": {
+        "name": "If508e72c01d9bc78836a40204e508585d1dc3555",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 42,
+    "fields": {
+        "name": "latest",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 43,
+    "fields": {
+        "name": "mr5.2",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 44,
+    "fields": {
+        "name": "mr5.3.1",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 45,
+    "fields": {
+        "name": "mr5.3",
+        "manifests": "{}",
+        "image": 45
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 46,
+    "fields": {
+        "name": "I5c5c351e36da15db71fe3addbed4603007e8c304",
+        "manifests": "{}",
+        "image": 57
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 47,
+    "fields": {
+        "name": "latest",
+        "manifests": "{}",
+        "image": 56
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 48,
+    "fields": {
+        "name": "I3a899b8945688c2ef3a4be6ba6c4c1d4cbf6d548",
+        "manifests": "{}",
+        "image": 58
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 49,
+    "fields": {
+        "name": "latest",
+        "manifests": "{}",
+        "image": 58
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 50,
+    "fields": {
+        "name": "I89e9acd846132508e135f7443482c0371c80d2b2",
+        "manifests": "{}",
+        "image": 57
+    }
+},
+{
+    "model": "release_dashboard.dockertag",
+    "pk": 51,
+    "fields": {
+        "name": "latest",
+        "manifests": "{}",
+        "image": 57
+    }
+}
+]
