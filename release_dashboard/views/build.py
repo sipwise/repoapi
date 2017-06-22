@@ -14,63 +14,28 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-import re
 import json
 import uuid
 from django.shortcuts import render
 from django.http import HttpResponseNotFound, JsonResponse
 from django.views.decorators.http import require_http_methods
 from release_dashboard.models import Project
-from .utils import get_tags, get_branches
-from .utils import trigger_hotfix, trigger_build, trigger_docker_build
-from .tasks import gerrit_fetch_info, gerrit_fetch_all
-from .forms.build import BuildDepForm, BuildReleaseForm
-from .forms.build import BuildTrunkDepForm, BuildTrunkReleaseForm
-from .forms.docker import BuildDockerForm
-from .forms import trunk_projects, trunk_build_deps, docker_projects
-from .forms import rd_settings
+from release_dashboard.utils import build
+from release_dashboard.tasks import gerrit_fetch_info, gerrit_fetch_all
+from release_dashboard.forms.build import BuildDepForm, BuildReleaseForm
+from release_dashboard.forms.build import BuildTrunkDepForm
+from release_dashboard.forms.build import BuildTrunkReleaseForm
+from release_dashboard.forms import trunk_projects, trunk_build_deps
+from release_dashboard.forms import rd_settings
+from . import _projects_versions, _common_versions, _hash_versions
+from . import regex_hotfix, regex_master, regex_mr
 
 logger = logging.getLogger(__name__)
-regex_hotfix = re.compile(r'^mr[0-9]+\.[0-9]+\.[0-9]+$')
-regex_mr = re.compile(r'^mr.+$')
-regex_master = re.compile(r'^master$')
 
 
 def index(request):
     context = {}
     return render(request, 'release_dashboard/index.html', context)
-
-
-def _projects_versions(projects, regex=None,
-                       tags=True, branches=True, master=False):
-    res = []
-    for project in projects:
-        info = {
-            'name': project,
-        }
-        if tags:
-            info['tags'] = get_tags(project, regex)
-        if branches:
-            info['branches'] = get_branches(project, regex)
-        if master:
-            info['branches'].append('master')
-        res.append(info)
-    logger.debug(res)
-    return res
-
-
-def _common_versions(context, tags=True, branches=True):
-    common_versions = {'tags': set(), 'branches': set()}
-
-    for project in context['projects']:
-        if tags:
-            common_versions['tags'] |= set(project['tags'])
-        if branches:
-            common_versions['branches'] |= set(project['branches'])
-    context['common_versions'] = {
-        'tags': sorted(common_versions['tags'], reverse=True),
-        'branches': sorted(common_versions['branches'], reverse=True),
-    }
 
 
 @require_http_methods(["POST", ])
@@ -94,7 +59,7 @@ def hotfix_build(request, branch, project):
     json_data = json.loads(request.body)
     if json_data['push'] == 'no':
         logger.warn("dryrun for %s:%s", project, branch)
-    url = trigger_hotfix(project, branch, json_data['push'])
+    url = build.trigger_hotfix(project, branch, json_data['push'])
     return JsonResponse({'url': url})
 
 
@@ -119,9 +84,9 @@ def _build_logic(form, projects):
             logger.debug(
                 "trying to trigger release %s, project %s",
                 version_release, pro)
-            url = trigger_build("%s-get-code" % pro,
-                                version_release, result[pro],
-                                distribution, flow_uuid)
+            url = build.trigger_build("%s-get-code" % pro,
+                                      version_release, result[pro],
+                                      distribution, flow_uuid)
             context['projects'].append(
                 {'name': pro, 'url': url})
         except KeyError:
@@ -212,7 +177,12 @@ def refresh(request, project):
 
 def build_trunk_deps(request):
     if request.method == "POST":
-        pass
+        form = BuildTrunkDepForm(request.POST)
+        if form.is_valid():
+            context = _build_logic(form, rd_settings['build_deps'])
+        else:
+            context = {'error': 'form validation error'}
+        return render(request, 'release_dashboard/build_result.html', context)
     else:
         context = {
             'projects': _projects_versions(
@@ -250,53 +220,3 @@ def build_trunk_release(request):
             'debian': rd_settings['debian_supported'],
         }
         return render(request, 'release_dashboard/build_trunk.html', context)
-
-
-def _build_docker_logic(form, projects):
-    result = _hash_versions(form.cleaned_data, projects)
-    context = {'projects': []}
-    for pro in projects:
-        try:
-            logger.debug(
-                "trying to trigger docker image at branch %s for project %s",
-                result[pro], pro)
-            url = trigger_docker_build(pro, result[pro])
-            context['projects'].append(
-                {'name': pro, 'url': url})
-        except KeyError:
-            logger.error("Houston, we have a problem with"
-                         "trigger for %s", pro)
-            context['projects'].append(
-                {'name': pro, 'url': None})
-    return context
-
-
-def build_docker_images(request):
-    if request.method == "POST":
-        form = BuildDockerForm(request.POST)
-        if form.is_valid():
-            context = _build_docker_logic(form, docker_projects)
-        else:
-            context = {'error': 'form validation error'}
-        return render(request,
-                      'release_dashboard/build_result.html',
-                      context)
-    else:
-        context = {
-            'projects': _projects_versions(
-                docker_projects,
-                regex_mr,
-                False,
-                True,
-                True,
-            ),
-            'common_versions': {
-                'tags': [],
-                'branches': ['master', ]
-            },
-            'docker': True,
-        }
-        _common_versions(context, False, True)
-        return render(request,
-                      'release_dashboard/build_docker.html',
-                      context)

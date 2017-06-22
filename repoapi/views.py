@@ -39,6 +39,8 @@ def api_root(request, _format=None):
                                     request=request, format=_format),
         'release': reverse('release-list',
                            request=request, format=_format),
+        'docker': reverse('docker-list',
+                          request=request, format=_format),
     })
 
 

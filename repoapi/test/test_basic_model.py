@@ -17,6 +17,7 @@ from django.test import TestCase
 from repoapi.models import JenkinsBuildInfo
 from django.test import override_settings
 from repoapi.test.base import BaseTest
+from mock import patch
 
 JBI_HOST = "https://%s/job/fake-gerrit/"
 
@@ -74,10 +75,10 @@ class JenkinsBuildInfoTestCase(BaseTest):
         job = JenkinsBuildInfo.objects.create(
             projectname='fake',
             jobname='fake-get-code',
-            job_url=JBI_HOST % 'jenkins-dev.local',
             buildnumber=1,
             result='OK',
             param_release='release-mr4.0')
+        job.job_url = JBI_HOST % 'jenkins-dev.local'
         self.assertTrue(job.is_job_url_allowed())
         job.job_url = JBI_HOST % 'jenkins.local'
         self.assertTrue(job.is_job_url_allowed())

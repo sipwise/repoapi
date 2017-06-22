@@ -6,7 +6,7 @@ djangorestframework==3.4
 django-rest-swagger
 markdown
 django-filter
-six
+six==1.10
 webassets
 celery<4.0
 django-celery
