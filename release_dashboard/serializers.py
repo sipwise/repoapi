@@ -1,4 +1,4 @@
-# Copyright (C) 2016 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
 
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,12 +13,20 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.contrib import admin
+from rest_framework import serializers
 from . import models
 
 
-@admin.register(models.DockerTag)
-@admin.register(models.DockerImage)
-@admin.register(models.Project)
-class ProjectAdmin(admin.ModelAdmin):
-    pass
+class ProjectSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = models.Project
+        fields = '__all__'
+
+
+class DockerImageSerializer(serializers.HyperlinkedModelSerializer):
+    project = serializers.StringRelatedField()
+
+    class Meta:
+        model = models.DockerImage
+        fields = '__all__'

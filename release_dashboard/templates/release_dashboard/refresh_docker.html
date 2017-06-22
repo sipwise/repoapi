@@ -1,14 +1,14 @@
 {% extends "release_dashboard/base.html" %}
 {% load staticfiles %}
-{% block title %}Refresh GIT{% endblock %}
+{% block title %}Refresh Docker{% endblock %}
 {% block navlist %}
     <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
-    <li><a href="{% url 'release_dashboard:refresh_all'%}">Refresh GIT Info</a></li>
+    <li><a href="{% url 'release_dashboard:refresh_docker_all'%}">Refresh Docker Info</a></li>
 {% endblock %}
 {% block content %}
 {% include "release_dashboard/refresh_content.html" %}
 {% endblock %}
 {% block extrajs %}
 <script src="{% static "release_dashboard/js/csrf.js" %}"></script>
-<script src="{% static "release_dashboard/js/refresh_info.js" %}"></script>
+<script src="{% static "release_dashboard/js/refresh_docker_info.js" %}"></script>
 {% endblock %}
