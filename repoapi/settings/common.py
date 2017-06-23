@@ -208,6 +208,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "monitoring-tools",
         "netscript",
         "ngcp-api-tools",
+        "ngcp-csc",
         "ngcp-fauditd",
         "ngcp-klish-config",
         "ngcp-panel",
