@@ -91,8 +91,10 @@ class Project(models.Model):
 
 class DockerImageManager(models.Manager):
 
-    def images_with_tags(self):
+    def images_with_tags(self, project=None):
         qs = self.get_queryset().filter(dockertag__isnull=False)
+        if project:
+            qs = qs.filter(project__name=project)
         return qs.distinct()
 
 
@@ -115,6 +117,7 @@ class DockerTag(models.Model):
     name = models.CharField(max_length=50, null=False)
     manifests = JSONField(null=False)
     image = models.ForeignKey(DockerImage, on_delete=models.CASCADE)
+    reference = models.CharField(max_length=150, unique=True, null=False)
 
     class Meta:
         unique_together = (("name", "image"),)
@@ -127,12 +130,11 @@ class DockerTag(models.Model):
         if self.manifests is None:
             return None
         try:
-            value = self.manifests['history'][-1]['v1Compatibility']
+            value = self.manifests['history'][0]['v1Compatibility']
             time = json.loads(value)
             created = time['created'].split('.')
             return datetime.strptime(
                 created[0],
                 '%Y-%m-%dT%H:%M:%S')
         except Exception as e:
-            logger.error(e)
             return None
