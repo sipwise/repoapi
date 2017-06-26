@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from rest_framework.urlpatterns import format_suffix_patterns
 from repoapi import views
+from release_dashboard.views import docker
 
 api_patterns = [
     url(r'^$', views.api_root, name='index'),
@@ -45,6 +46,15 @@ api_patterns = [
         '/(?P<project>[^/]+)/(?P<uuid>[^/]+)/$',
         views.UUIDInfoList.as_view(),
         name='uuidinfo-list'),
+    url(r'^docker/image/$',
+        docker.DockerImageList.as_view(),
+        name='dockerimage-list'),
+    url(r'^docker/image/(?P<pk>[0-9]+)/$',
+        docker.DockerImageDetail.as_view(),
+        name='dockerimage-detail'),
+    url(r'^docker/tag/(?P<pk>[0-9]+)/$',
+        docker.DockerTagDetail.as_view(),
+        name='dockertag-detail'),
 ]
 
 api_patterns = format_suffix_patterns(api_patterns)

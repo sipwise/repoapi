@@ -17,6 +17,7 @@ import logging
 import urllib
 import requests
 import json
+import uuid
 from django.conf import settings
 from repoapi.utils import openurl
 
@@ -47,7 +48,7 @@ def trigger_docker_build(project, branch):
     return "{base}/job/build-project-docker/".format(**params)
 
 
-def get_docker_info(url):
+def _get_info(url):
     if settings.DEBUG:
         logger.debug("Debug mode, would trigger: %s", url)
     else:
@@ -55,7 +56,28 @@ def get_docker_info(url):
         response = requests.get(url)
         logger.debug("response: %s" % response)
         response.raise_for_status()
-        return response.text
+        return response
+
+
+def get_docker_info(url):
+    response = _get_info(url)
+    return response.text
+
+
+def get_docker_manifests_info(url):
+    response = _get_info(url)
+    return (response.text, response.headers['Docker-Content-Digest'])
+
+
+def delete_docker_info(url):
+    if settings.DEBUG:
+        logger.debug("Debug mode, would trigger: %s", url)
+    else:
+        logger.debug("trigger: %s", url)
+        response = requests.delete(url)
+        logger.debug("response: %s" % response)
+        response.raise_for_status()
+        return
 
 
 def get_docker_repositories():
@@ -94,15 +116,21 @@ def get_docker_tags(image):
 
 def get_docker_manifests(image, tag):
     if settings.DEBUG:
-        return '{}'
+        return ('{}', uuid.uuid4())
     else:
         dru = settings.DOCKER_REGISTRY_URL
         url = dru.format("%s/manifests/%s" % (image, tag))
         try:
-            info = get_docker_info(url)
+            info, digest = get_docker_manifests_info(url)
             logger.debug("response: %s" % info)
             result = json.loads(info)
-            return result
+            return (result, digest)
         except Exception as e:
             logger.error('image: %s tag:%s %s' % (image, tag, e))
-            return None
+            return (None, None)
+
+
+def delete_tag(image, reference):
+    dru = settings.DOCKER_REGISTRY_URL
+    url = dru.format("%s/manifests/%s" % (image, reference))
+    delete_docker_info(url)
