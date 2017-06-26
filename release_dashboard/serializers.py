@@ -24,8 +24,16 @@ class ProjectSerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
 
 
+class DockerTagSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = models.DockerTag
+        fields = '__all__'
+
+
 class DockerImageSerializer(serializers.HyperlinkedModelSerializer):
     project = serializers.StringRelatedField()
+    dockertag_set = DockerTagSerializer(many=True, read_only=True)
 
     class Meta:
         model = models.DockerImage

@@ -28,18 +28,28 @@
                 </a>
               </td>
               <td>
+                <div class="list-group">
               {% for tag in i.dockertag_set.all %}
-                <a href="{{URL_BASE}}{{i.name}}/manifests/{{tag.name}}">
-                {% if tag.name|length > 10 %}
-                  <span class="label label-warning"
-                {% else %}
-                  <span class="label label-success"
-                {% endif %}
-                    data-toggle="tooltip" title="{{tag.date|date:"DATETIME_FORMAT"}}">
-                      {{ tag.name|truncatechars:10 }}
-                  </span>
-                </a>
+                  <div id="row_{{tag.pk}}" class="list-group-item">
+                    <a href="{{URL_BASE}}{{i.name}}/manifests/{{tag.name}}">
+                    {% if tag.name|length > 10 %}
+                      <span class="btn btn-warning">
+                    {% else %}
+                      <span class="btn btn-success">
+                    {% endif %}
+                          {{ tag.name|truncatechars:10 }}
+                      </span>
+                    </a>
+                    <div class="pull-right">
+                      <button pk="{{tag.pk}}" class="delete btn btn-danger">Delete</button>
+                      <span id="{{tag.pk}}" class="hidden">Done</span>
+                    </div>
+                    <span class="text-info">
+                      {{tag.date|date:"DATETIME_FORMAT"}}
+                    </span>
+                  </div>
               {% endfor %}
+                </div>
               </td>
             </tr>
         {% endfor %}
