@@ -1,6 +1,6 @@
 [Unit]
 Description=Celery Service
-After=network.target
+After=network.target rabbitmq-server.service
 
 [Service]
 Type=simple
