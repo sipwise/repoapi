@@ -1,0 +1,14 @@
+{% extends "release_dashboard/base.html" %}
+{% load staticfiles %}
+{% block title %}Build docker images per project{% endblock %}
+{% block navlist %}
+    <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+    <li><a href="{% url 'release_dashboard:docker_images'%}">Docker Images</a></li>
+{% endblock %}
+{% block content %}
+{% include "release_dashboard/docker_image_content.html" %}
+{% endblock %}
+{% block extrajs %}
+<script src="{% static "release_dashboard/js/csrf.js" %}"></script>
+<script src="{% static "release_dashboard/js/docker_image.js" %}"></script>
+{% endblock %}

@@ -16,14 +16,17 @@
 import logging
 import re
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
+from rest_framework import generics, status
+from rest_framework.response import Response
 from release_dashboard.utils import docker
 from release_dashboard.forms.docker import BuildDockerForm
 from release_dashboard.forms import docker_projects
-from release_dashboard.tasks import docker_fetch_info, docker_fetch_all
-from release_dashboard.models import DockerImage
+from release_dashboard import tasks
+from release_dashboard.models import Project, DockerImage, DockerTag
+from release_dashboard import serializers
 from . import _projects_versions, _common_versions, _hash_versions
 from . import regex_mr
 
@@ -100,7 +103,7 @@ def build_docker_images(request):
 
 def refresh_all(request):
     if request.method == "POST":
-        res = docker_fetch_all.delay()
+        res = tasks.docker_fetch_all.delay()
         return JsonResponse({'url': '/flower/task/%s' % res.id})
     else:
         projects = []
@@ -116,7 +119,7 @@ def refresh_all(request):
 
 @require_http_methods(["POST", ])
 def refresh(request, project):
-    res = docker_fetch_info.delay(project)
+    res = tasks.docker_fetch_project.delay(project)
     return JsonResponse({'url': '/flower/task/%s' % res.id})
 
 
@@ -129,3 +132,60 @@ def docker_images(request):
     }
     return render(request, 'release_dashboard/docker_images.html',
                   context)
+
+
+@require_http_methods(["GET", ])
+def docker_project_images(request, project):
+    try:
+        Project.objects.get(name=project)
+    except Project.DoesNotExist:
+        raise Http404("Project does not exist")
+    images = DockerImage.objects.images_with_tags(project)
+    context = {
+        'images': images,
+        'URL_BASE': settings.DOCKER_REGISTRY_URL.format(''),
+    }
+    return render(request, 'release_dashboard/docker_images.html',
+                  context)
+
+
+@require_http_methods(["GET", ])
+def docker_image_tags(request, project, image):
+    try:
+        proj = Project.objects.get(name=project)
+        image = DockerImage.objects.get(name=image, project=proj)
+    except Project.DoesNotExist:
+        raise Http404("Project does not exist")
+    except DockerImage.DoesNotExist:
+        raise Http404("Project does not exist")
+    context = {
+        'images': [image, ],
+        'URL_BASE': settings.DOCKER_REGISTRY_URL.format(''),
+    }
+    return render(request, 'release_dashboard/docker_image.html',
+                  context)
+
+
+class DockerImageList(generics.ListAPIView):
+    queryset = DockerImage.objects.all()
+    serializer_class = serializers.DockerImageSerializer
+
+
+class DockerImageDetail(generics.RetrieveDestroyAPIView):
+    queryset = DockerImage.objects.all()
+    serializer_class = serializers.DockerImageSerializer
+
+
+class DockerTagList(generics.ListAPIView):
+    queryset = DockerTag.objects.all()
+    serializer_class = serializers.DockerTagSerializer
+
+
+class DockerTagDetail(generics.RetrieveDestroyAPIView):
+    queryset = DockerTag.objects.all()
+    serializer_class = serializers.DockerTagSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        tasks.docker_remove_tag.delay(instance.image.name, instance.name)
+        return Response(status=status.HTTP_202_ACCEPTED)
