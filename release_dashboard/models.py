@@ -91,8 +91,10 @@ class Project(models.Model):
 
 class DockerImageManager(models.Manager):
 
-    def images_with_tags(self):
+    def images_with_tags(self, project=None):
         qs = self.get_queryset().filter(dockertag__isnull=False)
+        if project:
+            qs = qs.filter(project__name=project)
         return qs.distinct()
 
 

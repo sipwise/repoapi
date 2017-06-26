@@ -58,6 +58,17 @@ def get_docker_info(url):
         return response.text
 
 
+def delete_docker_info(url):
+    if settings.DEBUG:
+        logger.debug("Debug mode, would trigger: %s", url)
+    else:
+        logger.debug("trigger: %s", url)
+        response = requests.delete(url)
+        logger.debug("response: %s" % response)
+        response.raise_for_status()
+        return
+
+
 def get_docker_repositories():
     if settings.DEBUG:
         result = json.loads(settings.DOCKER_REGISTRY)
@@ -106,3 +117,9 @@ def get_docker_manifests(image, tag):
         except Exception as e:
             logger.error('image: %s tag:%s %s' % (image, tag, e))
             return None
+
+
+def delete_tag(image, reference):
+    dru = settings.DOCKER_REGISTRY_URL
+    url = dru.format("%s/manifests/%s" % (image, reference))
+    delete_docker_info(url)

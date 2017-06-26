@@ -39,4 +39,9 @@ urlpatterns = [
         name='refresh_docker'),
     url(r'^docker/$', docker.docker_images,
         name='docker_images'),
+    url(r'^docker/(?P<project>[^/]+)/$', docker.docker_project_images,
+        name='docker_project_images'),
+    url(r'^docker/(?P<project>[^/]+)/(?P<image>[^/]+)$',
+        docker.docker_image_tags,
+        name='docker_image_tag'),
 ]

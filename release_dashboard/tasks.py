@@ -51,6 +51,18 @@ def docker_fetch_info(imagename):
 
 
 @shared_task(ignore_result=True)
+def docker_fetch_project(projectname):
+    DockerImage.objects.filter(project__name=projectname).delete()
+    images = docker.get_docker_repositories()
+    project = Project.objects.get(name=projectname)
+    for imagename in project.filter_docker_images(images):
+        image = DockerImage.objects.create(name=imagename,
+                                           project=project)
+        logger.debug("%s created" % image)
+        docker_fetch_info.delay(image.name)
+
+
+@shared_task(ignore_result=True)
 def docker_fetch_all():
     DockerImage.objects.all().delete()
     images = docker.get_docker_repositories()
@@ -62,3 +74,10 @@ def docker_fetch_all():
                                                project=project)
             logger.debug("%s created" % image)
             docker_fetch_info.delay(image.name)
+
+
+@shared_task(ignore_result=True)
+def docker_remove_tag(image_name, tag_name):
+    tag = DockerTag.objects.get(name=tag_name, image__name=image_name)
+    docker.delete_tag(image_name, tag_name)
+    tag.delete()
