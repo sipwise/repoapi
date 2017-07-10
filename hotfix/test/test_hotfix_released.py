@@ -88,14 +88,14 @@ class TestHotfixReleased(BaseTest):
             projectname=projectname,
             version=version)
         self.assertEquals(gri.count(), 1)
-        msg = "hotfix %s %s triggered" % (projectname, version)
+        msg = "hotfix %s.git %s triggered" % (projectname, version)
         calls = [call("345", msg), ]
         gri = models.WorkfrontNoteInfo.objects.filter(
             workfront_id="123",
             projectname=projectname,
             version=version)
         self.assertEquals(gri.count(), 1)
-        msg = "hotfix %s %s triggered" % (projectname, version)
+        msg = "hotfix %s.git %s triggered" % (projectname, version)
         calls.append(call("123", msg))
         wns.assert_has_calls(calls)
         wsrt.assert_has_calls(

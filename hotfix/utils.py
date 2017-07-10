@@ -49,7 +49,7 @@ def create_note(wid, projectname, version):
         projectname=projectname,
         version=version)
     if created:
-        msg = "hotfix %s %s triggered" % (note.projectname, note.version)
+        msg = "hotfix %s.git %s triggered" % (note.projectname, note.version)
         utils.workfront_note_send(wid, msg)
         target_release = get_target_release(note.version)
         if target_release:

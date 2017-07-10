@@ -105,12 +105,12 @@ def workfront_note_manage(sender, **kwargs):
                 instance.result == "SUCCESS":
             set_release_target = True
             if instance.gerrit_eventtype == 'change-merged':
-                msg = "%s[%s] review merged"
+                msg = "%s.git[%s] review merged"
             elif instance.gerrit_eventtype == 'patchset-created':
-                msg = "%s[%s] review created"
+                msg = "%s.git[%s] review created"
                 set_release_target = False
             else:
-                msg = "%s[%s] commit created"
+                msg = "%s.git[%s] commit created"
             workfront_note_add(instance, msg % (instance.projectname,
                                                 instance.param_branch),
                                set_release_target)
