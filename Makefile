@@ -27,6 +27,10 @@ migrate: venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
 		./manage.py migrate --settings="repoapi.settings.prod"
 
+load_apikeys: venv_prod
+	source $(VAR_DIR)/venv_prod/bin/activate && \
+		./manage.py loaddata $(VAR_DIR)/apikey.json --settings="repoapi.settings.prod"
+
 shell: venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
 		./manage.py shell --settings="repoapi.settings.prod"
