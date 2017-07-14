@@ -18,6 +18,7 @@ import os
 from ConfigParser import RawConfigParser
 # pylint: disable=W0401,W0614
 from .common import *
+from celery.schedules import crontab
 
 BASE_DIR = os.path.dirname(
     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -77,6 +78,16 @@ BUILD_KEY_AUTH = True
 
 # celery
 BROKER_URL = server_config.get('server', 'BROKER_URL')
+CELERYBEAT_SCHEDULE = {
+    # Executes every Sunday morning at 7:30 A.M
+    'purge-trunk': {
+        'task': 'repoapi.tasks.jbi_purge',
+        'schedule': crontab(hour=7, minute=30, day_of_week='sunday'),
+        'args': ('none', 4),
+    },
+}
+CELERY_TIMEZONE = 'UTC'
+
 JBI_BASEDIR = os.path.join(VAR_DIR, 'jbi_files')
 JBI_ARTIFACT_JOBS = [
     'release-tools-runner',
