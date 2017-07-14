@@ -15,6 +15,7 @@
 import logging
 import re
 from collections import OrderedDict
+from datetime import datetime, timedelta
 
 from django.db import models
 from django.forms.models import model_to_dict
@@ -133,6 +134,12 @@ class JenkinsBuildInfoManager(models.Manager):
         if res is not None:
             latest_uuid['latest'] = (res.tag == uuid)
         return latest_uuid
+
+    def purge_release(self, release, _timedelta=timedelta(weeks=3)):
+        _date = datetime.now() - _timedelta
+        self.get_queryset().filter(
+            param_release=release,
+            date__date__lt=_date).delete()
 
 
 class JenkinsBuildInfo(models.Model):

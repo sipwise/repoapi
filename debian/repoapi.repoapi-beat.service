@@ -1,0 +1,17 @@
+[Unit]
+Description=Celery Beat Service
+After=network.target rabbitmq-server.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+Environment=DJANGO_SETTINGS_MODULE=repoapi.settings.prod
+PIDFile=/var/lib/repoapi/celery-beat.pid
+WorkingDirectory=/usr/share/repoapi
+ExecStart=/var/lib/repoapi/venv_prod/bin/python ./manage.py celery beat \
+		--schedule=/var/lib/repoapi/celery-beat.schedule \
+        --pidfile=/var/lib/repoapi/celery-beat.pid --loglevel=INFO
+
+[Install]
+WantedBy=multi-user.target

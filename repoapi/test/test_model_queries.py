@@ -16,6 +16,7 @@
 from django.utils.dateparse import parse_datetime
 from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
+from datetime import datetime, timedelta
 
 
 class JBIQueriesTestCase(BaseTest):
@@ -59,3 +60,13 @@ class JBIQueriesTestCase(BaseTest):
         date = parse_datetime("2015-05-04T17:04:57.802Z")
         self.assertEquals(JenkinsBuildInfo.objects.latest_uuid(
             'mr3.1-fake', 'fake'), {'tag': 'UUID1', 'date': date})
+
+    def test_purge_release(self):
+        jbi = JenkinsBuildInfo.objects.get(pk=1)
+        jbi.date = datetime.now()
+        jbi.save()
+        self.assertEquals(JenkinsBuildInfo.objects.count(), 5)
+        JenkinsBuildInfo.objects.purge_release(
+            'mr3.1-fake',
+            timedelta(weeks=3))
+        self.assertEquals(JenkinsBuildInfo.objects.count(), 1)
