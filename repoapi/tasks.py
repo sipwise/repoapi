@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from __future__ import absolute_import
-
+from datetime import timedelta
 import json
 import logging
 from os.path import basename
@@ -22,6 +22,7 @@ from django.conf import settings
 from .celery import jbi_parse_hotfix
 from .utils import jenkins_get_console, jenkins_get_artifact
 from .utils import jenkins_get_build, jenkins_get_env
+from .models import JenkinsBuildInfo
 
 logger = logging.getLogger(__name__)
 
@@ -46,3 +47,11 @@ def get_jbi_files(jbi_id, jobname, buildnumber):
             jbi_get_artifact.delay(jbi_id, jobname, buildnumber, artifact)
     else:
         logger.debug("skip artifacts download for jobname: %s", jobname)
+
+
+@shared_task(ignore_result=True)
+def jbi_purge(release, weeks):
+    JenkinsBuildInfo.objects.purge_release(
+        release,
+        timedelta(weeks=weeks))
+    logger.info("purge release %s jbi older than %s weeks" % (release, weeks))
