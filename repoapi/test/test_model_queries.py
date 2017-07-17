@@ -70,3 +70,15 @@ class JBIQueriesTestCase(BaseTest):
             'mr3.1-fake',
             timedelta(weeks=3))
         self.assertEquals(JenkinsBuildInfo.objects.count(), 1)
+
+    def test_purge_release_none(self):
+        jbi = JenkinsBuildInfo.objects.get(pk=1)
+        jbi.param_release = None
+        jbi.save()
+        self.assertEquals(JenkinsBuildInfo.objects.filter(
+            param_release__isnull=True).count(), 1)
+        self.assertEquals(JenkinsBuildInfo.objects.count(), 5)
+        JenkinsBuildInfo.objects.purge_release(
+            None,
+            timedelta(weeks=3))
+        self.assertEquals(JenkinsBuildInfo.objects.count(), 4)

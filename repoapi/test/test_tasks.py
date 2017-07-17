@@ -30,3 +30,13 @@ class TasksTestCase(BaseTest):
         self.assertEquals(JenkinsBuildInfo.objects.count(), 5)
         tasks.jbi_purge.delay('mr3.1-fake', 3)
         self.assertEquals(JenkinsBuildInfo.objects.count(), 1)
+
+    def test_purge_none(self):
+        jbi = JenkinsBuildInfo.objects.get(pk=1)
+        jbi.param_release = None
+        jbi.save()
+        self.assertEquals(JenkinsBuildInfo.objects.filter(
+            param_release__isnull=True).count(), 1)
+        self.assertEquals(JenkinsBuildInfo.objects.count(), 5)
+        tasks.jbi_purge.delay(None, 3)
+        self.assertEquals(JenkinsBuildInfo.objects.count(), 4)

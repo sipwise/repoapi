@@ -137,9 +137,14 @@ class JenkinsBuildInfoManager(models.Manager):
 
     def purge_release(self, release, _timedelta=timedelta(weeks=3)):
         _date = datetime.now() - _timedelta
-        self.get_queryset().filter(
-            param_release=release,
-            date__date__lt=_date).delete()
+        if release is None:
+            self.get_queryset().filter(
+                param_release__isnull=True,
+                date__date__lt=_date).delete()
+        else:
+            self.get_queryset().filter(
+                param_release=release,
+                date__date__lt=_date).delete()
 
 
 class JenkinsBuildInfo(models.Model):

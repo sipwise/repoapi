@@ -85,6 +85,11 @@ CELERYBEAT_SCHEDULE = {
         'schedule': crontab(hour=7, minute=30, day_of_week='sunday'),
         'args': ('none', 4),
     },
+    'purge-none': {
+        'task': 'repoapi.tasks.jbi_purge',
+        'schedule': crontab(hour=7, minute=30, day_of_week='sunday'),
+        'args': (None, 1),
+    },
 }
 CELERY_TIMEZONE = 'UTC'
 
