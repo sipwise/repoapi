@@ -272,3 +272,34 @@ class WorkfrontNoteTestCase(BaseTest):
         self.assertItemsEqual(wsrt.mock_calls, [])
         wsrt.assert_not_called()
         wns.assert_called_once_with("0001", msg)
+
+    @patch('repoapi.utils.workfront_set_release_target')
+    @patch('repoapi.utils.get_next_release')
+    @patch('repoapi.utils.workfront_note_send')
+    def test_note_commit_non_ngcp(self, wns, gnr, wsrt):
+        param = self.get_non_gerrit_defaults()
+        param['projectname'] = 'fake'
+        param['jobname'] = 'fake-get-code'
+        param['param_branch'] = 'mr5.5.2'
+        JenkinsBuildInfo.objects.create(**param)
+
+        gri = WorkfrontNoteInfo.objects.filter(
+            workfront_id="0001",
+            gerrit_change="7fg4567")
+        self.assertEquals(gri.count(), 1)
+
+        param['jobname'] = "fake-binaries"
+        param['buildnumber'] = 897
+        JenkinsBuildInfo.objects.create(**param)
+
+        gri = WorkfrontNoteInfo.objects.filter(
+            workfront_id="0001",
+            gerrit_change="7fg4567")
+        self.assertEquals(gri.count(), 1)
+        msg = "%s.git[%s] commit created %s " % (
+            param['projectname'],
+            param['param_branch'],
+            settings.GITWEB_URL.format("fake", "7fg4567"))
+        wsrt.assert_not_called()
+        gnr.assert_not_called()
+        wns.assert_called_once_with("0001", msg)

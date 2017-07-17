@@ -18,6 +18,7 @@ import re
 from django.db import models
 from django.conf import settings
 from repoapi import utils
+from release_dashboard.utils.build import is_ngcp_project
 
 logger = logging.getLogger(__name__)
 workfront_re = re.compile(r"TT#(\d+)")
@@ -60,6 +61,10 @@ class WorkfrontNoteInfo(models.Model):
 
 
 def workfront_release_target(instance, wid):
+    if not is_ngcp_project(instance.projectname):
+        logger.info("%s not a NGCP project, skip release_target",
+                    instance.projectname)
+        return
     branch = instance.param_branch
     if workfront_re_branch.search(branch):
         release = branch
