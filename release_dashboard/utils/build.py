@@ -117,3 +117,10 @@ def get_gerrit_tags(project, regex=None):
 def get_gerrit_branches(project, regex=None):
     url = settings.GERRIT_URL.format("a/projects/%s/branches/" % project)
     return get_gerrit_info(url)
+
+
+def is_ngcp_project(projectname):
+    ngcp_projects = settings.RELEASE_DASHBOARD_SETTINGS['projects']
+    if projectname in ngcp_projects:
+        return True
+    return False
