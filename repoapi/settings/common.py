@@ -196,6 +196,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "keyring",
         "kibana",
         "klish",
+        "libhsclient-c-wrapper",
         "libinewrate",
         "libswrate",
         "libtcap",
