@@ -23,7 +23,7 @@ Depends:
  python-dev,
  sipwise-repos-scripts-helpers,
  uwsgi,
- uwsgi-plugin-python,
+ uwsgi-plugin-python3,
  virtualenv,
  ${misc:Depends},
 Description: REST API webapp
