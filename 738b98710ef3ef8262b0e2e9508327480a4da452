@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7adec928_0ab9582e",
+        "filename": "repoapi.ini",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2017-07-20T14:13:47Z",
+      "side": 1,
+      "message": "python35\n\nand we need to use uwsgi-plugin-python3 in puppet",
+      "revId": "738b98710ef3ef8262b0e2e9508327480a4da452",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
