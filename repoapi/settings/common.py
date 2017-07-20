@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_api_key',
     'rest_framework_swagger',
-    'django_extensions',
     'django_assets',
-    'djcelery',
+    'django_celery_results',
+    'django_extensions',
     'jsonify',
 ]
 
@@ -63,6 +63,9 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
+        'TEMPLATE_DIRS':  [
+            'repoapi/templates',
+            ],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -102,10 +105,6 @@ STATICFILES_FINDERS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_media/')
-
-TEMPLATE_DIRS = (
-    'repoapi/templates',
-)
 
 REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
@@ -149,7 +148,7 @@ JENKINS_TOKEN = "sipwise_jenkins_ci"
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERY_RESULT_BACKEND = 'django-db'
 
 HOTFIX_ARTIFACT = 'debian_changelog.txt'
 
