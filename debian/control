@@ -5,7 +5,7 @@ Build-Depends:
  debhelper (>= 9~),
  dh-systemd (>= 1.5),
  libpq-dev,
- python-dev,
+ python3-dev,
  virtualenv,
 Standards-Version: 3.9.8
 Section: python
@@ -23,7 +23,7 @@ Depends:
  python-dev,
  sipwise-repos-scripts-helpers,
  uwsgi,
- uwsgi-plugin-python,
+ uwsgi-plugin-python3,
  virtualenv,
  ${misc:Depends},
 Description: REST API webapp

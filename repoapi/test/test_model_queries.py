@@ -24,12 +24,12 @@ class JBIQueriesTestCase(BaseTest):
 
     def test_releases(self):
         releases = JenkinsBuildInfo.objects.releases()
-        self.assertItemsEqual(releases, ['mr3.1-fake', ])
+        self.assertCountEqual(releases, ['mr3.1-fake', ])
 
     def test_release_projects(self):
         projects = ['fake', ]
         check = JenkinsBuildInfo.objects.release_projects('mr3.1-fake')
-        self.assertItemsEqual(check, projects)
+        self.assertCountEqual(check, projects)
 
     def test_release_project_uuids(self):
         projects = ['fake', ]
@@ -40,18 +40,18 @@ class JBIQueriesTestCase(BaseTest):
         for project in projects:
             uuids[project] = JenkinsBuildInfo.objects.release_project_uuids(
                 'mr3.1-fake', project)
-            self.assertItemsEqual(uuids_ok[project], uuids[project])
+            self.assertCountEqual(uuids_ok[project], uuids[project])
 
     def test_jobs_by_uuid(self):
         jobs = JenkinsBuildInfo.objects.jobs_by_uuid(
             'mr3.1-fake', 'fake', 'UUID0')
-        self.assertItemsEqual(
+        self.assertCountEqual(
             JenkinsBuildInfo.objects.filter(param_release='mr3.1-fake',
                                             projectname='fake',
                                             tag='UUID0'), jobs)
         jobs = JenkinsBuildInfo.objects.jobs_by_uuid(
             'mr3.1-fake', 'fake', 'UUID1')
-        self.assertItemsEqual(
+        self.assertCountEqual(
             JenkinsBuildInfo.objects.filter(param_release='mr3.1-fake',
                                             projectname='fake',
                                             tag='UUID1'), jobs)
