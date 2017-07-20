@@ -7,9 +7,9 @@ all:
 .ONESHELL:
 SHELL = /bin/bash
 venv_prod: requirements/prod.txt
-	virtualenv --python=python2.7 $(VAR_DIR)/venv_prod
+	virtualenv --python=python3 $(VAR_DIR)/venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
-		pip install -r ./requirements/prod.txt | tee install.log
+		pip3 install -r ./requirements/prod.txt | tee install.log
 ###################################
 
 test:

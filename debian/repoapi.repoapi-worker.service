@@ -9,7 +9,7 @@ Group=www-data
 Environment=DJANGO_SETTINGS_MODULE=repoapi.settings.prod
 PIDFile=/var/lib/repoapi/celery-worker.pid
 WorkingDirectory=/usr/share/repoapi
-ExecStart=/var/lib/repoapi/venv_prod/bin/python ./manage.py celery worker \
+ExecStart=/var/lib/repoapi/venv_prod/bin/python3 ./manage.py celery worker \
         --pidfile=/var/lib/repoapi/celery-worker.pid --loglevel=INFO
 
 [Install]

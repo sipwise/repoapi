@@ -72,7 +72,7 @@ class TasksDockerTestCase(TestCase):
         self.assertEquals(proj.name, "data-hal")
         image = DockerImage.objects.create(
             name='data-hal-jessie', project=proj)
-        self.assertItemsEqual(proj.dockerimage_set.all(), [image, ])
+        self.assertCountEqual(proj.dockerimage_set.all(), [image, ])
         result = tasks.docker_fetch_info.delay('data-hal-jessie')
         self.assertTrue(result.successful())
         image = DockerImage.objects.get(name='data-hal-jessie')
@@ -85,7 +85,7 @@ class TasksDockerTestCase(TestCase):
             call("data-hal-jessie/manifests/latest"),
         ]
         gdmi.assert_has_calls(calls)
-        self.assertItemsEqual(image.tags, ["I3a899", "latest"])
+        self.assertCountEqual(image.tags, ["I3a899", "latest"])
 
     @patch('release_dashboard.utils.docker.get_docker_manifests_info',
            side_effect=fake_manifest)
@@ -106,7 +106,7 @@ class TasksDockerTestCase(TestCase):
             call("data-hal-jessie/manifests/latest"),
         ]
         gdmi.assert_has_calls(calls)
-        self.assertItemsEqual(image.tags, ["I3a899", "latest"])
+        self.assertCountEqual(image.tags, ["I3a899", "latest"])
 
     @patch('release_dashboard.utils.docker.get_docker_manifests_info',
            side_effect=fake_manifest)
@@ -118,9 +118,9 @@ class TasksDockerTestCase(TestCase):
         proj = Project.objects.get(name="data-hal")
         images = [DockerImage.objects.get(name='data-hal-jessie'),
                   DockerImage.objects.get(name='data-hal-selenium-jessie')]
-        self.assertItemsEqual(proj.dockerimage_set.all(), images)
-        self.assertItemsEqual(images[0].tags, ["I3a899", "latest"])
-        self.assertItemsEqual(images[1].tags, ["If53a9", "latest"])
+        self.assertCountEqual(proj.dockerimage_set.all(), images)
+        self.assertCountEqual(images[0].tags, ["I3a899", "latest"])
+        self.assertCountEqual(images[1].tags, ["If53a9", "latest"])
         calls = [
             call("_catalog"),
             call("data-hal-jessie/tags/list"),
