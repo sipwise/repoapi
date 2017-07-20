@@ -69,7 +69,7 @@ class TasksDockerTestCase(TestCase):
            side_effect=fake_tag)
     def test_docker_fetch_info(self, gdi, gdmi):
         proj = Project.objects.create(name="data-hal")
-        self.assertEquals(proj.name, "data-hal")
+        self.assertCountEqual(proj.name, "data-hal")
         image = DockerImage.objects.create(
             name='data-hal-jessie', project=proj)
         self.assertItemsEqual(proj.dockerimage_set.all(), [image, ])

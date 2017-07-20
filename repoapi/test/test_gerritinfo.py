@@ -44,7 +44,7 @@ class GerritRepoInfoTestCase(BaseTest):
         JenkinsBuildInfo.objects.create(**self.get_defaults())
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         utils.assert_not_called()
 
     @patch('repoapi.utils.jenkins_remove_ppa')
@@ -55,7 +55,7 @@ class GerritRepoInfoTestCase(BaseTest):
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 0)
+        self.assertCountEqual(gri.count(), 0)
         utils.assert_called_with("gerrit_MT10339_review2054")
 
     @patch('repoapi.utils.jenkins_remove_ppa')
@@ -66,7 +66,7 @@ class GerritRepoInfoTestCase(BaseTest):
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 0)
+        self.assertCountEqual(gri.count(), 0)
         utils.assert_not_called()
 
     @patch('repoapi.utils.jenkins_remove_ppa')
@@ -77,7 +77,7 @@ class GerritRepoInfoTestCase(BaseTest):
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         utils.assert_not_called()
 
     @patch('repoapi.utils.jenkins_remove_ppa')
@@ -86,7 +86,7 @@ class GerritRepoInfoTestCase(BaseTest):
         JenkinsBuildInfo.objects.create(**param)
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         utils.assert_not_called()
 
         param['projectname'] = "fake"
@@ -97,7 +97,7 @@ class GerritRepoInfoTestCase(BaseTest):
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 2)
+        self.assertCountEqual(gri.count(), 2)
         utils.assert_not_called()
 
     @patch('repoapi.utils.jenkins_remove_ppa')
@@ -106,7 +106,7 @@ class GerritRepoInfoTestCase(BaseTest):
         JenkinsBuildInfo.objects.create(**param)
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         utils.assert_not_called()
 
         param_fake = self.get_defaults()
@@ -118,7 +118,7 @@ class GerritRepoInfoTestCase(BaseTest):
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 2)
+        self.assertCountEqual(gri.count(), 2)
         utils.assert_not_called()
 
         param['gerrit_eventtype'] = "change-merged"
@@ -127,7 +127,7 @@ class GerritRepoInfoTestCase(BaseTest):
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         utils.assert_not_called()
 
     @patch('repoapi.utils.jenkins_remove_ppa')
@@ -136,7 +136,7 @@ class GerritRepoInfoTestCase(BaseTest):
         JenkinsBuildInfo.objects.create(**param)
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         utils.assert_not_called()
 
         param_fake = self.get_defaults()
@@ -148,7 +148,7 @@ class GerritRepoInfoTestCase(BaseTest):
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 2)
+        self.assertCountEqual(gri.count(), 2)
         utils.assert_not_called()
 
         param['gerrit_eventtype'] = "change-merged"
@@ -157,7 +157,7 @@ class GerritRepoInfoTestCase(BaseTest):
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         utils.assert_not_called()
 
         param_fake['buildnumber'] = 9
@@ -166,7 +166,7 @@ class GerritRepoInfoTestCase(BaseTest):
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 0)
+        self.assertCountEqual(gri.count(), 0)
         utils.assert_called_with("gerrit_MT10339_review2054")
 
     @patch('repoapi.utils.jenkins_remove_ppa')
@@ -175,7 +175,7 @@ class GerritRepoInfoTestCase(BaseTest):
         JenkinsBuildInfo.objects.create(**param)
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         utils.assert_not_called()
 
         param['jobname'] = "kamailio-cleanup"
@@ -185,5 +185,5 @@ class GerritRepoInfoTestCase(BaseTest):
 
         gri = GerritRepoInfo.objects.filter(
             param_ppa="gerrit_MT10339_review2054")
-        self.assertEquals(gri.count(), 0)
+        self.assertCountEqual(gri.count(), 0)
         utils.assert_called_with("gerrit_MT10339_review2054")

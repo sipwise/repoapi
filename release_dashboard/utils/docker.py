@@ -35,9 +35,9 @@ def trigger_docker_build(project, branch):
     branch = branch.split("branch/")[1]
     params = {
         'base': settings.JENKINS_URL,
-        'token': urllib.quote(settings.JENKINS_TOKEN),
+        'token': urllib.parse.quote(settings.JENKINS_TOKEN),
         'project': project,
-        'branch': urllib.quote(branch),
+        'branch': urllib.parse.quote(branch),
     }
 
     url = docker_url.format(**params)

@@ -58,12 +58,12 @@ class TestHotfixReleased(BaseTest):
     def test_parse_changelog(self):
         ids, changelog = utils.parse_changelog("/tmp/fake.txt")
         self.assertItemsEqual(ids, ["345", "123"])
-        self.assertEquals(changelog.full_version, "3.8.7.4+0~mr3.8.7.4")
-        self.assertEquals(changelog.package, "ngcp-fake")
+        self.assertCountEqual(changelog.full_version, "3.8.7.4+0~mr3.8.7.4")
+        self.assertCountEqual(changelog.package, "ngcp-fake")
 
     def test_get_target_release(self):
         val = utils.get_target_release("3.8.7.4+0~mr3.8.7.4")
-        self.assertEquals(val, "mr3.8.7.4")
+        self.assertCountEqual(val, "mr3.8.7.4")
 
     def test_get_target_release_ko(self):
         val = utils.get_target_release("3.8.7.4-1")
@@ -82,19 +82,19 @@ class TestHotfixReleased(BaseTest):
         gri = models.WorkfrontNoteInfo.objects.filter(
             projectname=projectname,
             version=version)
-        self.assertEquals(gri.count(), 2)
+        self.assertCountEqual(gri.count(), 2)
         gri = models.WorkfrontNoteInfo.objects.filter(
             workfront_id="345",
             projectname=projectname,
             version=version)
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         msg = "hotfix %s.git %s triggered" % (projectname, version)
         calls = [call("345", msg), ]
         gri = models.WorkfrontNoteInfo.objects.filter(
             workfront_id="123",
             projectname=projectname,
             version=version)
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         msg = "hotfix %s.git %s triggered" % (projectname, version)
         calls.append(call("123", msg))
         wns.assert_has_calls(calls)

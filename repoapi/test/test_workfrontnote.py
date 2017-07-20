@@ -35,7 +35,7 @@ class WorkfrontNoteTestCase(BaseTest):
 
     def test_getCommit(self):
         res = WorkfrontNoteInfo.getCommit("1234567 TT#67676 whatever")
-        self.assertEquals(res, "1234567")
+        self.assertCountEqual(res, "1234567")
 
     def get_defaults(self):
         defaults = {
@@ -74,7 +74,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="2054")
-        self.assertEquals(gri.count(), 0)
+        self.assertCountEqual(gri.count(), 0)
 
         param['jobname'] = "kamailio-get-code"
         param['buildnumber'] = 897
@@ -83,7 +83,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="2054")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         msg = "%s.git[%s] review created %s " % (
             param['projectname'],
             param['param_branch'],
@@ -102,7 +102,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="2054")
-        self.assertEquals(gri.count(), 0)
+        self.assertCountEqual(gri.count(), 0)
 
         param['jobname'] = "kamailio-get-code"
         param['buildnumber'] = 897
@@ -112,11 +112,11 @@ class WorkfrontNoteTestCase(BaseTest):
             workfront_id="0001",
             gerrit_change="2054",
             eventtype='patchset-created')
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="7fg4567")
-        self.assertEquals(gri.count(), 0)
+        self.assertCountEqual(gri.count(), 0)
         msg = "%s.git[%s] review created %s " % (
             param['projectname'],
             param['param_branch'],
@@ -135,11 +135,11 @@ class WorkfrontNoteTestCase(BaseTest):
             workfront_id="0001",
             gerrit_change="2054",
             eventtype='change-merged')
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="2054")
-        self.assertEquals(gri.count(), 2)
+        self.assertCountEqual(gri.count(), 2)
         msg = "%s.git[%s] review merged %s " % (
             param['projectname'],
             param['param_branch'],
@@ -160,7 +160,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="7fg4567")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
 
         param['jobname'] = "kamailio-binaries"
         param['buildnumber'] = 897
@@ -169,7 +169,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="7fg4567")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         msg = "%s.git[%s] commit created %s " % (
             param['projectname'],
             param['param_branch'],
@@ -192,7 +192,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="7fg4567")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
 
         param['jobname'] = "kamailio-binaries"
         param['buildnumber'] = 897
@@ -201,7 +201,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="7fg4567")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         msg = "%s.git[%s] commit created %s " % (
             param['projectname'],
             param['param_branch'],
@@ -222,7 +222,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="7fg4567")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
 
         param['jobname'] = "kamailio-binaries"
         param['buildnumber'] = 897
@@ -231,7 +231,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="7fg4567")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         msg = "%s.git[%s] commit created %s " % (
             param['projectname'],
             param['param_branch'],
@@ -254,7 +254,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="7fg4567")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
 
         param['jobname'] = "kamailio-binaries"
         param['buildnumber'] = 897
@@ -263,7 +263,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="7fg4567")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         msg = "%s.git[%s] commit created %s " % (
             param['projectname'],
             param['param_branch'],
@@ -286,7 +286,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="7fg4567")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
 
         param['jobname'] = "fake-binaries"
         param['buildnumber'] = 897
@@ -295,7 +295,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001",
             gerrit_change="7fg4567")
-        self.assertEquals(gri.count(), 1)
+        self.assertCountEqual(gri.count(), 1)
         msg = "%s.git[%s] commit created %s " % (
             param['projectname'],
             param['param_branch'],
