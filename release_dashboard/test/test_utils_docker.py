@@ -53,7 +53,7 @@ class UtilsDockerTestCase(TestCase):
     @patch('release_dashboard.utils.docker.get_docker_info')
     def test_get_docker_repositories(self, gdi):
         gdi.return_value = DOCKER_REST_CATALOG
-        self.assertItemsEqual(
+        self.assertCountEqual(
             docker.get_docker_repositories(),
             ['fake-jessie',
              'fake-selenium-jessie',
@@ -64,7 +64,7 @@ class UtilsDockerTestCase(TestCase):
     @patch('release_dashboard.utils.docker.get_docker_info',
            side_effect=fake_tag)
     def test_get_docker_tags(self, gdi):
-        self.assertItemsEqual(
+        self.assertCountEqual(
             docker.get_docker_tags('fake-jessie'),
             ["I3a899b8945688c2ef3a4be6ba6c4c1d4cbf6d548",
              "latest"])
@@ -76,7 +76,7 @@ class UtilsDockerTestCase(TestCase):
     @patch('release_dashboard.utils.docker.get_docker_info',
            side_effect=fake_tag)
     def test_get_docker_tags_empty(self, gdi):
-        self.assertItemsEqual(docker.get_docker_tags('other'), [])
+        self.assertCountEqual(docker.get_docker_tags('other'), [])
         calls = [
             call("other/tags/list"),
         ]
