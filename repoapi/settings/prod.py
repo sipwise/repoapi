@@ -15,7 +15,7 @@
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from ConfigParser import RawConfigParser
+from configparser import RawConfigParser
 # pylint: disable=W0401,W0614
 from .common import *
 from celery.schedules import crontab
