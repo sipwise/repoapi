@@ -46,11 +46,11 @@ def trigger_hotfix(project, branch, push="yes"):
     flow_uuid = uuid.uuid4()
     params = {
         "base": settings.JENKINS_URL,
-        'token': urllib.quote(settings.JENKINS_TOKEN),
-        'action': urllib.quote("--hotfix"),
-        'branch': urllib.quote(branch),
-        'project': urllib.quote(project),
-        'push': urllib.quote(push),
+        'token': urllib.parse.quote(settings.JENKINS_TOKEN),
+        'action': urllib.parse.quote("--hotfix"),
+        'branch': urllib.parse.quote(branch),
+        'project': urllib.parse.quote(project),
+        'push': urllib.parse.quote(push),
         'uuid': flow_uuid,
     }
 
@@ -74,22 +74,22 @@ def trigger_build(project, trigger_release=None,
     params = {
         'base': settings.JENKINS_URL,
         'job': project,
-        'token': urllib.quote(settings.JENKINS_TOKEN),
-        'cause': urllib.quote(trigger_release),
+        'token': urllib.parse.quote(settings.JENKINS_TOKEN),
+        'cause': urllib.parse.quote(trigger_release),
         'branch': 'none',
         'tag': 'none',
-        'release': urllib.quote(trigger_release),
-        'distribution': urllib.quote(trigger_distribution),
+        'release': urllib.parse.quote(trigger_release),
+        'distribution': urllib.parse.quote(trigger_distribution),
         'uuid': flow_uuid,
     }
     if trigger_branch_or_tag.startswith("tag/"):
         tag = trigger_branch_or_tag.split("tag/")[1]
-        params['tag'] = urllib.quote(tag)
+        params['tag'] = urllib.parse.quote(tag)
     elif trigger_branch_or_tag.startswith("branch/"):
         branch = trigger_branch_or_tag.split("branch/")[1]
-        params['branch'] = urllib.quote(branch)
+        params['branch'] = urllib.parse.quote(branch)
     else:
-        params['branch'] = urllib.quote(trigger_branch_or_tag)
+        params['branch'] = urllib.parse.quote(trigger_branch_or_tag)
 
     url = project_url.format(**params)
     if settings.DEBUG:

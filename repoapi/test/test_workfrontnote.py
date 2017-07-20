@@ -23,15 +23,15 @@ class WorkfrontNoteTestCase(BaseTest):
 
     def test_getID(self):
         res = WorkfrontNoteInfo.getIds("jojo TT#0891 whatever")
-        self.assertItemsEqual(res, ['0891'])
+        self.assertCountEqual(res, ['0891'])
 
     def test_getID_multiple(self):
         res = WorkfrontNoteInfo.getIds("jojo TT#0891 whatever TT#0001")
-        self.assertItemsEqual(res, ['0891', '0001'])
+        self.assertCountEqual(res, ['0891', '0001'])
 
     def test_getID_multiple_duplicate(self):
         res = WorkfrontNoteInfo.getIds("jojo TT#0891 whatever TT#0001 TT#0891")
-        self.assertItemsEqual(res, ['0891', '0001'])
+        self.assertCountEqual(res, ['0891', '0001'])
 
     def test_getCommit(self):
         res = WorkfrontNoteInfo.getCommit("1234567 TT#67676 whatever")
@@ -269,7 +269,7 @@ class WorkfrontNoteTestCase(BaseTest):
             param['param_branch'],
             settings.GITWEB_URL.format("kamailio", "7fg4567"))
         gnr.assert_called_once_with("stretch/master")
-        self.assertItemsEqual(wsrt.mock_calls, [])
+        self.assertCountEqual(wsrt.mock_calls, [])
         wsrt.assert_not_called()
         wns.assert_called_once_with("0001", msg)
 
