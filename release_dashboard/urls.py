@@ -14,7 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 from django.conf.urls import url
-from views import build, docker
+from .views import build, docker
 
 urlpatterns = [
     url(r'^$', build.index, name='index'),

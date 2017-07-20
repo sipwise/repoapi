@@ -24,5 +24,5 @@ class BuildReleaseTestCase(TestCase):
     def test_projects_list(self):
         build = BuildRelease.objects.get(
             uuid="dbe569f7-eab6-4532-a6d1-d31fb559649b")
-        self.assertItemsEqual(build.projects_list,
+        self.assertCountEqual(build.projects_list,
                               ['kamailio', 'lua-ngcp-kamailio', 'ngcp-panel'])

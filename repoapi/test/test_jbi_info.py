@@ -56,7 +56,7 @@ class TestJBICelery(BaseTest):
         }
         return defaults
 
-    @patch('__builtin__.open', mock_open(read_data=artifacts_json))
+    @patch('builtins.open', mock_open(read_data=artifacts_json))
     @patch('repoapi.utils.dlfile')
     def test_jbi_path_creation(self, dlfile):
         param = self.get_defaults()
@@ -66,7 +66,7 @@ class TestJBICelery(BaseTest):
                                  jbi.jobname, str(jbi.buildnumber))
         self.assertTrue(os.path.isdir(base_path), base_path)
 
-    @patch('__builtin__.open', mock_open(read_data=artifacts_json))
+    @patch('builtins.open', mock_open(read_data=artifacts_json))
     @patch('repoapi.utils.dlfile')
     def test_jbi_console(self, dlfile):
         param = self.get_defaults()
@@ -91,7 +91,7 @@ class TestJBICelery(BaseTest):
         path = os.path.join(artifact_base_path, 'builddeps.list')
         self.assertNotIn(call(url, path), dlfile.call_args_list)
 
-    @patch('__builtin__.open', mock_open(read_data=artifacts_json))
+    @patch('builtins.open', mock_open(read_data=artifacts_json))
     @patch('repoapi.utils.dlfile')
     def test_jbi_buildinfo(self, dlfile):
         param = self.get_defaults()
@@ -115,7 +115,7 @@ class TestJBICelery(BaseTest):
         path = os.path.join(artifact_base_path, 'builddeps.list')
         self.assertNotIn(call(url, path), dlfile.call_args_list)
 
-    @patch('__builtin__.open', mock_open(read_data=artifacts_json))
+    @patch('builtins.open', mock_open(read_data=artifacts_json))
     @patch('repoapi.utils.dlfile')
     def test_jbi_artifact(self, dlfile):
         param = self.get_defaults()
@@ -133,7 +133,7 @@ class TestJBICelery(BaseTest):
         path = os.path.join(artifact_base_path, 'builddeps.list')
         dlfile.assert_any_call(url, path)
 
-    @patch('__builtin__.open', mock_open(read_data=artifacts_json))
+    @patch('builtins.open', mock_open(read_data=artifacts_json))
     @patch('repoapi.utils.dlfile')
     def test_jbi_envVars(self, dlfile):
         param = self.get_defaults()

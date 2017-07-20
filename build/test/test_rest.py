@@ -85,4 +85,4 @@ class TestRest(APIAuthenticatedTestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         data_all['start_date'] = response.data['start_date']
         data_all['id'] = response.data['id']
-        self.assertItemsEqual(response.data, data_all)
+        self.assertCountEqual(response.data, data_all)
