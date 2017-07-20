@@ -21,7 +21,7 @@ from django.db import models
 from django.forms.models import model_to_dict
 from django.conf import settings
 from repoapi.tasks import get_jbi_files
-from urlparse import urlparse
+from urllib.parse import urlparse
 
 logger = logging.getLogger(__name__)
 workfront_re = re.compile(r"TT#(\d+)")
