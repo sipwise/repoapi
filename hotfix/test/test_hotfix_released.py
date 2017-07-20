@@ -54,10 +54,10 @@ class TestHotfixReleased(BaseTest):
         }
         return defaults
 
-    @patch('__builtin__.open', mock_open(read_data=debian_changelog))
+    @patch('builtins.open', mock_open(read_data=debian_changelog))
     def test_parse_changelog(self):
         ids, changelog = utils.parse_changelog("/tmp/fake.txt")
-        self.assertItemsEqual(ids, ["345", "123"])
+        self.assertCountEqual(ids, ["345", "123"])
         self.assertEquals(changelog.full_version, "3.8.7.4+0~mr3.8.7.4")
         self.assertEquals(changelog.package, "ngcp-fake")
 
@@ -69,7 +69,7 @@ class TestHotfixReleased(BaseTest):
         val = utils.get_target_release("3.8.7.4-1")
         self.assertIsNone(val)
 
-    @patch('__builtin__.open', mock_open(read_data=debian_changelog))
+    @patch('builtins.open', mock_open(read_data=debian_changelog))
     @patch('repoapi.utils.dlfile')
     @patch('repoapi.utils.workfront_set_release_target')
     @patch('repoapi.utils.workfront_note_send')
@@ -97,6 +97,7 @@ class TestHotfixReleased(BaseTest):
         self.assertEquals(gri.count(), 1)
         msg = "hotfix %s.git %s triggered" % (projectname, version)
         calls.append(call("123", msg))
-        wns.assert_has_calls(calls)
+        wns.assert_has_calls(calls, any_order=True)
         wsrt.assert_has_calls(
-            [call("345", "mr3.8.7.4"), call("123", "mr3.8.7.4")])
+            [call("345", "mr3.8.7.4"), call("123", "mr3.8.7.4")],
+            any_order=True)

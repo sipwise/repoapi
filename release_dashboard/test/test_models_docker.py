@@ -28,13 +28,13 @@ class DockerImageTestCase(TestCase):
     def test_create(self):
         image = diobj.create(
             name='fake-jessie', project=self.proj)
-        self.assertItemsEqual(self.proj.dockerimage_set.all(),
+        self.assertCountEqual(self.proj.dockerimage_set.all(),
                               [image, ])
 
     def test_remove_image(self):
         image = diobj.create(
             name='fake-jessie', project=self.proj)
-        self.assertItemsEqual(self.proj.dockerimage_set.all(),
+        self.assertCountEqual(self.proj.dockerimage_set.all(),
                               [image, ])
         image.delete()
         self.assertTrue(Project.objects.filter(name="fake").exists())
@@ -42,7 +42,7 @@ class DockerImageTestCase(TestCase):
     def test_remove_project(self):
         image = diobj.create(
             name='fake-jessie', project=self.proj)
-        self.assertItemsEqual(self.proj.dockerimage_set.all(), [image, ])
+        self.assertCountEqual(self.proj.dockerimage_set.all(), [image, ])
         self.proj.delete()
         self.assertFalse(Project.objects.filter(name="fake").exists())
         self.assertFalse(diobj.filter(name="fake").exists())
@@ -50,24 +50,24 @@ class DockerImageTestCase(TestCase):
     def test_filter_images(self):
         images = ['fake-jessie', 'other', 'ngcp-fake', 'fake-more']
         images_ok = ['fake-jessie', 'ngcp-fake', 'fake-more']
-        self.assertItemsEqual(
+        self.assertCountEqual(
             self.proj.filter_docker_images(images), images_ok)
 
     def test_image_tags(self):
         image = diobj.create(
             name='fake-jessie', project=self.proj)
-        self.assertItemsEqual(image.tags, [])
+        self.assertCountEqual(image.tags, [])
         DockerTag.objects.create(
             name='latest',
             image=image,
             manifests='{}')
-        self.assertItemsEqual(image.tags, ['latest', ])
+        self.assertCountEqual(image.tags, ['latest', ])
         DockerTag.objects.create(
             name='mr5.4',
             image=image,
             manifests='{}',
             reference='whatever')
-        self.assertItemsEqual(image.tags, ['latest', 'mr5.4'])
+        self.assertCountEqual(image.tags, ['latest', 'mr5.4'])
 
 
 class DockerImageTest2Case(TestCase):
@@ -83,20 +83,20 @@ class DockerImageTest2Case(TestCase):
         ]
 
     def test_images_with_tags(self):
-        self.assertItemsEqual(
+        self.assertCountEqual(
             diobj.images_with_tags(),
             self.images_with_tags)
 
     def test_project_images_with_tags(self):
-        self.assertItemsEqual(
+        self.assertCountEqual(
             diobj.images_with_tags('data-hal'),
             [diobj.get(name='data-hal-jessie'), ])
-        self.assertItemsEqual(
+        self.assertCountEqual(
             diobj.images_with_tags('ngcp-panel'),
             [diobj.get(name='ngcp-panel-selenium'),
              diobj.get(name='ngcp-panel-tests-rest-api-jessie'),
              diobj.get(name='ngcp-panel-tests-selenium-jessie'), ])
-        self.assertItemsEqual(diobj.images_with_tags('libtcap'), [])
+        self.assertCountEqual(diobj.images_with_tags('libtcap'), [])
 
     def test_date(self):
         tag = DockerTag.objects.get(

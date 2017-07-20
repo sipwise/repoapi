@@ -6,7 +6,7 @@
   tasks:
     - name: install Debian package requirements
       apt: name=libyaml-dev state=present
-      apt: name=python2.7-dev state=present
+      apt: name=python3-dev state=present
       apt: name=python-virtualenv state=present
 
 - hosts: all
