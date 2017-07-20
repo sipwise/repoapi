@@ -57,7 +57,7 @@ class TestHotfixReleased(BaseTest):
     @patch('__builtin__.open', mock_open(read_data=debian_changelog))
     def test_parse_changelog(self):
         ids, changelog = utils.parse_changelog("/tmp/fake.txt")
-        self.assertItemsEqual(ids, ["345", "123"])
+        self.assertCountEqual(ids, ["345", "123"])
         self.assertEquals(changelog.full_version, "3.8.7.4+0~mr3.8.7.4")
         self.assertEquals(changelog.package, "ngcp-fake")
 

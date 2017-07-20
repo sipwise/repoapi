@@ -19,7 +19,7 @@ import logging
 import os
 import shutil
 import subprocess
-import urllib2
+import urllib3
 from django.conf import settings
 
 logger = logging.getLogger(__name__)
@@ -43,16 +43,16 @@ def dlfile(url, path):
     if settings.DEBUG:
         logger.info("I would call %s", url)
     else:
-        remote_file = urllib2.urlopen(url)
+        remote_file = urllib3.urlopen(url)
         logger.debug("url:[%s]", url)
         with open(path, "wb") as local_file:
             shutil.copyfileobj(remote_file, local_file)
 
 
 def openurl(url):
-    req = urllib2.Request(url)
+    req = urllib3.Request(url)
     logger.debug("url:[%s]", url)
-    response = urllib2.urlopen(req)
+    response = urllib3.urlopen(req)
     if response.code > 199 and response.code < 300:
         logger.debug("OK[%d] url: %s", url, response.code)
         return True

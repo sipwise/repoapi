@@ -66,26 +66,26 @@ class ProjectTestCase(TestCase):
         proj = Project.objects.create(name="fake", json_tags=FILTERED_TAGS)
         self.assertEquals(proj.name, "fake")
         self.assertIsInstance(proj.tags, list)
-        self.assertItemsEqual(proj.tags, ["mr2.0.0", "mr1.0.0", ])
+        self.assertCountEqual(proj.tags, ["mr2.0.0", "mr1.0.0", ])
 
     def test_tags_null(self):
         proj = Project.objects.create(name="fake")
         self.assertEquals(proj.name, "fake")
         self.assertIsInstance(proj.tags, list)
-        self.assertItemsEqual(proj.tags, [])
+        self.assertCountEqual(proj.tags, [])
 
     def test_branches(self):
         proj = Project.objects.create(name="fake",
                                       json_branches=FILTERED_BRANCHES)
         self.assertEquals(proj.name, "fake")
         self.assertIsInstance(proj.branches, list)
-        self.assertItemsEqual(proj.branches, ["vseva/1789", "master"])
+        self.assertCountEqual(proj.branches, ["vseva/1789", "master"])
 
     def test_branches_null(self):
         proj = Project.objects.create(name="fake")
         self.assertEquals(proj.name, "fake")
         self.assertIsInstance(proj.branches, list)
-        self.assertItemsEqual(proj.branches, [])
+        self.assertCountEqual(proj.branches, [])
 
     def test_filtered_json(self):
         res = Project._get_filtered_json(GERRIT_REST_TAGS)
@@ -116,17 +116,17 @@ class ProjectTestCase(TestCase):
         proj = Project.objects.create(name="fake")
         self.assertEquals(proj.name, "fake")
         self.assertIsInstance(proj.tags, list)
-        self.assertItemsEqual(proj.tags, [])
+        self.assertCountEqual(proj.tags, [])
         proj.tags = GERRIT_REST_TAGS
-        self.assertItemsEqual(proj.tags, ["mr2.0.0", "mr1.0.0"])
+        self.assertCountEqual(proj.tags, ["mr2.0.0", "mr1.0.0"])
 
     def test_branches_set(self):
         proj = Project.objects.create(name="fake")
         self.assertEquals(proj.name, "fake")
         self.assertIsInstance(proj.branches, list)
-        self.assertItemsEqual(proj.branches, [])
+        self.assertCountEqual(proj.branches, [])
         proj.branches = GERRIT_REST_BRANCHES
-        self.assertItemsEqual(proj.branches, ["master", "vseva/1789"])
+        self.assertCountEqual(proj.branches, ["master", "vseva/1789"])
 
     def test_branches_mrXX(self):
         tmp = [
@@ -138,7 +138,7 @@ class ProjectTestCase(TestCase):
         proj = Project.objects.create(name="fake",
                                       json_branches=tmp)
         self.assertEquals(proj.name, "fake")
-        self.assertItemsEqual(proj.branches_mrXX(),
+        self.assertCountEqual(proj.branches_mrXX(),
                               ["mr0.1", ])
 
     def test_branches_mrXXX(self):
@@ -151,5 +151,5 @@ class ProjectTestCase(TestCase):
         proj = Project.objects.create(name="fake",
                                       json_branches=tmp)
         self.assertEquals(proj.name, "fake")
-        self.assertItemsEqual(proj.branches_mrXXX(),
+        self.assertCountEqual(proj.branches_mrXXX(),
                               ["mr0.1.1", ])
