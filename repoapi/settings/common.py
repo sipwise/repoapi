@@ -39,9 +39,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_api_key',
     'rest_framework_swagger',
-    'django_extensions',
     'django_assets',
-    'djcelery',
+    'django_celery_results',
+    'django_extensions',
     'jsonify',
 ]
 
@@ -149,7 +149,7 @@ JENKINS_TOKEN = "sipwise_jenkins_ci"
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+CELERY_RESULT_BACKEND = 'django-db'
 
 HOTFIX_ARTIFACT = 'debian_changelog.txt'
 
