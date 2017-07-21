@@ -1,3 +1,74 @@
+repoapi (0.2.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [afb792a] TT#1951 fix requirements for hotfix
+  * [00f24c5] MT#7247 panel: add latest_uuid view
+  * [7c2ff35] MT#7247 split uwsgi configs
+  * [9c07ac6] MT# uwsgi: remove daemons from repoapi.ini
+  * [89b15cf] MT#7247 panel: refresh info of latest view
+  * [75e7f0e] TT#2151 manage daemons by systemd services
+  * [75a7c8d] MT#7247 panel: fix order of jobs in release
+  * [b437ad5] TT#1735 repoapi: fix send_task() args
+  * [e720532] TT#3762 fix some pylint warnings
+  * [8f0ff90] TT#3762 panel: make base.html more generic
+  * [16a3bcc] MT#3762 release_dashboard base
+  * [331c6cc] TT#4008 relase_dashboard: implement build_deps and build
+    release
+  * [89b0148] MT#7247 panel: filter releases
+  * [eceefa7] MT#7247 repoapi: fix confusion between jenkins job vs build
+  * [34018bb] TT#4250 use some settings on prod from server.ini
+  * [ecba3fa] TT#4671 release_dashboard: add trunk builds
+  * [487440b] TT#4671 release_dashboard: set default_release to 'none'
+  * [932368e] MT#7247 panel: fix latest view
+  * [69ee1f4] TT#5454 requirements: do not use new celery 4.0
+  * [2bb4b42] TT#11544 test: fix test due common JBI_BASEDIR
+  * [cf809ff] TT#11544 WORKFRONT_NOTE setting
+  * [49937d2] TT#11544 wni: use workfront-jenkins-update to send notes
+  * [8334843] MT#7247 debian/postinst: remove hack from eceefa7ff57eb
+  * [7711c84] TT#11544 wni: add one last space after URL at WF note
+  * [92489bb] TT#1951 repoapi: fix call to hotfix task
+  * [42291db] TT#12263 new JBI_ALLOWED_HOSTS setting
+  * [3da2d6f] TT#11544 wni: add projectname to the WF message
+  * [711f94a] TT#11462 use postgresql psycopg2 as database backend engine
+  * [15ecc14] TT#11437 set workfront release_target
+  * [3619113] TT#11437 don't set release_target for empty values
+  * [9863ace] TT#16532 hotfix: set target_release
+  * [f56bd95] TT#16532 hotfix: use full mr version for target_release
+  * [45f8195] TT#17622 release_dashboard: add docker images forms
+  * [9982d18] TT#17502 fix Dockerfile
+  * [f243507] TT#17502 Dockerfile: update documentation
+  * [84932e3] TT#17622 release_dashboard: allow master for docker builds
+  * [01411e6] TT#17854 systemd: define unit dependence for rabbitmq-server
+  * [731dd69] TT#17622 build_docker
+  * [629fde1] TT#17756 docker: support remove tags
+  * [9129897] TT#16804 add '.git' suffix to projectname on workfront notes
+  * [2cf5b8d] TT#15305 build release REST API
+  * [5045755] TT#18710 Makefile: load_apikeys rule
+  * [7c335c3] TT#18651 provide beat service for periodic tasks
+  * [e0db32b] TT#18651 purge-none periodic task
+  * [5a37cc6] TT#18652 release_dashboard: fix refresh git all info task
+  * [6355f31] TT#18821 don't set release_target for non-NGCP projects
+
+  [ Alexander Lutay ]
+  * [c427dda] MT#22619 Switch Debian Source to Sipwise GitHub mirror
+  * [8ad44f0] TT#3683 Remove perms on /var/lib/repoapi
+  * [8ae736c] TT#2722 Add janus-client to release_dashboard
+  * [dc7b153] TT#13767 TT#15303 Add ngcp-fauditd/ngcp-user-framework to
+    repoapi dashboard
+  * [6c21b1f] TT#17902 Add ngcp-csc to repoapi dashboard
+
+  [ Michael Prokop ]
+  * [42d69ae] TT#4671 release_dashboard: support Debian/stretch based
+    builds
+  * [28cb180] TT#19059 Port to Python3, update to latest Django LTS
+    version + based on Debian/stretch. Thanks to Victor Seva for
+    assistance with porting
+
+  [ Sergii Kipot ]
+  * [73835bb] TT#18758 Add libhsclient-c-wrapper to repoapi dashboard
+
+ -- Michael Prokop <mprokop@sipwise.com>  Fri, 21 Jul 2017 14:36:14 +0200
+
 repoapi (0.1.1) unstable; urgency=medium
 
   [ Victor Seva ]
