@@ -153,7 +153,14 @@ def get_next_release(branch):
         return None
     val = res[1].rstrip()
     if len(val) > 0:
-        return val
+        # py2 vs py3: convert to string iff it's a bytes object,
+        # otherwise it should be a string object already (as with
+        # py2 as well as the mocking/patching as being done in test_utils.py)
+        if type(val) is bytes:
+            return val.decode("utf-8")
+        else:
+            return val
+
     else:
         return None
 
