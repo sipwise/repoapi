@@ -153,7 +153,7 @@ def get_next_release(branch):
         return None
     val = res[1].rstrip()
     if len(val) > 0:
-        return val
+        return val.decode("utf-8")
     else:
         return None
 
