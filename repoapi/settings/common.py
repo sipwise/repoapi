@@ -210,7 +210,6 @@ RELEASE_DASHBOARD_SETTINGS = {
         "netscript",
         "ngcp-api-tools",
         "ngcp-csc",
-        "ngcp-csc-extjs",
         "ngcp-fauditd",
         "ngcp-klish-config",
         "ngcp-panel",
