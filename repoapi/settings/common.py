@@ -234,6 +234,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "sems",
         "sems-app",
         "sems-ha",
+        "sems-modules",
         "sems-pbx",
         "sems-prompts",
         "sipsak",
