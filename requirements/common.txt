@@ -2,7 +2,7 @@ Django==1.11
 django-extensions
 yuicompressor
 django-assets
-djangorestframework
+djangorestframework>=3.6,<3.7
 drfapikey
 django-rest-swagger
 markdown
