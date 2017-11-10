@@ -1,0 +1,7 @@
+*.log
+*.substvars
+*.debhelper
+/.debhelper/
+/files
+/debhelper-build-stamp
+/repoapi
