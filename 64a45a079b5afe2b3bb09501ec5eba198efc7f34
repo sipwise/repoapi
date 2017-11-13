@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab895d6_23db8dee",
+        "filename": "debian/control",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-11-13T08:11:33Z",
+      "side": 1,
+      "message": "something wrong here?\n\n00:00:26.141 The following packages have unmet dependencies:\n00:00:26.141  pbuilder-satisfydepends-dummy : Depends: debhelper (\u003e\u003d 10~) but 9.20150101+deb8u2 is to be installed.\n\nhttps://jenkins.mgm.sipwise.com/job/repoapi-binaries/197/console",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 20
+      },
+      "revId": "64a45a079b5afe2b3bb09501ec5eba198efc7f34",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
