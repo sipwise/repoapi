@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ab29df4_17e9941a",
+        "filename": "build/utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-12-06T08:36:04Z",
+      "side": 1,
+      "message": "Isn\u0027t \"import string\" missing yet?",
+      "revId": "645031112ba2d87982f8b39e30f18e573f8de8d7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
