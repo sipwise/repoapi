@@ -70,6 +70,24 @@
       "revId": "645031112ba2d87982f8b39e30f18e573f8de8d7",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab29df4_3a659d45",
+        "filename": "build/utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2017-12-07T09:00:54Z",
+      "side": 1,
+      "message": "This is internal dev-qa tool, so can be broken for some period... IMHO you can merge it, I will test it on mr6.0.1 tagging next week. Otheriwse I will revert if any issues appear.\n\nThere are docker image available AFAIK. Victor was able to start and test everything locally... also we can test it on repoapi-dev.mgm as well.",
+      "parentUuid": "9ab29df4_ba69ad27",
+      "revId": "645031112ba2d87982f8b39e30f18e573f8de8d7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
