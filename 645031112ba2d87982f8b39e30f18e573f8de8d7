@@ -16,6 +16,24 @@
       "revId": "645031112ba2d87982f8b39e30f18e573f8de8d7",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab29df4_5a35f144",
+        "filename": "build/utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T08:26:13Z",
+      "side": 1,
+      "message": "Indeed, thanks for noticing, adding in patchset 2.\n\n(I don\u0027t know a quick way to test this code, I thought it better to not touch the servers and I don\u0027t know how to test it locally without spending a lot of time trying to learn how to set-up django, the right versions, etc.  And even then, by triggering the actions I might break things in sipwise repos -- e.g. overwriting git tags, docker images.\n\nSo if any of you can test this safely --or tell me how to do it easily-- please go ahead).",
+      "parentUuid": "9ab29df4_17e9941a",
+      "revId": "645031112ba2d87982f8b39e30f18e573f8de8d7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
