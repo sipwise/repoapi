@@ -52,6 +52,24 @@
       "revId": "645031112ba2d87982f8b39e30f18e573f8de8d7",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab29df4_ba69ad27",
+        "filename": "build/utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-12-07T08:58:05Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s what Alex told me.\n\nHe was doubting if to assign this to you or to me, I wanted to take a quick stab at it because you were not around and because it might be beneficial for me to learn it if we need changes in the future.\n\nAlex, do you have a good way to fix this?  I will wait for your comments before merging.",
+      "parentUuid": "9ab29df4_fa45e5b3",
+      "revId": "645031112ba2d87982f8b39e30f18e573f8de8d7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
