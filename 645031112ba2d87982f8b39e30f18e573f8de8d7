@@ -34,6 +34,24 @@
       "revId": "645031112ba2d87982f8b39e30f18e573f8de8d7",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ab29df4_fa45e5b3",
+        "filename": "build/utils.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2017-12-07T08:39:45Z",
+      "side": 1,
+      "message": "We have some (unit) tests which we run via docker, see t/testrunner as starting point. Though the code we\u0027re talking about here isn\u0027t really covered yet and some parts are hard to test as-is.\n\nBroadly speaking: we\u0027ve yet to decide how to proceed with repoapi without having at least one person with good knowledge of python, django, pytest/python-testing in our team, currently we\u0027re just keeping it alive. ;)",
+      "parentUuid": "9ab29df4_5a35f144",
+      "revId": "645031112ba2d87982f8b39e30f18e573f8de8d7",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
