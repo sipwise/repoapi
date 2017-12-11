@@ -85,6 +85,11 @@ def trigger_build(project, trigger_release=None,
     if trigger_branch_or_tag.startswith("tag/"):
         tag = trigger_branch_or_tag.split("tag/")[1]
         params['tag'] = urllib.parse.quote(tag)
+
+        # branch is like tag but removing the last element,
+        # e.g. tag=mr5.5.2.1 -> branch=mr5.5.2
+        branch = string.join(tag.split(".")[0:-1], ".")
+        params['branch'] = urllib.parse.quote(branch)
     elif trigger_branch_or_tag.startswith("branch/"):
         branch = trigger_branch_or_tag.split("branch/")[1]
         params['branch'] = urllib.parse.quote(branch)
