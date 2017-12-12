@@ -14,7 +14,6 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import logging
-import string
 import urllib
 import uuid
 from django.conf import settings
@@ -50,7 +49,7 @@ def trigger_build(project, release_uuid, trigger_release=None,
 
         # branch is like tag but removing the last element,
         # e.g. tag=mr5.5.2.1 -> branch=mr5.5.2
-        branch = string.join(tag.split(".")[0:-1], ".")
+        branch = ".".join(tag.split(".")[0:-1])
         params['branch'] = urllib.parse.quote(branch)
     elif trigger_branch_or_tag.startswith("branch/"):
         branch = trigger_branch_or_tag.split("branch/")[1]
