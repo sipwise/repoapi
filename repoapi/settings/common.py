@@ -181,6 +181,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "data-hal",
         "db-schema",
         "diva-drivers",
+        "deployment-iso",
         "documentation",
         "faxserver",
         "glusterfs-config",
