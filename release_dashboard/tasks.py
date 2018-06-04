@@ -35,7 +35,7 @@ def gerrit_fetch_info(projectname):
 
 @shared_task(ignore_result=True)
 def gerrit_fetch_all():
-    for project in rd_settings['docker_projects']:
+    for project in rd_settings['projects'] + rd_settings['build_deps']:
         gerrit_fetch_info.delay(project)
 
 
