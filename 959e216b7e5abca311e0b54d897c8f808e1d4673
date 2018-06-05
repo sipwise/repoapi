@@ -22,6 +22,30 @@
       "revId": "959e216b7e5abca311e0b54d897c8f808e1d4673",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ad0253b_b8aa3584",
+        "filename": "release_dashboard/tasks.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2018-06-05T10:03:20Z",
+      "side": 0,
+      "message": "docker button calls docker_fetch_all function and I don\u0027t change it or its subcalls so it will work as before.",
+      "parentUuid": "5ad0253b_589321a4",
+      "range": {
+        "startLine": 38,
+        "startChar": 32,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "959e216b7e5abca311e0b54d897c8f808e1d4673",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
