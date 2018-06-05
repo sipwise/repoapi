@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ad0253b_18bb6910",
+        "filename": "release_dashboard/tasks.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-06-05T08:25:24Z",
+      "side": 1,
+      "message": "this is not necessary as \u0027projects\u0027 contains all repos already including \u0027build_deps\u0027. see repoapi.git/settings/common.py",
+      "range": {
+        "startLine": 38,
+        "startChar": 43,
+        "endLine": 38,
+        "endChar": 71
+      },
+      "revId": "273b6495476ce6bb7ae01b96bb8c9fcc03e1adde",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
