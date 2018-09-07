@@ -152,7 +152,7 @@ CELERY_RESULT_BACKEND = 'django-db'
 HOTFIX_ARTIFACT = 'debian_changelog.txt'
 
 RELEASE_DASHBOARD_SETTINGS = {
-    'debian_supported': ('auto', 'stretch', 'jessie', 'wheezy', 'squeeze'),
+    'debian_supported': ('auto', 'buster', 'stretch', 'jessie', 'wheezy', 'squeeze'),
     'build_deps': (
         "check-tools", "data-hal", "libswrate", "sipwise-base", "mediaproxy-ng",
         "ngcp-schema", "rtpengine", "libtcap", "libinewrate"
