@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_db8156fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-10T15:03:38Z",
+      "side": 1,
+      "message": "Good point :-D\n\nI suppose it is my typo in a ticket. I still believe we need specify v2 API type \u0027json\u0027.",
+      "parentUuid": "9af37de9_5b9fa65f",
+      "revId": "c944edb28f8a7fe0c2895d4dbbaef60db4ccb370",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_fba53ab5",
         "filename": "release_dashboard/utils/docker.py",
         "patchSetId": 2
