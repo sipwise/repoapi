@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9af37de9_1ba11eaa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-10T14:52:45Z",
+      "side": 1,
+      "message": "the commit you are refering is using \"application/vnd.docker.distribution.manifest.v2+json\" why you are using prettyjwm here?",
+      "revId": "c944edb28f8a7fe0c2895d4dbbaef60db4ccb370",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9af37de9_fba53ab5",
+        "filename": "release_dashboard/utils/docker.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2018-09-10T14:52:45Z",
+      "side": 1,
+      "message": "Don\u0027t we need application/vnd.docker.distribution.manifest.v2+json ?",
+      "range": {
+        "startLine": 73,
+        "startChar": 64,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "c944edb28f8a7fe0c2895d4dbbaef60db4ccb370",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
