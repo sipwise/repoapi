@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9af37de9_5b9fa65f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2018-09-10T14:57:50Z",
+      "side": 1,
+      "message": "\u003e the commit you are refering is using \"application/vnd.docker.distribution.manifest.v2+json\"\n \u003e why you are using prettyjwm here?\n\nBecause in the ticket you asked for that one:\n\n  So we need to send \"application/vnd.docker.distribution.manifest.v1+prettyjws\" when we requesting \"Docker-Content-Digest\".\n\nDo we actually need the +prettyjws one or the +json one?",
+      "parentUuid": "9af37de9_1ba11eaa",
+      "revId": "c944edb28f8a7fe0c2895d4dbbaef60db4ccb370",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af37de9_fba53ab5",
         "filename": "release_dashboard/utils/docker.py",
         "patchSetId": 2
