@@ -48,12 +48,16 @@ def trigger_docker_build(project, branch):
     return "{base}/job/build-project-docker/".format(**params)
 
 
-def _get_info(url):
+def _get_info(url, headers=None):
     if settings.DEBUG:
         logger.debug("Debug mode, would trigger: %s", url)
     else:
-        logger.debug("trigger: %s", url)
-        response = requests.get(url)
+        if headers:
+            logger.debug("trigger: %s, headers: '%s'", url, headers)
+            response = requests.get(url, headers)
+        else:
+            logger.debug("trigger: %s", url)
+            response = requests.get(url)
         logger.debug("response: %s" % response)
         response.raise_for_status()
         return response
@@ -65,7 +69,9 @@ def get_docker_info(url):
 
 
 def get_docker_manifests_info(url):
-    response = _get_info(url)
+    headers = {'accept':
+               'application/vnd.docker.distribution.manifest.v2+json'}
+    response = _get_info(url, headers)
     return (response.text, response.headers['Docker-Content-Digest'])
 
 
@@ -74,7 +80,9 @@ def delete_docker_info(url):
         logger.debug("Debug mode, would trigger: %s", url)
     else:
         logger.debug("trigger: %s", url)
-        response = requests.delete(url)
+        headers = {'accept':
+                   'application/vnd.docker.distribution.manifest.v2+json'}
+        response = requests.delete(url, headers)
         logger.debug("response: %s" % response)
         response.raise_for_status()
         return
