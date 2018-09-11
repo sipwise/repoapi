@@ -82,7 +82,7 @@ def delete_docker_info(url):
         logger.debug("trigger: %s", url)
         headers = {'accept':
                    'application/vnd.docker.distribution.manifest.v2+json'}
-        response = requests.delete(url, headers)
+        response = requests.delete(url)
         logger.debug("response: %s" % response)
         response.raise_for_status()
         return
