@@ -82,5 +82,5 @@ def docker_fetch_all():
 @shared_task(ignore_result=True)
 def docker_remove_tag(image_name, tag_name):
     tag = DockerTag.objects.get(name=tag_name, image__name=image_name)
-    docker.delete_tag(image_name, tag.reference)
+    docker.delete_tag(image_name, tag.reference, tag_name)
     tag.delete()
