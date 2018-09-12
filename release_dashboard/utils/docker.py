@@ -136,7 +136,20 @@ def get_docker_manifests(image, tag):
             return (None, None)
 
 
-def delete_tag(image, reference):
+def delete_tag(image, reference, tag_name):
+    try:
+        dru = settings.DOCKER_REGISTRY_URL
+        url = dru.format("%s/manifests/%s" % (image, reference))
+        delete_docker_info(url)
+    except:
+        pass
+
+    # it does not work for some, retrieve Docker-Content-Digest from manifests
+    # and delete using that as reference
     dru = settings.DOCKER_REGISTRY_URL
-    url = dru.format("%s/manifests/%s" % (image, reference))
+    url = dru.format("%s/manifests/%s" % (image, tag_name))
+    response = get_docker_manifests_info(url)
+
+    dru = settings.DOCKER_REGISTRY_URL
+    url = dru.format("%s/manifests/%s" % (image, response[1]))
     delete_docker_info(url)
