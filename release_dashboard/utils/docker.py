@@ -149,7 +149,8 @@ def delete_tag(image, reference, tag_name):
         url = dru.format("%s/manifests/%s" % (image, tag_name))
         logger.debug('docker delete_tag() get_docker_manif_info(): %s' % (url))
         response = get_docker_manifests_info(url)
-        logger.debug('docker delete_tag response: %s' % (response.text))
+        logger.debug(' - response text: %s' % (response[0]))
+        logger.debug(' - response Docker-Content-Digest: %s' % (response[1]))
 
         dru = settings.DOCKER_REGISTRY_URL
         url = dru.format("%s/manifests/%s" % (image, response[1]))
