@@ -180,6 +180,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "comx-xmpp",
         "data-hal",
         "db-schema",
+        "dhtest",
         "diva-drivers",
         "deployment-iso",
         "documentation",
