@@ -2,6 +2,6 @@
 django-jenkins==0.19
 flake8==2.6
 pep8
-pylint
+pylint==1.9.3
 coverage
 mock
