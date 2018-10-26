@@ -15,10 +15,19 @@
 
 import re
 from release_dashboard.utils import get_tags, get_branches
+from release_dashboard.forms import rd_settings
 
 regex_hotfix = re.compile(r'^mr[0-9]+\.[0-9]+\.[0-9]+$')
 regex_mr = re.compile(r'^mr.+$')
-regex_master = re.compile(r'^master$')
+
+# support "master" + "$supported_debian_releases/master" for branch selection,
+# e.g. for trunk builds when not everything might build against master
+debian_releases = []
+for debian_release in rd_settings['debian_supported']:
+    if debian_release != "auto":
+        debian_releases.append(debian_release)
+regex_master = re.compile(r'^master$|^(%s)/master$' %
+                          '|'.join(map(re.escape, debian_releases)))
 
 
 def _projects_versions(projects, regex=None,
