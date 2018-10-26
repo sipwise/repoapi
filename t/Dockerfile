@@ -5,11 +5,11 @@ FROM docker.mgm.sipwise.com/sipwise-stretch:latest
 # is updated with the current date. It will force refresh of all
 # of the base images and things like `apt-get update` won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2017-07-21
+ENV REFRESHED_AT 2018-10-26
 
 RUN apt-get update
 RUN apt-get install --assume-yes python3 python3-dev \
-	python3-pip git screen
+	python3-pip python3-virtualenv virtualenv sqlite3 git screen
 
 # Get pip to download and install requirements:
 ADD requirements/*.txt /tmp/
