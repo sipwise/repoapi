@@ -19,6 +19,9 @@ import os
 # pylint: disable=W0401,W0614,C0413
 from .test import *
 
+# avoid having to hardcode an IP address
+from socket import gethostname, gethostbyname
+
 LOGGING['loggers']['release_dashboard']['level'] = \
     os.getenv('DJANGO_LOG_LEVEL', 'DEBUG')
 
@@ -30,3 +33,8 @@ BROKER_BACKEND = 'amqp'
 CELERY_ALWAYS_EAGER = False
 BROKER_URL = 'amqp://guest:guest@rabbit'
 JBI_BASEDIR = os.path.join(BASE_DIR, 'jbi_files')
+
+# Enable access when not accessing from localhost:
+ALLOWED_HOSTS = [gethostname(), gethostbyname(gethostname()), ]
+# or to manually override:
+# ALLOWED_HOSTS = ['172.17.0.3']
