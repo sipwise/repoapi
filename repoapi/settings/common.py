@@ -248,6 +248,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "upgrade",
         "vmnotify",
         "voisniff-ng",
+        'websocket',
         "www_admin",
         "www_csc"
     ),
