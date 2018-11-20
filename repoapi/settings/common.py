@@ -222,6 +222,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "ngcp-status",
         "ngcp-support",
         "ngcp-user-framework",
+        "ngcp-sudo-plugin",
         "ngcpcfg",
         "ngcpcfg-api",
         "ngcpcfg-ha",
