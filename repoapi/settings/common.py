@@ -220,6 +220,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "ngcp-rtcengine",
         "ngcp-schema",
         "ngcp-status",
+        "ngcp-sudo-plugin",
         "ngcp-support",
         "ngcp-user-framework",
         "ngcpcfg",
