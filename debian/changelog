@@ -1,3 +1,52 @@
+repoapi (0.3.0) unstable; urgency=medium
+
+  [ Michael Prokop ]
+  * [63d904d] TT#19059 python3 related urllib fixes
+  * [541e541] TT#19758 Fix Python3 string representation issue with json.loads
+  * [429b981] TT#20266 Fix Python3 issue with identifying next release version
+  * [21d13b9] TT#28953 Add buster to list of available Debian releases
+  * [4e98070] TT#46500 Support triggering $debian_release/master branches
+  * [a8daaaf] TT#46500 Improve development environment
+
+  [ Alexander Lutay ]
+  * [2286018] TT#20630 Add check-tools to build_deps for repoapi
+  * [f26487e] TT#22755 Revert "TT#19200 Add new repo ngcp-csc-extjs to repoapi dashboard"
+  * [f9077a3] TT#23433 Move glusterfs-config to abandoned list
+  * [8ddede8] TT#24919 Move kibana to abandoned list
+  * [ea1f485] TT#22755 Move ngcp-csc to abandoned list
+  * [0ccacd8] TT#22069 TT#22070 Move sems-app/sems-ha to abandoned list
+  * [c7cc5fd] Revert "TT#24919 Move kibana to abandoned list"
+  * [fa507cd] Revert "TT#23433 Move glusterfs-config to abandoned list"
+  * [449aa96] Revert "TT#22755 Move ngcp-csc to abandoned list"
+  * [bf7fc44] Revert "TT#22069 TT#22070 Move sems-app/sems-ha to abandoned list"
+  * [959e216] TT#32751 Add deployment-iso to release dashboard
+  * [973b357] Revert "TT#48622 Deprecate libhsclient-c-wrapper repo"
+
+  [ Sergii Kipot ]
+  * [4109593] TT#22952 Add new repo ngcp-csc-ui to repoapi dashboard
+  * [ecd9425] TT#22834 Add new repo sems-modules to repoapi dashboard
+  * [563929c] TT#23283 Set compatible Django REST framework to 3.6 only
+  * [dbb9813] TT#37390 Fix repoapi 'Refresh All' button.
+  * [c615f52] TT#46687 Add websocket to repoapi dashboard
+  * [9e29c94] TT#47816 Add ngcp-sudo-plugin to repoapi dashboard
+  * [4907b89] TT#48622 Deprecate libhsclient-c-wrapper repo
+
+  [ Manuel Montecelo ]
+  * [4f4c28d] TT#26827 Release panel triggers jenkins jobs with branch=none
+  * [afc971f] TT#26827 Release panel triggers jenkins jobs with branch=none
+  * [a3bcf7f] TT#26827 Release panel triggers jenkins jobs with branch=none
+  * [3974433] TT#42659 Fix for "Delete" button in repoapi docker info page
+  * [8142cd7] TT#42659 Another attempt to fix for "Delete" button in repoapi docker info page
+  * [711cdab] TT#42659 Delete unused variable after last commit
+  * [7611cc5] TT#42659 More attempts to fix for "Delete" button in repoapi docker info page
+  * [c882ee4] TT#42659 Values returned in change of previous commit are "arrays"
+  * [2c634b2] TT#44918 Add dhtest to release_dashboard
+
+  [ Guillem Jover ]
+  * [5c437e5] TT#22072 Update packaging
+
+ -- Alex Lutay <alutay@sipwise.com>  Thu, 17 Jan 2019 14:03:19 +0100
+
 repoapi (0.2.0) unstable; urgency=medium
 
   [ Victor Seva ]
