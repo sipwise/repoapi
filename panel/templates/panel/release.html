@@ -25,6 +25,7 @@ $( document ).ready(function() {
   $.panel = 'release';
   $.release.max_uuids = 1;
   $.release.interval = 30000;
+  update_info('{{release}}');
   $.release.timer = setInterval(function(){
     update_info('{{release}}');
   }, $.release.interval);
