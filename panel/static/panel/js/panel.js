@@ -436,6 +436,7 @@ function get_projects(release) {
   $.ajax({
     url: '/release/' + release + '/?format=json',
     method: 'GET',
+    async: false,
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: successFunc,
