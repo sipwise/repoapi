@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da1255d7_1999206f",
+        "filename": "panel/static/panel/js/panel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-02-14T10:16:09Z",
+      "side": 1,
+      "message": "BTW, should async requests be used for always or for the first request only?",
+      "revId": "7c79db569def9f483b65b26c7fb51adf52e2b945",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
