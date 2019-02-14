@@ -16,6 +16,24 @@
       "revId": "7c79db569def9f483b65b26c7fb51adf52e2b945",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da1255d7_5979d8fb",
+        "filename": "panel/static/panel/js/panel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000020
+      },
+      "writtenOn": "2019-02-14T12:52:02Z",
+      "side": 1,
+      "message": "I would say always but for subsequent reloads it\u0027s not that important",
+      "parentUuid": "da1255d7_1999206f",
+      "revId": "7c79db569def9f483b65b26c7fb51adf52e2b945",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
