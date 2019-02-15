@@ -35,14 +35,6 @@ function get_class_status(base, status) {
     return base + get_label_status(status);
 }
 
-function sort_project_stat_lists() {
-  $('.list-stat').each(function() {
-    $(this).children().detach().sort(function(a, b) {
-      return $(a).text().localeCompare($(b).text());
-    }).appendTo(this);
-  });
-}
-
 function set_project_stats(project, label)
 {
   var labels = new Set(Object.keys($.release.stats));
@@ -57,7 +49,6 @@ function set_project_stats(project, label)
   if($.release.stats[label]) {
     $.release.stats[label].add(project);
   }
-  sort_project_stat_lists();
 }
 
 function update_stats_progress() {
