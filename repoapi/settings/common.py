@@ -215,6 +215,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "ngcp-csc-ui",
         "ngcp-fauditd",
         "ngcp-klish-config",
+        "ngcp-logfs",
         "ngcp-panel",
         "ngcp-prompts",
         "ngcp-rtcengine",
