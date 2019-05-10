@@ -55,7 +55,7 @@
         {% for p in projects %}
             <tr class="repo">
               <th><label for="version_{{ p.name }}">{{ p.name }}</label></th>
-              <td class="version">
+              <td class="version col-md-1">
                   <select class="form-control" id="version_{{ p.name }}" name="version_{{ p.name }}">
                       <option value="ignore">ignore</option>
                   {% for t in p.tags %}
@@ -65,6 +65,9 @@
                       <option value="branch/{{ b }}">branch/{{ b }}</option>
                   {% endfor %}
                   </select>
+              </td>
+              <td>
+                  <button type="button" id="ignore_{{ p.name }}" onclick="click_ignore(event)" class="btn btn-warning">Ignore</button>
               </td>
             </tr>
         {% endfor %}

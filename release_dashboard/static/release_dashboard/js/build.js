@@ -55,3 +55,10 @@ $( document ).ready(function() {
     common_select.change();
   }
 });
+
+function click_ignore(e) {
+    var selection_box_id = e.target.id.split('_')[1];
+    var selection_box = $('#version_' + selection_box_id);
+    selection_box.val('ignore');
+    e.preventDefault();
+}
