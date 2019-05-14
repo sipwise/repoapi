@@ -178,6 +178,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "comx-fileshare-service",
         "comx-sip",
         "comx-xmpp",
+        "csta-testsuite",
         "data-hal",
         "db-schema",
         "dhtest",
