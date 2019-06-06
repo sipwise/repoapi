@@ -51,7 +51,7 @@ class BuildTrunkDepForm(BuildForm):
 
         for project in trunk_build_deps:
             self.fields['version_%s' %
-                        project] = forms.CharField(max_length=15)
+                        project] = forms.CharField(max_length=30)
 
 
 class BuildTrunkReleaseForm(BuildForm):
@@ -61,4 +61,4 @@ class BuildTrunkReleaseForm(BuildForm):
 
         for project in trunk_projects:
             self.fields['version_%s' %
-                        project] = forms.CharField(max_length=15)
+                        project] = forms.CharField(max_length=30)
