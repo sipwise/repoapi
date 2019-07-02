@@ -19,7 +19,8 @@ import logging
 import os
 import shutil
 import subprocess
-import urllib
+import urllib.request
+from urllib.error import HTTPError
 from django.conf import settings
 
 logger = logging.getLogger(__name__)
@@ -51,14 +52,18 @@ def dlfile(url, path):
 
 def openurl(url):
     req = urllib.request.Request(url)
-    logger.debug("url:[%s]", url)
-    response = urllib.request.urlopen(req)
-    if response.code > 199 and response.code < 300:
-        logger.debug("OK[%d] url: %s", url, response.code)
-        return True
-    else:
-        logger.error("Error[%d] retrieving %s", url, response.code)
-        return False
+    logger.debug("Trying to retrieve url: [%s]", url)
+    try:
+        response = urllib.request.urlopen(req)
+        if 199 < response.getcode() < 300:
+            logger.debug("OK[%d] URL[%s]", response.getcode(), url)
+            return True
+    except urllib.error.HTTPError as e:
+        logger.error('Error[%d] retrieving URL[%s]', e.getcode(), url)
+    except Exception:
+        logger.error("Fatal error retrieving URL[%s]", url)
+
+    return False
 
 
 def jenkins_remove_ppa(repo):
