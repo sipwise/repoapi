@@ -1,0 +1,10 @@
+Verified+1: Jenkins Jenkins
+Code-Review+2: Sergii Kipot <skipot@sipwise.com>
+Code-Review+2: Alexander Lutay <alutay@sipwise.com>
+Code-Review+2: Mykola Malkov <mmalkov@sipwise.com>
+Code-Review+1: Manuel Montecelo <mmontecelo@sipwise.com>
+Submitted-by: Michael Prokop <mprokop@sipwise.com>
+Submitted-at: Tue, 02 Jul 2019 22:38:48 +0200
+Reviewed-on: http://gerrit.mgm.sipwise.com/31134
+Project: repoapi
+Branch: refs/heads/master
