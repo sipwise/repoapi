@@ -3,7 +3,7 @@ Priority: optional
 Maintainer: Sipwise Development Team <support@sipwise.com>
 Homepage: https://www.sipwise.com/
 Build-Depends:
- debhelper (>= 10~),
+ debhelper-compat (= 12),
  dh-systemd (>= 1.5),
  libpq-dev,
  python3-dev,
