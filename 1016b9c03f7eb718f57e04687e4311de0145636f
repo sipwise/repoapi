@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1b9901_6ba7fe4f",
+        "filename": "debian/repoapi.dirs",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-07-03T20:27:42Z",
+      "side": 1,
+      "message": "there were 3 folder in old file...",
+      "revId": "1016b9c03f7eb718f57e04687e4311de0145636f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
