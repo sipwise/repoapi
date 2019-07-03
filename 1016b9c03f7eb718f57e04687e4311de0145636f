@@ -16,6 +16,24 @@
       "revId": "1016b9c03f7eb718f57e04687e4311de0145636f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_c8516d64",
+        "filename": "debian/repoapi.dirs",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-07-03T21:50:35Z",
+      "side": 1,
+      "message": "Yes the other two are the unnecessary entries mentioned in the commit message. They are already reference from the install file, which will make debhelper create the dirs if needed.",
+      "parentUuid": "fa1b9901_6ba7fe4f",
+      "revId": "1016b9c03f7eb718f57e04687e4311de0145636f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
