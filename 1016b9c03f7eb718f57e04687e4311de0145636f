@@ -16,6 +16,24 @@
       "revId": "1016b9c03f7eb718f57e04687e4311de0145636f",
       "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa1b9901_9fd5db44",
+        "filename": "debian/rules",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2019-07-24T15:36:48Z",
+      "side": 0,
+      "message": "This is now the default, so it\u0027s not needed anymore. And lintian rightfully complains about it.",
+      "parentUuid": "fa1b9901_bcad4d8a",
+      "revId": "1016b9c03f7eb718f57e04687e4311de0145636f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
     }
   ]
 }
