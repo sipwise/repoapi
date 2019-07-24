@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1b9901_bcad4d8a",
+        "filename": "debian/rules",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000001
+      },
+      "writtenOn": "2019-07-24T12:12:12Z",
+      "side": 0,
+      "message": "I have not enough knowledge here for +2 :(",
+      "revId": "1016b9c03f7eb718f57e04687e4311de0145636f",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
