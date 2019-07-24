@@ -215,6 +215,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "ngcp-api-tools",
         "ngcp-csc",
         "ngcp-csc-ui",
+        'ngcp-exporter',
         "ngcp-fauditd",
         "ngcp-inventory",
         "ngcp-klish-config",
