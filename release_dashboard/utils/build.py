@@ -17,7 +17,7 @@ import logging
 import uuid
 import urllib
 import requests
-from requests.auth import HTTPDigestAuth
+from requests.auth import HTTPBasicAuth
 from django.conf import settings
 from repoapi.utils import openurl
 
@@ -35,7 +35,7 @@ hotfix_url = ("{base}/job/release-tools-runner/buildWithParameters?"
 
 
 def get_response(url):
-    auth = HTTPDigestAuth(
+    auth = HTTPBasicAuth(
         settings.GERRIT_REST_HTTP_USER,
         settings.GERRIT_REST_HTTP_PASSWD)
     response = requests.get(url, auth=auth)
