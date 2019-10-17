@@ -164,6 +164,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "asterisk-voicemail",
         "backup-tools",
         "bulk-processor",
+        "bulk-processor-projects",
         "bootenv",
         "captagent",
         "cdr-exporter",
