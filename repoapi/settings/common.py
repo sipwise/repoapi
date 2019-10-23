@@ -158,7 +158,6 @@ RELEASE_DASHBOARD_SETTINGS = {
         "ngcp-schema", "rtpengine", "libtcap", "libinewrate"
     ),
     'projects': (
-        "acc-cdi",
         "asterisk",
         "asterisk-sounds",
         "asterisk-voicemail",
@@ -260,6 +259,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "www_csc"
     ),
     'abandoned': (
+        "acc-cdi",
         "asterisk",
         "asterisk-sounds",
         "cloudpbx-devices",
