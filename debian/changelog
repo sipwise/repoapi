@@ -1,3 +1,38 @@
+repoapi (0.4.0) unstable; urgency=medium
+
+  [ Sergii Kipot ]
+  * [7457a3a] TT#35952 Update repoapi panel release data immediately after page load
+  * [7c79db5] TT#35952 Use ajax sync GET to request projects
+  * [46eae42] TT#35952 Remove sorting from lists under progress bars
+  * [9936291] TT#55359 Add ngcp-logfs to repoapi dashboard
+  * [f684bf5] TT#58633 Add csta-testsuite to repoapi dashboard
+  * [9b706b4] TT#63655 Add ngcp-exporter to repoapi dashboard
+  * [d84f569] TT#38950 Remove digest auth for gerrit
+  * [6a5caa6] TT#69102 Add bulk-processor-projects to repoapi dashboard
+
+  [ Alexander Lutay ]
+  * [ca4acb4] TT#56521 Add 'ngcp-inventory' to repoapi
+  * [53a7516] TT#60100 TT#44859 Add 'janus-admin' to repoapi dashboard
+
+  [ Robert Axelsen ]
+  * [c0f84b2] TT#58584 Add ignore helper button to build tables
+
+  [ Michael Prokop ]
+  * [a994742] TT#44156 Support building against branch/{stretch,buster}/master
+  * [24ba69c] TT#61761 Use Django 1.11.17 to support Python 3.7
+  * [19dbf6b] TT#61761 Fix urllib.request handling
+
+  [ Guillem Jover ]
+  * [10b2d74] TT#61954 Update copyright Format URL to use https
+  * [82dd135] TT#61954 Move license location in Debian systems into a Comment field
+  * [2a20f22] TT#61954 Update copyright years
+  * [1016b9c] TT#61954 Namespace debhelper fragment files
+
+  [ dependabot[bot] ]
+  * [e53a4e4] TT#69302 Bump django from 1.11.17 to 1.11.23 (security update)
+
+ -- Alex Lutay <alutay@sipwise.com>  Mon, 28 Oct 2019 11:01:55 +0100
+
 repoapi (0.3.0) unstable; urgency=medium
 
   [ Michael Prokop ]
