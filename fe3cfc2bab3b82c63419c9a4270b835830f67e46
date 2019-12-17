@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66fdc1ce_20aa6817",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-12-17T09:44:24Z",
+      "side": 1,
+      "message": "I would have preferred this to go into separate commits, though if it\u0027s within one single commit I\u0027d propose a different short commit message though, given that it\u0027s not only modifying debhelper compat level here",
+      "revId": "fe3cfc2bab3b82c63419c9a4270b835830f67e46",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": true
+    }
+  ]
+}
