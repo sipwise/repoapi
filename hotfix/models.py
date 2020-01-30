@@ -36,7 +36,7 @@ class WorkfrontNoteInfo(models.Model):
     @staticmethod
     def getIds(change):
         """
-        parses text searching for Workfront TT# ocurrences
+        parses text searching for Workfront TT# occurrences
         returns a list of IDs
         """
         if change:

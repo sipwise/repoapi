@@ -37,7 +37,7 @@ class WorkfrontNoteInfo(models.Model):
     @staticmethod
     def getIds(git_comment):
         """
-        parses git_commit_msg searching for Workfront TT# ocurrences
+        parses git_commit_msg searching for Workfront TT# occurrences
         returns a list of IDs
         """
         if git_comment:
@@ -93,7 +93,7 @@ def workfront_note_add(instance, message, release_target=False):
             eventtype=eventtype)
         if created:
             if not utils.workfront_note_send(wid, "%s %s " % (message, url)):
-                logger.error("remove releated WorkfrontNoteInfo")
+                logger.error("remove related WorkfrontNoteInfo")
                 note.delete()
             if release_target:
                 workfront_release_target(instance, wid)
