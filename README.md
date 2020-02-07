@@ -14,6 +14,16 @@ Run docker containers
 Prepare development environment
 ===============================
 
+On your desktop, install pre-commit tool
+
+[pre-commit](https://pre-commit.com/)
+-------------------------------------
+
+  * apt install build-essential python3-dev python3-virtualenvwrapper virtualenvwrapper
+  * mkvirtualenv repos-scritps --python=python3
+  * pip3 install pre-commit
+  * pre-commit install
+
 Inside the repoapi-stretch container run:
 
     $ export VAR_DIR=/tmp/repoapi
