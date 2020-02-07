@@ -19,6 +19,7 @@ import uuid
 from django.shortcuts import render
 from django.http import HttpResponseNotFound, JsonResponse
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth.decorators import login_required
 from release_dashboard.models import Project
 from release_dashboard.utils import build
 from release_dashboard.tasks import gerrit_fetch_info, gerrit_fetch_all
@@ -38,6 +39,7 @@ def index(request):
     return render(request, 'release_dashboard/index.html', context)
 
 
+@login_required
 @require_http_methods(["POST", ])
 def hotfix_build(request, branch, project):
     if project not in rd_settings['projects']:
@@ -109,6 +111,7 @@ def build_deps(request, tag_only=False):
         return render(request, 'release_dashboard/build_deps.html', context)
 
 
+@login_required
 def hotfix(request):
     context = {
         'projects': _projects_versions(

@@ -15,75 +15,73 @@
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+from os.path import dirname
 
-BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
 
 # Application definition
 # django-jenkins
 PROJECT_APPS = [
-    'repoapi',
-    'hotfix',
-    'panel',
-    'release_dashboard',
-    'build',
+    "repoapi",
+    "hotfix",
+    "panel",
+    "release_dashboard",
+    "build",
 ]
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-    'rest_framework_api_key',
-    'rest_framework_swagger',
-    'django_assets',
-    'django_celery_results',
-    'django_extensions',
-    'jsonify',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "rest_framework",
+    "rest_framework_api_key",
+    "rest_framework_swagger",
+    "django_assets",
+    "django_celery_results",
+    "django_extensions",
+    "jsonify",
 ]
 
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
 )
 
-ROOT_URLCONF = 'repoapi.urls'
-
+ROOT_URLCONF = "repoapi.urls"
+LOGIN_URL = "/api-auth/login/"
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            'repoapi/templates',
-        ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": ["repoapi/templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'repoapi.wsgi.application'
+WSGI_APPLICATION = "repoapi.wsgi.application"
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -95,69 +93,77 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    'django_assets.finders.AssetsFinder',
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "django_assets.finders.AssetsFinder",
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_media/')
+STATIC_ROOT = os.path.join(BASE_DIR, "static_media/")
 
 REST_FRAMEWORK = {
-    'PAGE_SIZE': 10,
-    'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework.filters.DjangoFilterBackend',
-    )
+    "PAGE_SIZE": 10,
+    "DEFAULT_FILTER_BACKENDS": ("rest_framework.filters.DjangoFilterBackend",),
 }
 
 SWAGGER_SETTINGS = {
-    'api_version': '0.1',
-    'info': {
-        'contact': 'dev@sipwise.com',
-        'description': 'repoapi, one ring to rule them all',
-        'license': 'GPL 3.0',
-        'title': 'RepoApi',
+    "api_version": "0.1",
+    "info": {
+        "contact": "dev@sipwise.com",
+        "description": "repoapi, one ring to rule them all",
+        "license": "GPL 3.0",
+        "title": "RepoApi",
     },
 }
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {"console": {"class": "logging.StreamHandler"}},
+    "loggers": {
+        "repoapi": {
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
         },
-    },
-    'loggers': {
-        'repoapi': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-        },
-        'release_dashboard': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+        "release_dashboard": {
+            "handlers": ["console"],
+            "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
         },
     },
 }
 
 JENKINS_TOKEN = "sipwise_jenkins_ci"
 
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_RESULT_BACKEND = "django-db"
 
-HOTFIX_ARTIFACT = 'debian_changelog.txt'
-
+HOTFIX_ARTIFACT = "debian_changelog.txt"
+DEBIAN_RELEASES = (
+    "auto",
+    "buster",
+    "stretch",
+    "jessie",
+    "wheezy",
+    "squeeze",
+)
 RELEASE_DASHBOARD_SETTINGS = {
-    'debian_supported': ('auto', 'buster', 'stretch', 'jessie', 'wheezy', 'squeeze'),
-    'build_deps': (
-        "check-tools", "data-hal", "libswrate", "sipwise-base", "mediaproxy-ng",
-        "ngcp-schema", "rtpengine", "libtcap", "libinewrate"
+    "debian_supported": DEBIAN_RELEASES,
+    "build_deps": (
+        "check-tools",
+        "data-hal",
+        "libswrate",
+        "sipwise-base",
+        "mediaproxy-ng",
+        "ngcp-schema",
+        "rtpengine",
+        "libtcap",
+        "libinewrate",
     ),
-    'projects': (
+    "projects": (
         "acc-cdi",
         "asterisk",
         "asterisk-sounds",
@@ -216,7 +222,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "ngcp-api-tools",
         "ngcp-csc",
         "ngcp-csc-ui",
-        'ngcp-exporter',
+        "ngcp-exporter",
         "ngcp-fauditd",
         "ngcp-inventory",
         "ngcp-klish-config",
@@ -257,9 +263,9 @@ RELEASE_DASHBOARD_SETTINGS = {
         "voisniff-ng",
         "websocket",
         "www_admin",
-        "www_csc"
+        "www_csc",
     ),
-    'abandoned': (
+    "abandoned": (
         "asterisk",
         "asterisk-sounds",
         "cloudpbx-devices",
@@ -279,7 +285,7 @@ RELEASE_DASHBOARD_SETTINGS = {
         "www_admin",
         "www_csc",
     ),
-    'docker_projects': (
+    "docker_projects": (
         "comx-fileshare-service",
         "data-hal",
         "documentation",
