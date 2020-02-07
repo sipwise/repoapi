@@ -48,6 +48,16 @@ server_config.read(os.path.join(VAR_DIR, 'server.ini'))
 JENKINS_URL = server_config.get('server', 'JENKINS_URL')
 GERRIT_URL = server_config.get('server', 'GERRIT_URL')
 DOCKER_REGISTRY_URL = server_config.get('server', 'DOCKER_REGISTRY_URL')
+AUTH_LDAP_SERVER_URI = server_config.get('server', 'AUTH_LDAP_SERVER_URI')
+AUTH_LDAP_USER_BASE = server_config.get('server', 'AUTH_LDAP_USER_BASE')
+AUTH_LDAP_USER_DN_TEMPLATE = 'uid=%(user)s,' + AUTH_LDAP_USER_BASE
+
+# Keep ModelBackend around for per-user permissions and maybe a local
+# superuser.
+AUTHENTICATION_BACKENDS = (
+    "django_auth_ldap.backend.LDAPBackend",
+    "django.contrib.auth.backends.ModelBackend",
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
