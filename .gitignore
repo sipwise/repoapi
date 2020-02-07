@@ -1,4 +1,5 @@
 *~
 *.pyc
+coverage.rc
 db.sqlite3
 reports

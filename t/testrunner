@@ -16,4 +16,9 @@ else
   mkdir -p "${RESULTS}"
 fi
 
+cat > coverage.rc <<EOF
+[run]
+data_file = ${RESULTS}/.coverage
+EOF
+
 RESULTS=${RESULTS} make test
