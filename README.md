@@ -9,12 +9,12 @@ Run docker containers
 ---------------------
 
     $ docker run --rm --hostname repoapi-rabbit --name repoapi-rabbit rabbitmq:3
-    $ docker run --rm -i -t --link repoapi-rabbit:rabbit -v $(pwd):/code:rw docker.mgm.sipwise.com/repoapi-stretch:latest bash
+    $ docker run --rm -i -t --link repoapi-rabbit:rabbit -v $(pwd):/code:rw docker.mgm.sipwise.com/repoapi-buster:latest bash
 
 Prepare development environment
 ===============================
 
-Inside the repoapi-stretch container run:
+Inside the repoapi-buster container run:
 
     $ export VAR_DIR=/tmp/repoapi
     $ make venv_dev
