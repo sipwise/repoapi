@@ -5,6 +5,7 @@ Homepage: https://www.sipwise.com/
 Build-Depends:
  debhelper-compat (= 12),
  dh-systemd (>= 1.5),
+ libldap2-dev,
  libpq-dev,
  python3-dev,
  virtualenv,
@@ -16,6 +17,7 @@ Section: python
 Architecture: all
 Depends:
  build-essential,
+ libldap2-dev,
  libpq-dev,
  make,
  postgresql,
