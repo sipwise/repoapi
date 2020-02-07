@@ -1,7 +1,9 @@
 -r common.txt
-django-jenkins==0.19
-flake8==2.6
+# django-jenkins is not maintained right now
+# this has some comunity fixes applied
+-e git://github.com/linuxmaniac/django-jenkins.git#egg=django-jenkins
+flake8
 pep8
-pylint==1.9.3
+pylint
 coverage
 mock
