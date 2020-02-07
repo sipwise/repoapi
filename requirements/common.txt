@@ -1,4 +1,4 @@
-Django==1.11.23
+Django==1.11.28
 django-extensions
 yuicompressor
 django-assets
