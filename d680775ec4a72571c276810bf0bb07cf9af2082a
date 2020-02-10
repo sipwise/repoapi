@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58800167_8684ba4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-02-10T15:08:01Z",
+      "side": 1,
+      "message": "nit: s/logged/logged in/ :)",
+      "revId": "d680775ec4a72571c276810bf0bb07cf9af2082a",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
