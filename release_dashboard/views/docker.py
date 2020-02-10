@@ -19,6 +19,7 @@ from django.shortcuts import render
 from django.http import JsonResponse, Http404
 from django.views.decorators.http import require_http_methods
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from rest_framework import generics, status
 from rest_framework.response import Response
 from release_dashboard.utils import docker
@@ -40,12 +41,12 @@ def _get_docker_tags(project, tag=None):
     logger.debug("%s: %s" % (project, project_repos))
     docker_tags = []
     for image in project_repos:
-        res = {'name': image}
+        res = {"name": image}
         tags = docker.get_docker_tags(image)
         if tag:
             logger.degug("non filtered tags: %s" % tags)
             tags = filter(re.compile(tag).match, tags)
-        res['tags'] = tags
+        res["tags"] = tags
         docker_tags.append(res)
     logger.debug("docker_tags: %s" % docker_tags)
     return docker_tags
@@ -53,88 +54,78 @@ def _get_docker_tags(project, tag=None):
 
 def _build_docker_logic(form, projects):
     result = _hash_versions(form.cleaned_data, projects)
-    context = {'projects': []}
+    context = {"projects": []}
     for pro in projects:
         try:
             logger.debug(
                 "trying to trigger docker image at branch %s for project %s",
-                result[pro], pro)
+                result[pro],
+                pro,
+            )
             url = docker.trigger_docker_build(pro, result[pro])
-            context['projects'].append(
-                {'name': pro, 'url': url})
+            context["projects"].append({"name": pro, "url": url})
         except KeyError:
-            logger.error("Houston, we have a problem with"
-                         "trigger for %s", pro)
-            context['projects'].append(
-                {'name': pro, 'url': None})
+            msg = "Houston, we have a problem with trigger for %s"
+            logger.error(msg, pro)
+            context["projects"].append({"name": pro, "url": None})
     return context
 
 
+@login_required
 def build_docker_images(request):
     if request.method == "POST":
         form = BuildDockerForm(request.POST)
         if form.is_valid():
             context = _build_docker_logic(form, docker_projects)
         else:
-            context = {'error': 'form validation error'}
-        return render(request,
-                      'release_dashboard/build_result.html',
-                      context)
+            context = {"error": "form validation error"}
+        return render(request, "release_dashboard/build_result.html", context)
     else:
         context = {
-            'projects':  _projects_versions(
-                docker_projects,
-                regex_mr,
-                False,
-                True,
-                True,
+            "projects": _projects_versions(
+                docker_projects, regex_mr, False, True, True,
             ),
-            'common_versions': {
-                'tags': [],
-                'branches': ['master', ]
-            },
-            'docker': True,
+            "common_versions": {"tags": [], "branches": ["master"]},
+            "docker": True,
         }
         _common_versions(context, False, True)
-        return render(request,
-                      'release_dashboard/build_docker.html',
-                      context)
+        return render(request, "release_dashboard/build_docker.html", context)
 
 
+@login_required
 def refresh_all(request):
     if request.method == "POST":
         res = tasks.docker_fetch_all.delay()
-        return JsonResponse({'url': '/flower/task/%s' % res.id})
+        return JsonResponse({"url": "/flower/task/%s" % res.id})
     else:
+        template = "release_dashboard/refresh_docker.html"
         projects = []
         for project in docker_projects:
-            info = {
-                'name': project,
-                'tags': None
-            }
+            info = {"name": project, "tags": None}
             projects.append(info)
-        return render(request, 'release_dashboard/refresh_docker.html',
-                      {'projects': projects})
+        return render(request, template, {"projects": projects})
 
 
-@require_http_methods(["POST", ])
+@login_required
+@require_http_methods(["POST"])
 def refresh(request, project):
     res = tasks.docker_fetch_project.delay(project)
-    return JsonResponse({'url': '/flower/task/%s' % res.id})
+    return JsonResponse({"url": "/flower/task/%s" % res.id})
 
 
-@require_http_methods(["GET", ])
+@login_required
+@require_http_methods(["GET"])
 def docker_images(request):
     images = DockerImage.objects.images_with_tags
     context = {
-        'images': images,
-        'URL_BASE': settings.DOCKER_REGISTRY_URL.format(''),
+        "images": images,
+        "URL_BASE": settings.DOCKER_REGISTRY_URL.format(""),
     }
-    return render(request, 'release_dashboard/docker_images.html',
-                  context)
+    return render(request, "release_dashboard/docker_images.html", context)
 
 
-@require_http_methods(["GET", ])
+@login_required
+@require_http_methods(["GET"])
 def docker_project_images(request, project):
     try:
         Project.objects.get(name=project)
@@ -142,14 +133,14 @@ def docker_project_images(request, project):
         raise Http404("Project does not exist")
     images = DockerImage.objects.images_with_tags(project)
     context = {
-        'images': images,
-        'URL_BASE': settings.DOCKER_REGISTRY_URL.format(''),
+        "images": images,
+        "URL_BASE": settings.DOCKER_REGISTRY_URL.format(""),
     }
-    return render(request, 'release_dashboard/docker_images.html',
-                  context)
+    return render(request, "release_dashboard/docker_images.html", context)
 
 
-@require_http_methods(["GET", ])
+@login_required
+@require_http_methods(["GET"])
 def docker_image_tags(request, project, image):
     try:
         proj = Project.objects.get(name=project)
@@ -159,11 +150,10 @@ def docker_image_tags(request, project, image):
     except DockerImage.DoesNotExist:
         raise Http404("Project does not exist")
     context = {
-        'images': [image, ],
-        'URL_BASE': settings.DOCKER_REGISTRY_URL.format(''),
+        "images": [image],
+        "URL_BASE": settings.DOCKER_REGISTRY_URL.format(""),
     }
-    return render(request, 'release_dashboard/docker_image.html',
-                  context)
+    return render(request, "release_dashboard/docker_image.html", context)
 
 
 class DockerImageList(generics.ListAPIView):
