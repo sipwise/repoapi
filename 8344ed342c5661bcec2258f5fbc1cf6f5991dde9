@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dd5046b_6ffa06d4",
+        "filename": "repoapi/settings/common.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-02-10T11:27:07Z",
+      "side": 1,
+      "message": "just curious, why the double quotes (\"\") instead single quotes (\u0027\u0027) now?",
+      "revId": "8344ed342c5661bcec2258f5fbc1cf6f5991dde9",
+      "serverId": "85315e57-5f03-49c3-83f8-201ae2313a75",
+      "unresolved": false
+    }
+  ]
+}
