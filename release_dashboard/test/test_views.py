@@ -28,3 +28,15 @@ class TestHotfix(TestCase):
         self.client.force_login(user)
         res = self.client.get(reverse("release_dashboard:hotfix"))
         self.assertEqual(res.status_code, 200)
+
+
+class TestDocker(TestCase):
+    def test_no_login(self):
+        res = self.client.get(reverse("release_dashboard:docker_images"))
+        self.assertNotEqual(res.status_code, 200)
+
+    def test_login_ok(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        res = self.client.get(reverse("release_dashboard:docker_images"))
+        self.assertEqual(res.status_code, 200)

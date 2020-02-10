@@ -57,7 +57,8 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = "repoapi.urls"
-LOGIN_URL = "/api-auth/login/"
+LOGIN_URL = "rest_framework:login"
+LOGOUT_URL = "rest_framework:logout"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
