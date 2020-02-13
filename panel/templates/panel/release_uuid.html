@@ -1,0 +1,51 @@
+{% extends "panel/base.html" %}
+{% load jsonify %}
+{% load staticfiles %}
+{% block title %}{{ release }}{% endblock %}
+{% block navlist %}
+    <li><a href="{% url 'panel:index' %}">Panel</a></li>
+    <li class="active"><a href="#">{{ release }}</a></li>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="panel panel-default" id="stats">
+      {% include "panel/release_stats.html" %}
+    </div>
+    <div class="panel panel-default project-clone hidden">
+      {% include "panel/base_project.html" %}
+    </div>
+    <div id="project-list"></div>
+</div>
+{% endblock %}
+
+{% block extrajs %}
+<script src="{% static "panel/js/panel.js" %}"></script>
+<script type="text/javascript">
+$( document ).ready(function() {
+  $.panel = 'release';
+  $.release.max_uuids = 1;
+  $.release.interval = 30000;
+  update_info('{{release}}');
+  $.release.timer = setInterval(function(){
+    update_info('{{release}}');
+  }, $.release.interval);
+{% for projectname, project in projects.iteritems %}
+  create_new_project('{{ release }}', '{{ projectname }}', false);
+  {% for uuid, uuid_value in project.iteritems %}
+    {% if uuid_value.latest %}
+    values = {tag: '{{ uuid }}', latest: true };
+    {% else %}
+    values = {tag: '{{ uuid }}', latest: false };
+    {% endif %}
+    create_new_uuid('{{ release }}', '{{ projectname }}', values, false);
+    {% for key, job in uuid_value.iteritems %}
+    {% if key != 'latest' %}
+    data = {{ job|jsonify }};
+    create_new_job('{{ release }}', '{{ projectname }}', '{{ uuid }}', data);
+    {% endif %}
+    {% endfor %}
+  {% endfor %}
+{% endfor %}
+});
+</script>
+{% endblock %}

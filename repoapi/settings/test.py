@@ -13,21 +13,22 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Build paths inside the project like this: join(BASE_DIR, ...)
 import os
-# pylint: disable=W0401,W0614
-from .common import *
+from os.path import dirname, join
 
-BASE_DIR = os.path.dirname(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-os.environ.setdefault('RESULTS', '/tmp')
-RESULTS_DIR = os.environ['RESULTS']
+# pylint: disable=W0401,W0614
+from .common import *  # noqa
+
+BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
+os.environ.setdefault("RESULTS", "/tmp")
+RESULTS_DIR = os.environ["RESULTS"]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')+0h68-(g30hg1awc6!y65cwws6j^qd5=&pc2@h430=9x@bf%2'
+SECRET_KEY = ")+0h68-(g30hg1awc6!y65cwws6j^qd5=&pc2@h430=9x@bf%2"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,36 +36,36 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 TESTING_APPS = [
-    'django_jenkins',
+    "django_jenkins",
 ]
-INSTALLED_APPS.extend(TESTING_APPS)
-INSTALLED_APPS.extend(PROJECT_APPS)
+INSTALLED_APPS.extend(TESTING_APPS)  # noqa
+INSTALLED_APPS.extend(PROJECT_APPS)  # noqa
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": join(BASE_DIR, "db.sqlite3"),
     }
 }
 
 # django-jenkins
 JENKINS_TASKS = (
-    'django_jenkins.tasks.run_pylint',
-    'django_jenkins.tasks.run_flake8',
+    "django_jenkins.tasks.run_pylint",
+    "django_jenkins.tasks.run_flake8",
 )
-PYLINT_RCFILE = 'pylint.cfg'
+PYLINT_RCFILE = "pylint.cfg"
 
-DJANGO_LOG_LEVEL = 'DEBUG'
+DJANGO_LOG_LEVEL = "DEBUG"
 
 JENKINS_URL = "http://localhost"
 GERRIT_URL = "https://gerrit.local/{}"
-GERRIT_REST_HTTP_USER = 'jenkins'
-GERRIT_REST_HTTP_PASSWD = 'verysecrethttppasswd'
+GERRIT_REST_HTTP_USER = "jenkins"
+GERRIT_REST_HTTP_PASSWD = "verysecrethttppasswd"
 GITWEB_URL = "https://git.local/gitweb/?p={}.git;a=commit;h={}"
-WORKFRONT_CREDENTIALS = os.path.join(BASE_DIR, '.workfront.ini')
+WORKFRONT_CREDENTIALS = join(BASE_DIR, ".workfront.ini")
 WORKFRONT_NOTE = True
 DOCKER_REGISTRY_URL = "https://localhost:5000/v2/{}"
 # fake info
@@ -73,36 +74,43 @@ DOCKER_REGISTRY = """
 """
 
 DOCKER_IMAGES = {
-    'data-hal-jessie': [
+    "data-hal-jessie": [
         "Ia9b03983d174a1546631f5b42e605235809711ef",
         "If508e72c01d9bc78836a40204e508585d1dc3555",
-        "latest", "mr5.2", "mr5.3.1", "mr5.3"
+        "latest",
+        "mr5.2",
+        "mr5.3.1",
+        "mr5.3",
     ],
-    'documentation-jessie': [
+    "documentation-jessie": [
         "If53a93f4b6d1c82fd7af5672e8b02087e646b507",
-        "latest", "mr5.2", "mr5.3.1", "mr5.3"
+        "latest",
+        "mr5.2",
+        "mr5.3.1",
+        "mr5.3",
     ],
-    'ngcp-panel-selenium': ["latest", ],
-    'ngcp-panel-tests-rest-api-jessie': [
+    "ngcp-panel-selenium": ["latest"],
+    "ngcp-panel-tests-rest-api-jessie": [
         "I5c5c351e36da15db71fe3addbed4603007e8c304",
         "I89e9acd846132508e135f7443482c0371c80d2b2",
-        "latest"
+        "latest",
     ],
-    'ngcp-panel-tests-selenium-jessie': [
+    "ngcp-panel-tests-selenium-jessie": [
         "I3a899b8945688c2ef3a4be6ba6c4c1d4cbf6d548",
-        "latest"
+        "latest",
     ],
 }
 
 # build app
 BUILD_KEY_AUTH = True
+REPOS_SCRIPTS_CONFIG_DIR = join(BASE_DIR, "build", "fixtures", "config")
 
 # celery
-BROKER_BACKEND = 'memory'
+BROKER_BACKEND = "memory"
 CELERY_ALWAYS_EAGER = True
 CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
-JBI_BASEDIR = os.path.join(RESULTS_DIR, 'jbi_files')
+JBI_BASEDIR = join(RESULTS_DIR, "jbi_files")
 JBI_ARTIFACT_JOBS = [
-    'fake-release-tools-runner',
+    "fake-release-tools-runner",
 ]
-JBI_ALLOWED_HOSTS = ['jenkins-dev.mgm.sipwise.com']
+JBI_ALLOWED_HOSTS = ["jenkins-dev.mgm.sipwise.com"]
