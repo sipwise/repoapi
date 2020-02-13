@@ -1,4 +1,7 @@
 *~
+node_modules/
 *.pyc
 db.sqlite3
+install.log
 reports
+src
