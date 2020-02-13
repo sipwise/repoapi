@@ -18,5 +18,27 @@ from . import models
 
 
 @admin.register(models.BuildRelease)
-class JenkinsBuildInfoAdmin(admin.ModelAdmin):
-    list_filter = ('release',)
+class BuildReleaseAdmin(admin.ModelAdmin):
+    list_filter = ("release",)
+    readonly_fields = ("projects",)
+    modify_readonly_fields = (
+        "uuid",
+        "release",
+        "projects",
+    )
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj is None:
+            return self.readonly_fields
+        return self.modify_readonly_fields
+
+    def save_model(self, request, obj, form, change):
+        if change:
+            super(BuildReleaseAdmin, self).save_model(
+                request, obj, form, change
+            )
+        else:
+            new_obj = models.BuildRelease.objects.create_build_release(
+                uuid=obj.uuid, release=obj.release
+            )
+            obj.pk = new_obj.pk
