@@ -12,24 +12,8 @@
         <div class="panel-body">
             <ul class="list-group">
                 <li class="list-group-item">
-                    <a href="{% url 'release_dashboard:build_deps'%}">
-                    Build release dependences</a>
-                </li>
-                <li class="list-group-item">
-                    <a href="{% url 'release_dashboard:build_release'%}">
+                    <a href="{% url 'release_dashboard:build_index'%}">
                     Build release</a>
-                </li>
-                <li class="list-group-item">
-                    <a href="{% url 'release_dashboard:build_release_tag'%}">
-                    Build release by tag</a>
-                </li>
-                <li class="list-group-item">
-                    <a href="{% url 'release_dashboard:build_trunk_deps'%}">
-                    Build Trunk release dependences</a>
-                </li>
-                <li class="list-group-item">
-                    <a href="{% url 'release_dashboard:build_trunk_release'%}">
-                    Build Trunk release</a>
                 </li>
                 <li class="list-group-item">
                     <a href="{% url 'release_dashboard:hotfix'%}">

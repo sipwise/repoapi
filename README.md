@@ -24,42 +24,73 @@ On your desktop, install pre-commit tool
   * pip3 install pre-commit
   * pre-commit install
 
-Inside the repoapi-stretch container run:
+virtualenv
+----------
+Inside the repoapi-buster container run:
 
-    $ export VAR_DIR=/tmp/repoapi
-    $ make venv_dev
-    $ source ${VAR_DIR}/venv_dev/bin/activate
+```
+  $ make venv_dev
+  $ source /var/lib/repoapi/venv_dev/bin/activate
+  (venv_dev)$
+```
 
 Create DB
-=========
+---------
 
 To ensure `db.sqlite3` exists as needed:
 
-    (repoapi)$ ./manage.py migrate --settings="repoapi.settings.dev"
+  ```
+  (venv_dev)$ ./manage.py migrate --settings="repoapi.settings.dev"
+  ```
+  or
+  ```
+  $ make migrate_dev
+  ```
 
 Create superuser
-================
+----------------
 
-    (repoapi)$ ./manage.py createsuperuser --settings="repoapi.settings.dev"
+  ```
+  (venv_dev)$ ./manage.py createsuperuser --settings="repoapi.settings.dev"
+  ```
 
-Run test server
-================
+Tmux
+----
+
+Use tmux inside repoapi-buster container so you can execute both dev server and worker
+
+
+Run dev server
+--------------
 
 If you want to run it on a specific IP, use:
 
-    (repoapi)$ IP=172.17.0.3 # adjust as needed
-    (repoapi)$ ./manage.py runserver_plus $IP:8000 --settings="repoapi.settings.dev"
-
+  ```
+  (venv_dev)$ IP=172.17.0.3 # adjust as needed
+  (venv_dev)$ ./manage.py runserver_plus $IP:8000 --settings="repoapi.settings.dev"
+  ```
 or just:
+  ```
+  $ make run_dev
+  ```
 
-    (repoapi)$  make run_dev
+Run dev worker
+--------------
+
+```
+  $ make worker_dev
+```
 
 Tests
-=====
+-----
 
-    (repoapi)$ ./manage.py test
+```
+  (venv_dev)$ ./manage.py test
+```
 
 Reports
-=======
+-------
 
-    (repoapi)$ ./manage.py jenkins
+```
+  (venv_dev)$ ./manage.py jenkins
+```
