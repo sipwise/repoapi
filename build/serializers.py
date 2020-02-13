@@ -15,17 +15,28 @@
 
 from rest_framework import serializers
 from . import models
+from .utils import ReleaseConfig
+from . import exceptions as err
 
 
 class BuildReleaseSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = models.BuildRelease
-        fields = '__all__'
+        fields = "__all__"
+        read_only_fields = ["tag", "branch", "distribution", "projects"]
 
-    def validate_projects(self, value):
-        projects = [x.strip() for x in value.split(',')]
-        if len(projects) <= 0:
+    def validate_release(self, value):
+        try:
+            self.release_config = ReleaseConfig(value)
+        except err.NoConfigReleaseFile:
+            raise serializers.ValidationError("{} unknown".format(value))
+        except err.NoJenkinsJobsInfo:
             raise serializers.ValidationError(
-                "projects is not a list of coma separate elements")
-        return ','.join(projects)
+                "{} has no jenkins-job info".format(value)
+            )
+        return self.release_config.release
+
+    def create(self, validate_data):
+        return self.Meta.model.objects.create_build_release(
+            validate_data["uuid"], validate_data["release"]
+        )

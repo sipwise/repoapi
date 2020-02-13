@@ -1,0 +1,63 @@
+{% extends "release_dashboard/base.html" %}
+{% load staticfiles %}
+{% block title %}Build release{% endblock %}
+{% block navlist %}
+    <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+    <li><a href="{% url 'release_dashboard:build_index'%}">Build Release</a></li>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <h2 class="panel-title"><b>{{ config.release }}</b></h2>
+      </div>
+      <div class="panel-body">
+        <table class="table table-condensed">
+          <tr>
+            <th>Distribution</th>
+            <th>tag</th>
+            <th>branch</th>
+            <th>Action</th>
+          </tr>
+          <tr class="active">
+            <td>{{ config.debian_release }}</td>
+            <td>{{ config.tag }}</td>
+            <td>{{ config.branch }}</td>
+            <td>
+            <form method="POST" class="form-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary" {% if build_releases %}disabled="disabled"{% endif %}>Build</button>
+            </form>
+            </td>
+          </tr>
+        </table>
+        {% if build_releases %}
+        <table class="table table-condensed">
+          <tr>
+            <th>UUID</th>
+            <th>Started at</th>
+          </tr>
+          {% for br in build_releases %}
+          <tr class="success">
+            <td><a href="{% url 'panel:release-view' _release=config.release %}">{{ br.uuid }}</a></td>
+            <td>{{ br.start_date }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% endif %}
+      </div>
+    </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Projects to build</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group">
+              {% for prj in config.projects %}
+                <li class="list-group-item {% if prj in build_deps %}list-group-item-warning{% endif %}">{{ prj }}</li>
+              {% endfor %}
+            </ul>
+        </div>
+      </div>
+</div>
+{% endblock %}
