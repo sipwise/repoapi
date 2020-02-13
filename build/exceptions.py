@@ -13,16 +13,26 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from django.db.models import signals
-from .br import BuildRelease
-from build.tasks import build_release
+
+class Error(Exception):
+    """Base class for exceptions in this module."""
+
+    pass
 
 
-def br_manage(sender, **kwargs):
-    if kwargs["created"]:
-        instance = kwargs["instance"]
-        build_release.delay(instance.pk)
+class NoConfigReleaseFile(Error):
+    pass
 
 
-post_save = signals.post_save.connect
-post_save(br_manage, sender=BuildRelease)
+class NoJenkinsJobsInfo(Error):
+    """ release config.yml has no jenkins-jobs entry """
+
+    pass
+
+
+class NoReleaseInfo(Error):
+    pass
+
+
+class NoDistrisInfo(Error):
+    pass

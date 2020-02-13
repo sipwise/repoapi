@@ -15,6 +15,7 @@
 from __future__ import absolute_import
 
 import logging
+from django.conf import settings
 from celery import shared_task
 from build.utils import trigger_build
 from build.models.br import BuildRelease
@@ -23,14 +24,21 @@ logger = logging.getLogger(__name__)
 
 
 @shared_task(ignore_result=True)
-def build_release(uuid):
-    instance = BuildRelease.objects.get(uuid=uuid)
+def build_release(pk):
+    br = BuildRelease.objects
+    if settings.DEBUG:
+        logger.info("pk:%s count:%d", pk, br.count())
+    instance = br.get(id=pk)
     if instance.tag:
         branch_or_tag = "tag/%s" % instance.tag
     else:
         branch_or_tag = "branch/%s" % instance.branch
     for project in instance.projects_list:
-        url = trigger_build(project, instance.uuid, instance.release,
-                            trigger_branch_or_tag=branch_or_tag,
-                            trigger_distribution=instance.distribution)
+        url = trigger_build(
+            project,
+            instance.uuid,
+            instance.release,
+            trigger_branch_or_tag=branch_or_tag,
+            trigger_distribution=instance.distribution,
+        )
         logger.debug("%s triggered" % url)
