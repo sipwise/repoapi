@@ -42,28 +42,34 @@ shell: venv_prod
 
 ###################################
 
-run_dev:
+run_dev: venv_dev
 	IP=$(shell ip a show dev eth0 scope global | grep inet | awk '{print $$2}' | cut -d/ -f1); \
+	source $(VAR_DIR)/venv_dev/bin/activate && \
 	./manage.py runserver_plus $$IP:8000 --settings="repoapi.settings.dev"
 
-worker_dev:
+worker_dev: venv_dev
+	source $(VAR_DIR)/venv_dev/bin/activate && \
 	DJANGO_SETTINGS_MODULE=repoapi.settings.dev \
 	$(VAR_DIR)/venv_dev/bin/celery -A repoapi worker \
 		--loglevel=info
 
-monitor_dev:
+monitor_dev: venv_dev
 	IP=$(shell ip a show dev eth0 scope global | grep inet | awk '{print $$2}' | cut -d/ -f1); \
+	source $(VAR_DIR)/venv_dev/bin/activate && \
 	DJANGO_SETTINGS_MODULE=repoapi.settings.dev \
 	$(VAR_DIR)/venv_dev/bin/celery -A repoapi flower \
 		--address=$$IP --port=5555 --settings="repoapi.settings.dev"
 
-makemigrations_dev:
+makemigrations_dev: venv_dev
+	source $(VAR_DIR)/venv_dev/bin/activate && \
 	./manage.py makemigrations --settings="repoapi.settings.dev"
 
-migrate_dev:
+migrate_dev: venv_dev
+	source $(VAR_DIR)/venv_dev/bin/activate && \
 	./manage.py migrate --settings="repoapi.settings.dev"
 
-shell_dev:
+shell_dev: venv_dev
+	source $(VAR_DIR)/venv_dev/bin/activate && \
 	./manage.py shell --settings="repoapi.settings.dev"
 ###################################
 

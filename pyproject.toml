@@ -1,0 +1,9 @@
+[tool.black]
+line-length = 79
+py37 = true
+exclude = '''
+/(
+  migrations
+  | __pycache__
+)/
+'''

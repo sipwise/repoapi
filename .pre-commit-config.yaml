@@ -2,12 +2,25 @@ default_language_version:
     # force all unspecified python hooks to run python3
     python: python3
 repos:
+-   repo: https://github.com/asottile/reorder_python_imports
+    rev: v1.9.0
+    hooks:
+    -   id: reorder-python-imports
+        exclude: migrations/
+        args: ["--py37-plus"]
 -   repo: https://github.com/psf/black
     rev: stable
-    args: -t py37
     hooks:
     -   id: black
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
     hooks:
     -   id: flake8
+    -   id: requirements-txt-fixer
+-   repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v6.8.0
+    hooks:
+    -   id: eslint
+        args: ['--fix']
+        additional_dependencies:
+        -   eslint-config-jquery
