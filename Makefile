@@ -47,11 +47,15 @@ run_dev:
 	./manage.py runserver_plus $$IP:8000 --settings="repoapi.settings.dev"
 
 worker_dev:
-	./manage.py celery worker --loglevel=info --settings="repoapi.settings.dev"
+	DJANGO_SETTINGS_MODULE=repoapi.settings.dev \
+	$(VAR_DIR)/venv_dev/bin/celery -A repoapi worker \
+		--loglevel=info
 
 monitor_dev:
 	IP=$(shell ip a show dev eth0 scope global | grep inet | awk '{print $$2}' | cut -d/ -f1); \
-	./manage.py celery flower --address=$$IP --port=5555 --settings="repoapi.settings.dev"
+	DJANGO_SETTINGS_MODULE=repoapi.settings.dev \
+	$(VAR_DIR)/venv_dev/bin/celery -A repoapi flower \
+		--address=$$IP --port=5555 --settings="repoapi.settings.dev"
 
 makemigrations_dev:
 	./manage.py makemigrations --settings="repoapi.settings.dev"
