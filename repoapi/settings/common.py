@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django_assets",
     "django_celery_results",
     "django_extensions",
+    "django_filters",
     "jsonify",
 ]
 
