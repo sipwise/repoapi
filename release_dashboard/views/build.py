@@ -1,42 +1,81 @@
 # Copyright (C) 2015 The Sipwise Team - http://sipwise.com
-
+#
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or (at your option)
 # any later version.
-
+#
 # This program is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 # more details.
-
+#
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-import logging
 import json
+import logging
 import uuid
-from django.shortcuts import render
-from django.http import HttpResponseNotFound, JsonResponse
-from django.views.decorators.http import require_http_methods
+
 from django.contrib.auth.decorators import login_required
-from release_dashboard.models import Project
-from release_dashboard.utils import build
-from release_dashboard.tasks import gerrit_fetch_info, gerrit_fetch_all
-from release_dashboard.forms.build import BuildDepForm, BuildReleaseForm
+from django.http import HttpResponseNotFound
+from django.http import HttpResponseRedirect
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.urls import reverse
+from django.views.decorators.http import require_http_methods
+
+from . import _common_versions
+from . import _hash_versions
+from . import _projects_versions
+from . import regex_hotfix
+from . import regex_master
+from . import regex_mr
+from build.models import BuildRelease
+from build.utils import ReleaseConfig
+from release_dashboard.forms import rd_settings
+from release_dashboard.forms import trunk_build_deps
+from release_dashboard.forms import trunk_projects
+from release_dashboard.forms.build import BuildDepForm
+from release_dashboard.forms.build import BuildReleaseForm
 from release_dashboard.forms.build import BuildTrunkDepForm
 from release_dashboard.forms.build import BuildTrunkReleaseForm
-from release_dashboard.forms import trunk_projects, trunk_build_deps
-from release_dashboard.forms import rd_settings
-from . import _projects_versions, _common_versions, _hash_versions
-from . import regex_hotfix, regex_master, regex_mr
+from release_dashboard.models import Project
+from release_dashboard.tasks import gerrit_fetch_all
+from release_dashboard.tasks import gerrit_fetch_info
+from release_dashboard.utils import build
 
 logger = logging.getLogger(__name__)
 
 
+@login_required
 def index(request):
-    context = {}
-    return render(request, "release_dashboard/index.html", context)
+    context = {
+        "releases": ReleaseConfig.supported_releases(),
+        "builds": BuildRelease.objects.releases_with_builds(),
+    }
+    return render(
+        request, "release_dashboard/build_supported_releases.html", context
+    )
+
+
+@login_required
+def build_release(request, release):
+    release_config = ReleaseConfig(release)
+    if request.method == "POST":
+        release_uuid = uuid.uuid4()
+        BuildRelease.objects.create_build_release(release_uuid, release)
+        return HttpResponseRedirect(
+            reverse("panel:release-uuid", args=(release_uuid,))
+        )
+    else:
+        context = {
+            "config": release_config,
+            "build_releases": BuildRelease.objects.filter(
+                release=release_config.release
+            ),
+            "build_deps": list(release_config.build_deps.keys()),
+        }
+        return render(request, "release_dashboard/build_release.html", context)
 
 
 @login_required
@@ -91,7 +130,7 @@ def _build_logic(form, projects):
 
 
 @login_required
-def build_deps(request, tag_only=False):
+def build_deps_old(request, tag_only=False):
     if request.method == "POST":
         form = BuildDepForm(request.POST)
         if form.is_valid():
@@ -118,7 +157,8 @@ def hotfix(request):
 
 
 @login_required
-def build_release(request, tag_only=False):
+def build_release_old(request, tag_only=False):
+
     if request.method == "POST":
         form = BuildReleaseForm(request.POST)
         if form.is_valid():
@@ -160,7 +200,7 @@ def refresh(request, project):
 
 
 @login_required
-def build_trunk_deps(request):
+def build_trunk_deps_old(request):
     if request.method == "POST":
         form = BuildTrunkDepForm(request.POST)
         if form.is_valid():
@@ -179,7 +219,7 @@ def build_trunk_deps(request):
 
 
 @login_required
-def build_trunk_release(request):
+def build_trunk_release_old(request):
     if request.method == "POST":
         form = BuildTrunkReleaseForm(request.POST)
         if form.is_valid():
