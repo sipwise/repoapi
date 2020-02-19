@@ -1,6 +1,12 @@
 <div class="panel-heading">
-    <span class="panel-title project-name"></span>
+    <span class="panel-title project-name">
+      <a class="link" name="" href=""></a>
+    </span>
     <div class="pull-right">
+      <form method="POST" class="form-inline">
+        {% csrf_token %}
+        <button class="btn-default btn-info retrigger-project-url hidden">Retrigger</button>
+      </form>
       <a class="badge latest-uuid-url" href="">latest</a>
     </div>
 </div>
@@ -22,7 +28,9 @@
         </div>
         <div class="panel-body">
             <ul class="list-group list-inline uuid-list">
-                <li class="list-group-item hidden job"></li>
+                <li class="list-group-item hidden job">
+                  <a class="link" href="">job</a>
+                </li>
             </ul>
         </div>
     </div>
