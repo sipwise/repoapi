@@ -1,0 +1,84 @@
+- model: repoapi.jenkinsbuildinfo
+  pk: 1
+  fields:
+    tag: 3cc6063e-6627-48b6-9dff-92e693547f59
+    projectname: release-copy-debs-yml
+    jobname: release-copy-debs-yml
+    buildnumber: 24
+    date: 2020-02-22 04:15:40.614682+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/release-copy-debs-yml/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: null
+    gerrit_eventtype: null
+    param_tag: null
+    param_branch: null
+    param_release: mr8.1
+    param_release_uuid: dbe569f7-eab6-4532-a6d1-d31fb559649b
+    param_distribution: null
+    param_ppa: null
+    repo_name: null
+    git_commit_msg: null
+- model: repoapi.jenkinsbuildinfo
+  pk: 2
+  fields:
+    tag: 3cc6063e-6627-48b6-9dff-92e693547f60
+    projectname: kamailio
+    jobname: kamailio-get-code
+    buildnumber: 23
+    date: 2020-02-22 04:15:40.614682+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/kamailio-get-code/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: null
+    gerrit_eventtype: null
+    param_tag: null
+    param_branch: mr8.1
+    param_release: release-mr8.1
+    param_release_uuid: dbe569f7-eab6-4532-a6d1-d31fb559649b
+    param_distribution: null
+    param_ppa: null
+    repo_name: null
+    git_commit_msg: null
+- model: repoapi.jenkinsbuildinfo
+  pk: 3
+  fields:
+    tag: 3cc6063e-6627-48b6-9dff-92e693547f61
+    projectname: release-copy-debs-yml
+    jobname: release-copy-debs-yml
+    buildnumber: 23
+    date: 2020-02-22 04:15:40.614682+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/release-copy-debs-yml/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: null
+    gerrit_eventtype: null
+    param_tag: null
+    param_branch: null
+    param_release: mr8.1
+    param_release_uuid: UUID_mr8.1
+    param_distribution: null
+    param_ppa: null
+    repo_name: null
+    git_commit_msg: null
+- model: repoapi.jenkinsbuildinfo
+  pk: 4
+  fields:
+    tag: 3cc6063e-6627-48b6-9dff-92e693547f62
+    projectname: release-copy-debs-yml
+    jobname: release-copy-debs-yml
+    buildnumber: 23
+    date: 2020-02-22 04:15:40.614682+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/release-copy-debs-yml/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: null
+    gerrit_eventtype: null
+    param_tag: null
+    param_branch: null
+    param_release: mr8.1
+    param_release_uuid: dbe569f7-eab6-4532-a6d1-d31fb559649b
+    param_distribution: null
+    param_ppa: null
+    repo_name: null
+    git_commit_msg: null
