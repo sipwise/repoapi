@@ -38,7 +38,7 @@ load_apikeys: venv_prod
 
 shell: venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
-		./manage.py shell --settings="repoapi.settings.prod"
+		./manage.py shell_plus --settings="repoapi.settings.prod"
 
 ###################################
 
@@ -70,7 +70,7 @@ migrate_dev: venv_dev
 
 shell_dev: venv_dev
 	source $(VAR_DIR)/venv_dev/bin/activate && \
-	./manage.py shell --settings="repoapi.settings.dev"
+	./manage.py shell_plus --settings="repoapi.settings.dev"
 ###################################
 
 # get rid of test files
