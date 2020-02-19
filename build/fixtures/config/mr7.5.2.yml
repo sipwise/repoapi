@@ -1,0 +1,277 @@
+distris:
+ - release-mr7.5.2
+ - buster
+
+debian_release: buster
+
+release-mr7.5.2: &packages
+ # TT#32916 TT#44119 bcg729 for G.729 codec support for rtpengine
+ - bcg729: 1.0.4+git20180222-0.1~bpo10+1
+ # TT#44190 needed by ngcp-panel
+ - grafana: 5.4.3
+ # MT#13097 + TT#11775 + TT#44117 needed by libinewrate
+ - libactivemq-cpp: 3.9.4-0.1~bpo10+1sipwise1
+ # TT#44184 needed by platform
+ - mariadb-connector-odbc: 3.1.1-1sipwise1~bpo10+1
+ # TT#44155 needed by sems*, not available in Buster at the moment
+ # TT#55301 does not build with latest mariadb libraries.
+ - mysql++: 3.2.2+pristine-2sipwise1~bpo10+1
+ # MT#19499 local robustness patches
+ - net-snmp: 5.7.3+dfsg-5sipwise1~bpo10+1
+ # TT#2398 influxdb + dependencies
+ - golang-github-influxdata-influxql: 0.0~git20180925.1cbfca8-0.1sipwise1~bpo10+1
+ # TT#28100 needed by platform
+ # + Packaging updates: R³:no.
+ # + Default to use the unix socket if available.
+ - influxdb: 1.6.4-1+sipwise1~bpo10+1
+ # TT#44187 needed by platform
+ # + Packaging updates: R³:no, Standards-Version=4.2.1, debhelper=11, © years.
+ # + Version should have been -0.1sipwiseN from the start.
+ - influxdb-relay: 0.0~20161114.0.adaa2ea-1sipwise2~bpo10+1
+ # TT#44188 needed by platform
+ - telegraf: 1.7.4-0.1sipwise1~bpo10+4
+ # TT#44918 Needed for Debian/buster PRO/Carrier
+ - ngcp-pxe-boot: 0.6.2.1+0~sipwise20190805
+ # TT#59330 rebuild of package pulled from non-free
+ - snmp-mibs-downloader: 1.2~bpo10+1
+ # TT#62202 Needed for Debian/buster PRO/Carrier
+ - monit: 5.25.2-3+deb10u1
+ # TT#66582 The version in Debian/buster does not work for us (yet)
+ - prosody: 0.9.12-2+deb9u2+bpo10+1
+
+buster: *packages
+
+repository-verify:
+  white-list: []
+
+jenkins-jobs:
+  ignore:
+    - heartbeat-binaries
+    - heartbeat-tap-test
+  build_deps:
+    data-hal:
+      - ngcp-panel
+    ngcp-schema:
+      - ngcp-panel
+    libinewrate:
+      - sems-pbx
+    libswrate:
+      - kamailio
+      - sems-pbx
+    libtcap:
+      - kamailio
+      - lnpd
+    sipwise-base:
+      - ngcp-panel
+      - ngcp-schema
+    check-tools:
+      - snmp-agent
+  projects:
+    - acc-cdi
+    - asterisk-voicemail
+    - backup-tools
+    - bulk-processor
+    - bulk-processor-projects
+    - bootenv
+    - cdr-exporter
+    - cfg-schema
+    - check-tools
+    - cleanup-tools
+    - cloudpbx-sources
+    - comx-application
+    - comx-fileshare-service
+    - csta-testsuite
+    - data-hal
+    - db-schema
+    - deployment-iso
+    - dhtest
+    - documentation
+    - faxserver
+    - heartbeat
+    - installer
+    - janus-admin
+    - janus-client
+    - kamailio
+    - kamailio-config-tests
+    - keyring
+    - klish
+    - libinewrate
+    - libswrate
+    - libtcap
+    - license-client
+    - lnpd
+    - lua-ngcp-kamailio
+    - mediator
+    - megacli
+    - metapackages
+    - monitoring-tools
+    - ngcp-api-tools
+    - ngcp-csc-ui
+    - ngcp-exporter
+    - ngcp-fauditd
+    - ngcp-inventory
+    - ngcp-logfs
+    - ngcp-klish-config
+    - ngcp-panel
+    - ngcp-prompts
+    - ngcp-rtcengine
+    - ngcp-schema
+    - ngcp-status
+    - ngcp-sudo-plugin
+    - ngcp-support
+    - ngcp-user-framework
+    - ngcpcfg
+    - ngcpcfg-api
+    - ngcpcfg-ha
+    - ngrep-sip
+    - prosody
+    - pushd
+    - rate-o-mat
+    - reminder
+    - rtpengine
+    - sems
+    - sems-ha
+    - sems-modules
+    - sems-pbx
+    - sipwise-base
+    - snmp-agent
+    - system-tests
+    - system-tools
+    - templates
+    - upgrade
+    - vmnotify
+    - voisniff-ng
+    - websocket
+
+release_mirror:
+  common:
+    copysrc:
+      - kamailio-config-tests
+      - klish
+      - libdata-hal-perl
+      - libsipwise-base-perl
+      - lua-ngcp-kamailio
+      - ngcp-acc-cdi
+      - ngcp-api-tools
+      - ngcp-asterisk-voicemail
+      - ngcp-bulk-processor
+      - ngcp-cdr-exporter
+      - ngcp-cfg-schema
+      - ngcp-check-tools
+      - ngcp-cleanup-tools
+      - ngcp-csc-ui
+      - ngcp-db-schema
+      - ngcp-deployment-iso
+      - ngcp-dhtest
+      - ngcp-handbook
+      - ngcp-installer
+      - ngcp-kamailio
+      - ngcp-keyring
+      - ngcp-klish-config
+      - ngcp-libswrate
+      - ngcp-libtcap
+      - ngcp-license-client
+      - ngcp-mediator
+      - ngcp-metapackages
+      - ngcp-ngcpcfg
+      - ngcp-panel
+      - ngcp-prompts
+      - ngcp-prosody-modules
+      - ngcp-rate-o-mat
+      - ngcp-reminder
+      - ngcp-rtpengine
+      - ngcp-schema
+      - ngcp-status
+      - ngcp-support
+      - ngcp-system-tests
+      - ngcp-system-tools
+      - ngcp-templates
+      - ngcp-upgrade
+      - ngcp-vmnotify
+      - ngrep-sip
+    remove:
+      source:
+        - ngcp-handbook
+        - ngcp-installer
+        - ngcp-libswrate
+        - ngcp-license-client
+        - ngcp-prompts
+        - ngcp-templates
+        - ngcp-upgrade
+      binary:
+        - ngcp-handbook-internal
+        - ngcp-handbook-pdf-internal
+      matched: []
+  ce:
+    copysrc:
+      - ngcp-sems
+    remove:
+      source: []
+      binary:
+        - ngcp-ngcpcfg-testsuite
+      matched:
+        - '*-carrier'
+        - '*-pro'
+        - '*-pro-dbgsym'
+  pro:
+    backports:
+      # cloudpbx firmwares(PRO ONLY), commented are empty
+      #- ngcp-cloudpbx-firmwares-audiocodes: '1.0.0.0'
+      - ngcp-cloudpbx-firmwares-ale: '1.0.0.1'
+      - ngcp-cloudpbx-firmwares-cisco: '1.0.0.0'
+      - ngcp-cloudpbx-firmwares-grandstream: '1.0.0.1'
+      - ngcp-cloudpbx-firmwares-innovaphone: '1.0.0.0'
+      - ngcp-cloudpbx-firmwares-panasonic: '1.0.0.2'
+      - ngcp-cloudpbx-firmwares-polycom: '1.0.0.1'
+      #- ngcp-cloudpbx-firmwares-snom: '1.0.0.0'
+      - ngcp-cloudpbx-firmwares-yealink: '1.0.0.1'
+    copysrc:
+      - heartbeat-2
+      - janus-admin
+      - janus-client
+      - megacli
+      - ngcp-backup-tools
+      - ngcp-bootenv
+      - ngcp-bulk-processor-projects
+      - ngcp-cloudpbx-devices
+      - ngcp-comx-application
+      - ngcp-comx-fileshare-service
+      - ngcp-csta-testsuite
+      - ngcp-exporter
+      - ngcp-fauditd
+      - ngcp-faxserver
+      - ngcp-inventory
+      - ngcp-libinewrate
+      - ngcp-lnpd
+      - ngcp-logfs
+      - ngcp-monitoring-tools
+      - ngcp-ngcpcfg-ha
+      - ngcp-pushd
+      - ngcp-rtcengine
+      - ngcp-sems-modules
+      - ngcp-sems-pbx
+      - ngcp-snmp
+      - ngcp-sudo-plugin
+      - ngcp-user-framework
+      - ngcp-voisniff
+      - ngcp-websocket
+      - ngcpcfg-api
+    remove:
+      binary: []
+      source:
+        - ngcp-cloudpbx-devices
+        - ngcp-csta-testsuite
+        - ngcp-fauditd
+        - ngcp-logfs
+        - ngcp-monitoring-tools
+        - ngcp-ngcpcfg-ha
+        - ngcp-pushd
+        - ngcp-sems-modules
+        - ngcp-sems-pbx
+        - ngcp-sudo-plugin
+        - ngcp-user-framework
+        - ngcp-voisniff
+        - ngcpcfg-api
+      matched:
+        - '*ngcp*-ce'
+        - '*ngcp*-ce-*'

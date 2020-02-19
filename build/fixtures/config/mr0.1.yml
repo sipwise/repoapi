@@ -1,0 +1,40 @@
+distris:
+ - release-mr0.1
+ - stretch
+
+debian_release: stretch
+
+release-mr0.1: &packages
+ - sngrep: 1.2.0-1~bpo8+1
+
+stretch: *packages
+
+repository-verify:
+  white-list: []
+
+release_mirror:
+  common:
+    copysrc:
+      - playground
+    remove:
+      source:
+        - playground
+      binary: []
+      matched: []
+  ce:
+    copysrc: []
+    remove:
+      source: []
+      binary: []
+      matched:
+        - '*-carrier'
+        - '*-pro'
+  pro:
+    backports: []
+    copysrc: []
+    remove:
+      binary: []
+      source: []
+      matched:
+        - '*ngcp*-ce'
+        - '*ngcp*-ce-*'

@@ -1,0 +1,200 @@
+[
+    {
+      "model": "build.buildrelease",
+      "pk": 1,
+      "fields": {
+        "uuid": "UUID_mr8.1",
+        "start_date": "2017-07-14T07:55:11.714Z",
+        "tag": "",
+        "branch": "mr8.1",
+        "release": "release-mr8.1",
+        "distribution": "buster",
+        "projects": "kamailio,lua-ngcp-kamailio,ngcp-panel",
+        "built_projects": null
+      }
+    },
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-01T12:57:54.379Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/foo-get-code/",
+            "param_branch": null,
+            "param_distribution": "buster",
+            "param_ppa": null,
+            "param_release": "release-mr8.1",
+            "param_release_uuid": "UUID_mr8.1",
+            "param_tag": null,
+            "projectname": "kamailio",
+            "jobname": "kamailio-source",
+            "repo_name": null,
+            "result": "FAILED",
+            "tag": "UUID1"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-04T10:41:53.788Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "http://fake.org/gogo",
+            "param_branch": null,
+            "param_distribution": "buster",
+            "param_ppa": null,
+            "param_release": "release-mr8.1",
+            "param_release_uuid": "UUID_mr8.1",
+            "param_tag": null,
+            "projectname": "kamailio",
+            "jobname": "kamailio-get-code",
+            "repo_name": null,
+            "result": "FAILED",
+            "tag": "UUID0"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-04T10:42:13.259Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "http://fake.org/gogo",
+            "param_branch": null,
+            "param_distribution": "buster",
+            "param_ppa": null,
+            "param_release": "release-mr8.1",
+            "param_release_uuid": "UUID_mr8.1",
+            "param_tag": null,
+            "projectname": "kamailio",
+            "jobname": "kamailio-source-tests",
+            "repo_name": null,
+            "result": "SUCCESS",
+            "tag": "UUID1"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-04T17:04:57.802Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/foo-get-code/",
+            "param_branch": null,
+            "param_distribution": "buster",
+            "param_ppa": null,
+            "param_release": "release-mr8.1",
+            "param_release_uuid": "UUID_mr8.1",
+            "param_tag": null,
+            "projectname": "kamailio",
+            "jobname": "kamailio-get-code",
+            "repo_name": null,
+            "result": "SUCCESS",
+            "tag": "UUID1"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-04T17:04:57.802Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/release-update-deb-symlinks/",
+            "param_branch": null,
+            "param_distribution": "buster",
+            "param_ppa": null,
+            "param_release": null,
+            "param_release_uuid": null,
+            "param_tag": null,
+            "projectname": "release-update-deb-symlinks",
+            "jobname": "release-update-deb-symlinks",
+            "repo_name": null,
+            "result": "SUCCESS",
+            "tag": null
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "buildnumber": 10,
+            "date": "2017-05-04T17:04:57.802Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/foo-get-code/",
+            "param_branch": null,
+            "param_distribution": "buster",
+            "param_ppa": null,
+            "param_release": "release-trunk-buster",
+            "param_release_uuid": "UUID_mr8.1",
+            "param_tag": null,
+            "projectname": "sems",
+            "jobname": "sems-get-code",
+            "repo_name": null,
+            "result": "SUCCESS",
+            "tag": "UUID1"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "buildnumber": 11,
+            "date": "2017-05-04T17:04:57.802Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/foo-get-code/",
+            "param_branch": null,
+            "param_distribution": "buster",
+            "param_ppa": null,
+            "param_release": "release-mr8.2",
+            "param_release_uuid": "UUID_mr8.2",
+            "param_tag": null,
+            "projectname": "kamailio",
+            "jobname": "kamailio-get-code",
+            "repo_name": null,
+            "result": "SUCCESS",
+            "tag": "UUID1"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "buildnumber": 12,
+            "date": "2017-05-04T17:04:57.802Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/foo-get-code/",
+            "param_branch": null,
+            "param_distribution": "buster",
+            "param_ppa": null,
+            "param_release": "release-mr8.1",
+            "param_release_uuid": "UUID0_mr8.1",
+            "param_tag": null,
+            "projectname": "kamailio",
+            "jobname": "kamailio-get-code",
+            "repo_name": null,
+            "result": "SUCCESS",
+            "tag": "UUID3"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 8
+    }
+]
