@@ -1,0 +1,20 @@
+<div class="panel-heading">
+  <h3 class="panel-title"><b>{{build_release.release}}</b> <b>{{build_release.uuid}}</b> Details</h3>
+</div>
+<div class="panel-body">
+  <table class="table table-condensed">
+    <tr>
+      <th>Distribution</th>
+      <th>tag</th>
+      <th>branch</th>
+      <th>started_at</th>
+    </tr>
+    <tr class="active">
+      <td>{{ build_release.config.debian_release }}</td>
+      <td>{{ build_release.tag }}</td>
+      <td>{{ build_release.branch }}</td>
+      <td>{{ build_release.start_date }}</td>
+      </td>
+    </tr>
+  </table>
+</div>

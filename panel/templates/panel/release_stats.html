@@ -1,12 +1,16 @@
 <div class="panel-heading">
-    <h3 class="panel-title">statistics</h3>
+    <span class="panel-title">Statistics</span>
+    <div class="pull-right">next info refresh in <span class="badge" id="update-info">0</span> seconds</div>
 </div>
 <div class="panel-body">
     <div>
         Total projects: <span id="stats-total">0</span>
     </div>
     <div>
-        Failed: <span id="stats-danger">0</span>
+        <button class="btn" type="button" data-toggle="collapse"
+          data-target="#collapseFailed" aria-expanded="true" aria-controls="collapseFailed">
+          Failed: <span id="stats-danger">0</span>
+        </button>
     </div>
     <div class="progress">
         <div class="progress-bar progress-bar-danger"
@@ -15,11 +19,19 @@
               <span id="stats-label-danger">0% Failed</span>
         </div>
     </div>
-    <ul class='list-group list-inline list-stat' id='stats-list-danger'>
-        <li class='list-group-item hidden list-group-item-danger stats-project-danger-clone'></li>
-    </ul>
+    <div class="collapse.in" id="collapseFailed">
+      <ul class='list-group list-inline list-stat' id='stats-list-danger'>
+          <li class='list-group-item hidden list-group-item-danger stats-project-danger-clone'>
+              <a class="link" href=""></a>
+              <span class="badge"></span>
+          </li>
+      </ul>
+    </div>
     <div>
-        Building: <span id="stats-created">0</span>
+        <button class="btn" type="button" data-toggle="collapse"
+          data-target="#collapseBuild" aria-expanded="false" aria-controls="collapseBuild">
+          Building: <span id="stats-created">0</span>
+        </button>
     </div>
     <div class="progress">
         <div class="progress-bar progress-bar-created"
@@ -28,9 +40,37 @@
               <span id="stats-label-danger">0% Building</span>
         </div>
     </div>
-    <ul class='list-group list-inline list-stat' id='stats-list-created'>
-        <li class='list-group-item hidden stats-project-created-clone'></li>
-    </ul>
+    <div class="collapse" id="collapseBuild">
+      <ul class='list-group list-inline list-stat' id='stats-list-created'>
+          <li class='list-group-item hidden stats-project-created-clone'>
+              <a class="link" href=""></a>
+              <span class="badge"></span>
+          </li>
+      </ul>
+    </div>
+{% if stats_queued %}
+    <div>
+        <button class="btn" type="button" data-toggle="collapse"
+          data-target="#collapseQueue" aria-expanded="false" aria-controls="collapseQueue">
+          On Queue: <span id="stats-queued">0</span>
+        </button>
+    </div>
+    <div class="progress">
+        <div class="progress-bar progress-bar-queued"
+          role="progressbar" aria-valuenow="0" aria-valuemin="0"
+          aria-valuemax="100" style="min-width: 2em; width: 0%">
+              <span id="stats-label-danger">0% Queued</span>
+        </div>
+    </div>
+    <div class="collapse" id="collapseQueue">
+      <ul class='list-group list-inline list-stat' id='stats-list-queued'>
+          <li class='list-group-item hidden stats-project-queued-clone'>
+              <a class="link" href=""></a>
+              <span class="badge"></span>
+          </li>
+      </ul>
+    </div>
+{% endif %}
     <div>
         Success: <span id="stats-success">0</span>
     </div>
@@ -42,7 +82,10 @@
         </div>
     </div>
     <div>
-        Warning: <span id="stats-warning">0</span>
+        <button class="btn" type="button" data-toggle="collapse"
+          data-target="#collapseWarn" aria-expanded="false" aria-controls="collapseWarn">
+          Warning: <span id="stats-warning">0</span>
+        </button>
     </div>
     <div class="progress">
         <div class="progress-bar progress-bar-warning"
@@ -51,7 +94,12 @@
               <span id="stats-label-warning">0% Warning</span>
         </div>
     </div>
-    <ul class='list-group list-inline list-stat' id='stats-list-warning'>
-        <li class='list-group-item hidden list-group-item-warning stats-project-warning-clone'></li>
-    </ul>
+    <div class="collapse" id="collapseWarn">
+      <ul class='list-group list-inline list-stat' id='stats-list-warning'>
+          <li class='list-group-item hidden list-group-item-warning stats-project-warning-clone'>
+            <a class="link" href=""></a>
+            <span class="badge"></span>
+          </li>
+      </ul>
+    </div>
 </div>
