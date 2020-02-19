@@ -1,35 +1,39 @@
 # Copyright (C) 2015 The Sipwise Team - http://sipwise.com
-
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or (at your option)
 # any later version.
-
 # This program is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 # more details.
-
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 import logging
 import re
-from django.shortcuts import render
-from django.http import JsonResponse, Http404
-from django.views.decorators.http import require_http_methods
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from rest_framework import generics, status
+from django.http import Http404
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.views.decorators.http import require_http_methods
+from rest_framework import generics
+from rest_framework import status
 from rest_framework.response import Response
-from release_dashboard.utils import docker
-from release_dashboard.forms.docker import BuildDockerForm
-from release_dashboard.forms import docker_projects
-from release_dashboard import tasks
-from release_dashboard.models import Project, DockerImage, DockerTag
-from release_dashboard import serializers
-from . import _projects_versions, _common_versions, _hash_versions
+
+from . import _common_versions
+from . import _hash_versions
+from . import _projects_versions
 from . import regex_mr
+from release_dashboard import serializers
+from release_dashboard import tasks
+from release_dashboard.forms import docker_projects
+from release_dashboard.forms.docker import BuildDockerForm
+from release_dashboard.models import DockerImage
+from release_dashboard.models import DockerTag
+from release_dashboard.models import Project
+from release_dashboard.utils import docker
 
 logger = logging.getLogger(__name__)
 
@@ -96,7 +100,7 @@ def build_docker_images(request):
 def refresh_all(request):
     if request.method == "POST":
         res = tasks.docker_fetch_all.delay()
-        return JsonResponse({"url": "/flower/task/%s" % res.id})
+        return JsonResponse({"url": "/flower/task/%s" % res.id}, status=201)
     else:
         template = "release_dashboard/refresh_docker.html"
         projects = []
@@ -110,7 +114,7 @@ def refresh_all(request):
 @require_http_methods(["POST"])
 def refresh(request, project):
     res = tasks.docker_fetch_project.delay(project)
-    return JsonResponse({"url": "/flower/task/%s" % res.id})
+    return JsonResponse({"url": "/flower/task/%s" % res.id}, status=201)
 
 
 @login_required

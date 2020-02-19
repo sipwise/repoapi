@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block extrajs %}
-<script src="{% static "panel/js/panel.js" %}"></script>
+<script src="{% static 'panel/js/panel.js' %}"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
   $.panel = 'release';
@@ -29,19 +29,19 @@ $( document ).ready(function() {
   $.release.timer = setInterval(function(){
     update_info('{{release}}');
   }, $.release.interval);
-{% for projectname, project in projects.iteritems %}
+{% for projectname, project in projects.items %}
   create_new_project('{{ release }}', '{{ projectname }}', false);
-  {% for uuid, uuid_value in project.iteritems %}
+  {% for uuid, uuid_value in project.items %}
     {% if uuid_value.latest %}
     values = {tag: '{{ uuid }}', latest: true };
     {% else %}
     values = {tag: '{{ uuid }}', latest: false };
     {% endif %}
     create_new_uuid('{{ release }}', '{{ projectname }}', values, false);
-    {% for key, job in uuid_value.iteritems %}
+    {% for key, job in uuid_value.items %}
     {% if key != 'latest' %}
     data = {{ job|jsonify }};
-    create_new_job('{{ release }}', '{{ projectname }}', '{{ uuid }}', data);
+    create_new_job('{{ projectname }}', '{{ uuid }}', data);
     {% endif %}
     {% endfor %}
   {% endfor %}
