@@ -1,0 +1,24 @@
+{% extends "release_dashboard/base.html" %}
+{% load staticfiles %}
+{% block title %}Build release{% endblock %}
+{% block navlist %}
+    <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="panel panel-default">
+      <div class="panel-heading">
+          <h3 class="panel-title">Supported Releases</h3>
+      </div>
+      <div class="panel-body">
+        <ul class="list-group" style="column-count: 4;">
+        {% for release in releases %}
+          <li class="list-group-item {% if release in builds %}list-group-item-info{% endif %}">
+            <a href="{% url 'release_dashboard:build_release' release=release %}">{{ release }}</a>
+          </li>
+        {% endfor %}
+        </ul>
+      </div>
+  </div>
+</div>
+{% endblock %}

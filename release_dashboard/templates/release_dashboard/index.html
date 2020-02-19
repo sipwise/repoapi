@@ -1,7 +1,11 @@
 {% extends "release_dashboard/base.html" %}
 {% block title %}Release Dashboard{% endblock %}
 {% block navlist %}
+{% if old_links %}
+    <li><a href="{% url 'release_dashboard:index_old'%}">Release Dashboard</a></li>
+{% else %}
     <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+{% endif %}
 {% endblock %}
 {% block content %}
 <div class="container">
@@ -11,26 +15,33 @@
         </div>
         <div class="panel-body">
             <ul class="list-group">
+            {% if old_links %}
                 <li class="list-group-item">
-                    <a href="{% url 'release_dashboard:build_deps'%}">
+                    <a href="{% url 'release_dashboard:build_deps_old'%}">
                     Build release dependences</a>
                 </li>
                 <li class="list-group-item">
-                    <a href="{% url 'release_dashboard:build_release'%}">
+                    <a href="{% url 'release_dashboard:build_release_old'%}">
                     Build release</a>
                 </li>
                 <li class="list-group-item">
-                    <a href="{% url 'release_dashboard:build_release_tag'%}">
+                    <a href="{% url 'release_dashboard:build_release_tag_old'%}">
                     Build release by tag</a>
                 </li>
                 <li class="list-group-item">
-                    <a href="{% url 'release_dashboard:build_trunk_deps'%}">
+                    <a href="{% url 'release_dashboard:build_trunk_deps_old'%}">
                     Build Trunk release dependences</a>
                 </li>
                 <li class="list-group-item">
-                    <a href="{% url 'release_dashboard:build_trunk_release'%}">
+                    <a href="{% url 'release_dashboard:build_trunk_release_old'%}">
                     Build Trunk release</a>
                 </li>
+            {% else %}
+                <li class="list-group-item">
+                    <a href="{% url 'release_dashboard:build_index'%}">
+                    Build release</a>
+                </li>
+            {% endif %}
                 <li class="list-group-item">
                     <a href="{% url 'release_dashboard:hotfix'%}">
                     Hotfixes</a>
