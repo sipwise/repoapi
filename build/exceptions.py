@@ -12,8 +12,27 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from django.apps import AppConfig
 
 
-class ReleaseConfig(AppConfig):
-    name = "build"
+class Error(Exception):
+    """Base class for exceptions in this module."""
+
+    pass
+
+
+class NoConfigReleaseFile(Error):
+    pass
+
+
+class NoJenkinsJobsInfo(Error):
+    """ release config.yml has no jenkins-jobs entry """
+
+    pass
+
+
+class NoReleaseInfo(Error):
+    pass
+
+
+class NoDistrisInfo(Error):
+    pass

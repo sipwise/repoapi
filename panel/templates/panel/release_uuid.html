@@ -8,6 +8,17 @@
 {% endblock %}
 {% block content %}
 <div class="container">
+  <div class="panel panel-default" id="release_metadata">
+    {% include "panel/release_info.html" %}
+  </div>
+</div>
+<div class="container">
+  <div class="panel panel-default">
+    {% include "panel/base_release_job.html" %}
+  </div>
+  <div id="release-job-list"></div>
+</div>
+<div class="container">
     <div class="panel panel-default" id="stats">
       {% include "panel/release_stats.html" %}
     </div>
@@ -20,25 +31,35 @@
 
 {% block extrajs %}
 <script src="{% static 'panel/js/panel.js' %}"></script>
+<script src="{% static 'panel/js/panel_release.js' %}"></script>
 <script type="text/javascript">
 $( document ).ready(function() {
   $.panel = 'release';
+  $.release.uuid = '{{ build_release.uuid }}';
   $.release.max_uuids = 1;
   $.release.interval = 30000;
-  update_info('{{release}}');
+  update_info('{{ build_release.release }}');
   $.release.timer = setInterval(function(){
-    update_info('{{release}}');
+    update_info('{{ build_release.release }}');
   }, $.release.interval);
-{% for projectname, project in projects.iteritems %}
-  create_new_project('{{ release }}', '{{ projectname }}', false);
-  {% for uuid, uuid_value in project.iteritems %}
+set_stats_total('{{ total }}');
+{% for projectname in queued_projects %}
+set_project_stats('{{ projectname }}', 'queued');
+{% endfor %}
+{% for job, values in release_jobs.items %}
+values = {{ values.0|jsonify }};
+create_new_release_job(values);
+{% endfor %}
+{% for projectname, project in projects.items %}
+  create_new_project('{{ build_release.release }}', '{{ projectname }}', false);
+  {% for uuid, uuid_value in project.items %}
     {% if uuid_value.latest %}
     values = {tag: '{{ uuid }}', latest: true };
     {% else %}
     values = {tag: '{{ uuid }}', latest: false };
     {% endif %}
-    create_new_uuid('{{ release }}', '{{ projectname }}', values, false);
-    {% for key, job in uuid_value.iteritems %}
+    create_new_uuid('{{ build_release.release }}', '{{ projectname }}', values, false);
+    {% for key, job in uuid_value.items %}
     {% if key != 'latest' %}
     data = {{ job|jsonify }};
     create_new_job('{{ projectname }}', '{{ uuid }}', data);
