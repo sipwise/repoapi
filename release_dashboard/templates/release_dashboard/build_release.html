@@ -1,0 +1,111 @@
+{% extends "release_dashboard/base.html" %}
+{% load staticfiles %}
+{% block title %}Build release{% endblock %}
+{% block navlist %}
+    <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+    <li><a href="{% url 'release_dashboard:build_index'%}">Build Release</a></li>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+          <h2 class="panel-title"><b>{{ config.release }}</b></h2>
+      </div>
+      <div class="panel-body">
+        <table class="table table-condensed">
+          <tr>
+            <th>Distribution</th>
+            <th>tag</th>
+            <th>branch</th>
+            <th>Action</th>
+          </tr>
+          <tr class="active">
+            <td>{{ config.debian_release }}</td>
+            <td>{{ config.tag }}</td>
+            <td>{{ config.branch }}</td>
+            <td>
+            <form method="POST" class="form-inline">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-primary" id="build_button"
+                {% if build_releases %}disabled="disabled"{% endif %}>Build</button>
+            </form>
+            </td>
+          </tr>
+        </table>
+        {% if build_releases %}
+        <table class="table table-condensed">
+          <tr>
+            <th>UUID</th>
+            <th>Started at</th>
+            <th>Action</th>
+          </tr>
+          {% for br in build_releases %}
+          <tr class="success build_release" id="br_{{ br.id }}">
+            <td><a href="{% url 'panel:release-uuid' _uuid=br.uuid %}">{{ br.uuid }}</a></td>
+            <td>{{ br.start_date }}</td>
+            <td><button type="button"
+              onclick="click_delete(event, '{{ br.id }}')" class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+        {% endif %}
+      </div>
+      <div class="panel-footer error"></div>
+    </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Projects to build</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group" style="column-count: 4;">
+              {% for prj in config.projects %}
+                <li class="list-group-item {% if prj in build_deps %}list-group-item-warning{% endif %}">{{ prj }}</li>
+              {% endfor %}
+            </ul>
+        </div>
+      </div>
+</div>
+{% endblock %}
+{% block extrajs %}
+<script type="text/javascript">
+function click_delete(e, id) {
+    delete_build_release(id);
+    e.preventDefault();
+}
+
+function delete_build_release( id ) {
+
+  function successFunc( data, _textStatus, _jqXHR ) {
+    $("#br_" + id).remove();
+    if ( $(".build_release").length === 0 ) {
+      $( "#build_button" ).removeAttr("disabled");
+    }
+  }
+
+  function errorFunc( _jqXHR, _status, error ) {
+    $( "#error" ).html( error );
+  }
+  var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+  function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+  });
+  $.ajax( {
+    url: "/build/" + id + "/?format=json",
+    method: "DELETE",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: successFunc,
+    error: errorFunc
+  } );
+}
+</script>
+{% endblock %}
