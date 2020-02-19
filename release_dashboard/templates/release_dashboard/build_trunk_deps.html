@@ -2,12 +2,12 @@
 {% load staticfiles %}
 {% block title %}Build dependences{% endblock %}
 {% block navlist %}
-    <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
-    <li><a href="{% url 'release_dashboard:build_trunk_deps'%}">Build Trunk dependences</a></li>
+    <li><a href="{% url 'release_dashboard:index_old'%}">Release Dashboard</a></li>
+    <li><a href="{% url 'release_dashboard:build_trunk_deps_old'%}">Build Trunk dependences</a></li>
 {% endblock %}
 {% block content %}
 {% include "release_dashboard/build_content.html" %}
 {% endblock %}
 {% block extrajs %}
-<script src="{% static "release_dashboard/js/build.js" %}"></script>
+<script src="{% static 'release_dashboard/js/build.js' %}"></script>
 {% endblock %}
