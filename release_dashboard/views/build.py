@@ -50,7 +50,7 @@ logger = logging.getLogger(__name__)
 @login_required
 def index(request):
     context = {
-        "releases": ReleaseConfig.supported_releases(),
+        "releases": ReleaseConfig.supported_releases_dict(),
         "builds": BuildRelease.objects.releases_with_builds(),
     }
     return render(

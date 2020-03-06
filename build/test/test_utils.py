@@ -20,6 +20,7 @@ from django.test import SimpleTestCase
 from mock import patch
 
 from build import exceptions as err
+from build.utils import get_common_release
 from build.utils import get_simple_release
 from build.utils import ReleaseConfig
 from build.utils import trigger_build
@@ -44,6 +45,24 @@ class SimpleReleaseTest(SimpleTestCase):
         self.assertIsNone(val)
 
 
+class CommonReleaseTest(SimpleTestCase):
+    def test_trunk(self):
+        val = get_common_release("release-trunk-buster")
+        self.assertEqual(val, "master")
+
+    def test_branch_release(self):
+        val = get_common_release("release-mr8.0")
+        self.assertEqual(val, "mr8.0")
+
+    def test_release_ok(self):
+        val = get_common_release("mr8.1.1")
+        self.assertEqual(val, "mr8.1")
+
+    def test_release_ko(self):
+        val = get_common_release("whatever-mr8.1.1")
+        self.assertIsNone(val)
+
+
 @override_settings(DEBUG=True)
 class ReleaseConfigTestCase(SimpleTestCase):
     build_deps = [
@@ -58,9 +77,28 @@ class ReleaseConfigTestCase(SimpleTestCase):
 
     @override_settings(RELEASES_SKIP=["mr0.1"])
     def test_supported_releases(self):
-        supported = ["trunk", "mr8.1", "mr7.5.2"]
+        supported = [
+            "trunk",
+            "mr8.1",
+            "mr7.5.3",
+            "mr7.5.2",
+            "mr7.5.1",
+            "mr7.5",
+        ]
         res = ReleaseConfig.supported_releases()
         self.assertListEqual(res, supported)
+
+    @patch.object(ReleaseConfig, "supported_releases")
+    def test_supported_releases_dict(self, sr):
+        res_ok = [
+            {"release": "trunk", "base": "master"},
+            {"release": "mr8.0", "base": "mr8.0"},
+            {"release": "mr8.0.1", "base": "mr8.0"},
+            {"release": "mr7.5.1", "base": "mr7.5"},
+        ]
+        sr.return_value = ["trunk", "mr8.0", "mr8.0.1", "mr7.5.1"]
+        res = ReleaseConfig.supported_releases_dict()
+        self.assertListEqual(res, res_ok)
 
     def test_no_release_config(self):
         with self.assertRaises(err.NoConfigReleaseFile):

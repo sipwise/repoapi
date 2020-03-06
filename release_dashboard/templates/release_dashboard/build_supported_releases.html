@@ -11,13 +11,30 @@
           <h3 class="panel-title">Supported Releases</h3>
       </div>
       <div class="panel-body">
-        <ul class="list-group" style="column-count: 4;">
-        {% for release in releases %}
-          <li class="list-group-item {% if release in builds %}list-group-item-info{% endif %}">
-            <a href="{% url 'release_dashboard:build_release' release=release %}">{{ release }}</a>
+        {% regroup releases|dictsortreversed:"base" by base as releases_list %}
+        <ul class="nav nav-pills" role="tablist">
+        {% for base, data_list in releases_list %}
+          <li role="presentation">
+            <a href="#{{base|cut:'.'}}" aria-controls="{{base|cut:'.'}}"
+               role="tab" data-toggle="tab">{{base}}</a>
           </li>
         {% endfor %}
         </ul>
+        <div class="tab-content">
+          {% for base, data_list in releases_list %}
+          <div role="tabpanel" class="tab-pane" id="{{base|cut:'.'}}">
+            <ul class="list-group" style="column-count: 4;">
+              {% for data in data_list %}
+              <li class="list-group-item {% if data.release in builds %}list-group-item-info{% endif %}">
+                <a href="{% url 'release_dashboard:build_release' release=data.release %}">
+                  {{ data.release }}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endfor %}
+        </div>
       </div>
   </div>
 </div>

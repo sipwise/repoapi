@@ -38,7 +38,8 @@ project_url = (
     "distribution={distribution}"
 )
 copy_deps_url = base_url + "&release={release}&internal={internal}"
-re_release = re.compile(r"release-(mr[0-9]+\.[0-9]+(\.[0-9]+)?)$")
+re_release = re.compile(r"^release-(mr[0-9]+\.[0-9]+(\.[0-9]+)?)$")
+re_release_common = re.compile(r"^(release-)?(mr[0-9]+\.[0-9]+)(\.[0-9]+)?$")
 
 
 def get_simple_release(version):
@@ -47,6 +48,14 @@ def get_simple_release(version):
         return match.group(1)
     if version.startswith("release-trunk-"):
         return "trunk"
+
+
+def get_common_release(version):
+    match = re_release_common.search(version)
+    if match:
+        return match.group(2)
+    if version.startswith("release-trunk-") or version == "trunk":
+        return "master"
 
 
 def trigger_copy_deps(release, internal, release_uuid, uuid=None):
@@ -159,6 +168,14 @@ class ReleaseConfig(object):
                     res.append(Path(name).stem)
         res.sort(reverse=True)
         return res
+
+    @classmethod
+    def supported_releases_dict(cls):
+        sr = cls.supported_releases()
+        return [
+            {"release": version, "base": get_common_release(version)}
+            for version in sr
+        ]
 
     def __init__(self, name):
         filename = get_simple_release(name)
