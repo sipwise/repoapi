@@ -23,14 +23,16 @@ class TasksTestCase(BaseTest):
     fixtures = ["test_model_queries.json"]
 
     def test_purge(self):
+        prev_count = JenkinsBuildInfo.objects.count()
         jbi = JenkinsBuildInfo.objects.get(pk=1)
         jbi.date = datetime.now()
         jbi.save()
-        self.assertEquals(JenkinsBuildInfo.objects.count(), 5)
+        self.assertEquals(JenkinsBuildInfo.objects.count(), prev_count)
         tasks.jbi_purge.delay("mr3.1-fake", 3)
         self.assertEquals(JenkinsBuildInfo.objects.count(), 1)
 
     def test_purge_none(self):
+        prev_count = JenkinsBuildInfo.objects.count()
         jbi = JenkinsBuildInfo.objects.get(pk=1)
         jbi.param_release = None
         jbi.save()
@@ -40,6 +42,6 @@ class TasksTestCase(BaseTest):
             ).count(),
             1,
         )
-        self.assertEquals(JenkinsBuildInfo.objects.count(), 5)
+        self.assertEquals(JenkinsBuildInfo.objects.count(), prev_count)
         tasks.jbi_purge.delay(None, 3)
-        self.assertEquals(JenkinsBuildInfo.objects.count(), 4)
+        self.assertEquals(JenkinsBuildInfo.objects.count(), prev_count - 1)

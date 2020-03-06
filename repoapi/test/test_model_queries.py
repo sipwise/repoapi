@@ -35,7 +35,7 @@ class JBIQueriesTestCase(BaseTest):
             "fake",
         ]
         check = JenkinsBuildInfo.objects.release_projects("mr3.1-fake")
-        self.assertCountEqual(check, projects)
+        self.assertListEqual(list(check), projects)
 
     def test_release_project_uuids(self):
         projects = [
@@ -79,16 +79,18 @@ class JBIQueriesTestCase(BaseTest):
         )
 
     def test_purge_release(self):
+        prev_count = JenkinsBuildInfo.objects.count()
         jbi = JenkinsBuildInfo.objects.get(pk=1)
         jbi.date = datetime.now()
         jbi.save()
-        self.assertEquals(JenkinsBuildInfo.objects.count(), 5)
+        self.assertEquals(JenkinsBuildInfo.objects.count(), prev_count)
         JenkinsBuildInfo.objects.purge_release(
             "mr3.1-fake", timedelta(weeks=3)
         )
         self.assertEquals(JenkinsBuildInfo.objects.count(), 1)
 
     def test_purge_release_none(self):
+        prev_count = JenkinsBuildInfo.objects.count()
         jbi = JenkinsBuildInfo.objects.get(pk=1)
         jbi.param_release = None
         jbi.save()
@@ -98,9 +100,9 @@ class JBIQueriesTestCase(BaseTest):
             ).count(),
             1,
         )
-        self.assertEquals(JenkinsBuildInfo.objects.count(), 5)
+        self.assertEquals(JenkinsBuildInfo.objects.count(), prev_count)
         JenkinsBuildInfo.objects.purge_release(None, timedelta(weeks=3))
-        self.assertEquals(JenkinsBuildInfo.objects.count(), 4)
+        self.assertEquals(JenkinsBuildInfo.objects.count(), prev_count - 1)
 
 
 @override_settings(DEBUG=True)
@@ -116,7 +118,7 @@ class JBIQueriesUUIDTest(BaseTest):
         check = JenkinsBuildInfo.objects.release_projects(
             self.release, release_uuid=self.release_uuid
         )
-        self.assertCountEqual(check, projects)
+        self.assertListEqual(list(check), projects)
 
     def test_release_project_uuids(self):
         projects = [
