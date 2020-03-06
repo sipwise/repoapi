@@ -113,5 +113,28 @@
         },
         "model": "repoapi.jenkinsbuildinfo",
         "pk": 5
+    },
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-04T17:04:57.802Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/release-copy-debs-yml/",
+            "param_branch": null,
+            "param_distribution": "wheezy",
+            "param_ppa": null,
+            "param_release": "mr3.1-fake",
+            "param_release_uuid": null,
+            "param_tag": null,
+            "projectname": "release-copy-debs-yml",
+            "jobname": "release-copy-debs-yml",
+            "repo_name": null,
+            "result": "SUCCESS",
+            "tag": null
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 6
     }
 ]

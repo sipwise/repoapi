@@ -78,6 +78,9 @@ class JenkinsBuildInfoManager(models.Manager):
             "param_release": release,
             "tag__isnull": False,
         }
+        exclude_params = {
+            "jobname__in": settings.RELEASE_JOBS,
+        }
         if release_uuid:
             params["param_release_uuid"] = release_uuid
         if failed is not None:
@@ -85,8 +88,10 @@ class JenkinsBuildInfoManager(models.Manager):
                 params["result"] = "FAILURE"
             else:
                 params["result__in"] = ["SUCCESS", "UNSTABLE"]
-        qs = self.get_queryset()
-        res = qs.filter(**params).values("projectname").distinct()
+        qs = self.get_queryset().filter(**params)
+        if release_uuid:
+            qs = qs.exclude(**exclude_params)
+        res = qs.values("projectname").distinct()
         if res.exists():
             if flat:
                 return res.values_list("projectname", flat=True)
