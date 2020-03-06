@@ -59,7 +59,10 @@ def get_common_release(version):
 
 
 def trigger_copy_deps(release, internal, release_uuid, uuid=None):
-    simple = get_simple_release(release)
+    if release.startswith("release-trunk-"):
+        simple = release
+    else:
+        simple = get_simple_release(release)
     if uuid is None:
         uuid = uuid4()
     params = {
@@ -90,6 +93,10 @@ def trigger_build(
 ):
     if uuid is None:
         uuid = uuid4()
+    if trigger_release.startswith("release-trunk"):
+        release = "none"
+    else:
+        release = trigger_release
     params = {
         "base": settings.JENKINS_URL,
         "job": project,
@@ -97,7 +104,7 @@ def trigger_build(
         "cause": urllib.parse.quote(trigger_release),
         "branch": "none",
         "tag": "none",
-        "release": urllib.parse.quote(trigger_release),
+        "release": urllib.parse.quote(release),
         "distribution": urllib.parse.quote(trigger_distribution),
         "uuid": uuid,
         "release_uuid": release_uuid,
