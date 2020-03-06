@@ -8,8 +8,18 @@ go away! This is on pre-alpha^4 development stage.
 Run docker containers
 ---------------------
 
-    $ docker run --rm --hostname repoapi-rabbit --name repoapi-rabbit rabbitmq:3
+    $ docker run -d --rm --hostname repoapi-rabbit --name repoapi-rabbit rabbitmq:3
     $ docker run --rm -i -t --link repoapi-rabbit:rabbit -v $(pwd):/code:rw docker.mgm.sipwise.com/repoapi-buster:latest bash
+
+Tmux
+----
+
+Use tmux inside repoapi-buster container so you can execute both dev server and worker
+
+```
+$ docker run --rm -i -t --link repoapi-rabbit:rabbit --env=VAR_DIR=/code -v $(pwd):/code:rw docker.mgm.sipwise.com/repoapi-buster:latest tmux
+```
+or just execute ``./tmux.sh``
 
 Prepare development environment
 ===============================
@@ -32,7 +42,7 @@ Inside the repoapi-buster container run:
 
 ```
   $ make venv_dev
-  $ source /var/lib/repoapi/venv_dev/bin/activate
+  $ source $(VAR_DIR)/venv_dev/bin/activate
   (venv_dev)$
 ```
 
@@ -55,11 +65,6 @@ Create superuser
   ```
   (venv_dev)$ ./manage.py createsuperuser --settings="repoapi.settings.dev"
   ```
-
-Tmux
-----
-
-Use tmux inside repoapi-buster container so you can execute both dev server and worker
 
 
 Run dev server
