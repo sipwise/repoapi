@@ -59,7 +59,10 @@ def get_common_release(version):
 
 
 def trigger_copy_deps(release, internal, release_uuid, uuid=None):
-    simple = get_simple_release(release)
+    if release.startswith("release-trunk-"):
+        simple = release
+    else:
+        simple = get_simple_release(release)
     if uuid is None:
         uuid = uuid4()
     params = {
