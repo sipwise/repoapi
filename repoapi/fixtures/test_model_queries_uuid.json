@@ -196,5 +196,28 @@
         },
         "model": "repoapi.jenkinsbuildinfo",
         "pk": 8
+    },
+    {
+        "fields": {
+            "buildnumber": 13,
+            "date": "2017-05-04T17:04:57.802Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/foo-get-code/",
+            "param_branch": null,
+            "param_distribution": "buster",
+            "param_ppa": null,
+            "param_release": "release-mr8.1",
+            "param_release_uuid": "UUID_mr8.1",
+            "param_tag": null,
+            "projectname": "release-copy-debs-yml",
+            "jobname": "release-copy-debs-yml",
+            "repo_name": null,
+            "result": "SUCCESS",
+            "tag": "UUID4"
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 9
     }
 ]

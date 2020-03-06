@@ -44,7 +44,7 @@ def jbi_manage(sender, **kwargs):
     if jbi.jobname in settings.BUILD_RELEASE_JOBS:
         if not release.startswith("release-"):
             release = "release-{}".format(jbi.param_release)
-    if jbi.param_release == "none":
+    if jbi.param_release_uuid in [None, "none", ""]:
         logger.debug(
             "jbi release:%s release_uuid:%s, no ReleaseBuild link, skip",
             jbi.param_release,
@@ -52,14 +52,10 @@ def jbi_manage(sender, **kwargs):
         )
         return
     try:
-        br = BuildRelease.objects.get(
-            release=release, uuid=jbi.param_release_uuid,
-        )
+        br = BuildRelease.objects.get(uuid=jbi.param_release_uuid,)
     except BuildRelease.DoesNotExist:
         logger.error(
-            "BuildRelease:%s[%s] not found",
-            jbi.param_release,
-            jbi.param_release_uuid,
+            "BuildRelease:%s not found", jbi.param_release_uuid,
         )
         return
     if not br.append_built(jbi):
