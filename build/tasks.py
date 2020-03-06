@@ -31,8 +31,12 @@ def build_release(self, pk):
         instance = br.get(id=pk)
     except BuildRelease.DoesNotExist as exc:
         raise self.retry(countdown=60 * 5, exc=exc)
+    if instance.release == "trunk":
+        release = "release-trunk-{}".format(instance.distribution)
+    else:
+        release = instance.release
     url = trigger_copy_deps(
-        release=instance.release, internal=True, release_uuid=instance.uuid,
+        release=release, internal=True, release_uuid=instance.uuid,
     )
     logger.info("%s triggered" % url)
 

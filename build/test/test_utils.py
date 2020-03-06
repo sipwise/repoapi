@@ -118,7 +118,7 @@ class ReleaseConfigTestCase(SimpleTestCase):
 
     def test_release_value(self):
         rc = ReleaseConfig("trunk")
-        self.assertEqual(rc.release, "release-trunk-buster")
+        self.assertEqual(rc.release, "trunk")
 
     def test_branch_tag_value_trunk(self):
         rc = ReleaseConfig("trunk")
@@ -228,6 +228,48 @@ class TriggerBuild(SimpleTestCase):
             "token={token}&cause={release}&uuid={uuid}&"
             "release_uuid={release_uuid}&"
             "release=mr8.2&internal=true"
+        )
+        res = trigger_copy_deps(**params)
+        params["project"] = "release-copy-debs-yml"
+        params["base"] = settings.JENKINS_URL
+        params["token"] = settings.JENKINS_TOKEN
+        self.assertEqual(res, "{base}/job/{project}/".format(**params))
+        openurl.assert_called_once_with(url.format(**params))
+
+    def test_project_build_trunk(self, openurl):
+        params = {
+            "project": "kamailio-get-code",
+            "release_uuid": "UUID_mr8.2",
+            "trigger_release": "trunk",
+            "trigger_branch_or_tag": "branch/master",
+            "trigger_distribution": "buster",
+            "uuid": "UUID_A",
+        }
+        url = (
+            "{base}/job/{project}/buildWithParameters?"
+            "token={token}&cause={trigger_release}&uuid={uuid}&"
+            "release_uuid={release_uuid}&"
+            "branch=master&tag=none&"
+            "release=trunk&distribution={trigger_distribution}"
+        )
+        res = trigger_build(**params)
+        params["base"] = settings.JENKINS_URL
+        params["token"] = settings.JENKINS_TOKEN
+        self.assertEqual(res, "{base}/job/{project}/".format(**params))
+        openurl.assert_called_once_with(url.format(**params))
+
+    def test_copy_debs_build_trunk(self, openurl):
+        params = {
+            "release": "release-trunk-buster",
+            "internal": True,
+            "release_uuid": "UUID_master",
+            "uuid": "UUID_B",
+        }
+        url = (
+            "{base}/job/{project}/buildWithParameters?"
+            "token={token}&cause={release}&uuid={uuid}&"
+            "release_uuid={release_uuid}&"
+            "release=release-trunk-buster&internal=true"
         )
         res = trigger_copy_deps(**params)
         params["project"] = "release-copy-debs-yml"
