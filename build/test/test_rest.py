@@ -56,9 +56,10 @@ class TestRest(APIAuthenticatedTestCase):
         }
         response = self.client.post(self.url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data["release"], "release-trunk-buster")
+        self.assertEqual(response.data["release"], "trunk")
         self.assertIsNone(response.data["tag"])
         self.assertEqual(response.data["branch"], "master")
+        self.assertEqual(response.data["distribution"], "buster")
 
     def test_trunk(self):
         data = {
@@ -68,9 +69,10 @@ class TestRest(APIAuthenticatedTestCase):
         response = self.client.post(self.url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data["uuid"], data["uuid"])
-        self.assertEqual(response.data["release"], "release-trunk-buster")
+        self.assertEqual(response.data["release"], "trunk")
         self.assertIsNone(response.data["tag"])
         self.assertEqual(response.data["branch"], "master")
+        self.assertEqual(response.data["distribution"], "buster")
         projects = response.data["projects"].split(",")
         self.assertEqual(len(projects), 73)
 

@@ -59,7 +59,10 @@ def get_common_release(version):
 
 
 def trigger_copy_deps(release, internal, release_uuid, uuid=None):
-    simple = get_simple_release(release)
+    if release.startswith("release-trunk-"):
+        simple = release
+    else:
+        simple = get_simple_release(release)
     if uuid is None:
         uuid = uuid4()
     params = {
@@ -215,7 +218,7 @@ class ReleaseConfig(object):
     @property
     def branch(self):
         release = self.release
-        if release.startswith("release-trunk-"):
+        if release == "trunk":
             return "master"
         release_count = release.count(".")
         if release_count in [1, 2]:
@@ -231,6 +234,8 @@ class ReleaseConfig(object):
     @property
     def release(self):
         for dist in self.config["distris"]:
+            if dist.startswith("release-trunk-"):
+                return "trunk"
             if dist.startswith("release-"):
                 return dist
 
