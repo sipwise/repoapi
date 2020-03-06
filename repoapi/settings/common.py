@@ -30,6 +30,7 @@ PROJECT_APPS = [
 ]
 
 INSTALLED_APPS = [
+    "object_tools",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "django_filters",
     "jsonify",
+    "export",
 ]
 
 MIDDLEWARE_CLASSES = (
