@@ -86,10 +86,10 @@ def jbi_manage(sender, **kwargs):
                 "trigger:%s for BuildRelease:%s", params["project"], br
             )
             trigger_build(**params)
-            br.pool_size += 1
-            br.save(update_fields=["pool_size"])
+            br.append_triggered(prj)
         else:
             logger.debug("BuildRelease:%s has no next", br)
+            break
 
 
 post_save = signals.post_save.connect

@@ -88,6 +88,7 @@ class BuildRelease(models.Model):
     distribution = models.CharField(max_length=50, null=False, editable=False)
     projects = models.TextField(null=False, editable=False)
     built_projects = models.TextField(null=True, editable=False)
+    triggered_projects = models.TextField(null=True, editable=False)
     failed_projects = models.TextField(null=True, editable=False)
     pool_size = models.SmallIntegerField(default=0, editable=False)
     objects = BuildReleaseManager()
@@ -116,6 +117,23 @@ class BuildRelease(models.Model):
         if self.failed_projects is not None:
             return [x.strip() for x in self.failed_projects.split(",")]
         return []
+
+    @property
+    def triggered_projects_list(self):
+        if self.triggered_projects is not None:
+            return [x.strip() for x in self.triggered_projects.split(",")]
+        return []
+
+    def append_triggered(self, value):
+        if value in self.triggered_projects_list:
+            return False
+        if self.triggered_projects is None:
+            self.triggered_projects = value
+        else:
+            self.triggered_projects += ",{}".format(value)
+        self.pool_size += 1
+        self.save()
+        return True
 
     def _append_falied(self, value):
         if value in self.failed_projects_list:
@@ -149,8 +167,21 @@ class BuildRelease(models.Model):
         self.save()
         return True
 
+    def remove_triggered(self, jbi):
+        value = jbi.projectname
+        triggered_list = self.triggered_projects_list
+        if value in triggered_list:
+            triggered_list.remove(value)
+            tl = ",".join(triggered_list)
+            if len(tl) > 0:
+                self.triggered_projects = tl
+            else:
+                self.triggered_projects = None
+            self.save()
+
     def append_built(self, jbi):
         jobname = jbi.jobname
+        self.remove_triggered(jbi)
         if jbi.result == "FAILURE":
             if jobname.endswith("-piuparts"):
                 return False
@@ -173,13 +204,14 @@ class BuildRelease(models.Model):
         release_jobs_len = len(",".join(settings.RELEASE_JOBS))
         if built_len == release_jobs_len + 1 + len(self.projects):
             return
+        t_list = self.triggered_projects_list
         built_list = self.built_projects_list
         for grp in self.build_deps:
             for prj in grp:
-                if prj not in built_list:
+                if prj not in built_list and prj not in t_list:
                     return prj
         for prj in self.projects_list:
-            if prj not in built_list:
+            if prj not in built_list and prj not in t_list:
                 return prj
 
     @property

@@ -12,6 +12,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from unittest.mock import call
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
@@ -344,14 +345,16 @@ class JBIManageTest(TestCase):
         }
         tb.assert_called_once_with(**params)
         self.assertEqual(br.pool_size, 1)
+        self.assertEqual(br.triggered_projects, "data-hal")
 
     @patch("build.models.trigger_build")
     def test_jbi_manage_skip(self, tb, dl):
         br = BuildRelease.objects.create_build_release("UUID_mr8.1", "mr8.1")
         br.pool_size = 1
+        br.triggered_projects = "kamailio"
         br.save()
         jbi = JenkinsBuildInfo.objects.create(
-            job_url="http://fake.local/job/release-copy-debs-yml/",
+            job_url="http://fake.local/job/kamailio-get-code/",
             projectname="kamailio",
             jobname="kamailio-get-code",
             tag="UUIDA",
@@ -366,6 +369,67 @@ class JBIManageTest(TestCase):
         jbi_manage(JenkinsBuildInfo, **params)
         tb.assert_not_called()
         self.assertEqual(br.pool_size, 1)
+        self.assertEqual(br.triggered_projects, "kamailio")
+
+    @override_settings(BUILD_POOL=2)
+    @patch("build.models.trigger_build")
+    def test_jbi_manage_pool(self, tb, dl):
+        br = BuildRelease.objects.create_build_release("UUID_mr8.1", "mr8.1")
+        self.assertEqual(br.pool_size, 0)
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/release-copy-debs-yml/",
+            projectname="release-copy-debs-yml",
+            jobname="release-copy-debs-yml",
+            tag="UUIDA",
+            param_release="mr8.1",
+            param_release_uuid="UUID_mr8.1",
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.get(pk=br.pk)
+        self.assertEqual(br.built_projects, "release-copy-debs-yml")
+        params = {
+            "project": "data-hal-get-code",
+            "release_uuid": br.uuid,
+            "trigger_release": br.release,
+            "trigger_branch_or_tag": br.branch_or_tag,
+            "trigger_distribution": br.distribution,
+        }
+        calls = [call(**params)]
+        params["project"] = "libinewrate-get-code"
+        calls.append(call(**params))
+        tb.assert_has_calls(calls)
+        self.assertEqual(br.pool_size, 2)
+        self.assertEqual(br.triggered_projects, "data-hal,libinewrate")
+
+    @override_settings(BUILD_POOL=2)
+    @patch("build.models.trigger_build")
+    def test_jbi_manage_pool_next(self, tb, dl):
+        self.test_jbi_manage_pool()
+        br = BuildRelease.objects.first()
+        self.assertEqual(br.pool_size, 2)
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/data-hal-repos/",
+            projectname="data-hal",
+            jobname="data-hal-repos",
+            tag="UUIDA",
+            param_release="release-mr8.1",
+            param_release_uuid="UUID_mr8.1",
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.get(pk=br.pk)
+        self.assertEqual(br.built_projects, "release-copy-debs-yml,data-hal")
+        params = {
+            "project": "libswrate-get-code",
+            "release_uuid": br.uuid,
+            "trigger_release": br.release,
+            "trigger_branch_or_tag": br.branch_or_tag,
+            "trigger_distribution": br.distribution,
+        }
+        tb.assert_called_once_with(**params)
+        self.assertEqual(br.pool_size, 2)
+        self.assertEqual(br.triggered_projects, "libinewrate,libswrate")
 
 
 @override_settings(
