@@ -79,6 +79,7 @@ class ReleaseConfigTestCase(SimpleTestCase):
     def test_supported_releases(self):
         supported = [
             "trunk",
+            "mr8.1.2",
             "mr8.1",
             "mr7.5.3",
             "mr7.5.2",

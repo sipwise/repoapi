@@ -145,6 +145,16 @@ class BuildReleaseStepsTest(TestCase):
         self.jbi = MagicMock()
         self.jbi.result = "SUCCESS"
 
+    def test_append_built_fist(self):
+        self.br.built_projects = "release-copy-debs-yml"
+        self.jbi.projectname = "data-hal"
+        self.jbi.jobname = "data-hal-repos"
+        self.assertTrue(self.br.append_built(self.jbi))
+        self.assertEqual(
+            self.br.built_projects, "release-copy-debs-yml,data-hal"
+        )
+        self.assertEqual(self.br.pool_size, 0)
+
     def test_append_built_empty(self):
         self.jbi.projectname = "data-hal"
         self.jbi.jobname = "data-hal-repos"
@@ -207,6 +217,16 @@ class BuildReleaseStepsTest(TestCase):
         self.assertEqual(self.br.failed_projects, "libinewrate")
         self.assertEqual(self.br.pool_size, 1)
 
+    def test_append_built_fail_piuparts(self):
+        self.br.built_projects = "data-hal,libinewrate"
+        self.jbi.projectname = "libinewrate"
+        self.jbi.jobname = "libinewrate-piuparts"
+        self.jbi.result = "FAILURE"
+        self.assertFalse(self.br.append_built(self.jbi))
+        self.assertEqual(self.br.built_projects, "data-hal,libinewrate")
+        self.assertIsNone(self.br.failed_projects)
+        self.assertEqual(self.br.pool_size, 1)
+
     def test_append_built_release_job_fail(self):
         self.jbi.projectname = "release-copy-debs-yml"
         self.jbi.jobname = "release-copy-debs-yml"
@@ -253,14 +273,25 @@ class BuildReleaseStepsTest(TestCase):
         self.assertEqual(self.br.next, "asterisk-voicemail")
 
     def test_next_last(self):
-        self.br.built_projects = ",".join(self.br.projects_list[:-1])
+        pl = self.br.projects_list[:-1]
+        pl.insert(0, "release-copy-debs-yml")
+        self.br.built_projects = ",".join(pl)
+        self.assertTrue(
+            self.br.built_projects.startswith("release-copy-debs-yml,")
+        )
+        last_projectname = self.br.projects_list[-2]
+        self.assertTrue(
+            self.br.built_projects.endswith(",{}".format(last_projectname))
+        )
         self.jbi.projectname = self.br.projects_list[-1]
         self.jbi.jobname = "{}-repos".format(self.jbi.projectname)
         self.assertTrue(self.br.append_built(self.jbi))
         self.assertIsNone(self.br.next)
 
     def test_next_stop(self):
-        self.br.built_projects = self.br.projects
+        self.br.built_projects = "release-copy-debs-yml,{}".format(
+            self.br.projects
+        )
         self.assertIsNone(self.br.next)
 
 

@@ -1,0 +1,3037 @@
+-   model: build.buildrelease
+    pk: 1
+    fields:
+        uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        start_date: 2020-03-09 11:18:02.265202+00:00
+        tag: mr8.1.2.1
+        branch: mr8.1.2
+        release: release-mr8.1.2
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-ha,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,data-hal,libinewrate,libswrate,libtcap,sipwise-base,check-tools,ngcp-schema,asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects
+        failed_projects: bootenv
+        pool_size: 1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207739
+    fields:
+        tag: 022287ec-54d6-4f4d-b85e-51f2885ecf31
+        projectname: release-copy-debs-yml
+        jobname: release-copy-debs-yml
+        buildnumber: 15541
+        date: 2020-03-09 11:18:55.196741+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/release-copy-debs-yml/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: null
+        param_branch: null
+        param_release: mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: null
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: null
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207740
+    fields:
+        tag: b14ba25b-cdef-41d5-9069-f6cf74e0faea
+        projectname: data-hal
+        jobname: data-hal-get-code
+        buildnumber: 378
+        date: 2020-03-09 11:18:57.501340+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207741
+    fields:
+        tag: 4e2e35de-db00-43db-b3cf-cbaf915bfeae
+        projectname: data-hal
+        jobname: data-hal-get-code
+        buildnumber: 379
+        date: 2020-03-09 11:18:58.614535+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207742
+    fields:
+        tag: 2e78ae1b-f9ad-4e0f-8aa6-176812fd133c
+        projectname: data-hal
+        jobname: data-hal-get-code
+        buildnumber: 380
+        date: 2020-03-09 11:18:59.741010+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207743
+    fields:
+        tag: b14ba25b-cdef-41d5-9069-f6cf74e0faea
+        projectname: data-hal
+        jobname: data-hal-manage-docker
+        buildnumber: 361
+        date: 2020-03-09 11:21:00.004201+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207744
+    fields:
+        tag: b14ba25b-cdef-41d5-9069-f6cf74e0faea
+        projectname: data-hal
+        jobname: data-hal-tap-test
+        buildnumber: 360
+        date: 2020-03-09 11:21:07.189101+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207745
+    fields:
+        tag: b14ba25b-cdef-41d5-9069-f6cf74e0faea
+        projectname: data-hal
+        jobname: data-hal-unit-tests-docker
+        buildnumber: 364
+        date: 2020-03-09 11:21:14.862039+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-unit-tests-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207746
+    fields:
+        tag: b14ba25b-cdef-41d5-9069-f6cf74e0faea
+        projectname: data-hal
+        jobname: data-hal-source-tests
+        buildnumber: 360
+        date: 2020-03-09 11:21:15.082869+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207747
+    fields:
+        tag: b14ba25b-cdef-41d5-9069-f6cf74e0faea
+        projectname: data-hal
+        jobname: data-hal-source
+        buildnumber: 339
+        date: 2020-03-09 11:21:16.134726+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207748
+    fields:
+        tag: b14ba25b-cdef-41d5-9069-f6cf74e0faea
+        projectname: data-hal
+        jobname: data-hal-binaries
+        buildnumber: 339
+        date: 2020-03-09 11:21:35.521348+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207749
+    fields:
+        tag: b14ba25b-cdef-41d5-9069-f6cf74e0faea
+        projectname: data-hal
+        jobname: data-hal-repos
+        buildnumber: 336
+        date: 2020-03-09 11:21:37.657049+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207750
+    fields:
+        tag: b14ba25b-cdef-41d5-9069-f6cf74e0faea
+        projectname: data-hal
+        jobname: data-hal-docker-ppa
+        buildnumber: 317
+        date: 2020-03-09 11:21:38.221142+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207751
+    fields:
+        tag: 5f943e8a-20f2-4610-850b-218e44260708
+        projectname: libinewrate
+        jobname: libinewrate-get-code
+        buildnumber: 514
+        date: 2020-03-09 11:21:39.600605+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libinewrate-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 04106d3 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207752
+    fields:
+        tag: 5f943e8a-20f2-4610-850b-218e44260708
+        projectname: libinewrate
+        jobname: libinewrate-manage-docker
+        buildnumber: 210
+        date: 2020-03-09 11:21:40.301638+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libinewrate-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 04106d3 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207753
+    fields:
+        tag: 5f943e8a-20f2-4610-850b-218e44260708
+        projectname: libinewrate
+        jobname: libinewrate-tap-test
+        buildnumber: 512
+        date: 2020-03-09 11:21:47.029461+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libinewrate-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 04106d3 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207754
+    fields:
+        tag: 5f943e8a-20f2-4610-850b-218e44260708
+        projectname: libinewrate
+        jobname: libinewrate-source-tests
+        buildnumber: 512
+        date: 2020-03-09 11:21:47.240884+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libinewrate-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 04106d3 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207755
+    fields:
+        tag: 5f943e8a-20f2-4610-850b-218e44260708
+        projectname: libinewrate
+        jobname: libinewrate-source
+        buildnumber: 509
+        date: 2020-03-09 11:21:48.511710+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libinewrate-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 04106d3 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207756
+    fields:
+        tag: b14ba25b-cdef-41d5-9069-f6cf74e0faea
+        projectname: data-hal
+        jobname: data-hal-piuparts
+        buildnumber: 317
+        date: 2020-03-09 11:22:01.157720+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207757
+    fields:
+        tag: 5f943e8a-20f2-4610-850b-218e44260708
+        projectname: libinewrate
+        jobname: libinewrate-binaries
+        buildnumber: 509
+        date: 2020-03-09 11:22:26.130653+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libinewrate-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 04106d3 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207758
+    fields:
+        tag: 5f943e8a-20f2-4610-850b-218e44260708
+        projectname: libinewrate
+        jobname: libinewrate-repos
+        buildnumber: 473
+        date: 2020-03-09 11:22:30.007997+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libinewrate-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 04106d3 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207759
+    fields:
+        tag: 5f943e8a-20f2-4610-850b-218e44260708
+        projectname: libinewrate
+        jobname: libinewrate-docker-ppa
+        buildnumber: 447
+        date: 2020-03-09 11:22:30.337101+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libinewrate-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 04106d3 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207760
+    fields:
+        tag: 81110650-2b48-42e7-997c-cf316453827b
+        projectname: libswrate
+        jobname: libswrate-get-code
+        buildnumber: 474
+        date: 2020-03-09 11:22:32.443421+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libswrate-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: ca8cc2c Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207762
+    fields:
+        tag: 5f943e8a-20f2-4610-850b-218e44260708
+        projectname: libinewrate
+        jobname: libinewrate-piuparts
+        buildnumber: 449
+        date: 2020-03-09 11:22:51.674611+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libinewrate-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 04106d3 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207763
+    fields:
+        tag: 4e2e35de-db00-43db-b3cf-cbaf915bfeae
+        projectname: data-hal
+        jobname: data-hal-manage-docker
+        buildnumber: 362
+        date: 2020-03-09 11:23:32.606306+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207764
+    fields:
+        tag: 4e2e35de-db00-43db-b3cf-cbaf915bfeae
+        projectname: data-hal
+        jobname: data-hal-tap-test
+        buildnumber: 361
+        date: 2020-03-09 11:23:40.723303+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207765
+    fields:
+        tag: 4e2e35de-db00-43db-b3cf-cbaf915bfeae
+        projectname: data-hal
+        jobname: data-hal-unit-tests-docker
+        buildnumber: 365
+        date: 2020-03-09 11:23:49.399318+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-unit-tests-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207766
+    fields:
+        tag: 4e2e35de-db00-43db-b3cf-cbaf915bfeae
+        projectname: data-hal
+        jobname: data-hal-source-tests
+        buildnumber: 361
+        date: 2020-03-09 11:23:49.600086+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207767
+    fields:
+        tag: 4e2e35de-db00-43db-b3cf-cbaf915bfeae
+        projectname: data-hal
+        jobname: data-hal-source
+        buildnumber: 340
+        date: 2020-03-09 11:23:50.738530+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207768
+    fields:
+        tag: 4e2e35de-db00-43db-b3cf-cbaf915bfeae
+        projectname: data-hal
+        jobname: data-hal-binaries
+        buildnumber: 340
+        date: 2020-03-09 11:24:09.955185+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207769
+    fields:
+        tag: 4e2e35de-db00-43db-b3cf-cbaf915bfeae
+        projectname: data-hal
+        jobname: data-hal-repos
+        buildnumber: 337
+        date: 2020-03-09 11:24:11.350446+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207770
+    fields:
+        tag: 4e2e35de-db00-43db-b3cf-cbaf915bfeae
+        projectname: data-hal
+        jobname: data-hal-docker-ppa
+        buildnumber: 318
+        date: 2020-03-09 11:24:11.870278+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207771
+    fields:
+        tag: 4e2e35de-db00-43db-b3cf-cbaf915bfeae
+        projectname: data-hal
+        jobname: data-hal-piuparts
+        buildnumber: 318
+        date: 2020-03-09 11:24:33.229780+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207772
+    fields:
+        tag: 81110650-2b48-42e7-997c-cf316453827b
+        projectname: libswrate
+        jobname: libswrate-manage-docker
+        buildnumber: 456
+        date: 2020-03-09 11:25:03.415877+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libswrate-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: ca8cc2c Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207773
+    fields:
+        tag: 81110650-2b48-42e7-997c-cf316453827b
+        projectname: libswrate
+        jobname: libswrate-abi-check-docker
+        buildnumber: 456
+        date: 2020-03-09 11:25:10.186705+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libswrate-abi-check-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: ca8cc2c Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207774
+    fields:
+        tag: 81110650-2b48-42e7-997c-cf316453827b
+        projectname: libswrate
+        jobname: libswrate-tap-test
+        buildnumber: 456
+        date: 2020-03-09 11:25:15.093064+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libswrate-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: ca8cc2c Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207775
+    fields:
+        tag: 81110650-2b48-42e7-997c-cf316453827b
+        projectname: libswrate
+        jobname: libswrate-source-tests
+        buildnumber: 456
+        date: 2020-03-09 11:25:15.279321+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libswrate-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: ca8cc2c Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207776
+    fields:
+        tag: 81110650-2b48-42e7-997c-cf316453827b
+        projectname: libswrate
+        jobname: libswrate-source
+        buildnumber: 443
+        date: 2020-03-09 11:25:16.353390+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libswrate-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: ca8cc2c Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207777
+    fields:
+        tag: 81110650-2b48-42e7-997c-cf316453827b
+        projectname: libswrate
+        jobname: libswrate-binaries
+        buildnumber: 443
+        date: 2020-03-09 11:25:34.451119+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libswrate-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: ca8cc2c Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207778
+    fields:
+        tag: 81110650-2b48-42e7-997c-cf316453827b
+        projectname: libswrate
+        jobname: libswrate-repos
+        buildnumber: 434
+        date: 2020-03-09 11:25:37.042717+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libswrate-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: ca8cc2c Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207779
+    fields:
+        tag: 81110650-2b48-42e7-997c-cf316453827b
+        projectname: libswrate
+        jobname: libswrate-docker-ppa
+        buildnumber: 423
+        date: 2020-03-09 11:25:37.468094+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libswrate-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: ca8cc2c Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207780
+    fields:
+        tag: f1d8381f-429a-4000-85cd-0c5e6103332a
+        projectname: libtcap
+        jobname: libtcap-get-code
+        buildnumber: 313
+        date: 2020-03-09 11:25:39.575975+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libtcap-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 0f2ce11 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207781
+    fields:
+        tag: 81110650-2b48-42e7-997c-cf316453827b
+        projectname: libswrate
+        jobname: libswrate-piuparts
+        buildnumber: 424
+        date: 2020-03-09 11:25:59.424853+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libswrate-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: ca8cc2c Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207782
+    fields:
+        tag: 2e78ae1b-f9ad-4e0f-8aa6-176812fd133c
+        projectname: data-hal
+        jobname: data-hal-manage-docker
+        buildnumber: 363
+        date: 2020-03-09 11:26:01.385339+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207783
+    fields:
+        tag: 2e78ae1b-f9ad-4e0f-8aa6-176812fd133c
+        projectname: data-hal
+        jobname: data-hal-tap-test
+        buildnumber: 362
+        date: 2020-03-09 11:26:10.589856+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207784
+    fields:
+        tag: 2e78ae1b-f9ad-4e0f-8aa6-176812fd133c
+        projectname: data-hal
+        jobname: data-hal-unit-tests-docker
+        buildnumber: 366
+        date: 2020-03-09 11:26:16.122175+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-unit-tests-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207785
+    fields:
+        tag: 2e78ae1b-f9ad-4e0f-8aa6-176812fd133c
+        projectname: data-hal
+        jobname: data-hal-source-tests
+        buildnumber: 362
+        date: 2020-03-09 11:26:16.323614+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207786
+    fields:
+        tag: 2e78ae1b-f9ad-4e0f-8aa6-176812fd133c
+        projectname: data-hal
+        jobname: data-hal-source
+        buildnumber: 341
+        date: 2020-03-09 11:26:17.488393+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207787
+    fields:
+        tag: 2e78ae1b-f9ad-4e0f-8aa6-176812fd133c
+        projectname: data-hal
+        jobname: data-hal-binaries
+        buildnumber: 341
+        date: 2020-03-09 11:26:36.451791+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207788
+    fields:
+        tag: 2e78ae1b-f9ad-4e0f-8aa6-176812fd133c
+        projectname: data-hal
+        jobname: data-hal-repos
+        buildnumber: 338
+        date: 2020-03-09 11:26:37.925409+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207789
+    fields:
+        tag: 2e78ae1b-f9ad-4e0f-8aa6-176812fd133c
+        projectname: data-hal
+        jobname: data-hal-docker-ppa
+        buildnumber: 319
+        date: 2020-03-09 11:26:38.227608+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207790
+    fields:
+        tag: 2e78ae1b-f9ad-4e0f-8aa6-176812fd133c
+        projectname: data-hal
+        jobname: data-hal-piuparts
+        buildnumber: 319
+        date: 2020-03-09 11:27:02.452577+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/data-hal-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: fcfaa6f Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207791
+    fields:
+        tag: f1d8381f-429a-4000-85cd-0c5e6103332a
+        projectname: libtcap
+        jobname: libtcap-manage-docker
+        buildnumber: 311
+        date: 2020-03-09 11:27:42.912091+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libtcap-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 0f2ce11 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207792
+    fields:
+        tag: f1d8381f-429a-4000-85cd-0c5e6103332a
+        projectname: libtcap
+        jobname: libtcap-abi-check-docker
+        buildnumber: 311
+        date: 2020-03-09 11:27:57.636184+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libtcap-abi-check-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 0f2ce11 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207793
+    fields:
+        tag: f1d8381f-429a-4000-85cd-0c5e6103332a
+        projectname: libtcap
+        jobname: libtcap-tap-test
+        buildnumber: 310
+        date: 2020-03-09 11:28:13.816599+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libtcap-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 0f2ce11 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207794
+    fields:
+        tag: f1d8381f-429a-4000-85cd-0c5e6103332a
+        projectname: libtcap
+        jobname: libtcap-source-tests
+        buildnumber: 311
+        date: 2020-03-09 11:28:14.025847+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libtcap-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 0f2ce11 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207795
+    fields:
+        tag: f1d8381f-429a-4000-85cd-0c5e6103332a
+        projectname: libtcap
+        jobname: libtcap-source
+        buildnumber: 308
+        date: 2020-03-09 11:28:15.344256+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libtcap-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 0f2ce11 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207796
+    fields:
+        tag: f1d8381f-429a-4000-85cd-0c5e6103332a
+        projectname: libtcap
+        jobname: libtcap-binaries
+        buildnumber: 308
+        date: 2020-03-09 11:28:33.212126+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libtcap-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 0f2ce11 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207797
+    fields:
+        tag: f1d8381f-429a-4000-85cd-0c5e6103332a
+        projectname: libtcap
+        jobname: libtcap-repos
+        buildnumber: 304
+        date: 2020-03-09 11:28:35.661044+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libtcap-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 0f2ce11 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207798
+    fields:
+        tag: f1d8381f-429a-4000-85cd-0c5e6103332a
+        projectname: libtcap
+        jobname: libtcap-docker-ppa
+        buildnumber: 298
+        date: 2020-03-09 11:28:35.979040+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libtcap-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 0f2ce11 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207799
+    fields:
+        tag: 681d27d0-3437-4afb-b1da-ef5be05c387e
+        projectname: sipwise-base
+        jobname: sipwise-base-get-code
+        buildnumber: 329
+        date: 2020-03-09 11:28:36.739487+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/sipwise-base-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 9966a08 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207800
+    fields:
+        tag: f1d8381f-429a-4000-85cd-0c5e6103332a
+        projectname: libtcap
+        jobname: libtcap-piuparts
+        buildnumber: 298
+        date: 2020-03-09 11:28:58.343088+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/libtcap-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 0f2ce11 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207801
+    fields:
+        tag: 681d27d0-3437-4afb-b1da-ef5be05c387e
+        projectname: sipwise-base
+        jobname: sipwise-base-manage-docker
+        buildnumber: 201
+        date: 2020-03-09 11:30:23.816818+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/sipwise-base-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 9966a08 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207802
+    fields:
+        tag: 681d27d0-3437-4afb-b1da-ef5be05c387e
+        projectname: sipwise-base
+        jobname: sipwise-base-tap-test
+        buildnumber: 311
+        date: 2020-03-09 11:30:30.214201+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/sipwise-base-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 9966a08 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207803
+    fields:
+        tag: 681d27d0-3437-4afb-b1da-ef5be05c387e
+        projectname: sipwise-base
+        jobname: sipwise-base-dist-test
+        buildnumber: 311
+        date: 2020-03-09 11:30:34.177606+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/sipwise-base-dist-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 9966a08 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207804
+    fields:
+        tag: 681d27d0-3437-4afb-b1da-ef5be05c387e
+        projectname: sipwise-base
+        jobname: sipwise-base-source-tests
+        buildnumber: 311
+        date: 2020-03-09 11:30:34.372841+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/sipwise-base-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 9966a08 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207805
+    fields:
+        tag: 681d27d0-3437-4afb-b1da-ef5be05c387e
+        projectname: sipwise-base
+        jobname: sipwise-base-docs
+        buildnumber: 308
+        date: 2020-03-09 11:30:34.969363+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/sipwise-base-docs/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 9966a08 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207806
+    fields:
+        tag: 681d27d0-3437-4afb-b1da-ef5be05c387e
+        projectname: sipwise-base
+        jobname: sipwise-base-source
+        buildnumber: 308
+        date: 2020-03-09 11:30:35.595689+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/sipwise-base-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 9966a08 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207807
+    fields:
+        tag: 681d27d0-3437-4afb-b1da-ef5be05c387e
+        projectname: sipwise-base
+        jobname: sipwise-base-binaries
+        buildnumber: 308
+        date: 2020-03-09 11:30:54.816915+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/sipwise-base-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 9966a08 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207808
+    fields:
+        tag: 681d27d0-3437-4afb-b1da-ef5be05c387e
+        projectname: sipwise-base
+        jobname: sipwise-base-repos
+        buildnumber: 302
+        date: 2020-03-09 11:30:56.982875+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/sipwise-base-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 9966a08 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207809
+    fields:
+        tag: 681d27d0-3437-4afb-b1da-ef5be05c387e
+        projectname: sipwise-base
+        jobname: sipwise-base-docker-ppa
+        buildnumber: 281
+        date: 2020-03-09 11:30:57.404031+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/sipwise-base-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 9966a08 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207810
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b52a
+        projectname: check-tools
+        jobname: check-tools-get-code
+        buildnumber: 1383
+        date: 2020-03-09 11:30:59.467555+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/check-tools-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 129f888 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207811
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b52a
+        projectname: check-tools
+        jobname: check-tools-manage-docker
+        buildnumber: 709
+        date: 2020-03-09 11:31:00.047238+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/check-tools-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 129f888 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207812
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b52a
+        projectname: check-tools
+        jobname: check-tools-tap-test
+        buildnumber: 1363
+        date: 2020-03-09 11:31:06.962396+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/check-tools-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 129f888 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207813
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b52a
+        projectname: check-tools
+        jobname: check-tools-source-tests
+        buildnumber: 1363
+        date: 2020-03-09 11:31:07.139891+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/check-tools-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 129f888 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207814
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b52a
+        projectname: check-tools
+        jobname: check-tools-source
+        buildnumber: 1362
+        date: 2020-03-09 11:31:08.503224+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/check-tools-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 129f888 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207815
+    fields:
+        tag: 681d27d0-3437-4afb-b1da-ef5be05c387e
+        projectname: sipwise-base
+        jobname: sipwise-base-piuparts
+        buildnumber: 281
+        date: 2020-03-09 11:31:18.837201+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/sipwise-base-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 9966a08 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207816
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b52a
+        projectname: check-tools
+        jobname: check-tools-binaries
+        buildnumber: 1363
+        date: 2020-03-09 11:31:24.098909+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/check-tools-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 129f888 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207817
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b52a
+        projectname: check-tools
+        jobname: check-tools-repos
+        buildnumber: 1351
+        date: 2020-03-09 11:31:26.509760+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/check-tools-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 129f888 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207818
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b52a
+        projectname: check-tools
+        jobname: check-tools-docker-ppa
+        buildnumber: 1330
+        date: 2020-03-09 11:31:26.910194+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/check-tools-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 129f888 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207819
+    fields:
+        tag: 8be94e61-f27d-4e3c-9402-ae9448267cac
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-get-code
+        buildnumber: 584
+        date: 2020-03-09 11:31:29.156882+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207820
+    fields:
+        tag: 8be94e61-f27d-4e3c-9402-ae9448267cac
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-manage-docker
+        buildnumber: 323
+        date: 2020-03-09 11:31:29.741494+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207821
+    fields:
+        tag: 8be94e61-f27d-4e3c-9402-ae9448267cac
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-tap-test
+        buildnumber: 583
+        date: 2020-03-09 11:31:35.450971+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207822
+    fields:
+        tag: 8be94e61-f27d-4e3c-9402-ae9448267cac
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-source-tests
+        buildnumber: 583
+        date: 2020-03-09 11:31:35.640751+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207823
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b52a
+        projectname: check-tools
+        jobname: check-tools-piuparts
+        buildnumber: 1343
+        date: 2020-03-09 11:31:36.247246+00:00
+        result: FAILURE
+        job_url: https://jenkins.mgm.sipwise.com/job/check-tools-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 129f888 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207824
+    fields:
+        tag: 8be94e61-f27d-4e3c-9402-ae9448267cac
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-source
+        buildnumber: 579
+        date: 2020-03-09 11:31:36.762966+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207825
+    fields:
+        tag: 7883c86d-e91c-4635-a0a0-8482ef217502
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-get-code
+        buildnumber: 585
+        date: 2020-03-09 11:31:37.286167+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207826
+    fields:
+        tag: 7883c86d-e91c-4635-a0a0-8482ef217502
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-manage-docker
+        buildnumber: 324
+        date: 2020-03-09 11:31:38.036850+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207827
+    fields:
+        tag: 7883c86d-e91c-4635-a0a0-8482ef217502
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-tap-test
+        buildnumber: 584
+        date: 2020-03-09 11:31:43.520811+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207828
+    fields:
+        tag: 7883c86d-e91c-4635-a0a0-8482ef217502
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-source-tests
+        buildnumber: 584
+        date: 2020-03-09 11:31:43.698282+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207829
+    fields:
+        tag: 7883c86d-e91c-4635-a0a0-8482ef217502
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-source
+        buildnumber: 580
+        date: 2020-03-09 11:31:44.909435+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207830
+    fields:
+        tag: 8be94e61-f27d-4e3c-9402-ae9448267cac
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-binaries
+        buildnumber: 552
+        date: 2020-03-09 11:31:57.999018+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207831
+    fields:
+        tag: 8be94e61-f27d-4e3c-9402-ae9448267cac
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-repos
+        buildnumber: 497
+        date: 2020-03-09 11:32:00.532486+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207832
+    fields:
+        tag: 8be94e61-f27d-4e3c-9402-ae9448267cac
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-docker-ppa
+        buildnumber: 483
+        date: 2020-03-09 11:32:01.109374+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207833
+    fields:
+        tag: 92559783-dc05-4165-a0a0-5a78a7c0ba1a
+        projectname: backup-tools
+        jobname: backup-tools-get-code
+        buildnumber: 415
+        date: 2020-03-09 11:32:02.730488+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/backup-tools-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: cb2c92e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207834
+    fields:
+        tag: 92559783-dc05-4165-a0a0-5a78a7c0ba1a
+        projectname: backup-tools
+        jobname: backup-tools-manage-docker
+        buildnumber: 261
+        date: 2020-03-09 11:32:03.475813+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/backup-tools-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: cb2c92e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207835
+    fields:
+        tag: 92559783-dc05-4165-a0a0-5a78a7c0ba1a
+        projectname: backup-tools
+        jobname: backup-tools-tap-test
+        buildnumber: 414
+        date: 2020-03-09 11:32:08.811418+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/backup-tools-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: cb2c92e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207836
+    fields:
+        tag: 92559783-dc05-4165-a0a0-5a78a7c0ba1a
+        projectname: backup-tools
+        jobname: backup-tools-source-tests
+        buildnumber: 414
+        date: 2020-03-09 11:32:08.997063+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/backup-tools-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: cb2c92e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207837
+    fields:
+        tag: 92559783-dc05-4165-a0a0-5a78a7c0ba1a
+        projectname: backup-tools
+        jobname: backup-tools-source
+        buildnumber: 414
+        date: 2020-03-09 11:32:10.118943+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/backup-tools-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: cb2c92e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207838
+    fields:
+        tag: 7883c86d-e91c-4635-a0a0-8482ef217502
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-binaries
+        buildnumber: 553
+        date: 2020-03-09 11:32:15.461479+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207839
+    fields:
+        tag: 7883c86d-e91c-4635-a0a0-8482ef217502
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-repos
+        buildnumber: 498
+        date: 2020-03-09 11:32:17.138843+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207840
+    fields:
+        tag: 7883c86d-e91c-4635-a0a0-8482ef217502
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-docker-ppa
+        buildnumber: 484
+        date: 2020-03-09 11:32:17.347958+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207841
+    fields:
+        tag: 92559783-dc05-4165-a0a0-5a78a7c0ba1a
+        projectname: backup-tools
+        jobname: backup-tools-binaries
+        buildnumber: 414
+        date: 2020-03-09 11:32:25.218513+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/backup-tools-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: cb2c92e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207842
+    fields:
+        tag: 92559783-dc05-4165-a0a0-5a78a7c0ba1a
+        projectname: backup-tools
+        jobname: backup-tools-repos
+        buildnumber: 413
+        date: 2020-03-09 11:32:27.345232+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/backup-tools-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: cb2c92e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207843
+    fields:
+        tag: 92559783-dc05-4165-a0a0-5a78a7c0ba1a
+        projectname: backup-tools
+        jobname: backup-tools-docker-ppa
+        buildnumber: 402
+        date: 2020-03-09 11:32:27.772824+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/backup-tools-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: cb2c92e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207844
+    fields:
+        tag: 8be94e61-f27d-4e3c-9402-ae9448267cac
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-piuparts
+        buildnumber: 483
+        date: 2020-03-09 11:32:28.449065+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207845
+    fields:
+        tag: d3aea4cc-b94a-4f7c-946e-5decc3e36f86
+        projectname: bulk-processor
+        jobname: bulk-processor-get-code
+        buildnumber: 1243
+        date: 2020-03-09 11:32:30.500335+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 1c43de0 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207846
+    fields:
+        tag: d3aea4cc-b94a-4f7c-946e-5decc3e36f86
+        projectname: bulk-processor
+        jobname: bulk-processor-manage-docker
+        buildnumber: 1014
+        date: 2020-03-09 11:32:31.261609+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 1c43de0 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207847
+    fields:
+        tag: 7883c86d-e91c-4635-a0a0-8482ef217502
+        projectname: asterisk-voicemail
+        jobname: asterisk-voicemail-piuparts
+        buildnumber: 484
+        date: 2020-03-09 11:32:45.115894+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/asterisk-voicemail-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 832eddc Release new version 13.14.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207848
+    fields:
+        tag: 92559783-dc05-4165-a0a0-5a78a7c0ba1a
+        projectname: backup-tools
+        jobname: backup-tools-piuparts
+        buildnumber: 407
+        date: 2020-03-09 11:32:47.931707+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/backup-tools-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: cb2c92e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207849
+    fields:
+        tag: d3aea4cc-b94a-4f7c-946e-5decc3e36f86
+        projectname: bulk-processor
+        jobname: bulk-processor-tap-test
+        buildnumber: 1243
+        date: 2020-03-09 11:33:17.633841+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 1c43de0 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207850
+    fields:
+        tag: d3aea4cc-b94a-4f7c-946e-5decc3e36f86
+        projectname: bulk-processor
+        jobname: bulk-processor-source-tests
+        buildnumber: 1243
+        date: 2020-03-09 11:33:17.910564+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 1c43de0 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207851
+    fields:
+        tag: d3aea4cc-b94a-4f7c-946e-5decc3e36f86
+        projectname: bulk-processor
+        jobname: bulk-processor-source
+        buildnumber: 1241
+        date: 2020-03-09 11:33:20.291318+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 1c43de0 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207852
+    fields:
+        tag: d3aea4cc-b94a-4f7c-946e-5decc3e36f86
+        projectname: bulk-processor
+        jobname: bulk-processor-binaries
+        buildnumber: 1241
+        date: 2020-03-09 11:33:38.387239+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 1c43de0 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207853
+    fields:
+        tag: d3aea4cc-b94a-4f7c-946e-5decc3e36f86
+        projectname: bulk-processor
+        jobname: bulk-processor-repos
+        buildnumber: 1219
+        date: 2020-03-09 11:33:41.142539+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 1c43de0 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207854
+    fields:
+        tag: d3aea4cc-b94a-4f7c-946e-5decc3e36f86
+        projectname: bulk-processor
+        jobname: bulk-processor-docker-ppa
+        buildnumber: 1206
+        date: 2020-03-09 11:33:41.537503+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 1c43de0 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207855
+    fields:
+        tag: 18d2da0e-7fa8-43d2-bbf3-3c46e79ad725
+        projectname: bulk-processor-projects
+        jobname: bulk-processor-projects-get-code
+        buildnumber: 154
+        date: 2020-03-09 11:33:43.683948+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-projects-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 2032d6a Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207856
+    fields:
+        tag: 18d2da0e-7fa8-43d2-bbf3-3c46e79ad725
+        projectname: bulk-processor-projects
+        jobname: bulk-processor-projects-manage-docker
+        buildnumber: 154
+        date: 2020-03-09 11:33:44.246167+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-projects-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2032d6a Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207857
+    fields:
+        tag: d3aea4cc-b94a-4f7c-946e-5decc3e36f86
+        projectname: bulk-processor
+        jobname: bulk-processor-piuparts
+        buildnumber: 1206
+        date: 2020-03-09 11:34:11.545530+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 1c43de0 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207858
+    fields:
+        tag: 18d2da0e-7fa8-43d2-bbf3-3c46e79ad725
+        projectname: bulk-processor-projects
+        jobname: bulk-processor-projects-tap-test
+        buildnumber: 154
+        date: 2020-03-09 11:34:12.137422+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-projects-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2032d6a Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207859
+    fields:
+        tag: 18d2da0e-7fa8-43d2-bbf3-3c46e79ad725
+        projectname: bulk-processor-projects
+        jobname: bulk-processor-projects-source-tests
+        buildnumber: 154
+        date: 2020-03-09 11:34:12.357769+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-projects-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2032d6a Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207860
+    fields:
+        tag: 18d2da0e-7fa8-43d2-bbf3-3c46e79ad725
+        projectname: bulk-processor-projects
+        jobname: bulk-processor-projects-source
+        buildnumber: 154
+        date: 2020-03-09 11:34:13.773597+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-projects-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2032d6a Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207861
+    fields:
+        tag: 18d2da0e-7fa8-43d2-bbf3-3c46e79ad725
+        projectname: bulk-processor-projects
+        jobname: bulk-processor-projects-binaries
+        buildnumber: 150
+        date: 2020-03-09 11:34:29.980921+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-projects-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2032d6a Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207862
+    fields:
+        tag: 18d2da0e-7fa8-43d2-bbf3-3c46e79ad725
+        projectname: bulk-processor-projects
+        jobname: bulk-processor-projects-repos
+        buildnumber: 150
+        date: 2020-03-09 11:34:32.595527+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-projects-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2032d6a Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207863
+    fields:
+        tag: 18d2da0e-7fa8-43d2-bbf3-3c46e79ad725
+        projectname: bulk-processor-projects
+        jobname: bulk-processor-projects-docker-ppa
+        buildnumber: 147
+        date: 2020-03-09 11:34:32.947672+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-projects-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2032d6a Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207864
+    fields:
+        tag: cdd7b89c-d533-4c71-9486-4920dcf7053b
+        projectname: bootenv
+        jobname: bootenv-get-code
+        buildnumber: 536
+        date: 2020-03-09 11:34:35.204829+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bootenv-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 2cafda2 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207865
+    fields:
+        tag: cdd7b89c-d533-4c71-9486-4920dcf7053b
+        projectname: bootenv
+        jobname: bootenv-manage-docker
+        buildnumber: 396
+        date: 2020-03-09 11:34:44.180332+00:00
+        result: FAILURE
+        job_url: https://jenkins.mgm.sipwise.com/job/bootenv-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2cafda2 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207866
+    fields:
+        tag: cdd7b89c-d533-4c71-9486-4920dcf7053b
+        projectname: bootenv
+        jobname: bootenv-unit-test-docker
+        buildnumber: 379
+        date: 2020-03-09 11:34:46.182816+00:00
+        result: FAILURE
+        job_url: https://jenkins.mgm.sipwise.com/job/bootenv-unit-test-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2cafda2 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207867
+    fields:
+        tag: cdd7b89c-d533-4c71-9486-4920dcf7053b
+        projectname: bootenv
+        jobname: bootenv-tap-test
+        buildnumber: 535
+        date: 2020-03-09 11:34:52.515634+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bootenv-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2cafda2 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207868
+    fields:
+        tag: cdd7b89c-d533-4c71-9486-4920dcf7053b
+        projectname: bootenv
+        jobname: bootenv-source-tests
+        buildnumber: 535
+        date: 2020-03-09 11:34:52.708986+00:00
+        result: FAILURE
+        job_url: https://jenkins.mgm.sipwise.com/job/bootenv-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2cafda2 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207869
+    fields:
+        tag: 18d2da0e-7fa8-43d2-bbf3-3c46e79ad725
+        projectname: bulk-processor-projects
+        jobname: bulk-processor-projects-piuparts
+        buildnumber: 147
+        date: 2020-03-09 11:35:02.988466+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bulk-processor-projects-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2032d6a Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207870
+    fields:
+        tag: 405ca023-fd7e-4bef-ae16-e4569d626089
+        projectname: bootenv
+        jobname: bootenv-get-code
+        buildnumber: 537
+        date: 2020-03-09 11:41:16.720115+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bootenv-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 2cafda2 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207871
+    fields:
+        tag: 405ca023-fd7e-4bef-ae16-e4569d626089
+        projectname: bootenv
+        jobname: bootenv-manage-docker
+        buildnumber: 397
+        date: 2020-03-09 11:41:25.358823+00:00
+        result: FAILURE
+        job_url: https://jenkins.mgm.sipwise.com/job/bootenv-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2cafda2 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207872
+    fields:
+        tag: 405ca023-fd7e-4bef-ae16-e4569d626089
+        projectname: bootenv
+        jobname: bootenv-unit-test-docker
+        buildnumber: 380
+        date: 2020-03-09 11:41:26.918374+00:00
+        result: FAILURE
+        job_url: https://jenkins.mgm.sipwise.com/job/bootenv-unit-test-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2cafda2 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207873
+    fields:
+        tag: 405ca023-fd7e-4bef-ae16-e4569d626089
+        projectname: bootenv
+        jobname: bootenv-tap-test
+        buildnumber: 536
+        date: 2020-03-09 11:41:31.704110+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/bootenv-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2cafda2 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1207874
+    fields:
+        tag: 405ca023-fd7e-4bef-ae16-e4569d626089
+        projectname: bootenv
+        jobname: bootenv-source-tests
+        buildnumber: 536
+        date: 2020-03-09 11:41:31.918001+00:00
+        result: FAILURE
+        job_url: https://jenkins.mgm.sipwise.com/job/bootenv-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 2cafda2 Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1208379
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b54c
+        projectname: ngcp-schema
+        jobname: ngcp-schema-get-code
+        buildnumber: 1041
+        date: 2020-03-09 14:54:36.316854+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/ngcp-schema-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2.1
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 8e2b47e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1208380
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b54c
+        projectname: ngcp-schema
+        jobname: ngcp-schema-manage-docker
+        buildnumber: 579
+        date: 2020-03-09 14:54:37.432427+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/ngcp-schema-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2.1
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8e2b47e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1208383
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b54c
+        projectname: ngcp-schema
+        jobname: ngcp-schema-source
+        buildnumber: 1038
+        date: 2020-03-09 14:55:27.774024+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/ngcp-schema-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2.1
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8e2b47e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1208384
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b54c
+        projectname: ngcp-schema
+        jobname: ngcp-schema-binaries
+        buildnumber: 1037
+        date: 2020-03-09 14:55:51.473141+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/ngcp-schema-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2.1
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8e2b47e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1208385
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b54c
+        projectname: ngcp-schema
+        jobname: ngcp-schema-repos
+        buildnumber: 1009
+        date: 2020-03-09 14:55:53.811506+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/ngcp-schema-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2.1
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8e2b47e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1208386
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b54c
+        projectname: ngcp-schema
+        jobname: ngcp-schema-docker-ppa
+        buildnumber: 988
+        date: 2020-03-09 14:55:54.136125+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/ngcp-schema-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2.1
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8e2b47e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1208387
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b54c
+        projectname: ngcp-schema
+        jobname: ngcp-schema-piuparts
+        buildnumber: 988
+        date: 2020-03-09 14:56:24.168537+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/ngcp-schema-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2.1
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8e2b47e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1208381
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b54c
+        projectname: ngcp-schema
+        jobname: ngcp-schema-tap-test
+        buildnumber: 1040
+        date: 2020-03-09 14:55:26.053963+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/ngcp-schema-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2.1
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8e2b47e Release new version 8.1.2.1+0~mr8.1.2.1
+-   model: repoapi.jenkinsbuildinfo
+    pk: 1208382
+    fields:
+        tag: 4f03a4d6-845d-4b8a-8d75-af3c2f73b54c
+        projectname: ngcp-schema
+        jobname: ngcp-schema-source-tests
+        buildnumber: 1040
+        date: 2020-03-09 14:55:26.336393+00:00
+        result: SUCCESS
+        job_url: https://jenkins.mgm.sipwise.com/job/ngcp-schema-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: mr8.1.2.1
+        param_branch: mr8.1.2.1
+        param_release: release-mr8.1.2
+        param_release_uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8e2b47e Release new version 8.1.2.1+0~mr8.1.2.1

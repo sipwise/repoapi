@@ -150,9 +150,11 @@ class BuildRelease(models.Model):
         return True
 
     def append_built(self, jbi):
-        if jbi.result == "FAILURE":
-            return self._append_falied(jbi.projectname)
         jobname = jbi.jobname
+        if jbi.result == "FAILURE":
+            if jobname.endswith("-piuparts"):
+                return False
+            return self._append_falied(jbi.projectname)
         if jobname.endswith("-repos") or jobname in settings.RELEASE_JOBS:
             if jbi.result in ["SUCCESS", "UNSTABLE"]:
                 return self._append_built(jbi.projectname)
@@ -168,19 +170,17 @@ class BuildRelease(models.Model):
         if self.built_projects is None:
             return self.build_deps[0][0]
         built_len = len(self.built_projects)
-        if built_len == len(self.projects):
+        release_jobs_len = len(",".join(settings.RELEASE_JOBS))
+        if built_len == release_jobs_len + 1 + len(self.projects):
             return
         built_list = self.built_projects_list
-        build_deps_size = len(",".join(self.config.build_deps.keys()))
-        if built_len < build_deps_size:
-            for grp in self.build_deps:
-                for prj in grp:
-                    if prj not in built_list:
-                        return prj
-        else:
-            for prj in self.projects_list:
+        for grp in self.build_deps:
+            for prj in grp:
                 if prj not in built_list:
                     return prj
+        for prj in self.projects_list:
+            if prj not in built_list:
+                return prj
 
     @property
     def next(self):
@@ -191,7 +191,9 @@ class BuildRelease(models.Model):
         res = self._next()
         if res is not None:
             if res in failed_projects:
-                logger.info("project: %s marked as failed, stop sending jobs")
+                logger.error(
+                    "project: %s marked as failed, stop sending jobs", res
+                )
             else:
                 return res
 
