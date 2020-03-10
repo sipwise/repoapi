@@ -65,6 +65,7 @@ def jbi_manage(sender, **kwargs):
     if not br.append_built(jbi):
         logger.debug("BuildRelease:%s jbi:%s skip", br, jbi)
         return
+    br.remove_triggered(jbi)
     params = {
         "release_uuid": br.uuid,
         "trigger_release": br.release,

@@ -185,7 +185,6 @@ class BuildRelease(models.Model):
 
     def append_built(self, jbi):
         jobname = jbi.jobname
-        self.remove_triggered(jbi)
         if jbi.result == "FAILURE":
             if jobname.endswith("-piuparts"):
                 return False

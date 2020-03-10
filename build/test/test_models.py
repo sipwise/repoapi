@@ -404,6 +404,39 @@ class JBIManageTest(TestCase):
 
     @override_settings(BUILD_POOL=2)
     @patch("build.models.trigger_build")
+    def test_jbi_manage_pool_building(self, tb, dl):
+        self.test_jbi_manage_pool()
+        br = BuildRelease.objects.first()
+        self.assertEqual(br.pool_size, 2)
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/data-hal-binaries/",
+            projectname="data-hal",
+            jobname="data-hal-binaries",
+            tag="UUIDA",
+            param_release="release-mr8.1",
+            param_release_uuid="UUID_mr8.1",
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.first()
+        self.assertEqual(br.pool_size, 2)
+        self.assertEqual(br.triggered_projects, "data-hal,libinewrate")
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/libinewrate-binaries/",
+            projectname="libinewrate",
+            jobname="libinewrate-binaries",
+            tag="UUIDA",
+            param_release="release-mr8.1",
+            param_release_uuid="UUID_mr8.1",
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.first()
+        self.assertEqual(br.pool_size, 2)
+        self.assertEqual(br.triggered_projects, "data-hal,libinewrate")
+
+    @override_settings(BUILD_POOL=2)
+    @patch("build.models.trigger_build")
     def test_jbi_manage_pool_next(self, tb, dl):
         self.test_jbi_manage_pool()
         br = BuildRelease.objects.first()
