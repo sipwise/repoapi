@@ -129,6 +129,7 @@ class BuildRelease(models.Model):
         return []
 
     def append_triggered(self, value):
+        fields = ["pool_size", "triggered_projects"]
         if value in self.triggered_projects_list:
             return False
         if self.triggered_projects is None:
@@ -136,10 +137,11 @@ class BuildRelease(models.Model):
         else:
             self.triggered_projects += ",{}".format(value)
         self.pool_size += 1
-        self.save()
+        self.save(update_fields=fields)
         return True
 
     def _append_falied(self, value):
+        fields = ["failed_projects"]
         if value in self.failed_projects_list:
             return False
         if self.failed_projects is None:
@@ -148,10 +150,12 @@ class BuildRelease(models.Model):
             self.failed_projects += ",{}".format(value)
         if self.pool_size > 0:
             self.pool_size -= 1
-        self.save()
+            fields.append("pool_size")
+        self.save(update_fields=fields)
         return True
 
     def _append_built(self, value):
+        fields = ["built_projects"]
         if value in self.built_projects_list:
             return False
         if self.built_projects is None:
@@ -160,6 +164,7 @@ class BuildRelease(models.Model):
             self.built_projects += ",{}".format(value)
         failed_projects = self.failed_projects_list
         if value in failed_projects:
+            fields.append("failed_projects")
             failed_projects.remove(value)
             fp = ",".join(failed_projects)
             if len(fp) > 0:
@@ -168,7 +173,8 @@ class BuildRelease(models.Model):
                 self.failed_projects = None
         if self.pool_size > 0:
             self.pool_size -= 1
-        self.save()
+            fields.append("pool_size")
+        self.save(update_fields=fields)
         return True
 
     def remove_triggered(self, jbi):
@@ -181,7 +187,7 @@ class BuildRelease(models.Model):
                 self.triggered_projects = tl
             else:
                 self.triggered_projects = None
-            self.save()
+            self.save(update_fields=["triggered_projects"])
 
     def append_built(self, jbi):
         jobname = jbi.jobname
