@@ -57,6 +57,10 @@ class BuildReleaseDetail(generics.RetrieveDestroyAPIView):
     queryset = models.BuildRelease.objects.all().order_by("id")
     serializer_class = serializers.BuildReleaseSerializer
 
+    def perform_destroy(self, instance):
+        models.BuildRelease.objects.jbi(instance.uuid).delete()
+        instance.delete()
+
 
 class BuildProject(APIView):
     permission_classes = (BuildAccess,)

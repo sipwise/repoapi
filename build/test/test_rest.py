@@ -19,6 +19,7 @@ from rest_framework.test import APITestCase
 from rest_framework_api_key.helpers import generate_key
 from rest_framework_api_key.models import APIKey
 
+from build import models
 from repoapi.test.base import BaseTest
 
 
@@ -117,3 +118,67 @@ class TestBuildRest(APIAuthenticatedTestCase):
         )
         response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+
+@override_settings(DEBUG=True)
+class TestBuildDeleteRest(APIAuthenticatedTestCase):
+    fixtures = [
+        "test_models",
+        "test_models_jbi",
+    ]
+    release = "release-mr8.1"
+    release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559649b"
+
+    def test_get_br(self):
+        br = models.BuildRelease.objects.get(uuid=self.release_uuid)
+        data = {}
+        url = reverse("build:detail", args=[br.id])
+        response = self.client.get(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_delete_br(self):
+        br = models.BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(
+            models.JenkinsBuildInfo.objects.filter(
+                param_release_uuid=self.release_uuid
+            ).count(),
+            4,
+        )
+        url = reverse("build:detail", args=[br.id])
+        response = self.client.delete(url, format="json")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        with self.assertRaises(models.BuildRelease.DoesNotExist):
+            models.BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(
+            models.JenkinsBuildInfo.objects.filter(
+                param_release_uuid=self.release_uuid
+            ).count(),
+            0,
+        )
+
+    def test_delete_br_empty(self):
+        br = models.BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(
+            models.JenkinsBuildInfo.objects.filter(
+                param_release_uuid=self.release_uuid
+            ).count(),
+            4,
+        )
+        models.BuildRelease.objects.jbi(self.release_uuid).delete()
+        self.assertEqual(
+            models.JenkinsBuildInfo.objects.filter(
+                param_release_uuid=self.release_uuid
+            ).count(),
+            0,
+        )
+        url = reverse("build:detail", args=[br.id])
+        response = self.client.delete(url, format="json")
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        with self.assertRaises(models.BuildRelease.DoesNotExist):
+            models.BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(
+            models.JenkinsBuildInfo.objects.filter(
+                param_release_uuid=self.release_uuid
+            ).count(),
+            0,
+        )

@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class BuildReleaseManager(models.Manager):
-    jbi = JenkinsBuildInfo.objects
+    _jbi = JenkinsBuildInfo.objects
 
     def create_build_release(self, uuid, release):
         config = ReleaseConfig(release)
@@ -39,8 +39,12 @@ class BuildReleaseManager(models.Manager):
             projects=",".join(config.projects),
         )
 
+    def jbi(self, release_uuid):
+        qs = self._jbi.get_queryset()
+        return qs.filter(param_release_uuid=release_uuid)
+
     def release_jobs(self, release_uuid, flat=True):
-        qs = self.jbi.get_queryset()
+        qs = self._jbi.get_queryset()
         res = qs.filter(
             jobname__in=settings.RELEASE_JOBS, param_release_uuid=release_uuid,
         ).distinct()
@@ -61,7 +65,7 @@ class BuildReleaseManager(models.Manager):
         return res
 
     def release_jobs_uuids(self, release_uuid, job):
-        qs = self.jbi.get_queryset()
+        qs = self._jbi.get_queryset()
         params = {
             "param_release_uuid": release_uuid,
             "jobname": job,
