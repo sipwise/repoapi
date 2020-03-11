@@ -43,8 +43,12 @@
           <tr class="success build_release" id="br_{{ br.id }}">
             <td><a href="{% url 'panel:release-uuid' _uuid=br.uuid %}">{{ br.uuid }}</a></td>
             <td>{{ br.start_date }}</td>
-            <td><button type="button"
-              onclick="click_delete(event, '{{ br.id }}')" class="btn btn-danger">Delete</button>
+            <td>
+              <button type="button" id="refresh_{{ br.id }}"
+                onclick="click_refresh_projects(event, '{{ br.id }}')"
+                class="btn btn-primary">Refresh projects</button>
+              <button type="button"
+                onclick="click_delete(event, '{{ br.id }}')" class="btn btn-danger">Delete</button>
             </td>
           </tr>
           {% endfor %}
@@ -101,6 +105,43 @@ function delete_build_release( id ) {
   $.ajax( {
     url: "/build/" + id + "/?format=json",
     method: "DELETE",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: successFunc,
+    error: errorFunc
+  } );
+}
+
+function click_refresh_projects(e, id) {
+    refresh_release_projects(id);
+    e.preventDefault();
+}
+
+function refresh_release_projects( id ) {
+
+  function successFunc( _data, _textStatus, _jqXHR ) {
+    $("#refresh_" + id).attr("disabled", "disabled");
+  }
+
+  function errorFunc( _jqXHR, _status, error ) {
+    $( "#error" ).html( error );
+  }
+  var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+  function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  }
+  $.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+  });
+  $.ajax( {
+    url: "/build/" + id + "/?format=json",
+    data: JSON.stringify({ action: "refresh" }),
+    method: "PATCH",
     contentType: "application/json; charset=utf-8",
     dataType: "json",
     success: successFunc,

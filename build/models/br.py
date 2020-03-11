@@ -100,6 +100,10 @@ class BuildRelease(models.Model):
     def __str__(self):
         return "%s[%s]" % (self.release, self.uuid)
 
+    def refresh_projects(self):
+        self.projects = ",".join(self.config.projects)
+        self.save()
+
     @property
     def projects_list(self):
         return [x.strip() for x in self.projects.split(",")]

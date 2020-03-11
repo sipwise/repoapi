@@ -61,6 +61,15 @@ class BuildReleaseDetail(generics.RetrieveDestroyAPIView):
         models.BuildRelease.objects.jbi(instance.uuid).delete()
         instance.delete()
 
+    def patch(self, request, *args, **kwargs):
+        action = request.data.get("action")
+        if action == "refresh":
+            instance = self.get_object()
+            instance.refresh_projects()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        return JsonResponse({"error": "Action unknown"}, status=400)
+
 
 class BuildProject(APIView):
     permission_classes = (BuildAccess,)

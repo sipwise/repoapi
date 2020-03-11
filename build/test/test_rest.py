@@ -182,3 +182,35 @@ class TestBuildDeleteRest(APIAuthenticatedTestCase):
             ).count(),
             0,
         )
+
+
+@override_settings(DEBUG=True)
+class TestBuildPatchRest(APIAuthenticatedTestCase):
+    fixtures = [
+        "test_models",
+    ]
+    release = "release-mr8.1"
+    release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559649b"
+
+    def test_refresh(self):
+        br = models.BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(br.projects, "kamailio,lua-ngcp-kamailio,ngcp-panel")
+        data = {"action": "refresh"}
+        url = reverse("build:detail", args=[br.id])
+        response = self.client.patch(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        br = models.BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertNotEqual(
+            br.projects, "kamailio,lua-ngcp-kamailio,ngcp-panel"
+        )
+        self.assertEqual(len(br.projects_list), 73)
+
+    def test_no_action(self):
+        br = models.BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(br.projects, "kamailio,lua-ngcp-kamailio,ngcp-panel")
+        data = {}
+        url = reverse("build:detail", args=[br.id])
+        response = self.client.patch(url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        br = models.BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(br.projects, "kamailio,lua-ngcp-kamailio,ngcp-panel")
