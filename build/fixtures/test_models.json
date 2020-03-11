@@ -23,8 +23,8 @@
     "branch": "mr8.1",
     "release": "release-mr8.1",
     "distribution": "buster",
-    "projects": "kamailio,lua-ngcp-kamailio,ngcp-panel",
-    "built_projects": "kamailio,lua-ngcp-kamailio"
+    "projects": "asterisk-voicemail,lua-ngcp-kamailio,ngcp-panel",
+    "built_projects": null
   }
 }
 ]

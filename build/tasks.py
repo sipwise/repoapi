@@ -15,6 +15,7 @@
 import logging
 
 from celery import shared_task
+from django.conf import settings
 
 from build.models.br import BuildRelease
 from build.utils import trigger_build
@@ -55,3 +56,37 @@ def build_project(pk, project):
     )
     br.pool_size += 1
     logger.info("%s triggered" % url)
+
+
+@shared_task(ignore_result=True)
+def build_resume(pk):
+    try:
+        br = BuildRelease.objects.get(id=pk)
+    except BuildRelease.DoesNotExist:
+        logger.error("can't resume on unknown release with id:%s", pk)
+        return
+    params = {
+        "release_uuid": br.uuid,
+        "trigger_release": br.release,
+        "trigger_branch_or_tag": br.branch_or_tag,
+        "trigger_distribution": br.distribution,
+    }
+    size = settings.BUILD_POOL - br.pool_size
+    if size <= 0:
+        logger.info(
+            "BuildRelease:%s No more room for new builds,"
+            " wait for next slot",
+            br,
+        )
+    for step in range(size):
+        prj = br.next
+        if prj:
+            params["project"] = "{}-get-code".format(prj)
+            logger.debug(
+                "trigger:%s for BuildRelease:%s", params["project"], br
+            )
+            trigger_build(**params)
+            br.append_triggered(prj)
+        else:
+            logger.debug("BuildRelease:%s has no next", br)
+            break

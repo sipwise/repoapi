@@ -96,6 +96,7 @@ class BuildRelease(models.Model):
     failed_projects = models.TextField(null=True, editable=False)
     pool_size = models.SmallIntegerField(default=0, editable=False)
     objects = BuildReleaseManager()
+    release_jobs_len = len(",".join(settings.RELEASE_JOBS))
 
     def __str__(self):
         return "%s[%s]" % (self.release, self.uuid)
@@ -103,6 +104,17 @@ class BuildRelease(models.Model):
     def refresh_projects(self):
         self.projects = ",".join(self.config.projects)
         self.save()
+
+    def resume(self):
+        if not self.done:
+            from build.tasks import build_resume
+
+            build_resume.delay(self.id)
+
+    @property
+    def done(self):
+        built_len = len(self.built_projects)
+        return built_len == self.release_jobs_len + 1 + len(self.projects)
 
     @property
     def projects_list(self):
@@ -207,9 +219,7 @@ class BuildRelease(models.Model):
     def _next(self):
         if self.built_projects is None:
             return self.build_deps[0][0]
-        built_len = len(self.built_projects)
-        release_jobs_len = len(",".join(settings.RELEASE_JOBS))
-        if built_len == release_jobs_len + 1 + len(self.projects):
+        if self.done:
             return
         t_list = self.triggered_projects_list
         built_list = self.built_projects_list

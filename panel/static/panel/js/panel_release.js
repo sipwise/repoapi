@@ -4,6 +4,45 @@ function click_retrigger( e, project ) {
     e.preventDefault();
 }
 
+/* eslint-disable-next-line no-unused-vars*/ // used at onClick
+function click_resume( e, id ) {
+    resume_build( id );
+    e.preventDefault();
+}
+
+function resume_build( id ) {
+
+  function successFunc( _data, _textStatus, _jqXHR ) {
+    $( "#resume" ).prop( "disabled", true );
+  }
+
+  function errorFunc( _jqXHR, _status, error ) {
+    $( "#release_error" ).html( error );
+  }
+  var csrftoken = jQuery( "[name=csrfmiddlewaretoken]" ).val();
+  function csrfSafeMethod( method ) {
+
+    // these HTTP methods do not require CSRF protection
+    return ( /^(GET|HEAD|OPTIONS|TRACE)$/.test( method ) );
+  }
+  $.ajaxSetup( {
+    beforeSend: function( xhr, settings ) {
+        if ( !csrfSafeMethod( settings.type ) && !this.crossDomain ) {
+            xhr.setRequestHeader( "X-CSRFToken", csrftoken );
+        }
+    }
+  } );
+  $.ajax( {
+    url: "/build/" + id + "/?format=json",
+    data: JSON.stringify( { action: "resume" } ),
+    method: "PATCH",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: successFunc,
+    error: errorFunc
+  } );
+}
+
 function clean_all_uuids( project ) {
   for ( var uuid of $.release[ project ].uuids ) {
     $( "#" + project + "-" + uuid ).remove();
@@ -134,6 +173,19 @@ function is_project_done( project ) {
   return $.release[ project ][ uuid ].jobs.has( project + "-repos" );
 }
 
+
+function is_stuck() {
+  var success = parseInt( $( "#stats-success" ).text(), 10 );
+  var failed = parseInt( $( "#stats-danger" ).text(), 10 );
+  var queued = parseInt( $( "#stats-queued" ).text(), 10 );
+  var building = parseInt( $( "#stats-created" ).text(), 10 );
+
+  if ( failed === 0 && queued > 0 && building === 0 && success > 0 ) {
+    return true;
+  }
+  return false;
+}
+
 /* eslint-disable-next-line no-unused-vars */ // used on templates
 function update_release_info( release ) {
   if ( $.release.release_jobs.size < $.release.release_jobs_size ) {
@@ -146,5 +198,8 @@ function update_release_info( release ) {
       /* eslint-disable-next-line no-undef */ // on panel.js
       get_uuids_for_project( release, project );
     }
+  }
+  if ( is_stuck() ) {
+    $( "#resume" ).prop( "disabled", false );
   }
 }

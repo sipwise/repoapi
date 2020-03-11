@@ -8,13 +8,21 @@
       <th>tag</th>
       <th>branch</th>
       <th>started_at</th>
+      <th>Action</th>
     </tr>
     <tr class="active">
       <td>{{ build_release.config.debian_release }}</td>
       <td>{{ build_release.tag }}</td>
       <td>{{ build_release.branch }}</td>
       <td>{{ build_release.start_date }}</td>
+      <td id="action_list">
+        <button type="button" id="resume"
+                disabled="disabled"
+                onclick="click_resume(event, '{{ build_release.id }}')"
+                class="btn btn-primary">Resume</button>
+      </td>
       </td>
     </tr>
   </table>
 </div>
+<div class="panel-footer error" id="release_error"></div>

@@ -19,7 +19,7 @@ from django.db.models import signals
 
 from .br import BuildRelease
 from build.tasks import build_release
-from build.utils import trigger_build
+from build.tasks import build_resume
 from repoapi.models import JenkinsBuildInfo
 
 logger = logging.getLogger(__name__)
@@ -66,31 +66,7 @@ def jbi_manage(sender, **kwargs):
         logger.debug("BuildRelease:%s jbi:%s skip", br, jbi)
         return
     br.remove_triggered(jbi)
-    params = {
-        "release_uuid": br.uuid,
-        "trigger_release": br.release,
-        "trigger_branch_or_tag": br.branch_or_tag,
-        "trigger_distribution": br.distribution,
-    }
-    size = settings.BUILD_POOL - br.pool_size
-    if size <= 0:
-        logger.info(
-            "BuildRelease:%s No more room for new builds,"
-            " wait for next slot",
-            br,
-        )
-    for step in range(size):
-        prj = br.next
-        if prj:
-            params["project"] = "{}-get-code".format(prj)
-            logger.debug(
-                "trigger:%s for BuildRelease:%s", params["project"], br
-            )
-            trigger_build(**params)
-            br.append_triggered(prj)
-        else:
-            logger.debug("BuildRelease:%s has no next", br)
-            break
+    build_resume.delay(br.id)
 
 
 post_save = signals.post_save.connect

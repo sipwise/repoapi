@@ -63,9 +63,15 @@ class BuildReleaseDetail(generics.RetrieveDestroyAPIView):
 
     def patch(self, request, *args, **kwargs):
         action = request.data.get("action")
+        if action is None:
+            return JsonResponse({"error": "No action"}, status=400)
+        instance = self.get_object()
         if action == "refresh":
-            instance = self.get_object()
             instance.refresh_projects()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
+        elif action == "resume":
+            instance.resume()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
         return JsonResponse({"error": "Action unknown"}, status=400)
