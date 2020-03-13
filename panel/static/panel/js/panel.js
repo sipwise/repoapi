@@ -65,7 +65,7 @@ function update_stats_progress() {
   var total = $.release.projects.size;
 
   if ( $.release.uuid ) {
-    total += $.release.stats.queued.size;
+    total = parseInt( $( "#stats-total" ).text(), 10 );
   }
 
   for ( var label of labels ) {

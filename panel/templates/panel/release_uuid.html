@@ -38,8 +38,10 @@ $( document ).ready(function() {
   $.release.uuid = '{{ build_release.uuid }}';
   $.release.release_jobs_size = {{ release_jobs_size }};
   $.release.max_uuids = 1;
-  $.release.interval = 30000;
-  update_release_info('{{ build_release.release }}');
+{% if build_release.is_done %}
+  $( "#update-info" ).hide();
+{% else %}
+  $.release.interval = 15000;
   $( "#update-info" ).text($.release.interval/1000);
   $.release.timer = setInterval(function(){
     update_release_info('{{ build_release.release }}');
@@ -49,6 +51,7 @@ $( document ).ready(function() {
     var step = parseInt($( "#update-info" ).text());
     $( "#update-info" ).text(step - 1);
   }, 1000);
+{% endif %}
 set_stats_total('{{ total }}');
 {% for projectname in queued_projects %}
 set_project_stats('{{ projectname }}', 'queued');
@@ -72,6 +75,8 @@ create_new_release_job(values);
     {% endif %}
   {% endfor %}
 {% endfor %}
+update_stats();
+update_release_info('{{ build_release.release }}');
 });
 </script>
 {% endblock %}

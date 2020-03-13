@@ -174,13 +174,25 @@ function is_project_done( project ) {
 }
 
 
+function is_done() {
+  var success = parseInt( $( "#stats-success" ).text(), 10 );
+  var failed = parseInt( $( "#stats-danger" ).text(), 10 );
+  var queued = parseInt( $( "#stats-queued" ).text(), 10 );
+  var building = parseInt( $( "#stats-created" ).text(), 10 );
+
+  if ( failed === queued === building === 0 && success > 0 ) {
+    return true;
+  }
+  return false;
+}
+
 function is_stuck() {
   var success = parseInt( $( "#stats-success" ).text(), 10 );
   var failed = parseInt( $( "#stats-danger" ).text(), 10 );
   var queued = parseInt( $( "#stats-queued" ).text(), 10 );
   var building = parseInt( $( "#stats-created" ).text(), 10 );
 
-  if ( failed === 0 && queued > 0 && building === 0 && success > 0 ) {
+  if ( failed === building === 0 && queued > 0 && success > 0 ) {
     return true;
   }
   return false;
@@ -201,5 +213,9 @@ function update_release_info( release ) {
   }
   if ( is_stuck() ) {
     $( "#resume" ).prop( "disabled", false );
+  } else if ( is_done() ) {
+    clearInterval( $.release.timer );
+    clearInterval( $.release.update_info_timer );
+    $( "#update-info" ).hide();
   }
 }
