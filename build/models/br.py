@@ -113,6 +113,8 @@ class BuildRelease(models.Model):
 
     @property
     def done(self):
+        if self.built_projects is None:
+            return False
         built_len = len(self.built_projects)
         return built_len == self.release_jobs_len + 1 + len(self.projects)
 
