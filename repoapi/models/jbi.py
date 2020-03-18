@@ -57,7 +57,9 @@ class JenkinsBuildInfoManager(models.Manager):
         return res
 
     def releases(self, flat=True):
-        qs = self.get_queryset().exclude(jobname__in=settings.RELEASE_JOBS)
+        qs = self.get_queryset().exclude(
+            jobname__in=settings.BUILD_RELEASE_JOBS
+        )
         res = qs.filter(tag__isnull=False).values("param_release").distinct()
         if res.exists():
             if flat:

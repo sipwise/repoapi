@@ -14,10 +14,10 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import logging
 
-from django.conf import settings
 from django.db.models import signals
 
 from .br import BuildRelease
+from build.conf import settings
 from build.tasks import build_release
 from build.tasks import build_resume
 from repoapi.models import JenkinsBuildInfo
@@ -41,7 +41,7 @@ def jbi_manage(sender, **kwargs):
     if jbi.param_release_uuid is None:
         return
     release = jbi.param_release
-    if jbi.jobname in settings.RELEASE_JOBS:
+    if jbi.jobname in settings.BUILD_RELEASE_JOBS:
         if not release.startswith("release-"):
             release = "release-{}".format(jbi.param_release)
     if jbi.param_release == "none":

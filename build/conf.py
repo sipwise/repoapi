@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,15 +12,17 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from release_dashboard.conf import settings
+from django.conf import settings  # noqa
+from appconf import AppConf
 
-trunk_projects = sorted(
-    set(settings.RELEASE_DASHBOARD_PROJECTS)
-    - set(settings.RELEASE_DASHBOARD_ABANDONED)
-    - set(settings.RELEASE_DASHBOARD_BUILD_DEPS)
-)
-trunk_build_deps = sorted(
-    set(settings.RELEASE_DASHBOARD_BUILD_DEPS)
-    - set(settings.RELEASE_DASHBOARD_ABANDONED)
-)
-docker_projects = settings.RELEASE_DASHBOARD_DOCKER_PROJECTS
+
+class Build(AppConf):
+    KEY_AUTH = True
+    REPOS_SCRIPTS_CONFIG_DIR = "/usr/share/sipwise-repos-scripts/config"
+    POOL = 3
+    # sipwise-repos-scripts config files we don't want
+    RELEASES_SKIP = (
+        "internal",
+        "mr0.1",
+    )
+    RELEASE_JOBS = ("release-copy-debs-yml",)

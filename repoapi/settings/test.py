@@ -74,7 +74,6 @@ DOCKER_REGISTRY_URL = "https://localhost:5000/v2/{}"
 DOCKER_REGISTRY = """
 {"repositories":["comx-fs-test-jessie","data-hal-jessie","documentation-jessie","janus-admin-jessie","janus-client-jessie","jenkins-configs","jenkins-configs-jessie","kamailio-config-tests-jessie","libswrate-jessie","libtcap-jessie","lua-ngcp-kamailio","lua-ngcp-kamailio-jenkins","lua-ngcp-kamailio-jessie","ngcp-csc-jessie","ngcp-panel-selenium","ngcp-panel-tests-rest-api-jessie","ngcp-panel-tests-selenium-jessie","ngcp-rate-o-mat-unit-tests-jessie","ngcp-rtcengine-test-jessie","ngcp-rtcengine-tests-selenium-jessie","ngcp-rtcengine-tests-selenium-stretch","ngcp-sipwise-snmp-mibs-jessie","ngcp-snmp-jessie","ngcpcfg-jessie","ossbss-perl-testing-wheezy","puppet-octocatalog-diff","puppet-sipwise-jessie","rate-o-mat-functional-tests-jessie","rate-o-mat-jessie","release-dashboard","repoapi-jessie","repos-scripts-jessie","rtpengine-jessie","sipphone-android","sipwise/ce-trunk","sipwise/mr3.8.10","sipwise/mr3.8.2","sipwise/mr3.8.3","sipwise/mr3.8.4","sipwise/mr3.8.5","sipwise/mr3.8.6","sipwise/mr3.8.7","sipwise/mr3.8.8","sipwise/mr3.8.9","sipwise/mr4.0.1","sipwise/mr4.0.2","sipwise/mr4.1.1","sipwise/mr4.1.2","sipwise/mr4.2.1","sipwise/mr4.2.2","sipwise/mr4.3.1","sipwise/mr4.3.2","sipwise/mr4.4.1","sipwise/mr4.4.2","sipwise/mr4.5.1","sipwise/mr4.5.2","sipwise/mr4.5.3","sipwise/mr4.5.4","sipwise/mr5.0.1","sipwise/mr5.0.2","sipwise/mr5.1.1","sipwise/mr5.1.2","sipwise/mr5.2.1","sipwise/mr5.3.1","sipwise-jessie","sipwise-stretch","sipwise-webpage-soap-docker-jessie","sipwise-webpage-soap-jessie","sipwise-wheezy","system-tools-jessie"]}
 """
-BUILD_POOL = 1
 
 DOCKER_IMAGES = {
     "data-hal-jessie": [
@@ -105,8 +104,8 @@ DOCKER_IMAGES = {
 }
 
 # build app
-BUILD_KEY_AUTH = True
-REPOS_SCRIPTS_CONFIG_DIR = join(BASE_DIR, "build", "fixtures", "config")
+BUILD_POOL = 1
+BUILD_REPOS_SCRIPTS_CONFIG_DIR = join(BASE_DIR, "build", "fixtures", "config")
 
 # celery
 BROKER_BACKEND = "memory"
