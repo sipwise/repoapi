@@ -1,4 +1,4 @@
-# Copyright (C) 2016 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,18 +12,20 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from django import forms
+from django.conf import settings  # noqa
+from appconf import AppConf
 
-from release_dashboard.conf import settings
 
+class BuildConf(AppConf):
+    KEY_AUTH = True
+    REPOS_SCRIPTS_CONFIG_DIR = "/usr/share/sipwise-repos-scripts/config"
+    POOL = 3
+    # sipwise-repos-scripts config files we don't want
+    RELEASES_SKIP = (
+        "internal",
+        "mr0.1",
+    )
+    RELEASE_JOBS = ("release-copy-debs-yml",)
 
-class BuildDockerForm(forms.Form):
-    common_select = forms.CharField(max_length=50)
-
-    def __init__(self, *args, **kwargs):
-        super(BuildDockerForm, self).__init__(*args, **kwargs)
-
-        for project in settings.RELEASE_DASHBOARD_DOCKER_PROJECTS:
-            self.fields["version_%s" % project] = forms.CharField(
-                max_length=15
-            )
+    class Meta:
+        prefix = "build"

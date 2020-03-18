@@ -16,7 +16,7 @@ import re
 
 from django.views.generic.base import TemplateView
 
-from release_dashboard.forms import rd_settings
+from release_dashboard.conf import settings
 from release_dashboard.utils import get_branches
 from release_dashboard.utils import get_tags
 
@@ -26,7 +26,7 @@ regex_mr = re.compile(r"^mr.+$")
 # support "master" + "$supported_debian_releases/master" for branch selection,
 # e.g. for trunk builds when not everything might build against master
 debian_releases = []
-for debian_release in rd_settings["debian_supported"]:
+for debian_release in settings.RELEASE_DASHBOARD_DEBIAN_RELEASES:
     if debian_release != "auto":
         debian_releases.append(debian_release)
 regex_master = re.compile(
