@@ -19,11 +19,11 @@ import urllib
 from pathlib import Path
 from uuid import uuid4
 
-from django.conf import settings
 from yaml import load
 from yaml import Loader
 
 from . import exceptions as err
+from .conf import settings
 from repoapi.utils import openurl
 
 logger = logging.getLogger(__name__)
@@ -157,9 +157,11 @@ class ReleaseConfig(object):
 
     @classmethod
     def supported_releases(cls):
-        skip_files = ["{}.yml".format(x) for x in settings.RELEASES_SKIP]
+        skip_files = ["{}.yml".format(x) for x in settings.BUILD_RELEASES_SKIP]
         res = []
-        for root, dirs, files in os.walk(settings.REPOS_SCRIPTS_CONFIG_DIR):
+        for root, dirs, files in os.walk(
+            settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR
+        ):
             for name in files:
                 path_name = Path(name)
                 if path_name.suffix != ".yml":
@@ -183,7 +185,7 @@ class ReleaseConfig(object):
             filename = name
         self.config_file = "{}.yml".format(filename)
         self.config_path = os.path.join(
-            settings.REPOS_SCRIPTS_CONFIG_DIR, self.config_file
+            settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR, self.config_file
         )
         try:
             with open(self.config_path) as f:

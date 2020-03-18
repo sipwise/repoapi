@@ -27,8 +27,8 @@ LOGGING["loggers"]["repoapi"]["level"] = os.getenv(  # noqa
 
 # celery
 BROKER_BACKEND = "amqp"
-CELERY_ALWAYS_EAGER = False
-BROKER_URL = "amqp://guest:guest@rabbit"
+CELERY_TASK_ALWAYS_EAGER = False
+CELERY_BROKER_URL = "amqp://guest:guest@rabbit"
 JBI_BASEDIR = os.path.join(BASE_DIR, "jbi_files")  # noqa
 
 # Enable access when not accessing from localhost:

@@ -23,7 +23,7 @@ from django.conf import settings
 from django.db import models
 from django.forms.models import model_to_dict
 
-from repoapi.tasks import get_jbi_files
+from ..tasks import get_jbi_files
 
 logger = logging.getLogger(__name__)
 workfront_re = re.compile(r"TT#(\d+)")
@@ -57,7 +57,9 @@ class JenkinsBuildInfoManager(models.Manager):
         return res
 
     def releases(self, flat=True):
-        qs = self.get_queryset().exclude(jobname__in=settings.RELEASE_JOBS)
+        qs = self.get_queryset().exclude(
+            jobname__in=settings.BUILD_RELEASE_JOBS
+        )
         res = qs.filter(tag__isnull=False).values("param_release").distinct()
         if res.exists():
             if flat:

@@ -19,7 +19,7 @@ from rest_framework.test import APITestCase
 from rest_framework_api_key.helpers import generate_key
 from rest_framework_api_key.models import APIKey
 
-from build import models
+from .. import models
 from repoapi.test.base import BaseTest
 
 

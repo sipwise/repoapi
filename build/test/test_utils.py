@@ -19,12 +19,12 @@ from django.test import override_settings
 from django.test import SimpleTestCase
 from mock import patch
 
-from build import exceptions as err
-from build.utils import get_common_release
-from build.utils import get_simple_release
-from build.utils import ReleaseConfig
-from build.utils import trigger_build
-from build.utils import trigger_copy_deps
+from .. import exceptions as err
+from ..utils import get_common_release
+from ..utils import get_simple_release
+from ..utils import ReleaseConfig
+from ..utils import trigger_build
+from ..utils import trigger_copy_deps
 
 
 class SimpleReleaseTest(SimpleTestCase):
@@ -75,7 +75,7 @@ class ReleaseConfigTestCase(SimpleTestCase):
         "check-tools",
     ]
 
-    @override_settings(RELEASES_SKIP=["mr0.1"])
+    @override_settings(BUILD_RELEASES_SKIP=["mr0.1"])
     def test_supported_releases(self):
         supported = [
             "trunk",

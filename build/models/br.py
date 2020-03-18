@@ -18,8 +18,8 @@ from django.conf import settings
 from django.db import models
 from django.forms.models import model_to_dict
 
-from build.utils import get_simple_release
-from build.utils import ReleaseConfig
+from ..utils import get_simple_release
+from ..utils import ReleaseConfig
 from repoapi.models import JenkinsBuildInfo
 
 logger = logging.getLogger(__name__)
@@ -46,7 +46,8 @@ class BuildReleaseManager(models.Manager):
     def release_jobs(self, release_uuid, flat=True):
         qs = self._jbi.get_queryset()
         res = qs.filter(
-            jobname__in=settings.RELEASE_JOBS, param_release_uuid=release_uuid,
+            jobname__in=settings.BUILD_RELEASE_JOBS,
+            param_release_uuid=release_uuid,
         ).distinct()
         if res.exists():
             if flat:
@@ -96,7 +97,7 @@ class BuildRelease(models.Model):
     failed_projects = models.TextField(null=True, editable=False)
     pool_size = models.SmallIntegerField(default=0, editable=False)
     objects = BuildReleaseManager()
-    release_jobs_len = len(",".join(settings.RELEASE_JOBS))
+    release_jobs_len = len(",".join(settings.BUILD_RELEASE_JOBS))
 
     def __str__(self):
         return "%s[%s]" % (self.release, self.uuid)
@@ -207,7 +208,9 @@ class BuildRelease(models.Model):
             if jobname.endswith("-piuparts"):
                 return False
             return self._append_falied(jbi.projectname)
-        if jobname.endswith("-repos") or jobname in settings.RELEASE_JOBS:
+        is_repos = jobname.endswith("-repos")
+        is_rj = jobname in settings.BUILD_RELEASE_JOBS
+        if is_repos or is_rj:
             if jbi.result in ["SUCCESS", "UNSTABLE"]:
                 return self._append_built(jbi.projectname)
         return False
@@ -236,7 +239,7 @@ class BuildRelease(models.Model):
     @property
     def next(self):
         failed_projects = self.failed_projects_list
-        if any(job in failed_projects for job in settings.RELEASE_JOBS):
+        if any(job in failed_projects for job in settings.BUILD_RELEASE_JOBS):
             logger.info("release has failed release_jobs, stop sending jobs")
             return
         res = self._next()

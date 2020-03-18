@@ -15,17 +15,16 @@
 import logging
 
 from celery import shared_task
-from django.conf import settings
 
-from build.models.br import BuildRelease
-from build.utils import trigger_build
-from build.utils import trigger_copy_deps
-from repoapi.celery import app
+from .conf import settings
+from .models.br import BuildRelease
+from .utils import trigger_build
+from .utils import trigger_copy_deps
 
 logger = logging.getLogger(__name__)
 
 
-@app.task(bind=True)
+@shared_task(bind=True, ignore_result=True)
 def build_release(self, pk):
     br = BuildRelease.objects
     try:

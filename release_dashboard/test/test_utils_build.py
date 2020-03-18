@@ -12,13 +12,12 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this prograproj.  If not, see <http://www.gnu.org/licenses/>.
-
 from django.test import TestCase
-from release_dashboard.utils import build
+
+from ..utils import build
 
 
 class UtilsBuildTestCase(TestCase):
-
     def test_is_ngcp_project(self):
-        self.assertFalse(build.is_ngcp_project('fake'))
-        self.assertTrue(build.is_ngcp_project('kamailio'))
+        self.assertFalse(build.is_ngcp_project("fake"))
+        self.assertTrue(build.is_ngcp_project("kamailio"))

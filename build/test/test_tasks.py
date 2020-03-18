@@ -18,7 +18,7 @@ from unittest.mock import patch
 from django.test import override_settings
 from django.test import TestCase
 
-from build.models import BuildRelease
+from ..models import BuildRelease
 from repoapi.models import JenkinsBuildInfo
 
 

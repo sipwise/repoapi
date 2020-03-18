@@ -1,20 +1,22 @@
 # Copyright (C) 2016 The Sipwise Team - http://sipwise.com
-
+#
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or (at your option)
 # any later version.
-
+#
 # This program is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 # more details.
-
+#
 # You should have received a copy of the GNU General Public License along
 # with this prograproj.  If not, see <http://www.gnu.org/licenses/>.
 import copy
+
 from django.test import TestCase
-from release_dashboard.models import Project
+
+from ..models import Project
 
 GERRIT_REST_TAGS = """
 )]}'
@@ -27,14 +29,7 @@ GERRIT_REST_TAGS = """
   }
 ]
 """
-FILTERED_TAGS = [
-    {
-        "ref": "refs/tags/mr2.0.0"
-    },
-    {
-        "ref": "refs/tags/mr1.0.0"
-    }
-]
+FILTERED_TAGS = [{"ref": "refs/tags/mr2.0.0"}, {"ref": "refs/tags/mr1.0.0"}]
 GERRIT_REST_BRANCHES = """
 )]}'
 [
@@ -47,17 +42,12 @@ GERRIT_REST_BRANCHES = """
 ]
 """
 FILTERED_BRANCHES = [
-    {
-        "ref": "refs/heads/master"
-    },
-    {
-        "ref": "refs/heads/vseva/1789"
-    }
+    {"ref": "refs/heads/master"},
+    {"ref": "refs/heads/vseva/1789"},
 ]
 
 
 class ProjectTestCase(TestCase):
-
     def test_create(self):
         proj = Project.objects.create(name="fake")
         self.assertEquals(proj.name, "fake")
@@ -66,7 +56,7 @@ class ProjectTestCase(TestCase):
         proj = Project.objects.create(name="fake", json_tags=FILTERED_TAGS)
         self.assertEquals(proj.name, "fake")
         self.assertIsInstance(proj.tags, list)
-        self.assertCountEqual(proj.tags, ["mr2.0.0", "mr1.0.0", ])
+        self.assertCountEqual(proj.tags, ["mr2.0.0", "mr1.0.0"])
 
     def test_tags_null(self):
         proj = Project.objects.create(name="fake")
@@ -75,8 +65,9 @@ class ProjectTestCase(TestCase):
         self.assertCountEqual(proj.tags, [])
 
     def test_branches(self):
-        proj = Project.objects.create(name="fake",
-                                      json_branches=FILTERED_BRANCHES)
+        proj = Project.objects.create(
+            name="fake", json_branches=FILTERED_BRANCHES
+        )
         self.assertEquals(proj.name, "fake")
         self.assertIsInstance(proj.branches, list)
         self.assertCountEqual(proj.branches, ["vseva/1789", "master"])
@@ -93,24 +84,27 @@ class ProjectTestCase(TestCase):
 
     def test_filter_values(self):
         values = copy.deepcopy(FILTERED_TAGS)
-        res = Project._filter_values(FILTERED_TAGS, '^refs/tags/(.+)$')
-        self.assertEquals(res, ['mr2.0.0', 'mr1.0.0'])
+        res = Project._filter_values(FILTERED_TAGS, "^refs/tags/(.+)$")
+        self.assertEquals(res, ["mr2.0.0", "mr1.0.0"])
         values.append({"ref": "no/no"})
-        res = Project._filter_values(values, '^refs/tags/(.+)$')
-        self.assertEquals(res, ['mr2.0.0', 'mr1.0.0'])
+        res = Project._filter_values(values, "^refs/tags/(.+)$")
+        self.assertEquals(res, ["mr2.0.0", "mr1.0.0"])
 
     def test_filter_values_regex(self):
         values = copy.deepcopy(FILTERED_TAGS)
-        res = Project._filter_values(FILTERED_TAGS, '^refs/tags/(.+)$',
-                                     r'^mr[0-9]+\.[0-9]+\.[0-9]+$')
-        self.assertEquals(res, ['mr2.0.0', 'mr1.0.0'])
+        res = Project._filter_values(
+            FILTERED_TAGS, "^refs/tags/(.+)$", r"^mr[0-9]+\.[0-9]+\.[0-9]+$"
+        )
+        self.assertEquals(res, ["mr2.0.0", "mr1.0.0"])
         values.append({"ref": "refs/tags/3.7.8"})
-        res = Project._filter_values(values, '^refs/tags/(.+)$',
-                                     r'^mr[0-9]+\.[0-9]+\.[0-9]+$')
-        self.assertEquals(res, ['mr2.0.0', 'mr1.0.0'])
-        res = Project._filter_values(values, '^refs/tags/(.+)$',
-                                     r'^[0-9]+\.[0-9]+\.[0-9]+$')
-        self.assertEquals(res, ['3.7.8'])
+        res = Project._filter_values(
+            values, "^refs/tags/(.+)$", r"^mr[0-9]+\.[0-9]+\.[0-9]+$"
+        )
+        self.assertEquals(res, ["mr2.0.0", "mr1.0.0"])
+        res = Project._filter_values(
+            values, "^refs/tags/(.+)$", r"^[0-9]+\.[0-9]+\.[0-9]+$"
+        )
+        self.assertEquals(res, ["3.7.8"])
 
     def test_tags_set(self):
         proj = Project.objects.create(name="fake")
@@ -135,11 +129,9 @@ class ProjectTestCase(TestCase):
             {"ref": "refs/heads/mr0.1.1"},
             {"ref": "refs/heads/vseva/nono"},
         ]
-        proj = Project.objects.create(name="fake",
-                                      json_branches=tmp)
+        proj = Project.objects.create(name="fake", json_branches=tmp)
         self.assertEquals(proj.name, "fake")
-        self.assertCountEqual(proj.branches_mrXX(),
-                              ["mr0.1", ])
+        self.assertCountEqual(proj.branches_mrXX(), ["mr0.1"])
 
     def test_branches_mrXXX(self):
         tmp = [
@@ -148,8 +140,6 @@ class ProjectTestCase(TestCase):
             {"ref": "refs/heads/mr0.1.1"},
             {"ref": "refs/heads/vseva/nono"},
         ]
-        proj = Project.objects.create(name="fake",
-                                      json_branches=tmp)
+        proj = Project.objects.create(name="fake", json_branches=tmp)
         self.assertEquals(proj.name, "fake")
-        self.assertCountEqual(proj.branches_mrXXX(),
-                              ["mr0.1.1", ])
+        self.assertCountEqual(proj.branches_mrXXX(), ["mr0.1.1"])
