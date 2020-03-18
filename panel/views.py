@@ -37,7 +37,7 @@ def release_uuid(request, _uuid):
         "stats_queued": True,
         "build_release": br,
         "projects": projects,
-        "release_jobs_size": len(settings.RELEASE_JOBS),
+        "release_jobs_size": len(settings.BUILD_RELEASE_JOBS),
         "release_jobs": release_jobs,
         "total": len(br.projects_list),
         "queued_projects": queued_projects,

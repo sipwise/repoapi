@@ -90,10 +90,6 @@ GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = join(BASE_DIR, "/etc/jenkins_jobs/workfront.ini")
 WORKFRONT_NOTE = True
 
-# build app
-BUILD_KEY_AUTH = True
-REPOS_SCRIPTS_CONFIG_DIR = "/usr/share/sipwise-repos-scripts/config"
-
 # celery
 BROKER_URL = server_config.get("server", "BROKER_URL")
 CELERYBEAT_SCHEDULE = {

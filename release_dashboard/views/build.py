@@ -32,7 +32,7 @@ from . import regex_master
 from . import regex_mr
 from build.models import BuildRelease
 from build.utils import ReleaseConfig
-from release_dashboard.forms import rd_settings
+from release_dashboard.conf import settings
 from release_dashboard.forms import trunk_build_deps
 from release_dashboard.forms import trunk_projects
 from release_dashboard.forms.build import BuildDepForm
@@ -81,7 +81,7 @@ def build_release(request, release):
 @login_required
 @require_http_methods(["POST"])
 def hotfix_build(request, branch, project):
-    if project not in rd_settings["projects"]:
+    if project not in settings.RELEASE_DASHBOARD_PROJECTS:
         error = "repo:%s not valid" % project
         logger.error(error)
         return HttpResponseNotFound(error)
@@ -134,16 +134,19 @@ def build_deps_old(request, tag_only=False):
     if request.method == "POST":
         form = BuildDepForm(request.POST)
         if form.is_valid():
-            context = _build_logic(form, rd_settings["build_deps"])
+            context = _build_logic(form, settings.RELEASE_DASHBOARD_BUILD_DEPS)
         else:
             context = {"error": "form validation error"}
         return render(request, "release_dashboard/build_result.html", context)
     else:
         context = {
             "projects": _projects_versions(
-                rd_settings["build_deps"], regex_mr, True, not tag_only,
+                settings.RELEASE_DASHBOARD_BUILD_DEPS,
+                regex_mr,
+                True,
+                not tag_only,
             ),
-            "debian": rd_settings["debian_supported"],
+            "debian": settings.RELEASE_DASHBOARD_DEBIAN_SUPPORTED,
         }
         _common_versions(context, True, not tag_only)
         return render(request, "release_dashboard/build_deps.html", context)
@@ -151,7 +154,9 @@ def build_deps_old(request, tag_only=False):
 
 @login_required
 def hotfix(request):
-    prj_list = _projects_versions(rd_settings["projects"], regex_hotfix)
+    prj_list = _projects_versions(
+        settings.RELEASE_DASHBOARD_PROJECTS, regex_hotfix
+    )
     context = {"projects": prj_list}
     return render(request, "release_dashboard/hotfix.html", context)
 
@@ -162,16 +167,19 @@ def build_release_old(request, tag_only=False):
     if request.method == "POST":
         form = BuildReleaseForm(request.POST)
         if form.is_valid():
-            context = _build_logic(form, rd_settings["projects"])
+            context = _build_logic(form, settings.RELEASE_DASHBOARD_PROJECTS)
         else:
             context = {"error": "form validation error"}
         return render(request, "release_dashboard/build_result.html", context)
     else:
         context = {
             "projects": _projects_versions(
-                rd_settings["projects"], regex_mr, True, not tag_only,
+                settings.RELEASE_DASHBOARD_PROJECTS,
+                regex_mr,
+                True,
+                not tag_only,
             ),
-            "debian": rd_settings["debian_supported"],
+            "debian": settings.RELEASE_DASHBOARD_DEBIAN_SUPPORTED,
         }
         _common_versions(context, True, not tag_only)
         if tag_only:
@@ -187,7 +195,7 @@ def refresh_all(request):
     else:
         template = "release_dashboard/refresh.html"
         projects = []
-        for project in rd_settings["projects"]:
+        for project in settings.RELEASE_DASHBOARD_PROJECTS:
             info = {"name": project, "tags": None}
             projects.append(info)
         return render(request, template, {"projects": projects})
@@ -204,7 +212,7 @@ def build_trunk_deps_old(request):
     if request.method == "POST":
         form = BuildTrunkDepForm(request.POST)
         if form.is_valid():
-            context = _build_logic(form, rd_settings["build_deps"])
+            context = _build_logic(form, settings.RELEASE_DASHBOARD_BUILD_DEPS)
         else:
             context = {"error": "form validation error"}
         return render(request, "release_dashboard/build_result.html", context)
@@ -213,7 +221,7 @@ def build_trunk_deps_old(request):
         context = {
             "projects": _projects_versions(trunk_build_deps, regex_master,),
             "common_versions": {"tags": [], "branches": ["master"]},
-            "debian": rd_settings["debian_supported"],
+            "debian": settings.RELEASE_DASHBOARD_DEBIAN_SUPPORTED,
         }
         return render(request, template, context)
 
@@ -231,6 +239,6 @@ def build_trunk_release_old(request):
         context = {
             "projects": _projects_versions(trunk_projects, regex_master,),
             "common_versions": {"tags": [], "branches": ["master"]},
-            "debian": rd_settings["debian_supported"],
+            "debian": settings.RELEASE_DASHBOARD_DEBIAN_SUPPORTED,
         }
         return render(request, "release_dashboard/build_trunk.html", context)
