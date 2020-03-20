@@ -37,12 +37,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-TESTING_APPS = [
-    "django_jenkins",
-]
-INSTALLED_APPS.extend(TESTING_APPS)  # noqa
-INSTALLED_APPS.extend(PROJECT_APPS)  # noqa
-
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
@@ -52,13 +46,6 @@ DATABASES = {
         "NAME": join(BASE_DIR, "db.sqlite3"),
     }
 }
-
-# django-jenkins
-JENKINS_TASKS = (
-    "django_jenkins.tasks.run_pylint",
-    "django_jenkins.tasks.run_flake8",
-)
-PYLINT_RCFILE = "pylint.cfg"
 
 DJANGO_LOG_LEVEL = "DEBUG"
 
