@@ -18,6 +18,7 @@ from .views import build
 from .views import docker
 from .views import Index
 
+app_name = "release_dashboard"
 urlpatterns = [
     url(r"^$", Index.as_view(), name="index"),
     url(r"^old/$", Index.as_view(old_links=True), name="index_old"),

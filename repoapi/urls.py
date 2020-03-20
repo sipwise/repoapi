@@ -1,12 +1,15 @@
 # Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+#
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or (at your option)
 # any later version.
+#
 # This program is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 # more details.
+#
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import object_tools
@@ -87,23 +90,20 @@ api_patterns = [
         docker.DockerTagDetail.as_view(),
         name="dockertag-detail",
     ),
-    url(r"^build/", include("build.urls", namespace="build")),
+    url(r"^build/", include("build.urls")),
 ]
 
 api_patterns = format_suffix_patterns(api_patterns)
 
 urlpatterns = [
-    url(r"^object-tools/", include(object_tools.tools.urls)),
-    url(r"^admin/", include(admin.site.urls)),
+    url(r"^object-tools/", object_tools.tools.urls),
+    url(r"^admin/", admin.site.urls),
     url(r"^", include(api_patterns)),
     url(
         r"^api-auth/",
         include("rest_framework.urls", namespace="rest_framework"),
     ),
     url(r"^docs/", views.schema_view),
-    url(r"^panel/", include("panel.urls", namespace="panel")),
-    url(
-        r"^release_panel/",
-        include("release_dashboard.urls", namespace="release_dashboard"),
-    ),
+    url(r"^panel/", include("panel.urls")),
+    url(r"^release_panel/", include("release_dashboard.urls"),),
 ]
