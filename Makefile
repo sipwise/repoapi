@@ -18,8 +18,8 @@ venv_dev: requirements/dev.txt
 ###################################
 
 test:
-	RESULTS=$(RESULTS) ./manage.py jenkins --enable-coverage --noinput --output-dir $(RESULTS) \
-		--settings="repoapi.settings.test"
+	RESULTS=$(RESULTS) pytest --cov=repoapi --junitxml=$(RESULTS)/junit.xml \
+		--pep8 --pylint
 
 ###################################
 
