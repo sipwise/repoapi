@@ -19,16 +19,6 @@ from os.path import dirname
 
 BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
 
-# Application definition
-# django-jenkins
-PROJECT_APPS = [
-    "repoapi",
-    "hotfix",
-    "panel",
-    "release_dashboard",
-    "build",
-]
-
 INSTALLED_APPS = [
     "object_tools",
     "django.contrib.admin",
@@ -46,6 +36,11 @@ INSTALLED_APPS = [
     "django_filters",
     "jsonify",
     "export",
+    "repoapi",
+    "hotfix",
+    "panel",
+    "release_dashboard",
+    "build",
 ]
 
 MIDDLEWARE_CLASSES = (

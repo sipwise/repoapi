@@ -44,8 +44,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = [".mgm.sipwise.com"]
 
-INSTALLED_APPS.extend(PROJECT_APPS)  # noqa
-
 LOGGING["loggers"]["repoapi"]["level"] = os.getenv(  # noqa
     "DJANGO_LOG_LEVEL", "INFO"
 )  # noqa

@@ -1,9 +1,2 @@
 -r common.txt
-# django-jenkins is not maintained right now
-# this has some comunity fixes applied
--e git://github.com/linuxmaniac/django-jenkins.git#egg=django-jenkins
-flake8
-pep8
-pylint
-coverage
 mock

@@ -5,10 +5,18 @@ FROM docker.mgm.sipwise.com/sipwise-buster:latest
 # is updated with the current date. It will force refresh of all
 # of the base images and things like `apt-get update` won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2020-03-06
+ENV REFRESHED_AT 2020-03-20
+
+# test execution; we need the backport of python3-junitxml from our own
+# repository since it's not part of Debian/buster
+# files that get-code generates
+COPY t/sources.list.d/builddeps.list /etc/apt/sources.list.d/
+COPY t/sources.list.d/preferences /etc/apt/preferences.d/
 
 RUN apt-get update
 RUN apt-get install --assume-yes python3 python3-dev \
+	python3-pytest python3-pytest-django python3-pytest-pep8 \
+	python3-pytest-pylint python3-pytest-cov python3-junitxml \
 	python3-pip python3-virtualenv virtualenv sqlite3 git tmux
 
 # Get pip to download and install requirements:
