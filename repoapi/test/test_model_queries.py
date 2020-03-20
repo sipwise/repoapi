@@ -73,7 +73,7 @@ class JBIQueriesTestCase(BaseTest):
 
     def test_latest_uuid(self):
         date = parse_datetime("2015-05-04T17:04:57.802Z")
-        self.assertEquals(
+        self.assertEqual(
             JenkinsBuildInfo.objects.latest_uuid("mr3.1-fake", "fake"),
             {"tag": "UUID1", "date": date},
         )
@@ -82,25 +82,25 @@ class JBIQueriesTestCase(BaseTest):
         jbi = JenkinsBuildInfo.objects.get(pk=1)
         jbi.date = datetime.now()
         jbi.save()
-        self.assertEquals(JenkinsBuildInfo.objects.count(), 5)
+        self.assertEqual(JenkinsBuildInfo.objects.count(), 5)
         JenkinsBuildInfo.objects.purge_release(
             "mr3.1-fake", timedelta(weeks=3)
         )
-        self.assertEquals(JenkinsBuildInfo.objects.count(), 1)
+        self.assertEqual(JenkinsBuildInfo.objects.count(), 1)
 
     def test_purge_release_none(self):
         jbi = JenkinsBuildInfo.objects.get(pk=1)
         jbi.param_release = None
         jbi.save()
-        self.assertEquals(
+        self.assertEqual(
             JenkinsBuildInfo.objects.filter(
                 param_release__isnull=True
             ).count(),
             1,
         )
-        self.assertEquals(JenkinsBuildInfo.objects.count(), 5)
+        self.assertEqual(JenkinsBuildInfo.objects.count(), 5)
         JenkinsBuildInfo.objects.purge_release(None, timedelta(weeks=3))
-        self.assertEquals(JenkinsBuildInfo.objects.count(), 4)
+        self.assertEqual(JenkinsBuildInfo.objects.count(), 4)
 
 
 @override_settings(DEBUG=True)
@@ -156,7 +156,7 @@ class JBIQueriesUUIDTest(BaseTest):
 
     def test_latest_uuid(self):
         date = parse_datetime("2015-05-04T17:04:57.802Z")
-        self.assertEquals(
+        self.assertEqual(
             JenkinsBuildInfo.objects.latest_uuid(
                 self.release, "kamailio", release_uuid=self.release_uuid
             ),
