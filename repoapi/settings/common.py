@@ -36,11 +36,11 @@ INSTALLED_APPS = [
     "django_filters",
     "jsonify",
     "export",
-    "repoapi",
-    "hotfix",
-    "panel",
-    "release_dashboard",
-    "build",
+    "repoapi.apps.RepoAPIConfig",
+    "hotfix.apps.HotfixConfig",
+    "panel.apps.PanelConfig",
+    "release_dashboard.apps.ReleaseDashboardConfig",
+    "build.apps.ReleaseConfig",
 ]
 
 MIDDLEWARE_CLASSES = (
