@@ -96,9 +96,9 @@ BUILD_KEY_AUTH = True
 REPOS_SCRIPTS_CONFIG_DIR = join(BASE_DIR, "build", "fixtures", "config")
 
 # celery
-BROKER_BACKEND = "memory"
-CELERY_ALWAYS_EAGER = True
-CELERY_EAGER_PROPAGATES_EXCEPTIONS = True
+CELERY_BROKER_URL = "memory://localhost/"
+CELERY_TASK_ALWAYS_EAGER = True
+CELERY_TASK_EAGER_PROPAGATES = True
 JBI_BASEDIR = join(RESULTS_DIR, "jbi_files")
 JBI_ARTIFACT_JOBS = [
     "fake-release-tools-runner",

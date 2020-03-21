@@ -93,8 +93,8 @@ BUILD_KEY_AUTH = True
 REPOS_SCRIPTS_CONFIG_DIR = "/usr/share/sipwise-repos-scripts/config"
 
 # celery
-BROKER_URL = server_config.get("server", "BROKER_URL")
-CELERYBEAT_SCHEDULE = {
+CELERY_BROKER_URL = server_config.get("server", "BROKER_URL")
+CELERY_BEAT_SCHEDULE = {
     # Executes every Sunday morning at 7:30 A.M
     "purge-trunk": {
         "task": "repoapi.tasks.jbi_purge",

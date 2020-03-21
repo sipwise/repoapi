@@ -63,7 +63,6 @@ def fake_manifest(url):
     return ("{}", uuid.uuid4())
 
 
-@override_settings(CELERY_EAGER_PROPAGATES_EXCEPTIONS=True)
 @override_settings(DOCKER_REGISTRY_URL="{}")
 @override_settings(DEBUG=False)
 class TasksDockerTestCase(TestCase):
