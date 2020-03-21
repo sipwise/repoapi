@@ -37,10 +37,10 @@ INSTALLED_APPS = [
     "jsonify",
     "export",
     "repoapi",
-    "hotfix",
-    "panel",
-    "release_dashboard",
-    "build",
+    "hotfix.apps.HotfixConfig",
+    "panel.apps.PanelConfig",
+    "release_dashboard.apps.ReleaseDashboardConfig",
+    "build.apps.ReleaseConfig",
 ]
 
 MIDDLEWARE_CLASSES = (
