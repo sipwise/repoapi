@@ -145,14 +145,6 @@ DEBIAN_RELEASES = (
     "wheezy",
     "squeeze",
 )
-# sipwise-repos-scripts config files we don't want
-RELEASES_SKIP = [
-    "internal",
-    "mr0.1",
-]
-RELEASE_JOBS = [
-    "release-copy-debs-yml",
-]
 RELEASE_DASHBOARD_SETTINGS = {
     "debian_supported": DEBIAN_RELEASES,
     "build_deps": (

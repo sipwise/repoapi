@@ -15,8 +15,8 @@
 import logging
 
 from celery import shared_task
-from django.conf import settings
 
+from .conf import settings
 from build.models.br import BuildRelease
 from build.utils import trigger_build
 from build.utils import trigger_copy_deps

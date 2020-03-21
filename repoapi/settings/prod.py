@@ -90,7 +90,7 @@ WORKFRONT_NOTE = True
 
 # build app
 BUILD_KEY_AUTH = True
-REPOS_SCRIPTS_CONFIG_DIR = "/usr/share/sipwise-repos-scripts/config"
+BUILD_REPOS_SCRIPTS_CONFIG_DIR = "/usr/share/sipwise-repos-scripts/config"
 
 # celery
 CELERY_BROKER_URL = server_config.get("server", "BROKER_URL")

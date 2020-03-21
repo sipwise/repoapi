@@ -93,7 +93,7 @@ DOCKER_IMAGES = {
 
 # build app
 BUILD_KEY_AUTH = True
-REPOS_SCRIPTS_CONFIG_DIR = join(BASE_DIR, "build", "fixtures", "config")
+BUILD_REPOS_SCRIPTS_CONFIG_DIR = join(BASE_DIR, "build", "fixtures", "config")
 
 # celery
 CELERY_BROKER_URL = "memory://localhost/"
