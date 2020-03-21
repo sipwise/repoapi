@@ -75,7 +75,7 @@ class ReleaseConfigTestCase(SimpleTestCase):
         "check-tools",
     ]
 
-    @override_settings(RELEASES_SKIP=["mr0.1"])
+    @override_settings(BUILD_RELEASES_SKIP=["mr0.1"])
     def test_supported_releases(self):
         supported = [
             "trunk",
