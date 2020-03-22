@@ -1,18 +1,20 @@
 # Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+#
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or (at your option)
 # any later version.
+#
 # This program is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 # more details.
+#
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import logging
 import re
 
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.http import JsonResponse
@@ -26,9 +28,9 @@ from . import _common_versions
 from . import _hash_versions
 from . import _projects_versions
 from . import regex_mr
+from ..conf import settings
 from release_dashboard import serializers
 from release_dashboard import tasks
-from release_dashboard.forms import docker_projects
 from release_dashboard.forms.docker import BuildDockerForm
 from release_dashboard.models import DockerImage
 from release_dashboard.models import DockerTag
@@ -80,14 +82,20 @@ def build_docker_images(request):
     if request.method == "POST":
         form = BuildDockerForm(request.POST)
         if form.is_valid():
-            context = _build_docker_logic(form, docker_projects)
+            context = _build_docker_logic(
+                form, settings.RELEASE_DASHBOARD_DOCKER_PROJECTS
+            )
         else:
             context = {"error": "form validation error"}
         return render(request, "release_dashboard/build_result.html", context)
     else:
         context = {
             "projects": _projects_versions(
-                docker_projects, regex_mr, False, True, True,
+                settings.RELEASE_DASHBOARD_DOCKER_PROJECTS,
+                regex_mr,
+                False,
+                True,
+                True,
             ),
             "common_versions": {"tags": [], "branches": ["master"]},
             "docker": True,
@@ -104,7 +112,7 @@ def refresh_all(request):
     else:
         template = "release_dashboard/refresh_docker.html"
         projects = []
-        for project in docker_projects:
+        for project in settings.RELEASE_DASHBOARD_DOCKER_PROJECTS:
             info = {"name": project, "tags": None}
             projects.append(info)
         return render(request, template, {"projects": projects})
