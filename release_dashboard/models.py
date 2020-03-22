@@ -1,24 +1,27 @@
 # Copyright (C) 2016 The Sipwise Team - http://sipwise.com
-
+#
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or (at your option)
 # any later version.
-
+#
 # This program is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 # more details.
-
+#
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import json
 import logging
 import re
-import json
 from datetime import datetime
+
 from django.db import models
-from django_extensions.db.fields.json import JSONField
 from django_extensions.db.fields import ModificationDateTimeField
+from django_extensions.db.fields.json import JSONField
+
+from .conf import settings
 
 logger = logging.getLogger(__name__)
 
@@ -56,7 +59,9 @@ class Project(models.Model):
 
     @property
     def tags(self):
-        return Project._filter_values(self.json_tags, '^refs/tags/(.+)$')
+        return Project._filter_values(
+            self.json_tags, settings.RELEASE_DASHBOARD_FILTER_TAGS
+        )
 
     @tags.setter
     def tags(self, value):
@@ -64,33 +69,38 @@ class Project(models.Model):
 
     @property
     def branches(self):
-        return Project._filter_values(self.json_branches, '^refs/heads/(.+)$')
+        return Project._filter_values(
+            self.json_branches, settings.RELEASE_DASHBOARD_FILTER_BRANCHES
+        )
 
     @branches.setter
     def branches(self, value):
         self.json_branches = Project._get_filtered_json(value)
 
     def filter_tags(self, regex):
-        return Project._filter_values(self.json_tags,
-                                      '^refs/tags/(.+)$', regex)
+        return Project._filter_values(
+            self.json_tags, settings.RELEASE_DASHBOARD_FILTER_TAGS, regex
+        )
 
     def filter_branches(self, regex):
-        return Project._filter_values(self.json_branches,
-                                      '^refs/heads/(.+)$', regex)
+        return Project._filter_values(
+            self.json_branches,
+            settings.RELEASE_DASHBOARD_FILTER_BRANCHES,
+            regex,
+        )
 
     def filter_docker_images(self, images):
         r = re.compile(self.name)
         return filter(r.search, images)
 
     def branches_mrXX(self):
-        return self.filter_branches(r'^mr[0-9]+\.[0-9]+$')
+        return self.filter_branches(settings.RELEASE_DASHBOARD_FILTER_MRXX)
 
     def branches_mrXXX(self):
-        return self.filter_branches(r'^mr[0-9]+\.[0-9]+\.[0-9]+$')
+        return self.filter_branches(settings.RELEASE_DASHBOARD_FILTER_MRXXX)
 
 
 class DockerImageManager(models.Manager):
-
     def images_with_tags(self, project=None):
         qs = self.get_queryset().filter(dockertag__isnull=False)
         if project:
@@ -109,7 +119,7 @@ class DockerImage(models.Model):
 
     @property
     def tags(self):
-        res = self.dockertag_set.all().values_list('name', flat=True)
+        res = self.dockertag_set.all().values_list("name", flat=True)
         return res
 
 
@@ -130,11 +140,9 @@ class DockerTag(models.Model):
         if self.manifests is None:
             return None
         try:
-            value = self.manifests['history'][0]['v1Compatibility']
+            value = self.manifests["history"][0]["v1Compatibility"]
             time = json.loads(value)
-            created = time['created'].split('.')
-            return datetime.strptime(
-                created[0],
-                '%Y-%m-%dT%H:%M:%S')
-        except Exception as e:
+            created = time["created"].split(".")
+            return datetime.strptime(created[0], "%Y-%m-%dT%H:%M:%S")
+        except Exception:
             return None
