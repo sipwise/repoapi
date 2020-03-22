@@ -12,11 +12,11 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from django.conf import settings
 from django.http import HttpResponseNotFound
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 
+from .conf import settings
 from build.models import BuildRelease
 from repoapi.models import JenkinsBuildInfo as jbi
 
