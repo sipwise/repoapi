@@ -12,29 +12,27 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import os
+from os.path import join
 from socket import gethostbyname
 from socket import gethostname
 
-from .test import *  # noqa
+from configurations import values
 
-# pylint: disable=W0401,W0614,C0413
-# avoid having to hardcode an IP address
+from .test import Test
 
-LOGGING["loggers"]["repoapi"]["level"] = os.getenv(  # noqa
-    "DJANGO_LOG_LEVEL", "DEBUG"
-)
 
-# celery
-BROKER_BACKEND = "amqp"
-CELERY_TASK_ALWAYS_EAGER = False
-CELERY_BROKER_URL = "amqp://guest:guest@rabbit"
-JBI_BASEDIR = os.path.join(BASE_DIR, "jbi_files")  # noqa
+class Dev(Test):
+    LOG_LEVEL = values.Value("DEBUG")
+    # celery
+    BROKER_BACKEND = "amqp"
+    CELERY_TASK_ALWAYS_EAGER = False
+    CELERY_BROKER_URL = "amqp://guest:guest@rabbit"
+    JBI_BASEDIR = join(Test.BASE_DIR, "jbi_files")  # noqa
 
-# Enable access when not accessing from localhost:
-ALLOWED_HOSTS = [
-    gethostname(),
-    gethostbyname(gethostname()),
-]
-# or to manually override:
-# ALLOWED_HOSTS = ['172.17.0.3']
+    # Enable access when not accessing from localhost:
+    ALLOWED_HOSTS = [
+        gethostname(),
+        gethostbyname(gethostname()),
+    ]
+    # or to manually override:
+    # ALLOWED_HOSTS = ['172.17.0.3']

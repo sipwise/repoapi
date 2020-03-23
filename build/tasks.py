@@ -20,12 +20,11 @@ from .conf import settings
 from build.models.br import BuildRelease
 from build.utils import trigger_build
 from build.utils import trigger_copy_deps
-from repoapi.celery import app
 
 logger = logging.getLogger(__name__)
 
 
-@app.task(bind=True)
+@shared_task(bind=True, ignore_result=True)
 def build_release(self, pk):
     br = BuildRelease.objects
     try:

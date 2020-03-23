@@ -29,58 +29,62 @@ test_pylint:
 
 deploy: venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
-		./manage.py collectstatic --noinput --settings="repoapi.settings.prod"
+		./manage.py collectstatic --noinput --settings="repoapi.settings"
 	chown www-data:www-data -R ./static_media/
 
 migrate: venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
-		./manage.py migrate --settings="repoapi.settings.prod"
+		./manage.py migrate --settings="repoapi.settings"
 
 load_apikeys: venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
-		./manage.py loaddata $(VAR_DIR)/apikey.json --settings="repoapi.settings.prod"
+		./manage.py loaddata $(VAR_DIR)/apikey.json \
+			--settings="repoapi.settings"
 
 shell: venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
-		./manage.py shell_plus --settings="repoapi.settings.prod"
+		./manage.py shell_plus --settings="repoapi.settings"
 
 ###################################
 
 run_dev: venv_dev
 	IP=$(shell ip a show dev eth0 scope global | grep inet | awk '{print $$2}' | cut -d/ -f1); \
 	source $(VAR_DIR)/venv_dev/bin/activate && \
-	./manage.py runserver_plus $$IP:8000 --settings="repoapi.settings.dev"
+	./manage.py runserver_plus $$IP:8000 --settings="repoapi.settings" \
+		--configuration=Dev
 
 worker_dev: venv_dev
 	source $(VAR_DIR)/venv_dev/bin/activate && \
-	DJANGO_SETTINGS_MODULE=repoapi.settings.dev \
-	$(VAR_DIR)/venv_dev/bin/celery -A repoapi worker \
-		--loglevel=info
+	DJANGO_SETTINGS_MODULE=repoapi.settings DJANGO_CONFIGURATION=Dev \
+	$(VAR_DIR)/venv_dev/bin/celery -A repoapi worker --loglevel=info
 
 monitor_dev: venv_dev
 	IP=$(shell ip a show dev eth0 scope global | grep inet | awk '{print $$2}' | cut -d/ -f1); \
 	source $(VAR_DIR)/venv_dev/bin/activate && \
-	DJANGO_SETTINGS_MODULE=repoapi.settings.dev \
+	DJANGO_SETTINGS_MODULE=repoapi.settings.dev DJANGO_CONFIGURATION=Dev \
 	$(VAR_DIR)/venv_dev/bin/celery -A repoapi flower \
-		--address=$$IP --port=5555 --settings="repoapi.settings.dev"
+		--address=$$IP --port=5555 --settings="repoapi.settings"
 
 makemigrations_dev: venv_dev
 	source $(VAR_DIR)/venv_dev/bin/activate && \
-	./manage.py makemigrations --settings="repoapi.settings.dev"
+	./manage.py makemigrations --settings="repoapi.settings" \
+		--configuration=Dev
 
 migrate_dev: venv_dev
 	source $(VAR_DIR)/venv_dev/bin/activate && \
-	./manage.py migrate --settings="repoapi.settings.dev"
+	./manage.py migrate --settings="repoapi.settings" \
+		--configuration=Dev
 
 shell_dev: venv_dev
 	source $(VAR_DIR)/venv_dev/bin/activate && \
-	./manage.py shell_plus --settings="repoapi.settings.dev"
+	./manage.py shell_plus --settings="repoapi.settings" \
+		--configuration=Dev
 ###################################
 
 # get rid of test files
 clean:
 	find . -type f -name '*.pyc' -exec rm {} \;
-	rm -rf reports install.log
+	rm -rf $(RESULTS) install.log
 
 # also get rid of virtual environments
 distclean dist-clean: clean
