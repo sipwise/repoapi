@@ -4,6 +4,7 @@ django-appconf
 django-assets
 django-celery-beat<2.0
 django-celery-results
+django-configurations
 django-export
 django-extensions
 django-filter

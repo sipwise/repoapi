@@ -12,105 +12,108 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Build paths inside the project like this: join(BASE_DIR, ...)
-import os
 from configparser import RawConfigParser
-from os.path import dirname
 from os.path import join
 from urllib.parse import urlparse
 
 from celery.schedules import crontab
 
-from .common import *  # noqa
+from .common import Common
 
-# pylint: disable=W0401,W0614
 
-BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
+class Prod(Common):
+    VAR_DIR = "/var/lib/repoapi"
+    # Quick-start development settings - unsuitable for production
+    # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-VAR_DIR = "/var/lib/repoapi"
-if not os.path.exists(VAR_DIR):
-    VAR_DIR = BASE_DIR
+    # SECURITY WARNING: don't run with debug turned on in production!
+    DEBUG = False
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
+    ALLOWED_HOSTS = [".mgm.sipwise.com"]
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# read it from external file
-SECRET_KEY = open(join(VAR_DIR, ".secret_key")).read().strip()
+    # Keep ModelBackend around for per-user permissions and maybe a local
+    # superuser.
+    AUTHENTICATION_BACKENDS = (
+        "django_auth_ldap.backend.LDAPBackend",
+        "django.contrib.auth.backends.ModelBackend",
+    )
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+    GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
+    WORKFRONT_CREDENTIALS = join(
+        Common.BASE_DIR, "/etc/jenkins_jobs/workfront.ini"
+    )
+    WORKFRONT_NOTE = True
 
-ALLOWED_HOSTS = [".mgm.sipwise.com"]
+    # build app
+    BUILD_KEY_AUTH = True
+    BUILD_REPOS_SCRIPTS_CONFIG_DIR = "/usr/share/sipwise-repos-scripts/config"
 
-LOGGING["loggers"]["repoapi"]["level"] = os.getenv(  # noqa
-    "DJANGO_LOG_LEVEL", "INFO"
-)  # noqa
-
-server_config = RawConfigParser()
-server_config.read(join(VAR_DIR, "server.ini"))
-JENKINS_URL = server_config.get("server", "JENKINS_URL")
-GERRIT_URL = server_config.get("server", "GERRIT_URL")
-DOCKER_REGISTRY_URL = server_config.get("server", "DOCKER_REGISTRY_URL")
-AUTH_LDAP_SERVER_URI = server_config.get("server", "AUTH_LDAP_SERVER_URI")
-AUTH_LDAP_USER_BASE = server_config.get("server", "AUTH_LDAP_USER_BASE")
-AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s," + AUTH_LDAP_USER_BASE
-BUILD_POOL = server_config.getint("server", "BUILD_POOL")
-
-# Keep ModelBackend around for per-user permissions and maybe a local
-# superuser.
-AUTHENTICATION_BACKENDS = (
-    "django_auth_ldap.backend.LDAPBackend",
-    "django.contrib.auth.backends.ModelBackend",
-)
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": server_config.get("server", "DB_NAME"),
-        "USER": server_config.get("server", "DB_USER"),
-        "PASSWORD": server_config.get("server", "DB_PWD"),
-        "HOST": "localhost",
-        "PORT": "",
+    # celery
+    CELERY_BEAT_SCHEDULE = {
+        # Executes every Sunday morning at 7:30 A.M
+        "purge-trunk": {
+            "task": "repoapi.tasks.jbi_purge",
+            "schedule": crontab(hour=7, minute=30, day_of_week="sunday"),
+            "args": ("none", 4),
+        },
+        "purge-none": {
+            "task": "repoapi.tasks.jbi_purge",
+            "schedule": crontab(hour=7, minute=30, day_of_week="sunday"),
+            "args": (None, 1),
+        },
     }
-}
+    CELERY_TIMEZONE = "UTC"
 
-gerrit_config = RawConfigParser()
-gerrit_config.read(join(VAR_DIR, "gerrit.ini"))
-GERRIT_REST_HTTP_USER = gerrit_config.get("gerrit", "HTTP_USER")
-GERRIT_REST_HTTP_PASSWD = gerrit_config.get("gerrit", "HTTP_PASSWD")
+    JBI_BASEDIR = join(VAR_DIR, "jbi_files")
+    JBI_ARTIFACT_JOBS = [
+        "release-tools-runner",
+    ]
 
-GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
-WORKFRONT_CREDENTIALS = join(BASE_DIR, "/etc/jenkins_jobs/workfront.ini")
-WORKFRONT_NOTE = True
+    @classmethod
+    def post_setup(cls):
+        super(Prod, cls).post_setup()
 
-# build app
-BUILD_KEY_AUTH = True
-BUILD_REPOS_SCRIPTS_CONFIG_DIR = "/usr/share/sipwise-repos-scripts/config"
+        gerrit_config = RawConfigParser()
+        gerrit_config.read(join(cls.VAR_DIR, "gerrit.ini"))
+        cls.GERRIT_REST_HTTP_USER = gerrit_config.get("gerrit", "HTTP_USER")
+        cls.GERRIT_REST_HTTP_PASSWD = gerrit_config.get(
+            "gerrit", "HTTP_PASSWD"
+        )
 
-# celery
-CELERY_BROKER_URL = server_config.get("server", "BROKER_URL")
-CELERY_BEAT_SCHEDULE = {
-    # Executes every Sunday morning at 7:30 A.M
-    "purge-trunk": {
-        "task": "repoapi.tasks.jbi_purge",
-        "schedule": crontab(hour=7, minute=30, day_of_week="sunday"),
-        "args": ("none", 4),
-    },
-    "purge-none": {
-        "task": "repoapi.tasks.jbi_purge",
-        "schedule": crontab(hour=7, minute=30, day_of_week="sunday"),
-        "args": (None, 1),
-    },
-}
-CELERY_TIMEZONE = "UTC"
+        server_config = RawConfigParser()
+        server_config.read(join(cls.VAR_DIR, "server.ini"))
+        cls.JENKINS_URL = server_config.get("server", "JENKINS_URL")
+        cls.GERRIT_URL = server_config.get("server", "GERRIT_URL")
+        cls.DOCKER_REGISTRY_URL = server_config.get(
+            "server", "DOCKER_REGISTRY_URL"
+        )
+        cls.AUTH_LDAP_SERVER_URI = server_config.get(
+            "server", "AUTH_LDAP_SERVER_URI"
+        )
+        cls.AUTHENTICATION_BACKENDS_LDAP_USER_BASE = server_config.get(
+            "server", "AUTH_LDAP_USER_BASE"
+        )
+        cls.AUTH_LDAP_USER_DN_TEMPLATE = (
+            "uid=%(user)s," + cls.AUTH_LDAP_USER_BASE
+        )
+        cls.BUILD_POOL = server_config.getint("server", "BUILD_POOL")
+        cls.CELERY_BROKER_URL = server_config.get("server", "BROKER_URL")
 
-JBI_BASEDIR = join(VAR_DIR, "jbi_files")
-JBI_ARTIFACT_JOBS = [
-    "release-tools-runner",
-]
-JBI_ALLOWED_HOSTS = [urlparse(JENKINS_URL).netloc]
+        cls.JBI_ALLOWED_HOSTS = [urlparse(cls.JENKINS_URL).netloc]
+
+        # Database
+        # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+        cls.DATABASES = {
+            "default": {
+                "ENGINE": "django.db.backends.postgresql_psycopg2",
+                "NAME": server_config.get("server", "DB_NAME"),
+                "USER": server_config.get("server", "DB_USER"),
+                "PASSWORD": server_config.get("server", "DB_PWD"),
+                "HOST": "localhost",
+                "PORT": "",
+            }
+        }
+
+        # SECURITY WARNING: keep the secret key used in production secret!
+        # read it from external file
+        cls.SECRET_KEY = open(join(cls.VAR_DIR, ".secret_key")).read().strip()
