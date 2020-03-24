@@ -12,10 +12,10 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from django.test import TestCase
+from django.test import SimpleTestCase
 
 
-class TestHotfixConf(TestCase):
+class TestHotfixConf(SimpleTestCase):
     def test_django_settings(self):
         from django.conf import settings
 

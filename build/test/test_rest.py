@@ -35,7 +35,7 @@ class APIAuthenticatedTestCase(BaseTest, APITestCase):
         self.client.credentials(HTTP_API_KEY=self.app_key.key)
 
 
-@override_settings(DEBUG=True, JBI_ALLOWED_HOSTS=["fake.local"])
+@override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
 class TestRest(APIAuthenticatedTestCase):
     def setUp(self):
         super(TestRest, self).setUp()
@@ -103,7 +103,7 @@ class TestRest(APIAuthenticatedTestCase):
         self.assertEqual(len(projects), 75)
 
 
-@override_settings(DEBUG=True, JBI_ALLOWED_HOSTS=["fake.local"])
+@override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
 class TestBuildRest(APIAuthenticatedTestCase):
     fixtures = [
         "test_models",
@@ -120,7 +120,7 @@ class TestBuildRest(APIAuthenticatedTestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 
-@override_settings(DEBUG=True, JBI_ALLOWED_HOSTS=["fake.local"])
+@override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
 class TestBuildDeleteRest(APIAuthenticatedTestCase):
     fixtures = [
         "test_models",
@@ -184,7 +184,7 @@ class TestBuildDeleteRest(APIAuthenticatedTestCase):
         )
 
 
-@override_settings(DEBUG=True, JBI_ALLOWED_HOSTS=["fake.local"])
+@override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
 class TestBuildPatchRest(APIAuthenticatedTestCase):
     fixtures = [
         "test_models",

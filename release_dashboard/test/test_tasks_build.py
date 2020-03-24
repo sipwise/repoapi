@@ -12,13 +12,13 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this prograproj.  If not, see <http://www.gnu.org/licenses/>.
-from django.test import TestCase
+from django.test import SimpleTestCase
 from mock import patch
 
 from release_dashboard import tasks
 
 
-class TasksBuildTestCase(TestCase):
+class TasksBuildTestCase(SimpleTestCase):
     @patch("release_dashboard.tasks.gerrit_fetch_info")
     def test_gerrit_fetch_all(self, gfi):
         result = tasks.gerrit_fetch_all.delay()

@@ -12,10 +12,10 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from django.test import TestCase
+from repoapi.test.base import BaseTest
 
 
-class TestBuildConf(TestCase):
+class TestBuildConf(BaseTest):
     def test_django_settings(self):
         from django.conf import settings
 
