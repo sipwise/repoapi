@@ -12,13 +12,12 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this prograproj.  If not, see <http://www.gnu.org/licenses/>.
-from django.test import override_settings
-from django.test import TestCase
 from django.urls import reverse
 
+from repoapi.test.base import BaseTest
 
-@override_settings(DEBUG=True)
-class ReleaseTest(TestCase):
+
+class ReleaseTest(BaseTest):
     fixtures = ["test_model_queries_uuid"]
 
     def test_no_release(self):

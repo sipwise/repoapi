@@ -15,14 +15,12 @@
 from datetime import datetime
 from datetime import timedelta
 
-from django.test import override_settings
 from django.utils.dateparse import parse_datetime
 
 from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
 
 
-@override_settings(DEBUG=True)
 class JBIQueriesTestCase(BaseTest):
     fixtures = ["test_model_queries.json"]
 
@@ -103,7 +101,6 @@ class JBIQueriesTestCase(BaseTest):
         self.assertEqual(JenkinsBuildInfo.objects.count(), 4)
 
 
-@override_settings(DEBUG=True)
 class JBIQueriesUUIDTest(BaseTest):
     fixtures = ["test_model_queries_uuid.json"]
     release = "release-mr8.1"

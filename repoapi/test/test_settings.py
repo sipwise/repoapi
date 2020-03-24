@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,26 +12,36 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import os
-import shutil
-from tempfile import mkdtemp
+import unittest
 
 from django.test import override_settings
-from django.test import TestCase
-
-JBI_BASEDIR = mkdtemp(dir=os.environ.get("RESULTS"))
+from django.test import SimpleTestCase
 
 
-@override_settings(DEBUG=True, JBI_BASEDIR=JBI_BASEDIR)
-class BaseTest(TestCase):
-    def setUp(self):
+class SettingsTest(SimpleTestCase):
+    def test_debug_from_test(self):
+        from ..settings.test import DEBUG
+
+        self.assertTrue(DEBUG)
+
+    @unittest.expectedFailure
+    def test_debug(self):
         from django.conf import settings
 
-        if not os.path.exists(settings.JBI_BASEDIR):
-            os.makedirs(settings.JBI_BASEDIR)
+        self.assertTrue(settings.DEBUG)
 
-    def tearDown(self):
+    @override_settings(DEBUG=False)
+    def test_debug_override(self):
         from django.conf import settings
 
-        if os.path.exists(settings.JBI_BASEDIR):
-            shutil.rmtree(settings.JBI_BASEDIR)
+        self.assertFalse(settings.DEBUG)
+
+    def test_common_value_from_django(self):
+        from django.conf import settings
+
+        self.assertEqual(settings.LANGUAGE_CODE, "en-us")
+
+    def test_common_value(self):
+        from django.conf import settings
+
+        self.assertEqual(settings.JENKINS_TOKEN, "sipwise_jenkins_ci")

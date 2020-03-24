@@ -63,7 +63,6 @@ class CommonReleaseTest(SimpleTestCase):
         self.assertIsNone(val)
 
 
-@override_settings(DEBUG=True)
 class ReleaseConfigTestCase(SimpleTestCase):
     build_deps = [
         "data-hal",

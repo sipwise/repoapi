@@ -15,7 +15,6 @@
 import uuid
 
 from django.test import override_settings
-from django.test import TestCase
 from mock import call
 from mock import patch
 
@@ -23,6 +22,7 @@ from release_dashboard import tasks
 from release_dashboard.models import DockerImage
 from release_dashboard.models import DockerTag
 from release_dashboard.models import Project
+from repoapi.test.base import BaseTest
 
 DOCKER_REST_CATALOG = """
 {
@@ -63,9 +63,8 @@ def fake_manifest(url):
     return ("{}", uuid.uuid4())
 
 
-@override_settings(DOCKER_REGISTRY_URL="{}")
-@override_settings(DEBUG=False)
-class TasksDockerTestCase(TestCase):
+@override_settings(DEBUG=False, DOCKER_REGISTRY_URL="{}")
+class TasksDockerTestCase(BaseTest):
     @patch(
         "release_dashboard.utils.docker.get_docker_manifests_info",
         side_effect=fake_manifest,

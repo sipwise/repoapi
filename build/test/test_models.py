@@ -16,14 +16,13 @@ from unittest.mock import MagicMock
 from unittest.mock import patch
 
 from django.test import override_settings
-from django.test import TestCase
 
 from build.models import BuildRelease
 from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
 
 
-@override_settings(DEBUG=True, JBI_ALLOWED_HOSTS=["fake.local"])
+@override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
 @patch("repoapi.utils.dlfile")
 class BuildReleaseManagerTestCase(BaseTest):
     fixtures = ["test_models", "test_models_jbi"]
@@ -61,8 +60,7 @@ class BuildReleaseManagerTestCase(BaseTest):
         )
 
 
-@override_settings(DEBUG=True)
-class BuildReleaseTestCase(TestCase):
+class BuildReleaseTestCase(BaseTest):
     fixtures = [
         "test_models",
     ]
@@ -136,8 +134,7 @@ class BuildReleaseTestCase(TestCase):
         self.assertListEqual(build.build_deps, build_deps)
 
 
-@override_settings(DEBUG=True)
-class BuildReleaseStepsTest(TestCase):
+class BuildReleaseStepsTest(BaseTest):
     fixtures = [
         "test_models",
     ]
@@ -300,10 +297,10 @@ class BuildReleaseStepsTest(TestCase):
         self.assertIsNone(self.br.next)
 
 
-@override_settings(DEBUG=True, JBI_ALLOWED_HOSTS=["fake.local"])
+@override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
 @patch("repoapi.utils.dlfile")
 @patch("build.models.build_resume")
-class JBIManageTest(TestCase):
+class JBIManageTest(BaseTest):
     fixtures = [
         "test_models",
     ]
@@ -375,8 +372,7 @@ class JBIManageTest(TestCase):
         self.assertEqual(br.triggered_projects, "kamailio")
 
 
-@override_settings(DEBUG=True)
-class BRManageTest(TestCase):
+class BRManageTest(BaseTest):
     @patch("build.tasks.trigger_copy_deps")
     @patch("build.models.build_resume")
     def test_br_manage(self, build_resume, trigger_copy_deps):
@@ -387,8 +383,7 @@ class BRManageTest(TestCase):
         )
 
 
-@override_settings(DEBUG=True)
-class BuildReleaseRetriggerTest(TestCase):
+class BuildReleaseRetriggerTest(BaseTest):
     fixtures = [
         "test_models",
     ]

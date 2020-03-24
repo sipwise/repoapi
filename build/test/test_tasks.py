@@ -16,16 +16,16 @@ from unittest.mock import call
 from unittest.mock import patch
 
 from django.test import override_settings
-from django.test import TestCase
 
 from build.models import BuildRelease
 from repoapi.models import JenkinsBuildInfo
+from repoapi.test.base import BaseTest
 
 
-@override_settings(DEBUG=True, JBI_ALLOWED_HOSTS=["fake.local"])
+@override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
 @patch("repoapi.utils.dlfile")
 @patch("build.tasks.trigger_build")
-class JBIManageTest(TestCase):
+class JBIManageTest(BaseTest):
     fixtures = [
         "test_models",
     ]
