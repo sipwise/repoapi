@@ -17,6 +17,7 @@ import requests
 from requests.auth import HTTPBasicAuth
 
 from ..conf import settings
+from ..models import Project
 from repoapi.utils import openurl
 
 logger = logging.getLogger(__name__)
@@ -110,6 +111,13 @@ def trigger_build(
     else:
         openurl(url)
     return "{base}/job/{job}/".format(**params)
+
+
+def fetch_gerrit_info(projectname):
+    project, _ = Project.objects.get_or_create(name=projectname)
+    project.tags = get_gerrit_tags(projectname)
+    project.branches = get_gerrit_branches(projectname)
+    project.save()
 
 
 def get_gerrit_info(url):

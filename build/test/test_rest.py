@@ -15,24 +15,9 @@
 from django.test import override_settings
 from django.urls import reverse
 from rest_framework import status
-from rest_framework.test import APITestCase
-from rest_framework_api_key.helpers import generate_key
-from rest_framework_api_key.models import APIKey
 
 from build import models
-from repoapi.test.base import BaseTest
-
-
-class APIAuthenticatedTestCase(BaseTest, APITestCase):
-
-    APP_NAME = "Project Tests"
-
-    def setUp(self):
-        super(APIAuthenticatedTestCase, self).setUp()
-        self.app_key = APIKey.objects.create(
-            name=self.APP_NAME, key=generate_key()
-        )
-        self.client.credentials(HTTP_API_KEY=self.app_key.key)
+from repoapi.test.base import APIAuthenticatedTestCase
 
 
 @override_settings(JBI_ALLOWED_HOSTS=["fake.local"])

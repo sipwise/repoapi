@@ -28,10 +28,7 @@ logger = logging.getLogger(__name__)
 
 @shared_task(ignore_result=True)
 def gerrit_fetch_info(projectname):
-    project, _ = Project.objects.get_or_create(name=projectname)
-    project.tags = build.get_gerrit_tags(projectname)
-    project.branches = build.get_gerrit_branches(projectname)
-    project.save()
+    build.fetch_gerrit_info(projectname)
 
 
 @shared_task(ignore_result=True)

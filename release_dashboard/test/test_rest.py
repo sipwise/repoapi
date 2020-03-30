@@ -13,12 +13,15 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.conf import settings
+from django.test import override_settings
 from django.urls import reverse
+from mock import call
 from mock import patch
 from rest_framework import status
 from rest_framework.test import APITestCase
 
 from release_dashboard import models
+from repoapi.test.base import APIAuthenticatedTestCase
 
 
 class TestDockerRest(APITestCase):
@@ -46,3 +49,13 @@ class TestDockerRest(APITestCase):
                 "%s/manifests/%s" % (image_name, tag.reference)
             )
         )
+
+
+@override_settings(RELEASE_DASHBOARD_PROJECTS=("asterisk", "kamailio"))
+class TestGerritRest(APIAuthenticatedTestCase):
+    @patch("release_dashboard.utils.build.fetch_gerrit_info")
+    def test_refresh(self, fgi):
+        response = self.client.post(reverse("gerrit-refresh"), format="json")
+        self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
+        calls = [call("asterisk"), call("kamailio")]
+        self.assertListEqual(fgi.mock_calls, calls)

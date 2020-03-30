@@ -19,6 +19,7 @@ from django.contrib import admin
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from build import views as build_views
+from release_dashboard.views import api as rd_api
 from release_dashboard.views import docker
 from repoapi import views
 
@@ -89,6 +90,11 @@ api_patterns = [
         r"^docker/tag/(?P<pk>[0-9]+)/$",
         docker.DockerTagDetail.as_view(),
         name="dockertag-detail",
+    ),
+    url(
+        r"^gerrit/refresh/$",
+        rd_api.RefreshGerritInfo.as_view(),
+        name="gerrit-refresh",
     ),
     url(r"^build/", include("build.urls")),
 ]

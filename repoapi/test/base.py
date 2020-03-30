@@ -18,6 +18,9 @@ from tempfile import mkdtemp
 
 from django.test import override_settings
 from django.test import TestCase
+from rest_framework.test import APITestCase
+from rest_framework_api_key.helpers import generate_key
+from rest_framework_api_key.models import APIKey
 
 JBI_BASEDIR = mkdtemp(dir=os.environ.get("RESULTS"))
 
@@ -35,3 +38,15 @@ class BaseTest(TestCase):
 
         if os.path.exists(settings.JBI_BASEDIR):
             shutil.rmtree(settings.JBI_BASEDIR)
+
+
+class APIAuthenticatedTestCase(BaseTest, APITestCase):
+
+    APP_NAME = "Project Tests"
+
+    def setUp(self):
+        super(APIAuthenticatedTestCase, self).setUp()
+        self.app_key = APIKey.objects.create(
+            name=self.APP_NAME, key=generate_key()
+        )
+        self.client.credentials(HTTP_API_KEY=self.app_key.key)
