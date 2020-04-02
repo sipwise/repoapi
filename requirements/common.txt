@@ -15,6 +15,7 @@ djangorestframework>=3.6,<3.7
 drfapikey
 flower
 markdown
+natsort
 python-debian
 PyYAML
 six>=1.9

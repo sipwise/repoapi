@@ -15,6 +15,7 @@
 import re
 
 from django.views.generic.base import TemplateView
+from natsort import humansorted
 
 from ..conf import settings
 from release_dashboard.utils import get_branches
@@ -43,9 +44,11 @@ def _projects_versions(
             "name": project,
         }
         if tags:
-            info["tags"] = get_tags(project, regex)
+            info["tags"] = humansorted(get_tags(project, regex), reverse=True)
         if branches:
-            info["branches"] = get_branches(project, regex)
+            info["branches"] = humansorted(
+                get_branches(project, regex), reverse=True
+            )
         if master:
             info["branches"].append("master")
         res.append(info)
@@ -61,8 +64,8 @@ def _common_versions(context, tags=True, branches=True):
         if branches:
             common_versions["branches"] |= set(project["branches"])
     context["common_versions"] = {
-        "tags": sorted(common_versions["tags"], reverse=True),
-        "branches": sorted(common_versions["branches"], reverse=True),
+        "tags": humansorted(common_versions["tags"], reverse=True),
+        "branches": humansorted(common_versions["branches"], reverse=True),
     }
 
 
