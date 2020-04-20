@@ -96,6 +96,7 @@ class ReleaseDashboardConf(AppConf):
         "metapackages",
         "monitoring-tools",
         "netscript",
+        "ngcp-admin-ui",
         "ngcp-api-tools",
         "ngcp-csc",
         "ngcp-csc-ui",
