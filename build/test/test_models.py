@@ -274,6 +274,28 @@ class BuildReleaseStepsTest(BaseTest):
         self.assertTrue(self.br.append_built(self.jbi))
         self.assertEqual(self.br.next, "asterisk-voicemail")
 
+    def test_next_build_deps_stop(self):
+        build_deps = [
+            "data-hal",
+            "libinewrate",
+            "libswrate",
+            "libtcap",
+            "sipwise-base",
+            "check-tools",
+        ]
+        i = 1
+        self.jbi.projectname = "release-copy-debs-yml"
+        self.assertTrue(self.br.append_built(self.jbi))
+        for prj in build_deps:
+            self.jbi.projectname = prj
+            self.assertTrue(self.br.append_triggered(prj))
+            _next = self.br.next
+            try:
+                self.assertEqual(_next, build_deps[i])
+                i += 1
+            except IndexError:
+                self.assertIsNone(_next)
+
     def test_next_last(self):
         pl = self.br.projects_list[:-1]
         pl.insert(0, "release-copy-debs-yml")

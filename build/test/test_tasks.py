@@ -147,3 +147,118 @@ class JBIManageTest(BaseTest):
         tb.assert_called_once_with(**params)
         self.assertEqual(br.pool_size, 2)
         self.assertEqual(br.triggered_projects, "libinewrate,libswrate")
+
+    @override_settings(BUILD_POOL=3)
+    def test_jbi_manage_pool_deps(self, tb, dl):
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(br.pool_size, 0)
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/release-copy-debs-yml/",
+            projectname="release-copy-debs-yml",
+            jobname="release-copy-debs-yml",
+            tag="UUIDA",
+            param_release="mr8.1",
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        params = {
+            "project": "data-hal-get-code",
+            "release_uuid": br.uuid,
+            "trigger_release": br.release,
+            "trigger_branch_or_tag": br.branch_or_tag,
+            "trigger_distribution": br.distribution,
+        }
+        calls = [call(**params)]
+        params["project"] = "libinewrate-get-code"
+        calls.append(call(**params))
+        params["project"] = "libswrate-get-code"
+        calls.append(call(**params))
+        tb.assert_has_calls(calls)
+
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/data-hal-repos/",
+            projectname="data-hal",
+            jobname="data-hal-repos",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        params["project"] = "libtcap-get-code"
+        tb.assert_called_with(**params)
+
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/libswrate-repos/",
+            projectname="libswrate",
+            jobname="libswrate-repos",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        params["project"] = "sipwise-base-get-code"
+        tb.assert_called_with(**params)
+
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/libinewrate-repos/",
+            projectname="libinewrate",
+            jobname="libinewrate-repos",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(
+            br.triggered_projects, "libtcap,sipwise-base,check-tools"
+        )
+        params["project"] = "check-tools-get-code"
+        tb.assert_called_with(**params)
+        tb.reset_mock()
+
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/libtcap-repos/",
+            projectname="libtcap",
+            jobname="libtcap-repos",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(br.triggered_projects, "sipwise-base,check-tools")
+        tb.assert_not_called()
+
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/check-tools-repos/",
+            projectname="check-tools",
+            jobname="check-tools-repos",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(br.triggered_projects, "sipwise-base")
+        tb.assert_not_called()
+
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/sipwise-base-repos/",
+            projectname="sipwise-base",
+            jobname="sipwise-base-repos",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(br.triggered_projects, "ngcp-schema")
+        params["project"] = "ngcp-schema-get-code"
+        tb.assert_called_with(**params)

@@ -228,10 +228,19 @@ class BuildRelease(models.Model):
             return
         t_list = self.triggered_projects_list
         built_list = self.built_projects_list
+        deps_missing = []
         for grp in self.build_deps:
             for prj in grp:
-                if prj not in built_list and prj not in t_list:
-                    return prj
+                if prj not in built_list:
+                    if prj not in t_list:
+                        return prj
+                    else:
+                        deps_missing.append(prj)
+            else:
+                if len(deps_missing) > 0:
+                    msg = "release {} has build_deps {} missing"
+                    logger.info(msg.format(self, deps_missing))
+                    return None
         for prj in self.projects_list:
             if prj not in built_list and prj not in t_list:
                 return prj
@@ -240,7 +249,8 @@ class BuildRelease(models.Model):
     def next(self):
         failed_projects = self.failed_projects_list
         if any(job in failed_projects for job in settings.BUILD_RELEASE_JOBS):
-            logger.info("release has failed release_jobs, stop sending jobs")
+            msg = "release {} has failed release_jobs, stop sending jobs"
+            logger.info(msg.format(self))
             return
         res = self._next()
         if res is not None:
