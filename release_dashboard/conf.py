@@ -120,6 +120,7 @@ class ReleaseDashboardConf(AppConf):
         "ossbss",
         "prosody",
         "pushd",
+        "py-ngcp-kamailio",
         "rate-o-mat",
         "reminder",
         "rtpengine",
