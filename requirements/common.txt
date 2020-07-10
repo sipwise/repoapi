@@ -13,7 +13,7 @@ django-rest-swagger
 django-timezone-field>=3.1,<4.0  # last version supporting django 1.11
 djangorestframework>=3.6,<3.7
 drfapikey
-flower
+flower==0.9.4
 markdown
 natsort
 python-debian
