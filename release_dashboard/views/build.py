@@ -146,7 +146,7 @@ def build_deps_old(request, tag_only=False):
                 True,
                 not tag_only,
             ),
-            "debian": settings.RELEASE_DASHBOARD_DEBIAN_SUPPORTED,
+            "debian": settings.RELEASE_DASHBOARD_DEBIAN_RELEASES,
         }
         _common_versions(context, True, not tag_only)
         return render(request, "release_dashboard/build_deps.html", context)
@@ -179,7 +179,7 @@ def build_release_old(request, tag_only=False):
                 True,
                 not tag_only,
             ),
-            "debian": settings.RELEASE_DASHBOARD_DEBIAN_SUPPORTED,
+            "debian": settings.RELEASE_DASHBOARD_DEBIAN_RELEASES,
         }
         _common_versions(context, True, not tag_only)
         if tag_only:
@@ -221,7 +221,7 @@ def build_trunk_deps_old(request):
         context = {
             "projects": _projects_versions(trunk_build_deps, regex_master,),
             "common_versions": {"tags": [], "branches": ["master"]},
-            "debian": settings.RELEASE_DASHBOARD_DEBIAN_SUPPORTED,
+            "debian": settings.RELEASE_DASHBOARD_DEBIAN_RELEASES,
         }
         return render(request, template, context)
 
@@ -239,6 +239,6 @@ def build_trunk_release_old(request):
         context = {
             "projects": _projects_versions(trunk_projects, regex_master,),
             "common_versions": {"tags": [], "branches": ["master"]},
-            "debian": settings.RELEASE_DASHBOARD_DEBIAN_SUPPORTED,
+            "debian": settings.RELEASE_DASHBOARD_DEBIAN_RELEASES,
         }
         return render(request, "release_dashboard/build_trunk.html", context)
