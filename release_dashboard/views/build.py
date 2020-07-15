@@ -68,12 +68,21 @@ def build_release(request, release):
             reverse("panel:release-uuid", args=(release_uuid,))
         )
     else:
+        build_releases = BuildRelease.objects.filter(
+            release=release_config.release
+        )
+        if build_releases.count() == 0:
+            done = True
+        else:
+            done = False
+            for b in build_releases.all():
+                if b.done:
+                    done = True
         context = {
             "config": release_config,
-            "build_releases": BuildRelease.objects.filter(
-                release=release_config.release
-            ),
+            "build_releases": build_releases,
             "build_deps": list(release_config.build_deps.keys()),
+            "done": done,
         }
         return render(request, "release_dashboard/build_release.html", context)
 

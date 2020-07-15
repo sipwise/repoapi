@@ -27,7 +27,7 @@
             <form method="POST" class="form-inline">
               {% csrf_token %}
               <button type="submit" class="btn btn-primary" id="build_button"
-                {% if build_releases %}disabled="disabled"{% endif %}>Build</button>
+                {% if not done %}disabled="disabled"{% endif %}>Build</button>
             </form>
             </td>
           </tr>
@@ -37,12 +37,14 @@
           <tr>
             <th>UUID</th>
             <th>Started at</th>
+            <th>Last update at</th>
             <th>Action</th>
           </tr>
           {% for br in build_releases %}
           <tr class="success build_release" id="br_{{ br.id }}">
             <td><a href="{% url 'panel:release-uuid' _uuid=br.uuid %}">{{ br.uuid }}</a></td>
             <td>{{ br.start_date }}</td>
+            <td>{{ br.last_update }}</td>
             <td>
               <button type="button" id="refresh_{{ br.id }}"
                 onclick="click_refresh_projects(event, '{{ br.id }}')"
@@ -73,6 +75,14 @@
 {% endblock %}
 {% block extrajs %}
 <script type="text/javascript">
+$( document ).ready(function() {
+  var release = '{{ config.release }}';
+  if (release.match(/^release-mr[0-9]+\.[0-9]+\.[0-9]+$/)) {
+    $( "#build_button" ).attr("disabled", "disabled");
+    console.debug("mrX.X.X release, can't be built twice");
+  }
+});
+
 function click_delete(e, id) {
     delete_build_release(id);
     e.preventDefault();

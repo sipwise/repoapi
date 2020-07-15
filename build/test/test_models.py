@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -59,47 +59,43 @@ class BuildReleaseManagerTestCase(BaseTest):
             list(BuildRelease.objects.releases_with_builds()), ["mr8.1"]
         )
 
+    def test_last_update(self, dlf):
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        job = JenkinsBuildInfo.objects.get(id=4)
+        self.assertEqual(br.last_update, job.date)
+
 
 class BuildReleaseTestCase(BaseTest):
     fixtures = [
         "test_models",
     ]
+    release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559649b"
 
     def test_distribution(self):
-        build = BuildRelease.objects.get(
-            uuid="dbe569f7-eab6-4532-a6d1-d31fb559649b"
-        )
+        build = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertEqual(build.distribution, "buster")
 
     def test_projects_list(self):
-        build = BuildRelease.objects.get(
-            uuid="dbe569f7-eab6-4532-a6d1-d31fb559649b"
-        )
+        build = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertCountEqual(
             build.projects_list,
             ["kamailio", "lua-ngcp-kamailio", "ngcp-panel"],
         )
 
     def test_built_projects_list(self):
-        build = BuildRelease.objects.get(
-            uuid="dbe569f7-eab6-4532-a6d1-d31fb559649b"
-        )
+        build = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertCountEqual(
             build.built_projects_list, ["kamailio", "lua-ngcp-kamailio"],
         )
 
     def test_queued_projects_list(self):
-        build = BuildRelease.objects.get(
-            uuid="dbe569f7-eab6-4532-a6d1-d31fb559649b"
-        )
+        build = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertCountEqual(
             build.queued_projects_list, ["ngcp-panel"],
         )
 
     def test_config(self):
-        build = BuildRelease.objects.get(
-            uuid="dbe569f7-eab6-4532-a6d1-d31fb559649b"
-        )
+        build = BuildRelease.objects.get(uuid=self.release_uuid)
         config = build.config
         self.assertIsNotNone(config)
         self.assertIs(config, build.config)
@@ -109,9 +105,7 @@ class BuildReleaseTestCase(BaseTest):
         self.assertEqual(build.branch_or_tag, "branch/master")
 
     def test_branch_or_tag_mrXX(self):
-        build = BuildRelease.objects.get(
-            uuid="dbe569f7-eab6-4532-a6d1-d31fb559649b"
-        )
+        build = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertEqual(build.branch_or_tag, "branch/mr8.1")
 
     def test_branch_or_tag_mrXXX(self):
@@ -147,6 +141,10 @@ class BuildReleaseStepsTest(BaseTest):
         self.jbi = MagicMock()
         self.jbi.result = "SUCCESS"
 
+    def test_done_empty(self):
+        self.assertIsNone(self.br.built_projects)
+        self.assertFalse(self.br.done)
+
     def test_append_built_fist(self):
         self.br.built_projects = "release-copy-debs-yml"
         self.jbi.projectname = "data-hal"
@@ -156,6 +154,7 @@ class BuildReleaseStepsTest(BaseTest):
             self.br.built_projects, "release-copy-debs-yml,data-hal"
         )
         self.assertEqual(self.br.pool_size, 0)
+        self.assertFalse(self.br.done)
 
     def test_append_built_empty(self):
         self.jbi.projectname = "data-hal"
@@ -163,6 +162,7 @@ class BuildReleaseStepsTest(BaseTest):
         self.assertTrue(self.br.append_built(self.jbi))
         self.assertEqual(self.br.built_projects, "data-hal")
         self.assertEqual(self.br.pool_size, 0)
+        self.assertFalse(self.br.done)
 
     def test_append_built(self):
         self.br.built_projects = "data-hal"
@@ -172,6 +172,7 @@ class BuildReleaseStepsTest(BaseTest):
         self.assertTrue(self.br.append_built(self.jbi))
         self.assertEqual(self.br.built_projects, "data-hal,libinewrate")
         self.assertEqual(self.br.pool_size, 1)
+        self.assertFalse(self.br.done)
 
     def test_append_built_dup(self):
         self.br.built_projects = "data-hal"
@@ -197,6 +198,7 @@ class BuildReleaseStepsTest(BaseTest):
         self.assertIsNone(self.br.built_projects)
         self.assertEqual(self.br.failed_projects, "data-hal")
         self.assertEqual(self.br.pool_size, 0)
+        self.assertFalse(self.br.done)
 
     def test_append_built_fail(self):
         self.br.built_projects = "data-hal"
@@ -273,6 +275,7 @@ class BuildReleaseStepsTest(BaseTest):
         self.jbi.jobname = "ngcp-schema-repos"
         self.assertTrue(self.br.append_built(self.jbi))
         self.assertEqual(self.br.next, "asterisk-voicemail")
+        self.assertFalse(self.br.done)
 
     def test_next_build_deps_stop(self):
         build_deps = [
@@ -295,6 +298,7 @@ class BuildReleaseStepsTest(BaseTest):
                 i += 1
             except IndexError:
                 self.assertIsNone(_next)
+        self.assertFalse(self.br.done)
 
     def test_next_last(self):
         pl = self.br.projects_list[:-1]
@@ -311,6 +315,7 @@ class BuildReleaseStepsTest(BaseTest):
         self.jbi.jobname = "{}-repos".format(self.jbi.projectname)
         self.assertTrue(self.br.append_built(self.jbi))
         self.assertIsNone(self.br.next)
+        self.assertTrue(self.br.done)
 
     def test_next_stop(self):
         self.br.built_projects = "release-copy-debs-yml,{}".format(
@@ -358,7 +363,7 @@ class JBIManageTest(BaseTest):
     def test_jbi_manage_ok_release_job(self, build_resume, dl):
         br = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertEqual(br.pool_size, 0)
-        JenkinsBuildInfo.objects.create(
+        job = JenkinsBuildInfo.objects.create(
             job_url="http://fake.local/job/release-copy-debs-yml/",
             projectname="release-copy-debs-yml",
             jobname="release-copy-debs-yml",
@@ -371,6 +376,7 @@ class JBIManageTest(BaseTest):
         br = BuildRelease.objects.get(pk=br.pk)
         self.assertEqual(br.built_projects, "release-copy-debs-yml")
         build_resume.delay.assert_called_once_with(br.pk)
+        self.assertEqual(br.last_update, job.date)
 
     def test_jbi_manage_skip(self, build_resume, dl):
         br = BuildRelease.objects.get(uuid=self.release_uuid)

@@ -113,6 +113,12 @@ class BuildRelease(models.Model):
             build_resume.delay(self.id)
 
     @property
+    def last_update(self):
+        job = BuildRelease.objects.jbi(self.uuid).order_by("-date").first()
+        if job:
+            return job.date
+
+    @property
     def done(self):
         if self.built_projects is None:
             return False
