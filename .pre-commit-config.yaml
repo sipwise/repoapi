@@ -26,5 +26,12 @@ repos:
     hooks:
     -   id: eslint
         args: ['--fix']
+        exclude: >
+            (?x)^(
+                .*/*min.js|
+                panel/static/panel/js/jquery*.js|
+                panel/static/panel/js/npm.js|
+                panel/static/panel/js/bootstrap.js|
+            )$
         additional_dependencies:
         -   eslint-config-jquery
