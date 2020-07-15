@@ -5,6 +5,21 @@ function click_retrigger( e, project ) {
 }
 
 /* eslint-disable-next-line no-unused-vars*/ // used at onClick
+function click_build( e, project ) {
+  var div_project = $( "#stats-" + project );
+  if ( $.release.release_jobs.size < $.release.release_jobs_size ) {
+    alert( "Not all release_jobs are done, builds are not allowed" );
+  } else {
+    var ok = confirm( "This will build " + project + ", are you sure?" );
+    if ( ok === true ) {
+      div_project.text( project );
+      build_queued_project( project );
+    }
+  }
+  e.preventDefault();
+}
+
+/* eslint-disable-next-line no-unused-vars*/ // used at onClick
 function click_resume( e, id ) {
     resume_build( id );
     e.preventDefault();
@@ -64,6 +79,40 @@ function retrigger_project( project ) {
 
   function errorFunc( _jqXHR, _status, error ) {
     $( "#" + project + "-error" ).text( error );
+  }
+  var csrftoken = jQuery( "[name=csrfmiddlewaretoken]" ).val();
+  function csrfSafeMethod( method ) {
+
+    // these HTTP methods do not require CSRF protection
+    return ( /^(GET|HEAD|OPTIONS|TRACE)$/.test( method ) );
+  }
+  $.ajaxSetup( {
+    beforeSend: function( xhr, settings ) {
+        if ( !csrfSafeMethod( settings.type ) && !this.crossDomain ) {
+            xhr.setRequestHeader( "X-CSRFToken", csrftoken );
+        }
+    }
+  } );
+  var url = "/build/" + $.release.uuid + "/" + project + "/?format=json";
+  $.ajax( {
+    async: true,
+    url: url,
+    method: "POST",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: successFunc,
+    error: errorFunc
+  } );
+}
+
+function build_queued_project( project ) {
+
+  function successFunc( _data, _textStatus, _jqXHR ) {
+    console.debug( "build sent for " + project );
+  }
+
+  function errorFunc( _jqXHR, _status, error ) {
+    console.error( error );
   }
   var csrftoken = jQuery( "[name=csrfmiddlewaretoken]" ).val();
   function csrfSafeMethod( method ) {

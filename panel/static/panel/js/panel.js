@@ -199,6 +199,7 @@ function create_new_project_stat( project, label ) {
     $( "#" + id ).remove();
   }
   var div_project = $( ".stats-project-" + label + "-clone" ).clone();
+  var div_link = $( ".link", div_project );
   var jobs = 0;
 
   div_project.removeClass( "hidden stats-project-" + label + "-clone" );
@@ -211,14 +212,13 @@ function create_new_project_stat( project, label ) {
         jobs = $.release[ project ][ uuid ].jobs.size;
       }
     }
-    var div_link = $( ".link", div_project );
     div_link.attr( "href", "#" + project );
-    div_link.text( project );
     $( ".badge", div_project ).text( jobs );
   } else {
-    div_project.text( project );
-      console.debug( project + " on queue" );
+    div_link.attr( "onclick", "click_build(event, \"" + project + "\")" );
+    console.debug( project + " on queue" );
   }
+  div_link.text( project );
 
   // put it on the proper place
   div_project.appendTo( "#stats-list-" + label );
