@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,7 +13,8 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import os
-import shutil
+from distutils.dir_util import mkpath
+from distutils.dir_util import remove_tree
 from tempfile import mkdtemp
 
 from django.test import override_settings
@@ -30,14 +31,13 @@ class BaseTest(TestCase):
     def setUp(self):
         from django.conf import settings
 
-        if not os.path.exists(settings.JBI_BASEDIR):
-            os.makedirs(settings.JBI_BASEDIR)
+        mkpath(settings.JBI_BASEDIR, verbose=True)
 
     def tearDown(self):
         from django.conf import settings
 
         if os.path.exists(settings.JBI_BASEDIR):
-            shutil.rmtree(settings.JBI_BASEDIR)
+            remove_tree(settings.JBI_BASEDIR, verbose=True)
 
 
 class APIAuthenticatedTestCase(BaseTest, APITestCase):

@@ -1,6 +1,8 @@
 #!/bin/bash
+dfile=$(dirname "$0")/t/Dockerfile
 repoapi_tag=${1:-latest}
-repoapi_image=docker.mgm.sipwise.com/repoapi-buster:${repoapi_tag}
+docker_name=$(sed -ne 's/^# DOCKER_NAME=\(.\+\)$/\1/p;Tn;q;:n' "${dfile}" || true)
+repoapi_image=docker.mgm.sipwise.com/${docker_name}:${repoapi_tag}
 
 docker run -d --rm \
 	--hostname repoapi-rabbit --name repoapi-rabbit rabbitmq:3

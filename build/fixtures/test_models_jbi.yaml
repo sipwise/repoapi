@@ -26,7 +26,7 @@
     projectname: kamailio
     jobname: kamailio-get-code
     buildnumber: 23
-    date: 2020-02-22 04:15:40.614682+00:00
+    date: 2020-02-22 04:20:40.614682+00:00
     result: SUCCESS
     job_url: https://jenkins-dev.mgm.sipwise.com/job/kamailio-get-code/
     gerrit_patchset: none_might-be-direct-push
@@ -68,7 +68,7 @@
     projectname: release-copy-debs-yml
     jobname: release-copy-debs-yml
     buildnumber: 23
-    date: 2020-02-23 04:15:40.614682+00:00
+    date: 2020-02-23 04:17:40.614682+00:00
     result: SUCCESS
     job_url: https://jenkins-dev.mgm.sipwise.com/job/release-copy-debs-yml/
     gerrit_patchset: none_might-be-direct-push
