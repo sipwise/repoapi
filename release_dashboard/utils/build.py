@@ -33,7 +33,7 @@ hotfix_url = (
     "{base}/job/release-tools-runner/buildWithParameters?"
     "token={token}&action={action}&branch={branch}&"
     "PROJECTNAME={project}&repository={project}&"
-    "push={push}&uuid={uuid}"
+    "push={push}&uuid={uuid}&remote_user={user}"
 )
 
 
@@ -45,7 +45,7 @@ def get_response(url):
     return response
 
 
-def trigger_hotfix(project, branch, push="yes"):
+def trigger_hotfix(project, branch, user, push="yes"):
     flow_uuid = uuid.uuid4()
     params = {
         "base": settings.JENKINS_URL,
@@ -55,12 +55,12 @@ def trigger_hotfix(project, branch, push="yes"):
         "project": urllib.parse.quote(project),
         "push": urllib.parse.quote(push),
         "uuid": flow_uuid,
+        "user": user.username,
     }
 
     url = hotfix_url.format(**params)
     if settings.DEBUG:
-        logger.debug("Debug mode, would trigger: %s", url)
-        # raise Exception("debug error")
+        logger.warn("Debug mode, would trigger: %s", url)
     else:
         openurl(url)
     return "%s/job/release-tools-runner/" % settings.JENKINS_URL

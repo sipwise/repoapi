@@ -109,7 +109,9 @@ def hotfix_build(request, branch, project):
     json_data = json.loads(request.body.decode("utf-8"))
     if json_data["push"] == "no":
         logger.warn("dryrun for %s:%s", project, branch)
-    url = build.trigger_hotfix(project, branch, json_data["push"])
+    url = build.trigger_hotfix(
+        project, branch, request.user, json_data["push"]
+    )
     return JsonResponse({"url": url})
 
 
