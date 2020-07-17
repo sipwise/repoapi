@@ -1,3 +1,61 @@
+repoapi (0.4.1) unstable; urgency=medium
+
+  [ Guillem Jover ]
+  * TT#61954 Bump debhelper compat level to 12
+  * TT#71950 Fix typos
+
+  [ Victor Seva ]
+  * TT#19230 add LDAP support for prod environment
+  * TT#19230 Bump django from 1.11.23 to 1.11.28 (security update)
+  * TT#19230 update docker image to use buster
+  * TT#19230 require that user is logged in for hotfix views
+  * TT#19230 require logged in user for all release_dashboard views
+  * TT#19059 Makefile: fix celery commands
+  * TT#43813 update Dockerfile
+  * TT#43813 build: improvements
+  * TT#43813 Add tabs on release_panel supported_releases
+  * TT#43813 django-export
+  * TT#43813 support changes on build_deps in the middle of a release
+  * TT#43813 properly do steps for POOL_SIZE
+  * TT#43813 build: delete all JBI info related to a BuildRelease on delete
+  * TT#43813 build: don't remove project from triggered until is done
+  * TT#43813 build: add refresh_projects
+  * TT#43813 build: support resume from panel
+  * TT#43813 panel: fixes and improvements
+  * TT#43813 django-pytest for testing instead of deprecated django-jenkins
+  * TT#43813 hotfix: move code from task to utils
+  * TT#43813 test: don't use deprecated assert
+  * TT#43813 fix RemovedInDjango20Warning issues
+  * TT#43813 fix RemovedInDjango20Warning issues
+  * TT#43813 upgrade celery settings for 4.4
+  * TT#43813 define AppConfig for every app as Django 1.11 recommends
+  * TT#43813 build: split settings per application
+  * TT#43813 panel: split settings per application
+  * TT#43813 release_dashboard: split settings per application
+  * TT#43813 hotfix: split settings per application
+  * TT#43813 tests: unify tests
+  * TT#43813 trunk fixes
+  * TT#43813 expose release_dashboard gerrit/refresh via API
+  * TT#78800 release_dashboard: use human sorting for tags/branches
+  * TT#43813 build: stop sending jobs if any previous build_deps is missing
+  * TT#85623 requirements: set django-filter version
+  * TT#85623 requirements: force flower>=0.9.5
+  * TT#85623 requirements: django-extensions<3.0
+  * TT#86350 allow to build a project in the queue
+  * TT#86350 update bootstrap to v3.3.7
+  * TT#43813 release_dashboard: fix missing setting
+  * TT#86350 release_dashboard: allow build release more than once
+  * TT#86202 release_dashboard: add username parameter on trigger_hotfix
+
+  [ Sergii Kipot ]
+  *  TT#80063 Add ngcp-admin-ui to repoapi dashboard
+  * TT#81705 Add py-ngcp-kamailio to repoapi dashboard
+
+  [ dependabot[bot] ]
+  * TT#69302 Bump django from 1.11.28 to 1.11.29 in /requirements
+
+ -- Victor Seva <vseva@debian.org>  Fri, 17 Jul 2020 15:21:55 +0200
+
 repoapi (0.4.0) unstable; urgency=medium
 
   [ Sergii Kipot ]
