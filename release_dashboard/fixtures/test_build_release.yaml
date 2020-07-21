@@ -1,0 +1,224 @@
+-   model: build.buildrelease
+    pk: 18
+    fields:
+        uuid: 02b8111a-0d33-4bce-993d-4b7887ed91de
+        start_date: 2020-07-20 11:59:50.574287+00:00
+        tag: null
+        branch: mr7.5
+        release: release-mr7.5
+        distribution: buster
+        projects: acc-cdi,asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-application,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,libswrate,libinewrate,sipwise-base,check-tools,libtcap,data-hal,ngcpcfg,ngcp-schema,sems-pbx,acc-cdi,backup-tools,asterisk-voicemail,bulk-processor-projects,cdr-exporter,bulk-processor,cleanup-tools,bootenv,comx-application,cloudpbx-sources,csta-testsuite,cfg-schema,db-schema,dhtest,deployment-iso,faxserver,comx-fileshare-service,installer,heartbeat,janus-admin,documentation,janus-client,keyring,klish,kamailio,kamailio-config-tests,license-client,lnpd,mediator,metapackages,megacli,monitoring-tools,ngcp-api-tools,lua-ngcp-kamailio,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-prompts,ngcp-csc-ui,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,ngcp-panel,prosody,pushd,reminder,rtpengine,rate-o-mat,sems,snmp-agent,ngcp-rtcengine,sems-modules,system-tests,templates,vmnotify,system-tools,upgrade,voisniff-ng,websocket
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 4
+    fields:
+        uuid: 0fdfe985-5277-4b70-b0aa-6a8f109e846c
+        start_date: 2020-03-10 16:56:30.778622+00:00
+        tag: mr8.1.2.1
+        branch: mr8.1.2
+        release: release-mr8.1.2
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,data-hal,libinewrate,libswrate,sipwise-base,check-tools,libtcap,ngcpcfg,ngcp-schema,asterisk-voicemail,backup-tools,sems-pbx,bulk-processor-projects,bulk-processor,cdr-exporter,cleanup-tools,bootenv,cfg-schema,csta-testsuite,cloudpbx-sources,db-schema,dhtest,comx-fileshare-service,faxserver,deployment-iso,installer,heartbeat,janus-admin,janus-client,documentation,keyring,kamailio,klish,license-client,kamailio-config-tests,lnpd,mediator,metapackages,megacli,monitoring-tools,lua-ngcp-kamailio,ngcp-api-tools,ngcp-exporter,ngcp-fauditd,ngcp-csc-ui,ngcp-inventory,ngcp-klish-config,ngcp-logfs,ngcp-panel,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,ngcp-prompts,reminder,rate-o-mat,rtpengine,sems,sems-modules,ngcp-rtcengine,system-tools,templates,system-tests,vmnotify,voisniff-ng,upgrade,websocket,snmp-agent
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 6
+    fields:
+        uuid: 35b9cf6c-d18d-41ce-a5e6-78110f7c86e3
+        start_date: 2020-03-16 10:57:19.359893+00:00
+        tag: null
+        branch: mr8.3
+        release: release-mr8.3
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,libswrate,libinewrate,data-hal,sipwise-base,check-tools,libtcap,ngcp-schema,asterisk-voicemail,backup-tools,sems-pbx,ngcpcfg,bulk-processor,bulk-processor-projects,cdr-exporter,cleanup-tools,bootenv,cfg-schema,csta-testsuite,cloudpbx-sources,db-schema,dhtest,comx-fileshare-service,faxserver,deployment-iso,installer,heartbeat,janus-admin,janus-client,documentation,keyring,kamailio,klish,license-client,lnpd,mediator,kamailio-config-tests,metapackages,megacli,monitoring-tools,lua-ngcp-kamailio,ngcp-api-tools,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-prompts,ngcp-csc-ui,ngcp-status,ngcp-panel,ngcp-rtcengine,ngcp-user-framework,ngcp-sudo-plugin,ngcp-support,ngcpcfg-api,ngrep-sip,ngcpcfg-ha,pushd,prosody,reminder,rate-o-mat,sems,rtpengine,system-tests,system-tools,templates,sems-modules,vmnotify,upgrade,voisniff-ng,websocket,snmp-agent
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 12
+    fields:
+        uuid: 450989cd-6ef5-44b3-8f93-ccef833c5602
+        start_date: 2020-05-27 13:26:44.089925+00:00
+        tag: mr8.4.1.1
+        branch: mr8.4.1
+        release: release-mr8.4.1
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-admin-ui,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,libswrate,libinewrate,sipwise-base,check-tools,libtcap,data-hal,ngcpcfg,ngcp-schema,sems-pbx,backup-tools,asterisk-voicemail,bulk-processor,bulk-processor-projects,cdr-exporter,cleanup-tools,bootenv,cfg-schema,cloudpbx-sources,comx-fileshare-service,csta-testsuite,dhtest,db-schema,faxserver,installer,deployment-iso,heartbeat,janus-admin,kamailio-config-tests,keyring,kamailio,janus-client,klish,lnpd,license-client,mediator,megacli,metapackages,monitoring-tools,lua-ngcp-kamailio,ngcp-api-tools,documentation,ngcp-admin-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-prompts,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,ngcp-rtcengine,reminder,sems,rtpengine,ngcp-csc-ui,snmp-agent,system-tests,templates,ngcp-panel,system-tools,vmnotify,voisniff-ng,upgrade,websocket,sems-modules
+        triggered_projects: null
+        failed_projects: csta-testsuite
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 10
+    fields:
+        uuid: 704c7af3-811a-438d-9cc8-d8fa3f75f4a5
+        start_date: 2020-05-19 09:22:07.797537+00:00
+        tag: null
+        branch: mr8.4
+        release: release-mr8.4
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-admin-ui,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,libswrate,libinewrate,libtcap,check-tools,data-hal,sipwise-base,ngcpcfg,ngcp-schema,sems-pbx,backup-tools,asterisk-voicemail,bulk-processor,bulk-processor-projects,cdr-exporter,bootenv,cleanup-tools,cfg-schema,cloudpbx-sources,comx-fileshare-service,csta-testsuite,dhtest,db-schema,faxserver,documentation,installer,deployment-iso,heartbeat,janus-admin,janus-client,kamailio,keyring,klish,license-client,lnpd,mediator,kamailio-config-tests,lua-ngcp-kamailio,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-exporter,ngcp-admin-ui,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-csc-ui,ngcp-panel,ngcp-klish-config,ngcp-status,ngcp-sudo-plugin,ngcp-prompts,ngcp-rtcengine,ngcp-user-framework,ngcp-support,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,pushd,prosody,reminder,rate-o-mat,sems,rtpengine,system-tests,system-tools,templates,sems-modules,upgrade,vmnotify,voisniff-ng,websocket,snmp-agent
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 15
+    fields:
+        uuid: 78507e00-74e4-4b9a-98bb-69f1334d02ed
+        start_date: 2020-07-14 10:09:47.532841+00:00
+        tag: null
+        branch: master
+        release: trunk
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-admin-ui,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,py-ngcp-kamailio,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,data-hal,libswrate,libinewrate,sipwise-base,check-tools,libtcap,ngcpcfg,ngcp-schema,sems-pbx,backup-tools,asterisk-voicemail,bulk-processor,bootenv,bulk-processor-projects,cdr-exporter,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,cfg-schema,deployment-iso,dhtest,db-schema,faxserver,installer,janus-admin,janus-client,documentation,heartbeat,kamailio-config-tests,keyring,license-client,klish,lnpd,lua-ngcp-kamailio,mediator,metapackages,megacli,monitoring-tools,ngcp-api-tools,ngcp-admin-ui,kamailio,ngcp-exporter,ngcp-fauditd,ngcp-csc-ui,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-rtcengine,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,py-ngcp-kamailio,sems,ngcp-prompts,rtpengine,sems-modules,snmp-agent,system-tests,system-tools,templates,vmnotify,voisniff-ng,upgrade,websocket
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 17
+    fields:
+        uuid: 7e71adb8-3bde-43cf-9fe2-43bf8036dbb2
+        start_date: 2020-07-20 11:59:31.096119+00:00
+        tag: mr7.5.5.1
+        branch: mr7.5.5
+        release: release-mr7.5.5
+        distribution: buster
+        projects: acc-cdi,asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-application,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,libswrate,libinewrate,sipwise-base,check-tools,data-hal,libtcap,ngcpcfg,ngcp-schema,sems-pbx,backup-tools,acc-cdi,asterisk-voicemail,bulk-processor-projects,cdr-exporter,bulk-processor,cleanup-tools,bootenv,comx-application,cloudpbx-sources,csta-testsuite,cfg-schema,db-schema,dhtest,comx-fileshare-service,faxserver,deployment-iso,installer,heartbeat,janus-admin,janus-client,documentation,keyring,kamailio,klish,license-client,kamailio-config-tests,lnpd,mediator,metapackages,megacli,monitoring-tools,ngcp-api-tools,lua-ngcp-kamailio,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-prompts,ngcp-csc-ui,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcp-panel,ngcpcfg-ha,ngrep-sip,prosody,pushd,reminder,rtpengine,rate-o-mat,sems,ngcp-rtcengine,snmp-agent,system-tests,templates,system-tools,vmnotify,voisniff-ng,upgrade,websocket,sems-modules
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 13
+    fields:
+        uuid: 8898cf03-df24-436d-b499-d2ae8dfc720a
+        start_date: 2020-06-29 15:57:49.608831+00:00
+        tag: mr5.5.12.1
+        branch: mr5.5.12
+        release: release-mr5.5.12
+        distribution: stretch
+        projects: acc-cdi,asterisk-voicemail,backup-tools,bulk-processor,bootenv,captagent,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-application,comx-fileshare-service,data-hal,db-schema,documentation,faxserver,heartbeat,installer,janus-client,kamailio,kamailio-config-tests,keyring,kibana,klish,libhsclient-c-wrapper,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,netscript,ngcp-api-tools,ngcp-fauditd,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng
+        built_projects: release-copy-debs-yml,libswrate,libinewrate,data-hal,check-tools,sipwise-base,libtcap,ngcp-schema,acc-cdi,backup-tools,asterisk-voicemail,bootenv,captagent,bulk-processor,cdr-exporter,cleanup-tools,comx-application,cloudpbx-sources,cfg-schema,db-schema,faxserver,comx-fileshare-service,installer,janus-client,heartbeat,kamailio-config-tests,keyring,kibana,kamailio,libhsclient-c-wrapper,klish,lnpd,license-client,mediator,megacli,lua-ngcp-kamailio,metapackages,monitoring-tools,netscript,ngcp-api-tools,ngcp-fauditd,ngcp-klish-config,documentation,ngcp-prompts,ngcp-status,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,ngcp-panel,rtpengine,ngcp-rtcengine,sems-pbx,system-tests,sems,snmp-agent,templates,system-tools,vmnotify,upgrade,voisniff-ng
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 19
+    fields:
+        uuid: 9058dce5-e865-420c-8b10-757e0412e22a
+        start_date: 2020-07-21 12:51:02.564938+00:00
+        tag: null
+        branch: master
+        release: trunk
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-admin-ui,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,py-ngcp-kamailio,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,data-hal,libinewrate,libswrate,sipwise-base,check-tools,libtcap,ngcpcfg,ngcp-schema,sems-pbx,ngcp-panel,backup-tools,asterisk-voicemail,bulk-processor,bootenv,bulk-processor-projects,cdr-exporter,cleanup-tools,cloudpbx-sources,cfg-schema,comx-fileshare-service,csta-testsuite,deployment-iso,dhtest,faxserver,db-schema,installer,janus-admin,janus-client,documentation,heartbeat,kamailio-config-tests,keyring,klish,license-client,lnpd,lua-ngcp-kamailio,mediator,kamailio,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-admin-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-csc-ui,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcp-rtcengine,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,py-ngcp-kamailio,reminder,sems,rtpengine,sems-modules,ngcp-prompts,snmp-agent,system-tests,system-tools,templates,vmnotify,upgrade,voisniff-ng,websocket
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 7
+    fields:
+        uuid: 912c8bd4-30c3-458a-a1cb-038047d5b67c
+        start_date: 2020-03-30 09:43:04.971403+00:00
+        tag: mr8.3.1.1
+        branch: mr8.3.1
+        release: release-mr8.3.1
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,libswrate,libinewrate,data-hal,check-tools,sipwise-base,libtcap,ngcp-schema,asterisk-voicemail,ngcpcfg,sems-pbx,backup-tools,bulk-processor-projects,bulk-processor,cdr-exporter,cleanup-tools,bootenv,cfg-schema,csta-testsuite,cloudpbx-sources,db-schema,dhtest,comx-fileshare-service,faxserver,documentation,deployment-iso,installer,heartbeat,janus-admin,janus-client,keyring,klish,license-client,kamailio-config-tests,kamailio,lnpd,mediator,megacli,metapackages,monitoring-tools,lua-ngcp-kamailio,ngcp-api-tools,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-prompts,ngcp-panel,ngcp-csc-ui,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,pushd,prosody,reminder,rate-o-mat,rtpengine,sems,sems-modules,ngcp-rtcengine,system-tools,templates,system-tests,vmnotify,voisniff-ng,upgrade,websocket,snmp-agent
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 16
+    fields:
+        uuid: a27cd04e-441a-469e-9711-4ed05855914f
+        start_date: 2020-07-14 11:38:50.186672+00:00
+        tag: null
+        branch: mr8.5
+        release: release-mr8.5
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-admin-ui,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,py-ngcp-kamailio,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,libinewrate,libtcap,sipwise-base,check-tools,libswrate,data-hal,ngcpcfg,ngcp-schema,sems-pbx,backup-tools,asterisk-voicemail,bulk-processor,bulk-processor-projects,cdr-exporter,cleanup-tools,bootenv,cfg-schema,cloudpbx-sources,db-schema,comx-fileshare-service,csta-testsuite,dhtest,faxserver,heartbeat,installer,deployment-iso,janus-admin,janus-client,documentation,keyring,klish,kamailio-config-tests,license-client,lnpd,mediator,kamailio,lua-ngcp-kamailio,ngcp-panel,metapackages,monitoring-tools,megacli,ngcp-api-tools,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-admin-ui,ngcp-prompts,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,py-ngcp-kamailio,ngcp-rtcengine,reminder,rate-o-mat,sems,rtpengine,ngcp-csc-ui,snmp-agent,sems-modules,system-tests,system-tools,templates,vmnotify,voisniff-ng,websocket,upgrade
+        triggered_projects: null
+        failed_projects: ngcp-panel
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 11
+    fields:
+        uuid: b4135755-649a-4588-ba4b-aa70af9519fd
+        start_date: 2020-05-21 14:25:17.105511+00:00
+        tag: mr6.5.9.1
+        branch: mr6.5.9
+        release: release-mr6.5.9
+        distribution: stretch
+        projects: acc-cdi,asterisk-voicemail,backup-tools,bulk-processor,bootenv,captagent,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-application,comx-fileshare-service,data-hal,db-schema,deployment-iso,documentation,faxserver,heartbeat,installer,janus-client,kamailio,kamailio-config-tests,keyring,klish,libhsclient-c-wrapper,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-fauditd,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng
+        built_projects: release-copy-debs-yml,libinewrate,data-hal,libswrate,check-tools,libtcap,sipwise-base,ngcpcfg,ngcp-schema,sems-pbx,backup-tools,acc-cdi,asterisk-voicemail,captagent,bulk-processor,cdr-exporter,bootenv,cleanup-tools,comx-application,cloudpbx-sources,cfg-schema,db-schema,comx-fileshare-service,faxserver,deployment-iso,installer,janus-client,heartbeat,kamailio,keyring,klish,libhsclient-c-wrapper,kamailio-config-tests,license-client,lnpd,mediator,megacli,lua-ngcp-kamailio,metapackages,monitoring-tools,ngcp-api-tools,ngcp-fauditd,ngcp-klish-config,documentation,ngcp-csc-ui,ngcp-prompts,ngcp-status,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,ngcp-panel,sems,ngcp-rtcengine,snmp-agent,sems-modules,templates,system-tools,vmnotify,system-tests,upgrade,voisniff-ng
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 9
+    fields:
+        uuid: bed806b4-4178-4675-92ca-ad1187f8c0bc
+        start_date: 2020-04-28 15:01:30.081865+00:00
+        tag: mr8.2.2.1
+        branch: mr8.2.2
+        release: release-mr8.2.2
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,libinewrate,data-hal,libswrate,check-tools,libtcap,sipwise-base,ngcpcfg,ngcp-schema,backup-tools,asterisk-voicemail,bulk-processor-projects,sems-pbx,bulk-processor,cdr-exporter,cfg-schema,bootenv,cleanup-tools,csta-testsuite,cloudpbx-sources,db-schema,deployment-iso,dhtest,faxserver,comx-fileshare-service,installer,heartbeat,janus-admin,janus-client,documentation,keyring,kamailio-config-tests,klish,license-client,kamailio,lnpd,mediator,megacli,metapackages,lua-ngcp-kamailio,monitoring-tools,ngcp-api-tools,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-prompts,ngcp-csc-ui,ngcp-panel,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,pushd,prosody,reminder,rate-o-mat,rtpengine,ngcp-rtcengine,sems,snmp-agent,sems-modules,templates,system-tools,vmnotify,upgrade,voisniff-ng,system-tests,websocket
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 8
+    fields:
+        uuid: c1381c6b-dc67-4aad-981b-405ba1811ac7
+        start_date: 2020-04-27 17:16:57.678749+00:00
+        tag: mr7.5.4.1
+        branch: mr7.5.4
+        release: release-mr7.5.4
+        distribution: buster
+        projects: acc-cdi,asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-application,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,libinewrate,data-hal,libswrate,check-tools,libtcap,sipwise-base,ngcpcfg,ngcp-schema,asterisk-voicemail,acc-cdi,backup-tools,bulk-processor-projects,bulk-processor,sems-pbx,cdr-exporter,cleanup-tools,bootenv,comx-application,cfg-schema,csta-testsuite,cloudpbx-sources,db-schema,dhtest,comx-fileshare-service,faxserver,deployment-iso,installer,heartbeat,janus-admin,documentation,janus-client,keyring,klish,kamailio,kamailio-config-tests,license-client,lnpd,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,lua-ngcp-kamailio,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-prompts,ngcp-csc-ui,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,ngcp-panel,ngcp-rtcengine,snmp-agent,system-tests,templates,system-tools,vmnotify,upgrade,sems-modules,voisniff-ng,websocket
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 5
+    fields:
+        uuid: d42a1a42-6e4e-4dc8-b5a8-ad938e9bdc3a
+        start_date: 2020-03-11 08:36:17.008069+00:00
+        tag: mr6.5.8.1
+        branch: mr6.5.8
+        release: release-mr6.5.8
+        distribution: stretch
+        projects: acc-cdi,asterisk-voicemail,backup-tools,bulk-processor,bootenv,captagent,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-application,comx-fileshare-service,data-hal,db-schema,deployment-iso,documentation,faxserver,heartbeat,installer,janus-client,kamailio,kamailio-config-tests,keyring,klish,libhsclient-c-wrapper,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-fauditd,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng
+        built_projects: release-copy-debs-yml,libinewrate,libswrate,data-hal,check-tools,sipwise-base,libtcap,ngcpcfg,ngcp-schema,acc-cdi,asterisk-voicemail,sems-pbx,backup-tools,captagent,bulk-processor,cdr-exporter,bootenv,cleanup-tools,comx-application,cfg-schema,cloudpbx-sources,db-schema,comx-fileshare-service,deployment-iso,faxserver,installer,janus-client,kamailio,heartbeat,keyring,klish,license-client,kamailio-config-tests,lnpd,mediator,lua-ngcp-kamailio,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-fauditd,ngcp-klish-config,documentation,ngcp-prompts,ngcp-csc-ui,ngcp-status,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,ngcp-panel,ngcp-rtcengine,snmp-agent,sems-modules,system-tests,system-tools,templates,vmnotify,upgrade,voisniff-ng,libhsclient-c-wrapper
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0
+-   model: build.buildrelease
+    pk: 14
+    fields:
+        uuid: e7ced02c-8821-4f89-9a57-e923a9d7beda
+        start_date: 2020-06-30 15:09:18.904087+00:00
+        tag: mr8.3.2.1
+        branch: mr8.3.2
+        release: release-mr8.3.2
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,libinewrate,libtcap,data-hal,libswrate,sipwise-base,check-tools,ngcpcfg,ngcp-schema,sems-pbx,backup-tools,asterisk-voicemail,bulk-processor,bulk-processor-projects,cdr-exporter,cleanup-tools,bootenv,cloudpbx-sources,cfg-schema,csta-testsuite,deployment-iso,db-schema,dhtest,faxserver,comx-fileshare-service,installer,documentation,heartbeat,janus-client,janus-admin,keyring,klish,license-client,lnpd,kamailio-config-tests,kamailio,mediator,metapackages,megacli,monitoring-tools,ngcp-api-tools,lua-ngcp-kamailio,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-csc-ui,ngcp-panel,ngcp-klish-config,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,ngcp-prompts,ngcp-rtcengine,sems-modules,system-tests,templates,system-tools,vmnotify,snmp-agent,voisniff-ng,websocket,upgrade
+        triggered_projects: null
+        failed_projects: null
+        pool_size: 0

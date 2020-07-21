@@ -19,6 +19,9 @@ from django.test import override_settings
 from django.test import TestCase
 from django.urls import reverse
 
+from build.models import BuildRelease
+from repoapi.test.base import BaseTest
+
 
 class TestHotfix(TestCase):
     def test_no_login(self):
@@ -75,3 +78,41 @@ class TestDocker(TestCase):
         self.client.force_login(user)
         res = self.client.get(reverse("release_dashboard:docker_images"))
         self.assertEqual(res.status_code, 200)
+
+
+class TestBuildRelease(BaseTest):
+    fixtures = ['test_build_release']
+
+    def test_no_login(self):
+        url = reverse("release_dashboard:build_release", args=['trunk'])
+        res = self.client.get(url)
+        self.assertNotEqual(res.status_code, 200)
+
+    def test_login_ok(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        url = reverse("release_dashboard:build_release", args=['trunk'])
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, 200)
+
+    def test_context_done(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        # no build yet
+        url = reverse("release_dashboard:build_release", args=['mr8.1'])
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(res.context['done'])
+
+    def test_context_not_done(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        br = BuildRelease.objects.get(
+            uuid="9058dce5-e865-420c-8b10-757e0412e22a"
+        )
+        br.built_projects = None
+        br.save()
+        url = reverse("release_dashboard:build_release", args=['trunk'])
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, 200)
+        self.assertFalse(res.context['done'])

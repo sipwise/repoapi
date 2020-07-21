@@ -70,14 +70,11 @@ def build_release(request, release):
     else:
         build_releases = BuildRelease.objects.filter(
             release=release_config.release
-        )
+        ).order_by('-start_date')
         if build_releases.count() == 0:
             done = True
         else:
-            done = False
-            for b in build_releases.all():
-                if b.done:
-                    done = True
+            done = build_releases.first().done
         context = {
             "config": release_config,
             "build_releases": build_releases,
