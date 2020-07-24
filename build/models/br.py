@@ -12,12 +12,14 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import datetime
 import logging
 import re
 
 from django.db import models
 from django.db.models import Q
 from django.forms.models import model_to_dict
+from django.utils import timezone
 
 from ..conf import settings
 from build.exceptions import BuildReleaseUnique
@@ -41,7 +43,7 @@ class BuildReleaseManager(models.Manager):
             Q(release=version) | Q(release="{}-update".format(version))
         )
 
-    def create_build_release(self, uuid, release):
+    def create_build_release(self, uuid, release, fake=False):
         config = ReleaseConfig(release)
         qs = self.get_queryset()
         br = qs.filter(release=config.release)
@@ -57,13 +59,24 @@ class BuildReleaseManager(models.Manager):
                     "set {} as release"
                 )
                 logger.info(msg.format(config.branch, release_ok))
+        projects = ",".join(config.projects)
+        if fake:
+            start_date = timezone.make_aware(datetime.datetime(1977, 1, 1))
+            built_projects = ",".join(
+                list(settings.BUILD_RELEASE_JOBS) + config.projects
+            )
+        else:
+            start_date = timezone.now()
+            built_projects = None
         return self.create(
+            start_date=start_date,
             uuid=uuid,
             tag=config.tag,
             branch=config.branch,
             release=release_ok,
             distribution=config.debian_release,
-            projects=",".join(config.projects),
+            projects=projects,
+            built_projects=built_projects,
         )
 
     def jbi(self, release_uuid):
@@ -113,7 +126,9 @@ class BuildReleaseManager(models.Manager):
 
 class BuildRelease(models.Model):
     uuid = models.CharField(max_length=64, unique=True, null=False)
-    start_date = models.DateTimeField(auto_now_add=True)
+    start_date = models.DateTimeField(
+        blank=True, editable=False, default=timezone.now
+    )
     tag = models.CharField(max_length=50, null=True, blank=True)
     branch = models.CharField(max_length=50, null=False)
     release = models.CharField(max_length=50, null=False, db_index=True)

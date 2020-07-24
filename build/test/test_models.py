@@ -12,10 +12,12 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import datetime
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
 from django.test import override_settings
+from django.utils import timezone
 
 from build.exceptions import BuildReleaseUnique
 from build.models import BuildRelease
@@ -88,6 +90,15 @@ class BuildReleaseManagerTestCase(BaseTest):
         self.assertEqual(br.release, "release-mr8.1-update")
         qs = BuildRelease.objects.release("release-mr8.1")
         self.assertEqual(qs.count(), prev.count() + 1)
+
+    def test_create_fake(self, dlf):
+        br = BuildRelease.objects.create_build_release(
+            "AAA", "trunk", fake=True
+        )
+        self.assertEqual(
+            br.start_date, timezone.make_aware(datetime.datetime(1977, 1, 1))
+        )
+        self.assertTrue(br.done)
 
 
 class BuildReleaseTestCase(BaseTest):

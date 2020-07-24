@@ -13,8 +13,10 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import logging
+from datetime import timedelta
 
 from django.db.models import signals
+from django.utils import timezone
 
 from ..conf import settings
 from .br import BuildRelease
@@ -31,6 +33,12 @@ def br_manage(sender, **kwargs):
         if instance.release.endswith("-update"):
             build_resume.delay(instance.pk)
             logger.debug("BuildRelease:%s triggered", instance)
+        elif timezone.now() > instance.start_date + timedelta(minutes=15):
+            logger.debug(
+                "BuildRelease:%s not triggered, is from the past:%s",
+                instance,
+                instance.start_date,
+            )
         else:
             build_release.delay(instance.pk)
             logger.debug("BuildRelease:%s triggered", instance)
