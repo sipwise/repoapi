@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,28 +13,55 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import logging
+import re
 
 from django.db import models
+from django.db.models import Q
 from django.forms.models import model_to_dict
 
 from ..conf import settings
+from build.exceptions import BuildReleaseUnique
 from build.utils import get_simple_release
 from build.utils import ReleaseConfig
 from repoapi.models import JenkinsBuildInfo
 
 logger = logging.getLogger(__name__)
 
+regex_mrXXX = re.compile(r"^mr[0-9]+\.[0-9]+\.[0-9]+$")
+regex_mrXX = re.compile(r"^mr[0-9]+\.[0-9]+$")
+regex_mrXX_up = re.compile(r"^release-mr[0-9]+\.[0-9]+-update$")
+
 
 class BuildReleaseManager(models.Manager):
     _jbi = JenkinsBuildInfo.objects
 
+    def release(self, version):
+        qs = self.get_queryset()
+        return qs.filter(
+            Q(release=version) | Q(release="{}-update".format(version))
+        )
+
     def create_build_release(self, uuid, release):
         config = ReleaseConfig(release)
+        qs = self.get_queryset()
+        br = qs.filter(release=config.release)
+        release_ok = config.release
+        if br.exists():
+            if regex_mrXXX.match(config.branch):
+                msg = "release[mrX.Y.Z]:{} has already a build"
+                raise BuildReleaseUnique(msg.format(release))
+            elif regex_mrXX.match(config.branch):
+                release_ok = "{}-update".format(config.release)
+                msg = (
+                    "release[mrX.Y]:{} has already a build, "
+                    "set {} as release"
+                )
+                logger.info(msg.format(config.branch, release_ok))
         return self.create(
             uuid=uuid,
             tag=config.tag,
             branch=config.branch,
-            release=config.release,
+            release=release_ok,
             distribution=config.debian_release,
             projects=",".join(config.projects),
         )
@@ -97,7 +124,7 @@ class BuildRelease(models.Model):
     failed_projects = models.TextField(null=True, editable=False)
     pool_size = models.SmallIntegerField(default=0, editable=False)
     objects = BuildReleaseManager()
-    release_jobs_len = len(",".join(settings.BUILD_RELEASE_JOBS))
+    release_jobs_len = len(",".join(settings.BUILD_RELEASE_JOBS)) + 1
 
     def __str__(self):
         return "%s[%s]" % (self.release, self.uuid)
@@ -119,11 +146,18 @@ class BuildRelease(models.Model):
             return job.date
 
     @property
+    def is_update(self):
+        return regex_mrXX_up.match(self.release) is not None
+
+    @property
     def done(self):
         if self.built_projects is None:
             return False
         built_len = len(self.built_projects)
-        return built_len == self.release_jobs_len + 1 + len(self.projects)
+        if self.is_update:
+            return built_len == len(self.projects)
+        else:
+            return built_len == self.release_jobs_len + len(self.projects)
 
     @property
     def projects_list(self):

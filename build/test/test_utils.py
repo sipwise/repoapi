@@ -40,6 +40,10 @@ class SimpleReleaseTest(SimpleTestCase):
         val = get_simple_release("release-mr8.1.1")
         self.assertEqual(val, "mr8.1.1")
 
+    def test_release_update_ok(self):
+        val = get_simple_release("release-mr8.1-update")
+        self.assertEqual(val, "mr8.1")
+
     def test_release_ko(self):
         val = get_simple_release("mr8.1.1")
         self.assertIsNone(val)

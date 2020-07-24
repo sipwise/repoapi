@@ -17,6 +17,7 @@ from unittest.mock import patch
 
 from django.test import override_settings
 
+from build.exceptions import BuildReleaseUnique
 from build.models import BuildRelease
 from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
@@ -37,6 +38,23 @@ class BuildReleaseManagerTestCase(BaseTest):
         self.assertEqual(br.branch, "master")
         self.assertNotEqual(len(br.projects), 0)
         self.assertIn("sipwise-base", br.projects)
+
+    def test_create_mrXX(self, dlf):
+        BuildRelease.objects.filter(release="release-mr8.1").delete()
+        self.assertFalse(
+            BuildRelease.objects.filter(release="release-mr8.1").exists()
+        )
+        br = BuildRelease.objects.create_build_release("AAA", "mr8.1")
+        self.assertEqual(br.release, "release-mr8.1")
+
+    def test_create_mrXX_update(self, dlf):
+        br = BuildRelease.objects.create_build_release("AAA", "mr8.1")
+        self.assertEqual(br.release, "release-mr8.1-update")
+
+    def test_create_mrXXX_fail(self, dlf):
+        BuildRelease.objects.create_build_release("AAA", "mr7.5.3")
+        with self.assertRaises(BuildReleaseUnique):
+            BuildRelease.objects.create_build_release("BBB", "mr7.5.3")
 
     def test_release_jobs(self, dlf):
         jobs = BuildRelease.objects.release_jobs(self.release_uuid)
@@ -63,6 +81,13 @@ class BuildReleaseManagerTestCase(BaseTest):
         br = BuildRelease.objects.get(uuid=self.release_uuid)
         job = JenkinsBuildInfo.objects.get(id=4)
         self.assertEqual(br.last_update, job.date)
+
+    def test_release(self, dlf):
+        prev = BuildRelease.objects.filter(release="release-mr8.1")
+        br = BuildRelease.objects.create_build_release("BBB", "mr8.1")
+        self.assertEqual(br.release, "release-mr8.1-update")
+        qs = BuildRelease.objects.release("release-mr8.1")
+        self.assertEqual(qs.count(), prev.count() + 1)
 
 
 class BuildReleaseTestCase(BaseTest):
@@ -103,14 +128,38 @@ class BuildReleaseTestCase(BaseTest):
     def test_branch_or_tag_trunk(self):
         build = BuildRelease.objects.create_build_release("AAA", "trunk")
         self.assertEqual(build.branch_or_tag, "branch/master")
+        self.assertFalse(build.is_update)
 
     def test_branch_or_tag_mrXX(self):
         build = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertEqual(build.branch_or_tag, "branch/mr8.1")
+        self.assertEqual(build.release, "release-mr8.1")
+        self.assertFalse(build.is_update)
 
     def test_branch_or_tag_mrXXX(self):
         build = BuildRelease.objects.create_build_release("AAA", "mr7.5.2")
         self.assertEqual(build.branch_or_tag, "tag/mr7.5.2.1")
+        self.assertFalse(build.is_update)
+
+    def test_is_update_ok(self):
+        build = BuildRelease.objects.create_build_release("AAA", "mr8.1")
+        self.assertEqual(build.branch_or_tag, "branch/mr8.1")
+        self.assertEqual(build.release, "release-mr8.1-update")
+        self.assertTrue(build.is_update)
+
+    def test_done_update(self):
+        build = BuildRelease.objects.create_build_release("AAA", "mr8.1")
+        build.built_projects = build.projects
+        self.assertTrue(build.done)
+
+    @override_settings(BUILD_RELEASE_JOBS=["release-copy-debs-yml", "other"])
+    def test_done(self):
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        br.built_projects = br.projects
+        self.assertFalse(br.done)
+        br.built_projects = "release-copy-debs-yml,other,{}".format(
+            br.projects
+        )
 
     def test_build_deps(self):
         build_deps = [
@@ -401,14 +450,25 @@ class JBIManageTest(BaseTest):
 
 
 class BRManageTest(BaseTest):
+    fixtures = [
+        "test_models",
+    ]
+
     @patch("build.tasks.trigger_copy_deps")
     @patch("build.models.build_resume")
     def test_br_manage(self, build_resume, trigger_copy_deps):
-        br = BuildRelease.objects.create_build_release("UUID_mr8.1", "mr8.1")
+        br = BuildRelease.objects.create_build_release("UUID", "mr7.5")
         build_resume.delay.assert_not_called()
         trigger_copy_deps.assert_called_once_with(
             internal=True, release=br.release, release_uuid=br.uuid
         )
+
+    @patch("build.tasks.trigger_copy_deps")
+    @patch("build.models.build_resume")
+    def test_br_manage_ko(self, build_resume, trigger_copy_deps):
+        br = BuildRelease.objects.create_build_release("UUID1", "mr8.1")
+        build_resume.delay.assert_called_once_with(br.id)
+        trigger_copy_deps.assert_not_called()
 
 
 class BuildReleaseRetriggerTest(BaseTest):

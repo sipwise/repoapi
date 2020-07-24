@@ -36,3 +36,9 @@ class NoReleaseInfo(Error):
 
 class NoDistrisInfo(Error):
     pass
+
+
+class BuildReleaseUnique(Error):
+    """ mrX.Y.Z release should be built just once """
+
+    pass

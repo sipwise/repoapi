@@ -68,9 +68,9 @@ def build_release(request, release):
             reverse("panel:release-uuid", args=(release_uuid,))
         )
     else:
-        build_releases = BuildRelease.objects.filter(
-            release=release_config.release
-        ).order_by('-start_date')
+        build_releases = BuildRelease.objects.release(
+            release_config.release
+        ).order_by("-start_date")
         if build_releases.count() == 0:
             done = True
         else:

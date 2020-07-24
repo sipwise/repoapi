@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -43,7 +43,7 @@ re_release_common = re.compile(r"^(release-)?(mr[0-9]+\.[0-9]+)(\.[0-9]+)?$")
 
 
 def get_simple_release(version):
-    match = re_release.search(version)
+    match = re_release.search(version.replace("-update", ""))
     if match:
         return match.group(1)
     if version.startswith("release-trunk-"):

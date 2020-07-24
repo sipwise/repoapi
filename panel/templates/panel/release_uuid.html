@@ -14,7 +14,9 @@
 </div>
 <div class="container">
   <div class="panel panel-default">
-    {% include "panel/base_release_job.html" %}
+    {% if not build_release.is_update %}
+      {% include "panel/base_release_job.html" %}
+    {% endif %}
   </div>
   <div id="release-job-list"></div>
 </div>
