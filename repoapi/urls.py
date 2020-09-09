@@ -97,6 +97,7 @@ api_patterns = [
         name="gerrit-refresh",
     ),
     url(r"^build/", include("build.urls")),
+    url(r"^release_changed/", include("release_changed.urls")),
 ]
 
 api_patterns = format_suffix_patterns(api_patterns)

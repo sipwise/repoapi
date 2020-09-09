@@ -146,3 +146,30 @@ class TestJBICelery(BaseTest):
         )
         path = os.path.join(base_path, "envVars.json")
         dlfile.assert_any_call(url, path)
+
+
+class TestJBIReleaseChangedCelery(BaseTest):
+    @patch("builtins.open", mock_open(read_data=artifacts_json))
+    @patch("repoapi.utils.dlfile")
+    @patch("repoapi.tasks.app")
+    def test_jbi_release_changed(self, app, dlfile):
+        param = {
+            "projectname": "check-ngcp-release-changes",
+            "jobname": "check-ngcp-release-changes",
+            "buildnumber": 1,
+            "result": "SUCCESS",
+            "job_url": "https://jenkins-dev.mgm.sipwise.com/job"
+            "/check-ngcp-release-changed",
+        }
+        jbi = JenkinsBuildInfo.objects.create(**param)
+        base_path = os.path.join(
+            settings.JBI_BASEDIR, jbi.jobname, str(jbi.buildnumber)
+        )
+        url = JBI_ENVVARS_URL.format(
+            settings.JENKINS_URL, jbi.jobname, jbi.buildnumber
+        )
+        path = os.path.join(base_path, "envVars.json")
+        dlfile.assert_any_call(url, path)
+        app.send_task.assert_called_once_with(
+            "release_changed.tasks.process_result", args=[jbi.id, path]
+        )

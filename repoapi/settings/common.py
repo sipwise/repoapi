@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "panel.apps.PanelConfig",
     "release_dashboard.apps.ReleaseDashboardConfig",
     "build.apps.ReleaseConfig",
+    "release_changed.apps.ReleaseChangedConfig",
 ]
 
 MIDDLEWARE = (

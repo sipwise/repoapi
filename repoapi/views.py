@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -46,6 +46,9 @@ def api_root(request, _format=None):
                 "release-list", request=request, format=_format
             ),
             "build": reverse("build:list", request=request, format=_format),
+            "release_changed": reverse(
+                "release_changed:list", request=request, format=_format
+            ),
         }
     )
 
@@ -54,9 +57,7 @@ class JenkinsBuildInfoFilter(django_filters.FilterSet):
     class Meta:
         model = jbi
         fields = ["tag", "projectname", "jobname", "param_release", "date"]
-        order_by = [
-            "-date",
-        ]
+        order_by = ["-date"]
 
 
 class JenkinsBuildInfoList(generics.ListCreateAPIView):
@@ -86,9 +87,7 @@ class ReleaseList(APIView):
 
 class ProjectList(APIView):
     def get(self, request, release):
-        params = {
-            "flat": False,
-        }
+        params = {"flat": False}
         if "release_uuid" in self.request.query_params:
             params["release_uuid"] = self.request.query_params["release_uuid"]
         projects = jbi.objects.release_projects(release, **params)
@@ -114,9 +113,7 @@ class ProjectFullList(APIView):
 
 class ProjectUUIDList(APIView):
     def get(self, request, release, project):
-        params = {
-            "flat": False,
-        }
+        params = {"flat": False}
         if "release_uuid" in self.request.query_params:
             params["release_uuid"] = self.request.query_params["release_uuid"]
         uuids = jbi.objects.release_project_uuids(release, project, **params)

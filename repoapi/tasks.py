@@ -20,6 +20,7 @@ from os.path import basename
 from celery import shared_task
 from django.apps import apps
 
+from .celery import app
 from .celery import jbi_parse_hotfix
 from .conf import settings
 from .utils import jenkins_get_artifact
@@ -40,7 +41,7 @@ def jbi_get_artifact(jbi_id, jobname, buildnumber, artifact_info):
 @shared_task(ignore_result=True)
 def get_jbi_files(jbi_id, jobname, buildnumber):
     jenkins_get_console(jobname, buildnumber)
-    jenkins_get_env(jobname, buildnumber)
+    path_envVars = jenkins_get_env(jobname, buildnumber)
     path_build = jenkins_get_build(jobname, buildnumber)
     if jobname in settings.JBI_ARTIFACT_JOBS:
         with open(path_build) as data_file:
@@ -50,6 +51,10 @@ def get_jbi_files(jbi_id, jobname, buildnumber):
             jbi_get_artifact.delay(jbi_id, jobname, buildnumber, artifact)
     else:
         logger.debug("skip artifacts download for jobname: %s", jobname)
+    if jobname in settings.RELEASE_CHANGED_JOBS:
+        app.send_task(
+            "release_changed.tasks.process_result", args=[jbi_id, path_envVars]
+        )
 
 
 @shared_task(ignore_result=True)

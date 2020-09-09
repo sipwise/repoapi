@@ -1,0 +1,25 @@
+[
+    {
+        "fields": {
+            "buildnumber": 1,
+            "date": "2015-05-01T12:57:54.379Z",
+            "gerrit_change": null,
+            "gerrit_eventtype": null,
+            "gerrit_patchset": null,
+            "job_url": "https://jenkins.mgm.sipwise.com/job/check-ngcp-release-changes/",
+            "param_branch": null,
+            "param_distribution": null,
+            "param_ppa": null,
+            "param_release": null,
+            "param_release_uuid": null,
+            "param_tag": null,
+            "projectname": "check-ngcp-release-changes",
+            "jobname": "check-ngcp-release-changes",
+            "repo_name": null,
+            "result": "FAILED",
+            "tag": null
+        },
+        "model": "repoapi.jenkinsbuildinfo",
+        "pk": 1
+    },
+]

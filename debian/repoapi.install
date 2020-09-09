@@ -3,6 +3,7 @@ build usr/share/repoapi
 hotfix usr/share/repoapi
 manage.py usr/share/repoapi
 panel usr/share/repoapi
+release_changed usr/share/repoapi
 release_dashboard usr/share/repoapi
 repoapi usr/share/repoapi
 repoapi.ini etc/uwsgi/apps-available
