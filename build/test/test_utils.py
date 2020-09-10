@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -14,12 +14,12 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import re
 
-from django.conf import settings
 from django.test import override_settings
 from django.test import SimpleTestCase
 from mock import patch
 
 from build import exceptions as err
+from build.conf import settings
 from build.utils import get_common_release
 from build.utils import get_simple_release
 from build.utils import ReleaseConfig

@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,7 +12,6 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from django.conf import settings
 from django.test import override_settings
 from django.urls import reverse
 from mock import call
@@ -21,6 +20,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from release_dashboard import models
+from release_dashboard.conf import settings
 from repoapi.test.base import APIAuthenticatedTestCase
 
 

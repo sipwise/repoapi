@@ -29,12 +29,12 @@ JBI_BASEDIR = mkdtemp(dir=os.environ.get("RESULTS"))
 @override_settings(DEBUG=True, JBI_BASEDIR=JBI_BASEDIR)
 class BaseTest(TestCase):
     def setUp(self):
-        from django.conf import settings
+        from repoapi.conf import settings
 
         mkpath(settings.JBI_BASEDIR, verbose=True)
 
     def tearDown(self):
-        from django.conf import settings
+        from repoapi.conf import settings
 
         if os.path.exists(settings.JBI_BASEDIR):
             remove_tree(settings.JBI_BASEDIR, verbose=True)

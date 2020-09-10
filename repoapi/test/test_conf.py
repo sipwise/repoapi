@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,18 +12,16 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from django.db.models import signals
+from django.test import SimpleTestCase
 
-from .gri import gerrit_repo_manage
-from .gri import GerritRepoInfo  # noqa
-from .jbi import jbi_manage
-from .jbi import JenkinsBuildInfo
-from .wni import workfront_note_manage
-from .wni import WorkfrontNoteInfo  # noqa
-from repoapi.conf import settings
 
-post_save = signals.post_save.connect
-post_save(jbi_manage, sender=JenkinsBuildInfo)
-post_save(gerrit_repo_manage, sender=JenkinsBuildInfo)
-if settings.WORKFRONT_NOTE:
-    post_save(workfront_note_manage, sender=JenkinsBuildInfo)
+class TestRepoAPIConf(SimpleTestCase):
+    def test_django_settings(self):
+        from django.conf import settings
+
+        self.assertIsNotNone(settings.RELEASE_CHANGED_JOBS)
+
+    def test_repoapi_settings(self):
+        from repoapi.conf import settings
+
+        self.assertIsNotNone(settings.RELEASE_CHANGED_JOBS)

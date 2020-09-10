@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -19,10 +19,10 @@ from datetime import datetime
 from datetime import timedelta
 from urllib.parse import urlparse
 
-from django.conf import settings
 from django.db import models
 from django.forms.models import model_to_dict
 
+from repoapi.conf import settings
 from repoapi.tasks import get_jbi_files
 
 logger = logging.getLogger(__name__)

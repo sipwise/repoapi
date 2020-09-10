@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import django_filters
-from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
@@ -25,6 +24,7 @@ from rest_framework_api_key.permissions import HasAPIAccess
 from . import models
 from . import serializers
 from . import tasks
+from .conf import settings
 from repoapi.serializers import JenkinsBuildInfoSerializer as JBISerializer
 
 

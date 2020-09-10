@@ -14,6 +14,18 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.db import models
 
+from .conf import settings  # noqa
+
+# This is needed due to:
+#
+# AppConf classes depend on being imported during startup of the Django
+# process. Even though there are multiple modules loaded automatically, only
+# the models modules (usually the models.py file of your app) are guaranteed
+# to be loaded at startup. Therefore it’s recommended to put your AppConf
+# subclass(es) there, too.
+#
+# https://django-appconf.readthedocs.io/en/latest/
+
 
 class ReleaseChanged(models.Model):
     VMTYPE_CHOICES = (("CE", "spce"), ("PRO", "sppro"))
