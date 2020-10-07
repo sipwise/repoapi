@@ -23,6 +23,7 @@ from django.apps import apps
 from .celery import app
 from .celery import jbi_parse_hotfix
 from .conf import settings
+from .utils import is_download_artifacts
 from .utils import jenkins_get_artifact
 from .utils import jenkins_get_build
 from .utils import jenkins_get_console
@@ -43,7 +44,7 @@ def get_jbi_files(jbi_id, jobname, buildnumber):
     jenkins_get_console(jobname, buildnumber)
     path_envVars = jenkins_get_env(jobname, buildnumber)
     path_build = jenkins_get_build(jobname, buildnumber)
-    if jobname in settings.JBI_ARTIFACT_JOBS:
+    if is_download_artifacts(jobname):
         with open(path_build) as data_file:
             data = json.load(data_file)
         logger.debug("job_info:%s", data)

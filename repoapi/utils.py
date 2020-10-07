@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import logging
 import os
+import re
 import shutil
 import subprocess
 import urllib.request
@@ -167,3 +168,12 @@ def workfront_set_release_target(_id, release):
         logger.error("can't set release target. %s. %s", res[1], res[2])
         return False
     return True
+
+
+def is_download_artifacts(jobname):
+    if jobname in settings.JBI_ARTIFACT_JOBS:
+        return True
+    for check in settings.REPOAPI_ARTIFACT_JOB_REGEX:
+        if re.search(check, jobname) is not None:
+            return True
+    return False

@@ -17,5 +17,9 @@ from appconf import AppConf
 
 
 class RepoAPIConf(AppConf):
+    ARTIFACT_JOB_REGEX = [
+        ".*-repos$",
+    ]
+
     class Meta:
         prefix = "repoapi"

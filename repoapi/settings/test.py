@@ -103,4 +103,5 @@ JBI_BASEDIR = join(RESULTS_DIR, "jbi_files")
 JBI_ARTIFACT_JOBS = [
     "fake-release-tools-runner",
 ]
+REPOAPI_ARTIFACT_JOB_REGEX = []
 JBI_ALLOWED_HOSTS = ["jenkins-dev.mgm.sipwise.com"]

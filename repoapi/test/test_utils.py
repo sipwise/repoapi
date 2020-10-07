@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,6 +12,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from django.test import override_settings
 from mock import patch
 
 from repoapi import utils
@@ -42,3 +43,14 @@ class UtilsTestCase(BaseTest):
         ear.return_value = [0, "\n", ""]
         val = utils.get_next_release("mr5.4")
         self.assertEqual(val, None)
+
+    @override_settings(
+        REPOAPI_ARTIFACT_JOB_REGEX=[".*-repos$"],
+        JBI_ARTIFACT_JOBS=["fake-release-tools-runner"],
+    )
+    def test__is_download_artifacts(self):
+        self.assertFalse(utils.is_download_artifacts("whatever-binaries"))
+        self.assertTrue(
+            utils.is_download_artifacts("fake-release-tools-runner")
+        )
+        self.assertTrue(utils.is_download_artifacts("whatever-repos"))
