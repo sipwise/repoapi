@@ -28,12 +28,12 @@ JBI_BASEDIR = mkdtemp(dir=os.environ.get("RESULTS"))
 
 @override_settings(DEBUG=True, JBI_BASEDIR=JBI_BASEDIR)
 class BaseTest(TestCase):
-    def setUp(self):
+    def setUp(self, *args, **kwargs):
         from repoapi.conf import settings
 
         mkpath(settings.JBI_BASEDIR, verbose=True)
 
-    def tearDown(self):
+    def tearDown(self, *args, **kwargs):
         from repoapi.conf import settings
 
         if os.path.exists(settings.JBI_BASEDIR):

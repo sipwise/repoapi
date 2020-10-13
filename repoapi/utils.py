@@ -12,18 +12,18 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import logging
 import os
 import re
 import subprocess
 from distutils.dir_util import mkpath
 
 import requests
+import structlog
 from requests.auth import HTTPBasicAuth
 
 from .conf import settings
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 JBI_CONSOLE_URL = "{}/job/{}/{}/consoleText"
 JBI_BUILD_URL = "{}/job/{}/{}/api/json"
@@ -32,12 +32,15 @@ JBI_ENVVARS_URL = "{}/job/{}/{}/injectedEnvVars/api/json"
 
 
 def executeAndReturnOutput(command, env=None):
+    log = logger.bind(
+        command=command,
+        env=env,
+    )
     proc = subprocess.Popen(
         command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env
     )
     stdoutdata, stderrdata = proc.communicate()
-    logger.debug("<stdout>%s</stdout>", stdoutdata)
-    logger.debug("<strerr>%s</stderr>", stderrdata)
+    log.debug("command done", stdout=stdoutdata, stderr=stderrdata)
     return proc.returncode, stdoutdata, stderrdata
 
 
@@ -51,13 +54,17 @@ def get_jenkins_response(url):
 
 
 def dlfile(url, path):
+    log = logger.bind(
+        url=url,
+        path=path,
+    )
     if settings.DEBUG:
-        logger.info("I would call %s", url)
+        log.info("_NOT_ calling due to DEBUG is set", url)
     else:
         auth = HTTPBasicAuth(
             settings.JENKINS_HTTP_USER, settings.JENKINS_HTTP_PASSWD
         )
-        logger.debug("url:[%s]", url)
+        log.debug("get request")
         req = requests.get(url, auth=auth)
         with open(path, "wb") as local_file:
             for chunk in req.iter_content(chunk_size=128):
@@ -65,17 +72,18 @@ def dlfile(url, path):
 
 
 def open_jenkins_url(url):
-    logger.debug("Trying to retrieve url: [%s]", url)
+    log = logger.bind(
+        url=url,
+    )
+    log.debug("Trying to retrieve")
     try:
         res = get_jenkins_response(url)
-        logger.debug("OK[{}] URL[{}]".format(res.status_code, url))
+        log.debug("OK", status_code=res.status_code)
         return True
     except requests.HTTPError as e:
-        logger.error(
-            "Error[{}] retrieving URL[{}]: {}".format(res.status_code, url, e)
-        )
+        log.error("Error %s", e, status_code=res.status_code)
     except Exception as e:
-        logger.error("Fatal error retrieving URL[{}]: {}".format(url, e))
+        log.error("Fatal error retrieving: %s", e)
 
     return False
 
@@ -86,8 +94,31 @@ def jenkins_remove_ppa(repo):
         "token=%s&repository=%s"
         % (settings.JENKINS_URL, settings.JENKINS_TOKEN, repo)
     )
+    log = logger.bind(
+        repo=repo,
+        url=url,
+    )
     if settings.DEBUG:
-        logger.debug("I would call %s", url)
+        log.debug("_NOT_ calling due to DEBUG is set", url)
+    else:
+        open_jenkins_url(url)
+
+
+def jenkins_remove_project_ppa(repo, source):
+    url = (
+        "%s/job/remove-reprepro-project/buildWithParameters?"
+        "token=%s&repository=%s&source=%s"
+        % (settings.JENKINS_URL, settings.JENKINS_TOKEN, repo, source)
+    )
+    log = logger.bind(
+        repo=repo,
+        source=source,
+        url=url,
+    )
+    if source is None:
+        raise FileNotFoundError()
+    if settings.DEBUG:
+        log.debug("_NOT_ calling due to DEBUG is set")
     else:
         open_jenkins_url(url)
 
@@ -95,7 +126,12 @@ def jenkins_remove_ppa(repo):
 def _jenkins_get(url, base_path, filename):
     mkpath(base_path)
     path = os.path.join(base_path, filename)
-    logger.debug("url:[%s] path[%s]", url, path)
+    log = logger.bind(
+        base_path=base_path,
+        filename=filename,
+        url=url,
+    )
+    log.debug("download file from jenkins", url, path)
     dlfile(url, path)
     return path
 
@@ -138,7 +174,6 @@ def workfront_note_send(_id, message):
         "--taskid=%s" % _id,
         '--message="%s"' % message,
     ]
-    logger.debug("workfront-jenkins-update command: %s", command)
     res = executeAndReturnOutput(command)
     if res[0] != 0:
         logger.error("can't post workfront note. %s. %s", res[1], res[2])
@@ -148,7 +183,6 @@ def workfront_note_send(_id, message):
 
 def get_next_release(branch):
     command = ["/usr/bin/meta-release-helper", "--next-release", branch]
-    logger.debug("meta-release-helper command: %s", command)
     res = executeAndReturnOutput(command)
     if res[0] != 0:
         logger.error(
@@ -176,7 +210,6 @@ def workfront_set_release_target(_id, release):
         "--taskid=%s" % _id,
         "--release=%s" % release,
     ]
-    logger.debug("workfront-target-task command: %s", command)
     res = executeAndReturnOutput(command)
     if res[0] != 0:
         logger.error("can't set release target. %s. %s", res[1], res[2])

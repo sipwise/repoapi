@@ -12,20 +12,24 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import logging
+import glob
+import json
 import re
 from collections import OrderedDict
 from datetime import datetime
 from datetime import timedelta
+from os.path import join
 from urllib.parse import urlparse
 
+import structlog
 from django.db import models
 from django.forms.models import model_to_dict
 
+from debian import deb822
 from repoapi.conf import settings
 from repoapi.tasks import get_jbi_files
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 workfront_re = re.compile(r"TT#(\d+)")
 commit_re = re.compile(r"^(\w{7}) ")
 
@@ -243,6 +247,44 @@ class JenkinsBuildInfo(models.Model):
             self.buildnumber,
             self.tag,
         )
+
+    @property
+    def build_path(self):
+        return join(settings.JBI_BASEDIR, self.jobname, str(self.buildnumber))
+
+    @property
+    def build_info(self):
+        path = join(self.build_path, "build.json")
+        try:
+            with open(path, "r") as data_file:
+                data = json.load(data_file)
+            return data
+        except FileNotFoundError:
+            logger.warn("file not found", path=path)
+            return None
+
+    @property
+    def artifacts(self):
+        build_info = self.build_info
+        if build_info is None:
+            return []
+        return [x["fileName"] for x in build_info["artifacts"]]
+
+    @property
+    def source(self):
+        try:
+            return getattr(self, "_source")
+        except AttributeError:
+            pass
+        path = join(self.build_path, "artifact")
+        dscs = glob.glob(join(path, "*.dsc"))
+        if len(dscs) != 1:
+            logger.error("more than one dsc file on artifact dir", path=path)
+            return None
+        with open(dscs[0]) as f:
+            d = deb822.Dsc(f)
+        self._source = d["Source"]
+        return self._source
 
 
 def jbi_manage(sender, **kwargs):

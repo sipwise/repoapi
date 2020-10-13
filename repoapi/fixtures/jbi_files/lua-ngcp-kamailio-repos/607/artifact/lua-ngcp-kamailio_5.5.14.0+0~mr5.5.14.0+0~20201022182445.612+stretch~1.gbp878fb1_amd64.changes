@@ -1,0 +1,37 @@
+Format: 1.8
+Date: Thu, 22 Oct 2020 18:24:46 +0000
+Source: lua-ngcp-kamailio
+Binary: lua-ngcp-kamailio lua-ngcp-kamailio-dev
+Architecture: source amd64
+Version: 5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1
+Distribution: UNRELEASED
+Urgency: medium
+Maintainer: Sipwise Development Team <support@sipwise.com>
+Changed-By: Jenkins Sipwise <jenkins@sipwise.com>
+Description:
+ lua-ngcp-kamailio - lua framework for ngcp-kamailio config
+ lua-ngcp-kamailio-dev - lua framework for ngcp-kamailio config development tests
+Changes:
+ lua-ngcp-kamailio (5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1) UNRELEASED; urgency=medium
+ .
+   ** SNAPSHOT build @878fb1e6645c8167c17e286e30af179250d1d2b8 **
+ .
+   * UNRELEASED
+Checksums-Sha1:
+ 8fc380a26b64faa600c91ce92ef0ce9c3354eda3 919 lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1.dsc
+ 34ea851580c2f637f8347ac4b636ed9f4d4490e8 34440 lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1.tar.xz
+ 05fb1571e8d346efeffa672727de929363a74a38 25468 lua-ngcp-kamailio-dev_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1_amd64.deb
+ aa7f4332c854e7e13bb1325f508a975fb96da52f 6615 lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1_amd64.buildinfo
+ c72e6213e939b5eb61624b12baaf3b5d3808ebb9 17436 lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1_amd64.deb
+Checksums-Sha256:
+ 7bd78af97344cbc0c9321f3c3a0d78a30e06d1c30ae6417f54f36c722e16f596 919 lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1.dsc
+ a4351332b736b7446fb221b67aa73d7b17209d620eaf20410995fe8812de7e61 34440 lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1.tar.xz
+ ed8527c54b25c58fa5b09323f932da680340791d506f41688a26236479f22bfc 25468 lua-ngcp-kamailio-dev_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1_amd64.deb
+ 4db1b281d3b2ac07c5e11e4d9e1c31559fdf9786efca7ad653da80a6918c4a93 6615 lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1_amd64.buildinfo
+ d6758b963604cab34790369bc4b5b7f0e7833767c33ddcfc401c0fc509af7709 17436 lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1_amd64.deb
+Files:
+ ba9aeab2d6b1068465dfa8452c6621db 919 libs extra lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1.dsc
+ c8ca417f88ace9940d3ce15d5682eab9 34440 libs extra lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1.tar.xz
+ 61f0dd1a22168ccd679eb703a6b5023d 25468 libs extra lua-ngcp-kamailio-dev_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1_amd64.deb
+ 705d87a811b4a9ddfdf90bcc49d98eff 6615 libs extra lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1_amd64.buildinfo
+ db68992f25e165654e8eb4898f60e1c4 17436 libs extra lua-ngcp-kamailio_5.5.14.0+0~mr5.5.14.0+0~20201022182445.612+stretch~1.gbp878fb1_amd64.deb

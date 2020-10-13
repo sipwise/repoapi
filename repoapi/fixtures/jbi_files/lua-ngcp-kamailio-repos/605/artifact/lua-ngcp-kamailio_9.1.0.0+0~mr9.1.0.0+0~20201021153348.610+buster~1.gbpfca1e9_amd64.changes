@@ -1,0 +1,38 @@
+Format: 1.8
+Date: Wed, 21 Oct 2020 15:33:48 +0000
+Source: lua-ngcp-kamailio
+Binary: lua-ngcp-kamailio lua-ngcp-kamailio-dev
+Architecture: source amd64
+Version: 9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9
+Distribution: UNRELEASED
+Urgency: medium
+Maintainer: Sipwise Development Team <support@sipwise.com>
+Changed-By: Jenkins Sipwise <jenkins@sipwise.com>
+Description:
+ lua-ngcp-kamailio - lua framework for ngcp-kamailio config
+ lua-ngcp-kamailio-dev - lua framework for ngcp-kamailio config development tests
+Changes:
+ lua-ngcp-kamailio (9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9) UNRELEASED; urgency=medium
+ .
+   ** SNAPSHOT build @fca1e982e19312599d8b24a4c7065f887c833ccb **
+ .
+   [ Victor Seva ]
+   * TT#95650 mocks/pv: add missing KSR.pv.get* functions
+Checksums-Sha1:
+ c68337e4bcafd3ba81ff666f0685ec2b351c56d6 940 lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9.dsc
+ 34f8f2250540c327e49e749715148d6a64b8151f 36176 lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9.tar.xz
+ 780bc3aac0d8816329833bcefb6696205cdba1e1 26984 lua-ngcp-kamailio-dev_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9_amd64.deb
+ 55a870d8c6da16a56e6316f2fd0de8304f09f97d 6052 lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9_amd64.buildinfo
+ 16c7cc540113311c7be0ac13ff08f6d09530d869 19076 lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9_amd64.deb
+Checksums-Sha256:
+ 6961af147470d183c72d2de78987556ef8db7eac922af921219b9650b25aec6b 940 lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9.dsc
+ 3f3aebb8542437d73d8581eb5ca5f01e5a31699de4fb7652c580001dd49dab6b 36176 lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9.tar.xz
+ df1586d1cc4a6d972f0988daeb7630c016390e6a6ec3b9f72248002923300093 26984 lua-ngcp-kamailio-dev_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9_amd64.deb
+ aed7a9198a899d81a00e1c7269a11330fc1d09ef6ca296ff6f26be82b663c24a 6052 lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9_amd64.buildinfo
+ b2efc0d92a3d9f6641b2132c1b5238dce591a4844c5a692c90144334001c1eab 19076 lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9_amd64.deb
+Files:
+ fc53a8bcfede15e08d30ef98767e0fe3 940 interpreters optional lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9.dsc
+ 5bcc783a1988c0c13bddca31dd46146d 36176 interpreters optional lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9.tar.xz
+ 47e9bba5dd1dba489e95cfd41a8bc926 26984 interpreters optional lua-ngcp-kamailio-dev_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9_amd64.deb
+ 45f845707123c9df801261f791da4e36 6052 interpreters optional lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9_amd64.buildinfo
+ 8cf68ec805432cec42150b584f3f6154 19076 interpreters optional lua-ngcp-kamailio_9.1.0.0+0~mr9.1.0.0+0~20201021153348.610+buster~1.gbpfca1e9_amd64.deb

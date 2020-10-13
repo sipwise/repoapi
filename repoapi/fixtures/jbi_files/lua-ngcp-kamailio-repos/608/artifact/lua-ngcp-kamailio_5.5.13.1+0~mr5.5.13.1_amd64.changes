@@ -1,0 +1,35 @@
+Format: 1.8
+Date: Thu, 22 Oct 2020 19:22:21 +0200
+Source: lua-ngcp-kamailio
+Binary: lua-ngcp-kamailio lua-ngcp-kamailio-dev
+Architecture: source amd64
+Version: 5.5.13.1+0~mr5.5.13.1
+Distribution: unstable
+Urgency: medium
+Maintainer: Sipwise Development Team <support@sipwise.com>
+Changed-By: Sipwise Jenkins Builder <jenkins@sipwise.com>
+Description:
+ lua-ngcp-kamailio - lua framework for ngcp-kamailio config
+ lua-ngcp-kamailio-dev - lua framework for ngcp-kamailio config development tests
+Changes:
+ lua-ngcp-kamailio (5.5.13.1+0~mr5.5.13.1) unstable; urgency=medium
+ .
+   * New release.
+Checksums-Sha1:
+ a877fc2f3b1a74c42155611b1c5137b5d462ca65 755 lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1.dsc
+ ed9235b5de9241ab0c2c3a2d237f2f33aa5e6d1f 34016 lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1.tar.xz
+ dcd5ea2f2960e53f6c2db30089ed73c6a7b5fc33 25316 lua-ngcp-kamailio-dev_5.5.13.1+0~mr5.5.13.1_amd64.deb
+ 03193c753eca156e8c89873af579ddc53972d454 6164 lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1_amd64.buildinfo
+ 8b16f0ccc74537883d1a70036e00a18f5d727c3b 17284 lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1_amd64.deb
+Checksums-Sha256:
+ d8a4e10552295885ead23c0b9ccfb0782a901cbcbfdadf14687040463fa3e224 755 lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1.dsc
+ 89ea415c8de43666040f49ff7a0e532707ca019a6a075f39bc9a7e86bda00ed6 34016 lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1.tar.xz
+ 6ea150ec530dcc3965df0fb62f0e03cabbcd8871f1743c2a0b38cd3a54c65ef7 25316 lua-ngcp-kamailio-dev_5.5.13.1+0~mr5.5.13.1_amd64.deb
+ 82f213960e9914403898b2583331ced85f1fb0ffdff52582698fba5ddc0c2391 6164 lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1_amd64.buildinfo
+ 6e8136cd1a3cc03d5caab27b550cc836356d3ce55293e2686674c45371c10cd7 17284 lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1_amd64.deb
+Files:
+ 4f4ca5f67003e0d773ca94d5ff28e196 755 libs extra lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1.dsc
+ bc7854b667e5ac5f90acfe0d95e163aa 34016 libs extra lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1.tar.xz
+ e4c32bc186276e31545d3e265c8365cd 25316 libs extra lua-ngcp-kamailio-dev_5.5.13.1+0~mr5.5.13.1_amd64.deb
+ 39105226396f9cfa87fb03af86d6337a 6164 libs extra lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1_amd64.buildinfo
+ 675dd1c6b04170943f00531daf41ddaa 17284 libs extra lua-ngcp-kamailio_5.5.13.1+0~mr5.5.13.1_amd64.deb
