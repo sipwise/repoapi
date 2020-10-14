@@ -13,11 +13,11 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import json
-import logging
 from datetime import timedelta
 from os.path import basename
 
 from celery import shared_task
+from celery.utils.log import get_task_logger
 from django.apps import apps
 
 from .celery import app
@@ -29,7 +29,7 @@ from .utils import jenkins_get_build
 from .utils import jenkins_get_console
 from .utils import jenkins_get_env
 
-logger = logging.getLogger(__name__)
+logger = get_task_logger(__name__)
 
 
 @shared_task(ignore_result=True)

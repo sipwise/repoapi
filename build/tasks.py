@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,9 +12,8 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import logging
-
 from celery import shared_task
+from celery.utils.log import get_task_logger
 
 from .conf import settings
 from build.models.br import BuildRelease
@@ -22,7 +21,7 @@ from build.utils import trigger_build
 from build.utils import trigger_copy_deps
 from repoapi.celery import app
 
-logger = logging.getLogger(__name__)
+logger = get_task_logger(__name__)
 
 
 @app.task(bind=True)
@@ -37,7 +36,9 @@ def build_release(self, pk):
     else:
         release = instance.release
     url = trigger_copy_deps(
-        release=release, internal=True, release_uuid=instance.uuid,
+        release=release,
+        internal=True,
+        release_uuid=instance.uuid,
     )
     logger.info("%s triggered" % url)
 

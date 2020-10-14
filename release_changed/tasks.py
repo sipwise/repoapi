@@ -13,14 +13,14 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import json
-import logging
 
 from celery import shared_task
+from celery.utils.log import get_task_logger
 from django.apps import apps
 
 from .models import ReleaseChanged
 
-logger = logging.getLogger(__name__)
+logger = get_task_logger(__name__)
 
 
 @shared_task(ignore_result=True)
@@ -32,7 +32,8 @@ def process_result(jbi_id, path_envVars):
     info = data["envMap"]
     if info["vmdone"] == "yes":
         ReleaseChanged.objects.filter(
-            version=info["vmversion"], vmtype=info["vmtype"],
+            version=info["vmversion"],
+            vmtype=info["vmtype"],
         ).delete()
         logger.info("{}_{} deleted".format(info["vmtype"], info["vmversion"]))
         return

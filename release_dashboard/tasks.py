@@ -1,4 +1,4 @@
-# Copyright (C) 2016 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,9 +12,8 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import logging
-
 from celery import shared_task
+from celery.utils.log import get_task_logger
 
 from .conf import settings
 from .models import DockerImage
@@ -23,7 +22,7 @@ from .models import Project
 from .utils import build
 from .utils import docker
 
-logger = logging.getLogger(__name__)
+logger = get_task_logger(__name__)
 
 
 @shared_task(ignore_result=True)
