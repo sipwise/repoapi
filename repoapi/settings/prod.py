@@ -50,8 +50,15 @@ LOGGING["loggers"]["repoapi"]["level"] = os.getenv(  # noqa
 
 server_config = RawConfigParser()
 server_config.read(join(VAR_DIR, "server.ini"))
-JENKINS_URL = server_config.get("server", "JENKINS_URL")
-GERRIT_URL = server_config.get("server", "GERRIT_URL")
+
+JENKINS_URL = server_config.get("jenkins", "URL")
+JENKINS_HTTP_USER = server_config.get("jenkins", "HTTP_USER")
+JENKINS_HTTP_PASSWD = server_config.get("jenkins", "HTTP_PASSWD")
+
+GERRIT_URL = server_config.get("gerrit", "URL")
+GERRIT_REST_HTTP_USER = server_config.get("gerrit", "HTTP_USER")
+GERRIT_REST_HTTP_PASSWD = server_config.get("gerrit", "HTTP_PASSWD")
+
 DOCKER_REGISTRY_URL = server_config.get("server", "DOCKER_REGISTRY_URL")
 AUTH_LDAP_SERVER_URI = server_config.get("server", "AUTH_LDAP_SERVER_URI")
 AUTH_LDAP_USER_BASE = server_config.get("server", "AUTH_LDAP_USER_BASE")
@@ -78,11 +85,6 @@ DATABASES = {
         "PORT": "",
     }
 }
-
-gerrit_config = RawConfigParser()
-gerrit_config.read(join(VAR_DIR, "gerrit.ini"))
-GERRIT_REST_HTTP_USER = gerrit_config.get("gerrit", "HTTP_USER")
-GERRIT_REST_HTTP_PASSWD = gerrit_config.get("gerrit", "HTTP_PASSWD")
 
 GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = join(BASE_DIR, "/etc/jenkins_jobs/workfront.ini")
