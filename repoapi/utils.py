@@ -17,8 +17,10 @@ import os
 import re
 import shutil
 import subprocess
-import urllib.request
 from distutils.dir_util import mkpath
+
+import requests
+from requests.auth import HTTPBasicAuth
 
 from .conf import settings
 
@@ -40,28 +42,40 @@ def executeAndReturnOutput(command, env=None):
     return proc.returncode, stdoutdata, stderrdata
 
 
+def get_jenkins_response(url):
+    auth = HTTPBasicAuth(
+        settings.JENKINS_HTTP_USER, settings.JENKINS_HTTP_PASSWD
+    )
+    response = requests.get(url, auth=auth)
+    response.raise_for_status()
+    return response
+
+
 def dlfile(url, path):
     if settings.DEBUG:
         logger.info("I would call %s", url)
     else:
-        remote_file = urllib.request.urlopen(url)
+        auth = HTTPBasicAuth(
+            settings.JENKINS_HTTP_USER, settings.JENKINS_HTTP_PASSWD
+        )
         logger.debug("url:[%s]", url)
-        with open(path, "wb") as local_file:
-            shutil.copyfileobj(remote_file, local_file)
+        with requests.get(url, auth=auth, stream=True) as req:
+            with open(path, "wb") as local_file:
+                shutil.copyfileobj(req.raw, local_file)
 
 
-def openurl(url):
-    req = urllib.request.Request(url)
+def open_jenkins_url(url):
     logger.debug("Trying to retrieve url: [%s]", url)
     try:
-        response = urllib.request.urlopen(req)
-        if 199 < response.getcode() < 300:
-            logger.debug("OK[%d] URL[%s]", response.getcode(), url)
-            return True
-    except urllib.error.HTTPError as e:
-        logger.error("Error[%d] retrieving URL[%s]", e.getcode(), url)
-    except Exception:
-        logger.error("Fatal error retrieving URL[%s]", url)
+        res = get_jenkins_response(url)
+        logger.debug("OK[{}] URL[{}]".format(res.status_code, url))
+        return True
+    except requests.HTTPError as e:
+        logger.error(
+            "Error[{}] retrieving URL[{}]: {}".format(res.status_code, url, e)
+        )
+    except Exception as e:
+        logger.error("Fatal error retrieving URL[{}]: {}".format(url, e))
 
     return False
 
@@ -75,7 +89,7 @@ def jenkins_remove_ppa(repo):
     if settings.DEBUG:
         logger.debug("I would call %s", url)
     else:
-        openurl(url)
+        open_jenkins_url(url)
 
 
 def _jenkins_get(url, base_path, filename):

@@ -24,7 +24,7 @@ from yaml import Loader
 
 from . import exceptions as err
 from .conf import settings
-from repoapi.utils import openurl
+from repoapi.utils import open_jenkins_url
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +79,7 @@ def trigger_copy_deps(release, internal, release_uuid, uuid=None):
     if settings.DEBUG:
         logger.info("Debug mode, would trigger: %s", url)
     else:
-        openurl(url)
+        open_jenkins_url(url)
     return "{base}/job/{job}/".format(**params)
 
 
@@ -123,7 +123,7 @@ def trigger_build(
     if settings.DEBUG:
         logger.info("Debug mode, would trigger: %s", url)
     else:
-        openurl(url)
+        open_jenkins_url(url)
     return "{base}/job/{job}/".format(**params)
 
 

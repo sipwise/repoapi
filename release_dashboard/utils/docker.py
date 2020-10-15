@@ -20,7 +20,7 @@ import uuid
 import requests
 
 from ..conf import settings
-from repoapi.utils import openurl
+from repoapi.utils import open_jenkins_url
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +50,7 @@ def trigger_docker_build(project, branch):
     if settings.DEBUG:
         logger.debug("Debug mode, would trigger: %s", url)
     else:
-        openurl(url)
+        open_jenkins_url(url)
     return "{base}/job/build-project-docker/".format(**params)
 
 

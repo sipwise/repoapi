@@ -174,7 +174,7 @@ class ReleaseConfigTestCase(SimpleTestCase):
         self.assertListEqual(["ngcp-schema"], values)
 
 
-@patch("build.utils.openurl")
+@patch("build.utils.open_jenkins_url")
 class TriggerBuild(SimpleTestCase):
     def test_project_build(self, openurl):
         params = {

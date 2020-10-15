@@ -18,7 +18,7 @@ from requests.auth import HTTPBasicAuth
 
 from ..conf import settings
 from ..models import Project
-from repoapi.utils import openurl
+from repoapi.utils import open_jenkins_url
 
 logger = logging.getLogger(__name__)
 
@@ -62,7 +62,7 @@ def trigger_hotfix(project, branch, user, push="yes"):
     if settings.DEBUG:
         logger.warn("Debug mode, would trigger: %s", url)
     else:
-        openurl(url)
+        open_jenkins_url(url)
     return "%s/job/release-tools-runner/" % settings.JENKINS_URL
 
 
@@ -109,7 +109,7 @@ def trigger_build(
     if settings.DEBUG:
         logger.debug("Debug mode, would trigger: %s", url)
     else:
-        openurl(url)
+        open_jenkins_url(url)
     return "{base}/job/{job}/".format(**params)
 
 
