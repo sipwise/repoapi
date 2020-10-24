@@ -15,7 +15,6 @@
 import logging
 import os
 import re
-import shutil
 import subprocess
 from distutils.dir_util import mkpath
 
@@ -59,9 +58,10 @@ def dlfile(url, path):
             settings.JENKINS_HTTP_USER, settings.JENKINS_HTTP_PASSWD
         )
         logger.debug("url:[%s]", url)
-        with requests.get(url, auth=auth, stream=True) as req:
-            with open(path, "wb") as local_file:
-                shutil.copyfileobj(req.raw, local_file)
+        req = requests.get(url, auth=auth)
+        with open(path, "wb") as local_file:
+            for chunk in req.iter_content(chunk_size=128):
+                local_file.write(chunk)
 
 
 def open_jenkins_url(url):
