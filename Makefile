@@ -49,11 +49,12 @@ shell: venv_prod
 run_dev: venv_dev
 	IP=$(shell ip a show dev eth0 scope global | grep inet | awk '{print $$2}' | cut -d/ -f1); \
 	source $(VAR_DIR)/venv_dev/bin/activate && \
+	DJANGO_LOG_LEVEL=DEBUG \
 	./manage.py runserver_plus $$IP:8000 --settings="repoapi.settings.dev"
 
 worker_dev: venv_dev
 	source $(VAR_DIR)/venv_dev/bin/activate && \
-	DJANGO_SETTINGS_MODULE=repoapi.settings.dev \
+	DJANGO_LOG_LEVEL=DEBUG DJANGO_SETTINGS_MODULE=repoapi.settings.dev \
 	$(VAR_DIR)/venv_dev/bin/celery -A repoapi worker \
 		--loglevel=info
 
