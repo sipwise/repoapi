@@ -58,6 +58,10 @@ def receiver_setup_logging(loglevel, logfile, format, colorize, **kwargs):
                     "handlers": ["console"],
                     "level": "INFO",
                 },
+                "celery": {
+                    "handlers": ["console"],
+                    "level": "INFO",
+                },
                 "repoapi": {
                     "handlers": ["console"],
                     "level": os.getenv("DJANGO_LOG_LEVEL", "INFO"),
