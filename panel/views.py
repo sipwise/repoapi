@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -15,6 +15,7 @@
 from django.http import HttpResponseNotFound
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+from natsort import humansorted
 
 from .conf import settings
 from build.models import BuildRelease
@@ -22,7 +23,7 @@ from repoapi.models import JenkinsBuildInfo as jbi
 
 
 def index(request):
-    context = {"releases": jbi.objects.releases()}
+    context = {"releases": humansorted(jbi.objects.releases())}
     return render(request, "panel/index.html", context)
 
 
