@@ -13,6 +13,7 @@
                 <th>Project</th>
                 <th>Version</th>
                 <th>Push</th>
+                <th>Empty</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -40,6 +41,9 @@
               </select>
             </td>
             <td>
+              <input id="empty_{{ p.name }}" type="checkbox">
+            </td>
+            <td>
               <button type="button" id="hotfix_{{ p.name }}" class="btn btn-warning hotfix" disabled="disabled">Select branch to hotfix</button>
             </td>
             <td>
@@ -53,6 +57,6 @@
 </div>
 {% endblock %}
 {% block extrajs %}
-<script src="{% static "release_dashboard/js/csrf.js" %}"></script>
-<script src="{% static "release_dashboard/js/hotfix.js" %}"></script>
+<script src="{% static 'release_dashboard/js/csrf.js' %}"></script>
+<script src="{% static 'release_dashboard/js/hotfix.js' %}"></script>
 {% endblock %}

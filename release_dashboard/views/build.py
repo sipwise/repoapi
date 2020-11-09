@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -104,11 +104,11 @@ def hotfix_build(request, branch, project):
         return HttpResponseNotFound(error)
 
     json_data = json.loads(request.body.decode("utf-8"))
-    if json_data["push"] == "no":
+    push = json_data.get("push", "no")
+    empty = json_data.get("empty", False)
+    if push == "no":
         logger.warn("dryrun for %s:%s", project, branch)
-    url = build.trigger_hotfix(
-        project, branch, request.user, json_data["push"]
-    )
+    url = build.trigger_hotfix(project, branch, request.user, push, empty)
     return JsonResponse({"url": url})
 
 
@@ -227,7 +227,10 @@ def build_trunk_deps_old(request):
     else:
         template = "release_dashboard/build_trunk_deps.html"
         context = {
-            "projects": _projects_versions(trunk_build_deps, regex_master,),
+            "projects": _projects_versions(
+                trunk_build_deps,
+                regex_master,
+            ),
             "common_versions": {"tags": [], "branches": ["master"]},
             "debian": settings.RELEASE_DASHBOARD_DEBIAN_RELEASES,
         }
@@ -245,7 +248,10 @@ def build_trunk_release_old(request):
         return render(request, "release_dashboard/build_result.html", context)
     else:
         context = {
-            "projects": _projects_versions(trunk_projects, regex_master,),
+            "projects": _projects_versions(
+                trunk_projects,
+                regex_master,
+            ),
             "common_versions": {"tags": [], "branches": ["master"]},
             "debian": settings.RELEASE_DASHBOARD_DEBIAN_RELEASES,
         }
