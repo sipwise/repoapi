@@ -114,6 +114,7 @@ class ReleaseDashboardConf(AppConf):
         "ngcp-sudo-plugin",
         "ngcp-support",
         "ngcp-user-framework",
+        "ngcp-web-tests-e2e",
         "ngcpcfg",
         "ngcpcfg-api",
         "ngcpcfg-ha",
