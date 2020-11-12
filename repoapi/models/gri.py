@@ -46,10 +46,14 @@ def gerrit_repo_add(instance):
     ppa, created = gri.get_or_create(
         param_ppa=instance.param_ppa,
         gerrit_change=instance.gerrit_change,
-        projectname=instance.projectname,
+        defaults={"projectname": instance.projectname},
     )
     if created:
         log.debug("ppa created", ppa=ppa)
+    elif ppa.projectname == "unknown":
+        ppa.projectname = instance.projectname
+        ppa.save()
+        log.info("ppa projectname updated")
 
 
 def gerrit_repo_del(instance):

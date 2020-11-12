@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2020 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,7 +12,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from mock import patch
+from unittest.mock import patch
 
 from repoapi.models import GerritRepoInfo
 from repoapi.models import JenkinsBuildInfo
@@ -196,3 +196,19 @@ class GerritRepoInfoTestCase(BaseTest):
         )
         self.assertEqual(gri.count(), 0)
         rppa.assert_called_with("gerrit_MT10339_review2054")
+
+    def test_update_projectname(self, rppa, rp):
+        GerritRepoInfo.objects.create(
+            param_ppa="gerrit_MT10339_review2054",
+            gerrit_change="2054",
+            projectname="unknown",
+        )
+        param = self.get_defaults()
+        JenkinsBuildInfo.objects.create(**param)
+        gri = GerritRepoInfo.objects.filter(
+            param_ppa="gerrit_MT10339_review2054",
+            projectname=param["projectname"],
+        )
+        self.assertEqual(gri.count(), 1)
+        rppa.assert_not_called()
+        rp.assert_not_called()
