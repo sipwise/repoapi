@@ -23,6 +23,7 @@ class ReleaseDashboardConf(AppConf):
     FILTER_MRXXX = r"^mr[0-9]+\.[0-9]+\.[0-9]+$"
     DEBIAN_RELEASES = (
         "auto",
+        "bullseye",
         "buster",
         "stretch",
         "jessie",
