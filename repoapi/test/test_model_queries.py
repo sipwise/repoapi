@@ -103,6 +103,14 @@ class JBIQueriesTestCase(BaseTest):
         self.assertEqual(JenkinsBuildInfo.objects.count(), prev_count - 1)
 
 
+class JBIQueriesTrunk(BaseTest):
+    fixtures = ["test_model_queries_trunk.yaml"]
+
+    def test_releases(self):
+        releases = JenkinsBuildInfo.objects.releases()
+        self.assertEqual(releases, [])
+
+
 class JBIQueriesUUIDTest(BaseTest):
     fixtures = ["test_model_queries_uuid.json"]
     release = "release-mr8.1"

@@ -23,7 +23,7 @@ from repoapi.models import JenkinsBuildInfo as jbi
 
 
 def index(request):
-    context = {"releases": humansorted(jbi.objects.releases())}
+    context = {"releases": humansorted(jbi.objects.releases(), reverse=True)}
     return render(request, "panel/index.html", context)
 
 

@@ -69,7 +69,7 @@ def build_release(request, release):
         )
     else:
         build_releases = BuildRelease.objects.release(
-            release_config.release
+            release_config.release, release_config.debian_release
         ).order_by("-start_date")
         if build_releases.count() == 0:
             done = True

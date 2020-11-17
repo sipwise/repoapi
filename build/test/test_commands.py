@@ -32,10 +32,10 @@ class createFakeBuildReleaseTest(TestCase):
 
     def test_mrXX_ok(self):
         self.assertEqual(
-            BuildRelease.objects.release("release-mr7.5").count(), 0
+            BuildRelease.objects.release("release-mr7.5", "buster").count(), 0
         )
         call_command("create_fake_buildrelease", "mr7.5")
-        qs = BuildRelease.objects.release("release-mr7.5")
+        qs = BuildRelease.objects.release("release-mr7.5", "buster")
         self.assertEqual(qs.count(), 1)
         br = qs.first()
         self.assertTrue(br.done)

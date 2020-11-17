@@ -40,6 +40,15 @@ project_url = (
 copy_deps_url = base_url + "&release={release}&internal={internal}"
 re_release = re.compile(r"^release-(mr[0-9]+\.[0-9]+(\.[0-9]+)?)$")
 re_release_common = re.compile(r"^(release-)?(mr[0-9]+\.[0-9]+)(\.[0-9]+)?$")
+re_release_trunk = re.compile(r"^release-trunk-(\w+)$")
+
+
+def is_release_trunk(version):
+    match = re_release_trunk.search(version)
+    if match:
+        return (True, match.group(1))
+    else:
+        return (False, None)
 
 
 def get_simple_release(version):
@@ -159,18 +168,36 @@ class ReleaseConfig(object):
             raise StopIteration
 
     @classmethod
+    def load_config(cls, config_path):
+        try:
+            with open(config_path) as f:
+                return load(f, Loader=Loader)
+        except IOError:
+            msg = "could not read configuration file '{}'"
+            raise err.NoConfigReleaseFile(msg.format(config_path))
+
+    @classmethod
     def supported_releases(cls):
         skip_files = ["{}.yml".format(x) for x in settings.BUILD_RELEASES_SKIP]
         res = []
         for root, dirs, files in os.walk(
             settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR
         ):
+            if "trunk.yml" in files:
+                files.remove("trunk.yml")
+                cfg = cls.load_config(
+                    os.path.join(
+                        settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR, "trunk.yml"
+                    )
+                )
+                for dist in cfg["distris"]:
+                    res.append(dist)
             for name in files:
                 path_name = Path(name)
                 if path_name.suffix != ".yml":
                     continue
                 if name not in skip_files:
-                    res.append(Path(name).stem)
+                    res.append(path_name.stem)
         res.sort(reverse=True)
         return res
 
@@ -182,7 +209,10 @@ class ReleaseConfig(object):
             for version in sr
         ]
 
-    def __init__(self, name):
+    def __init__(self, name, distribution=None):
+        ok, self.distribution = is_release_trunk(name)
+        if not ok and name == "trunk":
+            self.distribution = distribution
         filename = get_simple_release(name)
         if filename is None:
             filename = name
@@ -190,12 +220,7 @@ class ReleaseConfig(object):
         self.config_path = os.path.join(
             settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR, self.config_file
         )
-        try:
-            with open(self.config_path) as f:
-                self.config = load(f, Loader=Loader)
-        except IOError:
-            msg = "could not read configuration file '{}'"
-            raise err.NoConfigReleaseFile(msg.format(self.config_path))
+        self.config = self.load_config(self.config_path)
         try:
             self.jenkins_jobs = self.config["jenkins-jobs"]
         except KeyError:
@@ -241,6 +266,8 @@ class ReleaseConfig(object):
 
     @property
     def debian_release(self):
+        if self.distribution:
+            return self.distribution
         return self.config["debian_release"]
 
     @property

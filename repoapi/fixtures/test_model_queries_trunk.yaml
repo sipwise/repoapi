@@ -1,0 +1,399 @@
+-   model: repoapi.jenkinsbuildinfo
+    pk: 23955
+    fields:
+        tag: 167c4889-7eca-40c1-ada3-e444fca78d1f
+        projectname: data-hal
+        jobname: data-hal-get-code
+        buildnumber: 35
+        date: 2020-11-19 18:07:20.752111+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/data-hal-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: trunk
+        param_release_uuid: 62b4ccfe-20c6-4ed9-bb5b-c29893dc2e3a
+        param_distribution: bullseye
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 8687921 Release new version 9.2.0.0+0~mr9.2.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 23956
+    fields:
+        tag: 167c4889-7eca-40c1-ada3-e444fca78d1f
+        projectname: data-hal
+        jobname: data-hal-manage-docker
+        buildnumber: 34
+        date: 2020-11-19 18:07:21.586985+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/data-hal-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: trunk
+        param_release_uuid: 62b4ccfe-20c6-4ed9-bb5b-c29893dc2e3a
+        param_distribution: bullseye
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8687921 Release new version 9.2.0.0+0~mr9.2.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 23957
+    fields:
+        tag: 167c4889-7eca-40c1-ada3-e444fca78d1f
+        projectname: data-hal
+        jobname: data-hal-tap-test
+        buildnumber: 34
+        date: 2020-11-19 18:07:29.112762+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/data-hal-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: trunk
+        param_release_uuid: 62b4ccfe-20c6-4ed9-bb5b-c29893dc2e3a
+        param_distribution: bullseye
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8687921 Release new version 9.2.0.0+0~mr9.2.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 23958
+    fields:
+        tag: 167c4889-7eca-40c1-ada3-e444fca78d1f
+        projectname: data-hal
+        jobname: data-hal-unit-tests-docker
+        buildnumber: 34
+        date: 2020-11-19 18:07:35.561203+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/data-hal-unit-tests-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: trunk
+        param_release_uuid: 62b4ccfe-20c6-4ed9-bb5b-c29893dc2e3a
+        param_distribution: bullseye
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8687921 Release new version 9.2.0.0+0~mr9.2.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 23959
+    fields:
+        tag: 167c4889-7eca-40c1-ada3-e444fca78d1f
+        projectname: data-hal
+        jobname: data-hal-source-tests
+        buildnumber: 35
+        date: 2020-11-19 18:07:35.899654+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/data-hal-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: trunk
+        param_release_uuid: 62b4ccfe-20c6-4ed9-bb5b-c29893dc2e3a
+        param_distribution: bullseye
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8687921 Release new version 9.2.0.0+0~mr9.2.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 23960
+    fields:
+        tag: 167c4889-7eca-40c1-ada3-e444fca78d1f
+        projectname: data-hal
+        jobname: data-hal-source
+        buildnumber: 31
+        date: 2020-11-19 18:07:37.676427+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/data-hal-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: trunk
+        param_release_uuid: 62b4ccfe-20c6-4ed9-bb5b-c29893dc2e3a
+        param_distribution: bullseye
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8687921 Release new version 9.2.0.0+0~mr9.2.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 23961
+    fields:
+        tag: 167c4889-7eca-40c1-ada3-e444fca78d1f
+        projectname: data-hal
+        jobname: data-hal-binaries
+        buildnumber: 31
+        date: 2020-11-19 18:08:07.137439+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/data-hal-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: trunk
+        param_release_uuid: 62b4ccfe-20c6-4ed9-bb5b-c29893dc2e3a
+        param_distribution: bullseye
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8687921 Release new version 9.2.0.0+0~mr9.2.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 23962
+    fields:
+        tag: 167c4889-7eca-40c1-ada3-e444fca78d1f
+        projectname: data-hal
+        jobname: data-hal-repos
+        buildnumber: 31
+        date: 2020-11-19 18:08:07.759922+00:00
+        result: FAILURE
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/data-hal-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: trunk
+        param_release_uuid: 62b4ccfe-20c6-4ed9-bb5b-c29893dc2e3a
+        param_distribution: bullseye
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 8687921 Release new version 9.2.0.0+0~mr9.2.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 14192
+    fields:
+        tag: c8726604-79d3-4c62-bd18-50f86124dd33
+        projectname: sipwise-base
+        jobname: sipwise-base-get-code
+        buildnumber: 6
+        date: 2020-03-28 08:32:26.520724+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/sipwise-base-get-code/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: release-trunk-buster
+        param_release_uuid: 2b0d0640-a0be-4b44-98be-0c55cc6f6610
+        param_distribution: buster
+        param_ppa: null
+        repo_name: null
+        git_commit_msg: 99e3227 Release new version 8.4.0.0+0~mr8.4.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 14193
+    fields:
+        tag: c8726604-79d3-4c62-bd18-50f86124dd33
+        projectname: sipwise-base
+        jobname: sipwise-base-manage-docker
+        buildnumber: 6
+        date: 2020-03-28 08:32:27.025884+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/sipwise-base-manage-docker/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: release-trunk-buster
+        param_release_uuid: 2b0d0640-a0be-4b44-98be-0c55cc6f6610
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 99e3227 Release new version 8.4.0.0+0~mr8.4.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 14194
+    fields:
+        tag: c8726604-79d3-4c62-bd18-50f86124dd33
+        projectname: sipwise-base
+        jobname: sipwise-base-tap-test
+        buildnumber: 6
+        date: 2020-03-28 08:32:37.511295+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/sipwise-base-tap-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: release-trunk-buster
+        param_release_uuid: 2b0d0640-a0be-4b44-98be-0c55cc6f6610
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 99e3227 Release new version 8.4.0.0+0~mr8.4.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 14195
+    fields:
+        tag: c8726604-79d3-4c62-bd18-50f86124dd33
+        projectname: sipwise-base
+        jobname: sipwise-base-dist-test
+        buildnumber: 6
+        date: 2020-03-28 08:32:44.277122+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/sipwise-base-dist-test/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: release-trunk-buster
+        param_release_uuid: 2b0d0640-a0be-4b44-98be-0c55cc6f6610
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 99e3227 Release new version 8.4.0.0+0~mr8.4.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 14196
+    fields:
+        tag: c8726604-79d3-4c62-bd18-50f86124dd33
+        projectname: sipwise-base
+        jobname: sipwise-base-source-tests
+        buildnumber: 6
+        date: 2020-03-28 08:32:44.465908+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/sipwise-base-source-tests/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: release-trunk-buster
+        param_release_uuid: 2b0d0640-a0be-4b44-98be-0c55cc6f6610
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 99e3227 Release new version 8.4.0.0+0~mr8.4.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 14197
+    fields:
+        tag: c8726604-79d3-4c62-bd18-50f86124dd33
+        projectname: sipwise-base
+        jobname: sipwise-base-docs
+        buildnumber: 6
+        date: 2020-03-28 08:32:45.212242+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/sipwise-base-docs/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: release-trunk-buster
+        param_release_uuid: 2b0d0640-a0be-4b44-98be-0c55cc6f6610
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 99e3227 Release new version 8.4.0.0+0~mr8.4.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 14198
+    fields:
+        tag: c8726604-79d3-4c62-bd18-50f86124dd33
+        projectname: sipwise-base
+        jobname: sipwise-base-source
+        buildnumber: 6
+        date: 2020-03-28 08:32:46.692498+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/sipwise-base-source/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: release-trunk-buster
+        param_release_uuid: 2b0d0640-a0be-4b44-98be-0c55cc6f6610
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 99e3227 Release new version 8.4.0.0+0~mr8.4.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 14200
+    fields:
+        tag: c8726604-79d3-4c62-bd18-50f86124dd33
+        projectname: sipwise-base
+        jobname: sipwise-base-binaries
+        buildnumber: 6
+        date: 2020-03-28 08:33:07.359523+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/sipwise-base-binaries/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: release-trunk-buster
+        param_release_uuid: 2b0d0640-a0be-4b44-98be-0c55cc6f6610
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 99e3227 Release new version 8.4.0.0+0~mr8.4.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 14201
+    fields:
+        tag: c8726604-79d3-4c62-bd18-50f86124dd33
+        projectname: sipwise-base
+        jobname: sipwise-base-repos
+        buildnumber: 6
+        date: 2020-03-28 08:33:08.430006+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/sipwise-base-repos/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: release-trunk-buster
+        param_release_uuid: 2b0d0640-a0be-4b44-98be-0c55cc6f6610
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 99e3227 Release new version 8.4.0.0+0~mr8.4.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 14202
+    fields:
+        tag: c8726604-79d3-4c62-bd18-50f86124dd33
+        projectname: sipwise-base
+        jobname: sipwise-base-docker-ppa
+        buildnumber: 5
+        date: 2020-03-28 08:33:08.747639+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/sipwise-base-docker-ppa/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: release-trunk-buster
+        param_release_uuid: 2b0d0640-a0be-4b44-98be-0c55cc6f6610
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 99e3227 Release new version 8.4.0.0+0~mr8.4.0.0
+-   model: repoapi.jenkinsbuildinfo
+    pk: 14208
+    fields:
+        tag: c8726604-79d3-4c62-bd18-50f86124dd33
+        projectname: sipwise-base
+        jobname: sipwise-base-piuparts
+        buildnumber: 5
+        date: 2020-03-28 08:33:34.732237+00:00
+        result: SUCCESS
+        job_url: https://jenkins-dev.mgm.sipwise.com/job/sipwise-base-piuparts/
+        gerrit_patchset: none_might-be-direct-push
+        gerrit_change: null
+        gerrit_eventtype: null
+        param_tag: none
+        param_branch: master
+        param_release: release-trunk-buster
+        param_release_uuid: 2b0d0640-a0be-4b44-98be-0c55cc6f6610
+        param_distribution: buster
+        param_ppa: $ppa
+        repo_name: null
+        git_commit_msg: 99e3227 Release new version 8.4.0.0+0~mr8.4.0.0

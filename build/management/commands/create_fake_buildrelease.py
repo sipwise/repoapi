@@ -19,6 +19,7 @@ from django.core.management.base import CommandError
 
 from build.models import BuildRelease
 from build.models.br import regex_mrXX
+from build.utils import ReleaseConfig
 
 
 class Command(BaseCommand):
@@ -32,6 +33,12 @@ class Command(BaseCommand):
         if not regex_mrXX.match(ver):
             raise CommandError("'{}'' not mrX.Y version".format(ver))
         release = "release-{}".format(ver)
-        if BuildRelease.objects.release(release).count() > 0:
+        config = ReleaseConfig(release)
+        if (
+            BuildRelease.objects.release(
+                release, config.debian_release
+            ).count()
+            > 0
+        ):
             raise CommandError("'{}' has already instances".format(release))
         BuildRelease.objects.create_build_release(uuid.uuid4(), ver, fake=True)

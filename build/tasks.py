@@ -12,8 +12,8 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import structlog
 from celery import shared_task
-from celery.utils.log import get_task_logger
 
 from .conf import settings
 from build.models.br import BuildRelease
@@ -21,36 +21,37 @@ from build.utils import trigger_build
 from build.utils import trigger_copy_deps
 from repoapi.celery import app
 
-logger = get_task_logger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 @app.task(bind=True)
 def build_release(self, pk):
+    log = logger.bind(pk=pk)
     br = BuildRelease.objects
     try:
         instance = br.get(id=pk)
     except BuildRelease.DoesNotExist as exc:
+        log.warn("BuildRelease not found")
         raise self.retry(countdown=60 * 5, exc=exc)
     if instance.release == "trunk":
         release = "release-trunk-{}".format(instance.distribution)
     else:
         release = instance.release
     url = trigger_copy_deps(
-        release=release,
-        internal=True,
-        release_uuid=instance.uuid,
+        release=release, internal=True, release_uuid=instance.uuid
     )
-    logger.info("%s triggered" % url)
+    log.info(
+        "BuildRelease copy_deps triggered", instance=str(instance), url=url
+    )
 
 
 @shared_task(ignore_result=True)
 def build_project(pk, project):
+    log = logger.bind(project=project, pk=pk)
     try:
         br = BuildRelease.objects.get(id=pk)
     except BuildRelease.DoesNotExist:
-        logger.error(
-            "can't trigger %s on unknown release with id:%s", project, pk
-        )
+        log.error("can't trigger project on unknown release")
         return
     url = trigger_build(
         "{}-get-code".format(project),
@@ -60,15 +61,16 @@ def build_project(pk, project):
         trigger_distribution=br.distribution,
     )
     br.pool_size += 1
-    logger.info("%s triggered" % url)
+    log.info("project triggered", url=url, pool_size=br.pool_size)
 
 
 @shared_task(ignore_result=True)
 def build_resume(pk):
+    log = logger.bind(pk=pk)
     try:
         br = BuildRelease.objects.get(id=pk)
     except BuildRelease.DoesNotExist:
-        logger.error("can't resume on unknown release with id:%s", pk)
+        log.error("can't resume on unknown release")
         return
     params = {
         "release_uuid": br.uuid,
@@ -77,21 +79,16 @@ def build_resume(pk):
         "trigger_distribution": br.distribution,
     }
     size = settings.BUILD_POOL - br.pool_size
+    log.bind(size=size, pool_size=br.pool_size, br=str(br))
     if size <= 0:
-        logger.info(
-            "BuildRelease:%s No more room for new builds,"
-            " wait for next slot",
-            br,
-        )
+        log.info("No more room for new builds, wait for next slot")
     for step in range(size):
         prj = br.next
         if prj:
             params["project"] = "{}-get-code".format(prj)
-            logger.debug(
-                "trigger:%s for BuildRelease:%s", params["project"], br
-            )
+            log.debug("trigger project", project=params["project"])
             trigger_build(**params)
             br.append_triggered(prj)
         else:
-            logger.debug("BuildRelease:%s has no next", br)
+            log.debug("BuildRelease has no next")
             break

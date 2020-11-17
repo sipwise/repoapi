@@ -23,6 +23,7 @@ from urllib.parse import urlparse
 
 import structlog
 from django.db import models
+from django.db.models import Q
 from django.forms.models import model_to_dict
 
 from debian import deb822
@@ -62,7 +63,8 @@ class JenkinsBuildInfoManager(models.Manager):
 
     def releases(self, flat=True):
         qs = self.get_queryset().exclude(
-            jobname__in=settings.BUILD_RELEASE_JOBS
+            Q(param_release__contains="trunk")
+            | Q(jobname__in=settings.BUILD_RELEASE_JOBS)
         )
         res = qs.filter(tag__isnull=False).values("param_release").distinct()
         if res.exists():
@@ -70,6 +72,7 @@ class JenkinsBuildInfoManager(models.Manager):
                 return res.values_list("param_release", flat=True)
             else:
                 return res.values("param_release")
+        return []
 
     def is_release(self, release):
         res = self.get_queryset().filter(

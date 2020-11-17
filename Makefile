@@ -18,7 +18,7 @@ venv_dev: requirements/dev.txt
 ###################################
 
 test:
-	RESULTS=$(RESULTS) pytest-3 --junitxml=$(RESULTS)/junit.xml \
+	RESULTS=$(RESULTS) pytest-3 -ra --junitxml=$(RESULTS)/junit.xml \
 		--cov=. --cov-report=xml:$(RESULTS)/coverage.xml --pep8
 
 test_pylint:

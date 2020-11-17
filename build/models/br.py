@@ -13,9 +13,9 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import datetime
-import logging
 import re
 
+import structlog
 from django.db import models
 from django.db.models import Q
 from django.forms.models import model_to_dict
@@ -27,7 +27,7 @@ from build.utils import get_simple_release
 from build.utils import ReleaseConfig
 from repoapi.models import JenkinsBuildInfo
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 regex_mrXXX = re.compile(r"^mr[0-9]+\.[0-9]+\.[0-9]+$")
 regex_mrXX = re.compile(r"^mr[0-9]+\.[0-9]+$")
@@ -37,16 +37,20 @@ regex_mrXX_up = re.compile(r"^release-mr[0-9]+\.[0-9]+-update$")
 class BuildReleaseManager(models.Manager):
     _jbi = JenkinsBuildInfo.objects
 
-    def release(self, version):
+    def release(self, version, distribution):
         qs = self.get_queryset()
         return qs.filter(
-            Q(release=version) | Q(release="{}-update".format(version))
+            Q(release=version, distribution=distribution)
+            | Q(release="{}-update".format(version), distribution=distribution)
         )
 
     def create_build_release(self, uuid, release, fake=False):
+        log = logger.bind(uuid=str(uuid), release=release, fake=fake)
         config = ReleaseConfig(release)
         qs = self.get_queryset()
-        br = qs.filter(release=config.release)
+        br = qs.filter(
+            release=config.release, distribution=config.debian_release
+        )
         release_ok = config.release
         if br.exists():
             if regex_mrXXX.match(config.branch):
@@ -58,7 +62,7 @@ class BuildReleaseManager(models.Manager):
                     "release[mrX.Y]:{} has already a build, "
                     "set {} as release"
                 )
-                logger.info(msg.format(config.branch, release_ok))
+                log.info(msg.format(config.branch, release_ok))
         projects = ",".join(config.projects)
         if fake:
             start_date = timezone.make_aware(datetime.datetime(1977, 1, 1))
@@ -277,6 +281,7 @@ class BuildRelease(models.Model):
         return "branch/{}".format(self.branch)
 
     def _next(self):
+        log = logger.bind(release=self)
         if self.built_projects is None:
             return self.build_deps[0][0]
         if self.done:
@@ -293,8 +298,10 @@ class BuildRelease(models.Model):
                         deps_missing.append(prj)
             else:
                 if len(deps_missing) > 0:
-                    msg = "release {} has build_deps {} missing"
-                    logger.info(msg.format(self, deps_missing))
+                    log.info(
+                        "release has build_deps missing",
+                        deps_missing=deps_missing,
+                    )
                     return None
         for prj in self.projects_list:
             if prj not in built_list and prj not in t_list:
@@ -303,15 +310,19 @@ class BuildRelease(models.Model):
     @property
     def next(self):
         failed_projects = self.failed_projects_list
+        log = logger.bind(release=self)
         if any(job in failed_projects for job in settings.BUILD_RELEASE_JOBS):
-            msg = "release {} has failed release_jobs, stop sending jobs"
-            logger.info(msg.format(self))
+            log.info(
+                "release has failed release_jobs, stop sending jobs",
+                failed_projects=failed_projects,
+            )
             return
         res = self._next()
         if res is not None:
             if res in failed_projects:
-                logger.error(
-                    "project: %s marked as failed, stop sending jobs", res
+                log.error(
+                    "project marked as failed, stop sending jobs",
+                    project=res,
                 )
             else:
                 return res
@@ -328,5 +339,7 @@ class BuildRelease(models.Model):
     @property
     def config(self):
         if getattr(self, "_config", None) is None:
-            self._config = ReleaseConfig(self.release)
+            self._config = ReleaseConfig(
+                self.release, distribution=self.distribution
+            )
         return self._config

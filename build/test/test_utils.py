@@ -13,18 +13,40 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import re
+from unittest.mock import patch
 
 from django.test import override_settings
 from django.test import SimpleTestCase
-from mock import patch
 
 from build import exceptions as err
 from build.conf import settings
 from build.utils import get_common_release
 from build.utils import get_simple_release
+from build.utils import is_release_trunk
 from build.utils import ReleaseConfig
 from build.utils import trigger_build
 from build.utils import trigger_copy_deps
+
+
+class SimpleIsReleaseTrunkTest(SimpleTestCase):
+    def test_trunk(self):
+        ok, val = is_release_trunk("trunk")
+        self.assertFalse(ok)
+        self.assertIsNone(val)
+
+    def test_mrXX(self):
+        ok, val = is_release_trunk("release-mr8.5")
+        self.assertFalse(ok)
+        self.assertIsNone(val)
+
+    def test_release_trunk(self):
+        ok, val = is_release_trunk("release-trunk-buster")
+        self.assertTrue(ok)
+        self.assertEqual(val, "buster")
+
+        ok, val = is_release_trunk("release-trunk-bullseye")
+        self.assertTrue(ok)
+        self.assertEqual(val, "bullseye")
 
 
 class SimpleReleaseTest(SimpleTestCase):
@@ -81,7 +103,8 @@ class ReleaseConfigTestCase(SimpleTestCase):
     @override_settings(BUILD_RELEASES_SKIP=["mr0.1"])
     def test_supported_releases(self):
         supported = [
-            "trunk",
+            "release-trunk-buster",
+            "release-trunk-bullseye",
             "mr8.1.2",
             "mr8.1",
             "mr7.5.3",
@@ -95,12 +118,17 @@ class ReleaseConfigTestCase(SimpleTestCase):
     @patch.object(ReleaseConfig, "supported_releases")
     def test_supported_releases_dict(self, sr):
         res_ok = [
-            {"release": "trunk", "base": "master"},
+            {"release": "release-trunk-buster", "base": "master"},
             {"release": "mr8.0", "base": "mr8.0"},
             {"release": "mr8.0.1", "base": "mr8.0"},
             {"release": "mr7.5.1", "base": "mr7.5"},
         ]
-        sr.return_value = ["trunk", "mr8.0", "mr8.0.1", "mr7.5.1"]
+        sr.return_value = [
+            "release-trunk-buster",
+            "mr8.0",
+            "mr8.0.1",
+            "mr7.5.1",
+        ]
         res = ReleaseConfig.supported_releases_dict()
         self.assertListEqual(res, res_ok)
 
@@ -118,6 +146,19 @@ class ReleaseConfigTestCase(SimpleTestCase):
         self.assertListEqual(list(rc.build_deps.keys()), self.build_deps)
         self.assertEqual(rc.debian_release, "buster")
         self.assertEqual(len(rc.projects), 73)
+
+    def test_debian_release_value(self):
+        rc = ReleaseConfig("trunk")
+        self.assertEqual(rc.debian_release, "buster")
+
+        rc = ReleaseConfig("release-trunk-bullseye")
+        self.assertEqual(rc.debian_release, "bullseye")
+
+        rc = ReleaseConfig("trunk", "bullseye")
+        self.assertEqual(rc.debian_release, "bullseye")
+        # distribution parameter is only used with trunk
+        rc = ReleaseConfig("release-mr8.1-update", "bullseye")
+        self.assertEqual(rc.debian_release, "buster")
 
     def test_release_value(self):
         rc = ReleaseConfig("trunk")

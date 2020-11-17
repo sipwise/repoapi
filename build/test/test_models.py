@@ -41,6 +41,17 @@ class BuildReleaseManagerTestCase(BaseTest):
         self.assertNotEqual(len(br.projects), 0)
         self.assertIn("sipwise-base", br.projects)
 
+    def test_create_release_trunk(self, dlf):
+        br = BuildRelease.objects.create_build_release(
+            "AAA", "release-trunk-bullseye"
+        )
+        self.assertEqual(br.release, "trunk")
+        self.assertEqual(br.distribution, "bullseye")
+        self.assertIsNone(br.tag)
+        self.assertEqual(br.branch, "master")
+        self.assertNotEqual(len(br.projects), 0)
+        self.assertIn("sipwise-base", br.projects)
+
     def test_create_mrXX(self, dlf):
         BuildRelease.objects.filter(release="release-mr8.1").delete()
         self.assertFalse(
@@ -88,7 +99,7 @@ class BuildReleaseManagerTestCase(BaseTest):
         prev = BuildRelease.objects.filter(release="release-mr8.1")
         br = BuildRelease.objects.create_build_release("BBB", "mr8.1")
         self.assertEqual(br.release, "release-mr8.1-update")
-        qs = BuildRelease.objects.release("release-mr8.1")
+        qs = BuildRelease.objects.release("release-mr8.1", "buster")
         self.assertEqual(qs.count(), prev.count() + 1)
 
     def test_create_fake(self, dlf):
@@ -102,9 +113,7 @@ class BuildReleaseManagerTestCase(BaseTest):
 
 
 class BuildReleaseTestCase(BaseTest):
-    fixtures = [
-        "test_models",
-    ]
+    fixtures = ["test_models"]
     release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559649b"
 
     def test_distribution(self):
@@ -121,14 +130,12 @@ class BuildReleaseTestCase(BaseTest):
     def test_built_projects_list(self):
         build = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertCountEqual(
-            build.built_projects_list, ["kamailio", "lua-ngcp-kamailio"],
+            build.built_projects_list, ["kamailio", "lua-ngcp-kamailio"]
         )
 
     def test_queued_projects_list(self):
         build = BuildRelease.objects.get(uuid=self.release_uuid)
-        self.assertCountEqual(
-            build.queued_projects_list, ["ngcp-panel"],
-        )
+        self.assertCountEqual(build.queued_projects_list, ["ngcp-panel"])
 
     def test_config(self):
         build = BuildRelease.objects.get(uuid=self.release_uuid)
@@ -189,9 +196,7 @@ class BuildReleaseTestCase(BaseTest):
 
 
 class BuildReleaseStepsTest(BaseTest):
-    fixtures = [
-        "test_models",
-    ]
+    fixtures = ["test_models"]
     release = "release-mr8.1"
     release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559648b"
 
@@ -388,9 +393,7 @@ class BuildReleaseStepsTest(BaseTest):
 @patch("repoapi.utils.dlfile")
 @patch("build.models.build_resume")
 class JBIManageTest(BaseTest):
-    fixtures = [
-        "test_models",
-    ]
+    fixtures = ["test_models"]
     release = "release-mr8.1"
     release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559648b"
 
@@ -461,9 +464,7 @@ class JBIManageTest(BaseTest):
 
 
 class BRManageTest(BaseTest):
-    fixtures = [
-        "test_models",
-    ]
+    fixtures = ["test_models"]
 
     @patch("build.tasks.trigger_copy_deps")
     @patch("build.models.build_resume")
@@ -483,9 +484,7 @@ class BRManageTest(BaseTest):
 
 
 class BuildReleaseRetriggerTest(BaseTest):
-    fixtures = [
-        "test_models",
-    ]
+    fixtures = ["test_models"]
     release = "release-mr8.1"
     release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559648b"
 
