@@ -20,21 +20,21 @@
           </li>
         {% endfor %}
         </ul>
-        <div class="tab-content">
-          {% for base, data_list in releases_list %}
-          <div role="tabpanel" class="tab-pane" id="{{base|cut:'.'}}">
-            <ul class="list-group" style="column-count: 4;">
-              {% for data in data_list %}
-              <li class="list-group-item {% if data.release in builds %}list-group-item-info{% endif %}">
-                <a href="{% url 'release_dashboard:build_release' release=data.release %}">
-                  {{ data.release }}
-                </a>
-              </li>
-              {% endfor %}
-            </ul>
-          </div>
-          {% endfor %}
+      <div class="tab-content col-md-8">
+        {% for base, data_list in releases_list %}
+        <div role="tabpanel" class="tab-pane" id="{{base|cut:'.'}}">
+          <ul class="list-group row">
+            {% for data in data_list %}
+            <li class="list-group-item col-xs-2 {% if data.release in builds %}list-group-item-info{% endif %}">
+              <a href="{% url 'release_dashboard:build_release' release=data.release %}">
+                {{ data.release }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
         </div>
+        {% endfor %}
+      </div>
       </div>
   </div>
 </div>
