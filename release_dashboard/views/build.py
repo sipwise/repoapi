@@ -108,8 +108,8 @@ def hotfix_build(request, branch, project):
     empty = json_data.get("empty", False)
     if push == "no":
         logger.warn("dryrun for %s:%s", project, branch)
-    url = build.trigger_hotfix(project, branch, request.user, push, empty)
-    return JsonResponse({"url": url})
+    urls = build.trigger_hotfix(project, branch, request.user, push, empty)
+    return JsonResponse({"urls": urls})
 
 
 def _build_logic(form, projects):

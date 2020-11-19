@@ -69,7 +69,11 @@ def trigger_hotfix(project, branch, user, push="yes", empty=False):
         logger.warn("Debug mode, would trigger: %s", url)
     else:
         open_jenkins_url(url)
-    return "%s/job/release-tools-runner/" % settings.JENKINS_URL
+    res = [
+        "{}/job/release-tools-runner/".format(settings.JENKINS_URL),
+        "/panel/release-{}-update/{}/latest/".format(branch, project),
+    ]
+    return res
 
 
 def trigger_build(

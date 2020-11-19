@@ -48,6 +48,14 @@
             </td>
             <td>
               <span class="text-danger" id="hotfix_error_{{ p.name }}"></span>
+              <div id="links_{{ p.name }}" class="hidden">
+                <div class="btn-group btn-group-sm" role="group" aria-label="grp1">
+                    <a class="btn btn-default btn-success" type="button" role="group" id="link_done_{{ p.name }}">Done</a>
+                </div>
+                <div class="btn-group btn-group-sm" role="group" aria-label="grp2">
+                    <a class="btn btn-default btn-info" type="button" role="group" id="link_latest_{{ p.name }}">latest Build</a>
+                </div>
+              </div>
             </td>
           </tr>
       {% endfor %}
