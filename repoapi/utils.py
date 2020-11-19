@@ -59,7 +59,7 @@ def dlfile(url, path):
         path=path,
     )
     if settings.DEBUG:
-        log.info("_NOT_ calling due to DEBUG is set", url)
+        log.info("_NOT_ calling due to DEBUG is set")
     else:
         auth = HTTPBasicAuth(
             settings.JENKINS_HTTP_USER, settings.JENKINS_HTTP_PASSWD
@@ -83,7 +83,7 @@ def open_jenkins_url(url):
     except requests.HTTPError as e:
         log.error("Error %s", e, status_code=res.status_code)
     except Exception as e:
-        log.error("Fatal error retrieving: %s", e)
+        log.error("Fatal error retrieving:", error=str(e))
 
     return False
 
@@ -99,7 +99,7 @@ def jenkins_remove_ppa(repo):
         url=url,
     )
     if settings.DEBUG:
-        log.debug("_NOT_ calling due to DEBUG is set", url)
+        log.debug("_NOT_ calling due to DEBUG is set")
     else:
         open_jenkins_url(url)
 
@@ -131,7 +131,7 @@ def _jenkins_get(url, base_path, filename):
         filename=filename,
         url=url,
     )
-    log.debug("download file from jenkins", url, path)
+    log.debug("download file from jenkins")
     dlfile(url, path)
     return path
 
@@ -176,7 +176,9 @@ def workfront_note_send(_id, message):
     ]
     res = executeAndReturnOutput(command)
     if res[0] != 0:
-        logger.error("can't post workfront note. %s. %s", res[1], res[2])
+        logger.error(
+            "can't post workfront notes", stdout=res[1], stderr=res[2]
+        )
         return False
     return True
 
@@ -186,7 +188,7 @@ def get_next_release(branch):
     res = executeAndReturnOutput(command)
     if res[0] != 0:
         logger.error(
-            "can't find out next release version. %s. %s", res[1], res[2]
+            "can't find out next release version", stdout=res[1], stderr=res[2]
         )
         return None
     val = res[1].rstrip()
@@ -212,7 +214,7 @@ def workfront_set_release_target(_id, release):
     ]
     res = executeAndReturnOutput(command)
     if res[0] != 0:
-        logger.error("can't set release target. %s. %s", res[1], res[2])
+        logger.error("can't set release target", stdout=res[1], stderr=res[2])
         return False
     return True
 

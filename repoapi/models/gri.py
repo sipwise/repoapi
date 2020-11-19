@@ -37,7 +37,7 @@ class GerritRepoInfo(models.Model):
 
 def gerrit_repo_add(instance):
     log = logger.bind(
-        instance=instance,
+        instance=str(instance),
     )
     if instance.param_ppa == "$ppa":
         log.warn("ppa unset, skip removal")
@@ -49,7 +49,7 @@ def gerrit_repo_add(instance):
         defaults={"projectname": instance.projectname},
     )
     if created:
-        log.debug("ppa created", ppa=ppa)
+        log.debug("ppa created", ppa=str(ppa))
     elif ppa.projectname == "unknown":
         ppa.projectname = instance.projectname
         ppa.save()
@@ -58,7 +58,7 @@ def gerrit_repo_add(instance):
 
 def gerrit_repo_del(instance):
     log = logger.bind(
-        instance=instance,
+        instance=str(instance),
     )
     if instance.param_ppa == "$ppa":
         log.warn("ppa unset, skip removal")
@@ -69,7 +69,7 @@ def gerrit_repo_del(instance):
             param_ppa=instance.param_ppa, gerrit_change=instance.gerrit_change
         )
         ppa.delete()
-        log.debug("removed ppa", ppa=ppa)
+        log.debug("removed ppa", ppa=str(ppa))
     except GerritRepoInfo.DoesNotExist:
         pass
     qs = gri.filter(param_ppa=instance.param_ppa)
@@ -92,7 +92,7 @@ def gerrit_repo_manage(sender, **kwargs):
     if kwargs["created"]:
         instance = kwargs["instance"]
         log = logger.bind(
-            instance=instance,
+            instance=str(instance),
             ppa=instance.param_ppa,
         )
         if instance.param_ppa == "$ppa":
@@ -112,5 +112,5 @@ def gerrit_repo_manage(sender, **kwargs):
             and instance.result == "SUCCESS"
             and instance.gerrit_eventtype == "change-abandoned"
         ):
-            logger.debug("we need to count this")
+            log.debug("we need to count this")
             gerrit_repo_del(instance)

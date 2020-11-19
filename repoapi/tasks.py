@@ -38,7 +38,7 @@ def jenkins_remove_project(self, jbi_id):
     JenkinsBuildInfo = apps.get_model("repoapi", "JenkinsBuildInfo")
     jbi = JenkinsBuildInfo.objects.get(id=jbi_id)
     log = logger.bind(
-        jbi=jbi,
+        jbi=str(jbi),
     )
     if (
         jbi.jobname.endswith("-repos")
