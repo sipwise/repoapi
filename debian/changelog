@@ -1,3 +1,42 @@
+repoapi (0.4.2) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * TT#86350 release_dashboard: fix detection of done releases
+  * TT#86350 release_dashboard: fix release parameter when building mrX.Y
+  * TT#86350 build: create_fake_buildrelease command
+  * TT#88250 repoapi: define conf.py
+  * TT#88250 release_changed app
+  * TT#88250 release_changed: import settings from conf
+  * TT#96400 requirements: set supported version for celery
+  * TT#96400 repoapi: download artifacts from repos jobs
+  * TT#96400 improve celery logging for worker
+  * TT#7211 merge server.ini and gerrit.ini
+  * TT#7211 add authentication on jenkins requests
+  * TT#7211 fix repoapi.utils.dlfile, it was storing gzip responses content
+  * TT#96400 using structlog via python-structlog
+  * TT#96400 pre-commit: upgrade hook
+  * TT#96400 celery: restore celery log
+  * TT#78800 panel: use human sorting for releases
+  * TT#100601 release_dashboard: support empty hotfix
+  * TT#78800 panel: modern favicon
+  * TT#100601 use static versioning for production environment
+  * TT#101052 coverage: omit framework files
+  * TT#96400 repoapi: remove packages from PPA on 'change-merge'
+  * TT#96400 repoapi: deal with old gerritinfo data before last migration
+  * TT#100201 release_dashoard: proper column on list of supported relases
+  * TT#100201 release_dashoard: show latest build link when hotfixing
+  * TT#96400 repoapi: fix structlog use
+  * TT#100201 build: support trunk with more than one distribution
+
+  [ Sergii Kipot ]
+  * TT#88103 Add ngcp-rest-api to repoapi dashboard
+  * TT#100553 Add ngcp-web-tests-e2e to repoapi dashboard
+
+  [ Michael Prokop ]
+  * TT#100201 Add bullseye to list of Debian releases
+
+ -- Victor Seva <vseva@debian.org>  Thu, 26 Nov 2020 12:10:31 +0100
+
 repoapi (0.4.1) unstable; urgency=medium
 
   [ Guillem Jover ]
