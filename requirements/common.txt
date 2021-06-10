@@ -1,5 +1,5 @@
 celery>4.4,<5.0
-Django==1.11.29
+Django==2.2.24
 django-appconf
 django-assets
 django-celery-beat<2.0
