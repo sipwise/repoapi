@@ -104,6 +104,7 @@ class ReleaseDashboardConf(AppConf):
         "ngcp-exporter",
         "ngcp-fauditd",
         "ngcp-inventory",
+        "ngcp-js-api-client",
         "ngcp-klish-config",
         "ngcp-logfs",
         "ngcp-panel",
