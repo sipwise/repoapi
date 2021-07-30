@@ -4,9 +4,9 @@ Maintainer: Sipwise Development Team <support@sipwise.com>
 Homepage: https://www.sipwise.com/
 Build-Depends:
  debhelper-compat (= 12),
- dh-systemd (>= 1.5),
  libldap2-dev,
  libpq-dev,
+ libsasl2-dev,
  python3-dev,
  virtualenv,
 Standards-Version: 3.9.8

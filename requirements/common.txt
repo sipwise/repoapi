@@ -21,4 +21,3 @@ python-debian
 PyYAML
 six>=1.9
 webassets
-yuicompressor
