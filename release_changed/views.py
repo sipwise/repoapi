@@ -26,13 +26,13 @@ from .serializers import ReleaseChangedSerializer
 class ReleaseChangedFilter(django_filters.FilterSet):
     class Meta:
         model = models.ReleaseChanged
-        fields = ["vmtype", "version", "result"]
-        order_by = ["version", "vmtype"]
+        fields = ["label", "vmtype", "version", "result"]
+        order_by = ["label", "version", "vmtype"]
 
 
 class ReleaseChangedList(generics.ListCreateAPIView):
     queryset = models.ReleaseChanged.objects.all().order_by(
-        "version", "vmtype"
+        "label", "version", "vmtype"
     )
     serializer_class = ReleaseChangedSerializer
     filterset_class = ReleaseChangedFilter
@@ -40,17 +40,19 @@ class ReleaseChangedList(generics.ListCreateAPIView):
 
 class ReleaseChangedDetail(generics.RetrieveAPIView):
     queryset = models.ReleaseChanged.objects.all().order_by(
-        "version", "vmtype"
+        "label", "version", "vmtype"
     )
     serializer_class = ReleaseChangedSerializer
 
 
 class ReleaseChangedCheck(APIView):
-    def get(self, request, vmtype, release):
+    def get(self, request, label, vmtype, release):
         r = get_object_or_404(
-            models.ReleaseChanged, vmtype=vmtype, version=release
+            models.ReleaseChanged, label=label, vmtype=vmtype, version=release
         )
         if r.result != "SUCCESS":
-            raise NotFound("VM {}_{} has to be built".format(vmtype, release))
+            raise NotFound(
+                "VM {}_{}_{} has to be built".format(label, vmtype, release)
+            )
         serializer = ReleaseChangedSerializer(r, context={"request": request})
         return Response(serializer.data)

@@ -28,7 +28,7 @@ from .conf import settings  # noqa
 
 
 class ReleaseChanged(models.Model):
-    VMTYPE_CHOICES = (("CE", "spce"), ("PRO", "sppro"))
+    VMTYPE_CHOICES = (("CE", "spce"), ("PRO", "sppro"), ("CARRIER", "carrier"))
     RESULT_CHOICES = (
         ("ABORTED", "ABORTED"),
         ("FAILURE", "FAILURE"),
@@ -37,14 +37,15 @@ class ReleaseChanged(models.Model):
         ("UNSTABLE", "UNSTABLE"),
     )
     version = models.CharField(max_length=64, null=False)
-    vmtype = models.CharField(max_length=3, null=False, choices=VMTYPE_CHOICES)
+    vmtype = models.CharField(max_length=7, null=False, choices=VMTYPE_CHOICES)
+    label = models.CharField(max_length=128, null=False)
     result = models.CharField(
         max_length=50, null=False, choices=RESULT_CHOICES
     )
     date = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = (("version", "vmtype"),)
+        unique_together = (("version", "vmtype", "label"),)
 
     def __str__(self):
-        return "{0.vmtype}_{0.version}_{0.result}".format(self)
+        return "{0.label}_{0.vmtype}_{0.version}_{0.result}".format(self)

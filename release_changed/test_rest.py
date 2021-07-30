@@ -20,9 +20,7 @@ from repoapi.test.base import BaseTest
 
 
 class TestRest(BaseTest, APITestCase):
-    fixtures = [
-        "test_release_changed",
-    ]
+    fixtures = ["test_release_changed"]
 
     url = "release_changed:check"
 
@@ -30,16 +28,16 @@ class TestRest(BaseTest, APITestCase):
         super(TestRest, self).setUp()
 
     def test_get_success(self):
-        url = reverse(self.url, args=["PRO", "mr8.4"])
+        url = reverse(self.url, args=["base", "PRO", "mr8.4"])
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_not_success(self):
-        url = reverse(self.url, args=["CE", "mr8.4"])
+        url = reverse(self.url, args=["base", "CE", "mr8.4"])
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_get_not_exist(self):
-        url = reverse(self.url, args=["CE", "mr8.5"])
+        url = reverse(self.url, args=["base", "CE", "mr8.5"])
         response = self.client.get(url, format="json")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)

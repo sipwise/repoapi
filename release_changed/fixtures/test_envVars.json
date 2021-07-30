@@ -32,6 +32,7 @@
     "USER": "jenkins",
     "vmdone": "no",
     "vmtype": "CE",
-    "vmversion": "mr8.5.1"
+    "vmversion": "mr8.5.1",
+    "buildlabel": "base"
   }
 }

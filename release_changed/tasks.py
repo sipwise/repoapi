@@ -34,12 +34,18 @@ def process_result(jbi_id, path_envVars):
         ReleaseChanged.objects.filter(
             version=info["vmversion"],
             vmtype=info["vmtype"],
+            label=info["buildlabel"],
         ).delete()
-        logger.info("{}_{} deleted".format(info["vmtype"], info["vmversion"]))
+        logger.info(
+            "{}_{}_{} deleted".format(
+                info["vmtype"], info["vmversion"], info["buildlabel"]
+            )
+        )
         return
     r, created = ReleaseChanged.objects.get_or_create(
         version=info["vmversion"],
         vmtype=info["vmtype"],
+        label=info["buildlabel"],
         defaults={"result": jbi.result},
     )
     if not created:
@@ -49,5 +55,5 @@ def process_result(jbi_id, path_envVars):
         changed = "*NOT*"
     else:
         changed = ""
-    msg = "setting {}_{} as {} changed, created:{}"
-    logger.info(msg.format(r.vmtype, r.version, changed, created))
+    msg = "setting {}_{}_{} as {} changed, created:{}"
+    logger.info(msg.format(r.vmtype, r.version, r.label, changed, created))

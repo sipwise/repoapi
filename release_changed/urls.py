@@ -25,7 +25,7 @@ urlpatterns = [
         name="detail",
     ),
     url(
-        r"^(?P<vmtype>[^/]+)/(?P<release>[^/]+)/$",
+        r"^(?P<label>[^/]+)/(?P<vmtype>[^/]+)/(?P<release>[^/]+)/$",
         views.ReleaseChangedCheck.as_view(),
         name="check",
     ),

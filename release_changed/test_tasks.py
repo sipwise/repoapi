@@ -38,34 +38,42 @@ class TasksTestCase(BaseTest):
         jbi = JenkinsBuildInfo.objects.get(pk=1)
         with patch("builtins.open", mock_open(read_data=DATA)):
             tasks.process_result.delay(jbi.id, FILE_PATH)
-        r = ReleaseChanged.objects.get(version="mr8.5.1", vmtype="CE")
+        r = ReleaseChanged.objects.get(
+            label="base", version="mr8.5.1", vmtype="CE"
+        )
         self.assertEqual("FAILED", r.result)
 
     def test_process_modify(self):
         r = ReleaseChanged.objects.create(
-            version="mr8.5.1", vmtype="CE", result="SUCCESS"
+            label="base", version="mr8.5.1", vmtype="CE", result="SUCCESS"
         )
         r_id = r.id
         jbi = JenkinsBuildInfo.objects.get(pk=1)
         with patch("builtins.open", mock_open(read_data=DATA)):
             tasks.process_result.delay(jbi.id, FILE_PATH)
-        r = ReleaseChanged.objects.get(version="mr8.5.1", vmtype="CE")
+        r = ReleaseChanged.objects.get(
+            label="base", version="mr8.5.1", vmtype="CE"
+        )
         self.assertEqual(r_id, r.id)
         self.assertEqual("FAILED", r.result)
 
     def test_process_done(self):
         ReleaseChanged.objects.create(
-            version="mr8.5.1", vmtype="CE", result="FAILED"
+            label="base", version="mr8.5.1", vmtype="CE", result="FAILED"
         )
         jbi = JenkinsBuildInfo.objects.get(pk=1)
         with patch("builtins.open", mock_open(read_data=DATA_DONE)):
             tasks.process_result.delay(jbi.id, FILE_PATH)
-        rs = ReleaseChanged.objects.filter(version="mr8.5.1", vmtype="CE")
+        rs = ReleaseChanged.objects.filter(
+            label="base", version="mr8.5.1", vmtype="CE"
+        )
         self.assertFalse(rs.exists())
 
     def test_process_done_no_obj(self):
         jbi = JenkinsBuildInfo.objects.get(pk=1)
         with patch("builtins.open", mock_open(read_data=DATA_DONE)):
             tasks.process_result.delay(jbi.id, FILE_PATH)
-        rs = ReleaseChanged.objects.filter(version="mr8.5.1", vmtype="CE")
+        rs = ReleaseChanged.objects.filter(
+            label="base", version="mr8.5.1", vmtype="CE"
+        )
         self.assertFalse(rs.exists())
