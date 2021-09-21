@@ -185,6 +185,7 @@ class ReleaseDashboardConf(AppConf):
         "ngcpcfg",
         "rate-o-mat",
         "snmp-agent",
+        "system-tests",
         "system-tools",
     )
 
