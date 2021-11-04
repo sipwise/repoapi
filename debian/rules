@@ -14,7 +14,7 @@ override_dh_auto_build:
 	cp debian/server.ini server.ini
 
 override_dh_auto_install:
-	VAR_DIR=$(shell pwd) make deploy
+	VAR_DIR=$(CURDIR) make deploy
 	find . -name '__pycache__' -type d -print0 | xargs --no-run-if-empty -0 rm -r
 	make clean
 
