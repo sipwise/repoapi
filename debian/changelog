@@ -1,3 +1,19 @@
+repoapi (0.4.3) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * TT#134250 remove yuicompressor since is no longer provide by pip
+  * TT#134250 release_changed: add label field
+  * TT#154401 build needs a $HOME dir
+
+  [ Sergii Kipot ]
+  * TT#117154 Add ngcp-js-api-client to repoapi dashboard
+  * TT#138658 Add system-tests to docker projects
+
+  [ Guillem Jover ]
+  * TT#124273 Use $(CURDIR) instead of $(shell pwd)
+
+ -- Victor Seva <vseva@debian.org>  Wed, 08 Dec 2021 10:40:52 +0100
+
 repoapi (0.4.2) unstable; urgency=medium
 
   [ Victor Seva ]
