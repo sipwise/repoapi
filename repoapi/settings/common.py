@@ -51,7 +51,6 @@ MIDDLEWARE = (
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -109,7 +108,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_media/")
 
 REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
-    "DEFAULT_FILTER_BACKENDS": ("rest_framework.filters.DjangoFilterBackend",),
+    "DEFAULT_PAGINATION_CLASS": "rest_framework"
+    ".pagination.LimitOffsetPagination",
+    "DEFAULT_FILTER_BACKENDS": (
+        "django_filters.rest_framework.DjangoFilterBackend",
+    ),
 }
 
 SWAGGER_SETTINGS = {

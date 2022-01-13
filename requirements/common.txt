@@ -1,18 +1,18 @@
-celery>4.4,<5.0
-Django==1.11.29
+celery
+Django==3.0.14
 django-appconf
 django-assets
-django-celery-beat<2.0
+django-celery-beat
 django-celery-results
 django-export
-django-extensions<3.0
-django-filter<2.3
+django-extensions
+django-filter
 django-jsonify
 django-object-tools
 django-rest-swagger
 django-structlog
-django-timezone-field>=3.1,<4.0  # last version supporting django 1.11
-djangorestframework>=3.6,<3.7
+django-timezone-field
+djangorestframework>=3.6
 drfapikey
 flower>=0.9.5
 markdown
