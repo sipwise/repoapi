@@ -4,11 +4,10 @@ django-appconf
 django-assets
 django-celery-beat
 django-celery-results
-django-export
 django-extensions
 django-filter
+django-import-export
 django-jsonify
-django-object-tools
 django-rest-swagger
 django-structlog
 django-timezone-field

@@ -12,7 +12,6 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import object_tools
 from django.conf.urls import include
 from django.conf.urls import url
 from django.contrib import admin
@@ -103,7 +102,6 @@ api_patterns = [
 api_patterns = format_suffix_patterns(api_patterns)
 
 urlpatterns = [
-    url(r"^object-tools/", object_tools.tools.urls),
     url(r"^admin/", admin.site.urls),
     url(r"^", include(api_patterns)),
     url(

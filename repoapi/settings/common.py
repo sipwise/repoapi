@@ -22,7 +22,6 @@ import structlog
 BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
 
 INSTALLED_APPS = [
-    "object_tools",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -37,7 +36,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "django_filters",
     "jsonify",
-    "export",
+    "import_export",
     "repoapi.apps.RepoAPIConfig",
     "hotfix.apps.HotfixConfig",
     "panel.apps.PanelConfig",
