@@ -28,7 +28,6 @@ from django.forms.models import model_to_dict
 
 from debian import deb822
 from repoapi.conf import settings
-from repoapi.tasks import get_jbi_files
 
 logger = structlog.get_logger(__name__)
 workfront_re = re.compile(r"TT#(\d+)")
@@ -288,12 +287,3 @@ class JenkinsBuildInfo(models.Model):
             d = deb822.Dsc(f)
         self._source = d["Source"]
         return self._source
-
-
-def jbi_manage(sender, **kwargs):
-    if kwargs["created"]:
-        instance = kwargs["instance"]
-        if instance.is_job_url_allowed():
-            get_jbi_files.delay(
-                instance.pk, instance.jobname, instance.buildnumber
-            )

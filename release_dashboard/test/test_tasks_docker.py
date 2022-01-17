@@ -13,10 +13,10 @@
 # You should have received a copy of the GNU General Public License along
 # with this prograproj.  If not, see <http://www.gnu.org/licenses/>.
 import uuid
+from unittest.mock import call
+from unittest.mock import patch
 
 from django.test import override_settings
-from mock import call
-from mock import patch
 
 from release_dashboard import tasks
 from release_dashboard.models import DockerImage
@@ -156,7 +156,10 @@ class TasksDockerTestCase(BaseTest):
             name="data-hal-jessie", project=proj
         )
         tag = DockerTag.objects.create(
-            name="latest", image=image, reference=uuid.uuid4()
+            name="latest",
+            image=image,
+            reference=uuid.uuid4(),
+            manifests=dict(),
         )
         result = tasks.docker_remove_tag.delay("data-hal-jessie", "latest")
         self.assertTrue(result.successful())

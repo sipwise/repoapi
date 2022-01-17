@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,71 +12,5 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import logging
-from datetime import timedelta
-
-from django.db.models import signals
-from django.utils import timezone
-
-from ..conf import settings
-from .br import BuildRelease
-from build.tasks import build_release
-from build.tasks import build_resume
-from repoapi.models import JenkinsBuildInfo
-
-logger = logging.getLogger(__name__)
-
-
-def br_manage(sender, **kwargs):
-    if kwargs["created"]:
-        instance = kwargs["instance"]
-        if instance.release.endswith("-update"):
-            build_resume.delay(instance.pk)
-            logger.debug("BuildRelease:%s triggered", instance)
-        elif timezone.now() > instance.start_date + timedelta(minutes=15):
-            logger.debug(
-                "BuildRelease:%s not triggered, is from the past:%s",
-                instance,
-                instance.start_date,
-            )
-        else:
-            build_release.delay(instance.pk)
-            logger.debug("BuildRelease:%s triggered", instance)
-
-
-def jbi_manage(sender, **kwargs):
-    if not kwargs["created"]:
-        return
-    jbi = kwargs["instance"]
-    if not jbi.is_job_url_allowed():
-        return
-    if jbi.param_release_uuid is None:
-        return
-    release = jbi.param_release
-    if jbi.jobname in settings.BUILD_RELEASE_JOBS:
-        if not release.startswith("release-"):
-            release = "release-{}".format(jbi.param_release)
-    if jbi.param_release_uuid in [None, "none", ""]:
-        logger.debug(
-            "jbi release:%s release_uuid:%s, no ReleaseBuild link, skip",
-            jbi.param_release,
-            jbi.param_release_uuid,
-        )
-        return
-    try:
-        br = BuildRelease.objects.get(uuid=jbi.param_release_uuid,)
-    except BuildRelease.DoesNotExist:
-        logger.error(
-            "BuildRelease:%s not found", jbi.param_release_uuid,
-        )
-        return
-    if not br.append_built(jbi):
-        logger.debug("BuildRelease:%s jbi:%s skip", br, jbi)
-        return
-    br.remove_triggered(jbi)
-    build_resume.delay(br.id)
-
-
-post_save = signals.post_save.connect
-post_save(br_manage, sender=BuildRelease)
-post_save(jbi_manage, sender=JenkinsBuildInfo)
+from .br import BuildRelease  # noqa
+from repoapi.models import JenkinsBuildInfo  # noqa

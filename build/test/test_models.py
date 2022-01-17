@@ -391,7 +391,7 @@ class BuildReleaseStepsTest(BaseTest):
 
 @override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
 @patch("repoapi.utils.dlfile")
-@patch("build.models.build_resume")
+@patch("build.signals.build_resume")
 class JBIManageTest(BaseTest):
     fixtures = ["test_models"]
     release = "release-mr8.1"
@@ -467,7 +467,7 @@ class BRManageTest(BaseTest):
     fixtures = ["test_models"]
 
     @patch("build.tasks.trigger_copy_deps")
-    @patch("build.models.build_resume")
+    @patch("build.signals.build_resume")
     def test_br_manage(self, build_resume, trigger_copy_deps):
         br = BuildRelease.objects.create_build_release("UUID", "mr7.5")
         build_resume.delay.assert_not_called()
@@ -476,7 +476,7 @@ class BRManageTest(BaseTest):
         )
 
     @patch("build.tasks.trigger_copy_deps")
-    @patch("build.models.build_resume")
+    @patch("build.signals.build_resume")
     def test_br_manage_ko(self, build_resume, trigger_copy_deps):
         br = BuildRelease.objects.create_build_release("UUID1", "mr8.1")
         build_resume.delay.assert_called_once_with(br.id)

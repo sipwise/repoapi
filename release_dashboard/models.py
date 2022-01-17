@@ -1,4 +1,4 @@
-# Copyright (C) 2016 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -19,7 +19,6 @@ from datetime import datetime
 
 from django.db import models
 from django_extensions.db.fields import ModificationDateTimeField
-from django_extensions.db.fields.json import JSONField
 
 from .conf import settings
 
@@ -28,12 +27,14 @@ logger = logging.getLogger(__name__)
 
 class Project(models.Model):
     name = models.CharField(max_length=50, unique=True, null=False)
-    json_tags = JSONField(null=True)
-    json_branches = JSONField(null=True)
+    json_tags = models.JSONField(null=True)
+    json_branches = models.JSONField(null=True)
     modified = ModificationDateTimeField(null=True)
 
     @classmethod
     def _filter_values(cls, values, val_ok_filter, regex=None):
+        if values is None:
+            return list()
         res = set()
 
         for value in values:
@@ -50,7 +51,7 @@ class Project(models.Model):
     @classmethod
     def _get_filtered_json(cls, text):
         """gerrit responds with malformed json
-           https://gerrit-review.googlesource.com/Documentation/rest-api.html#output
+        https://gerrit-review.googlesource.com/Documentation/rest-api.html#output
         """
         return json.loads(text[5:])
 
@@ -125,7 +126,7 @@ class DockerImage(models.Model):
 
 class DockerTag(models.Model):
     name = models.CharField(max_length=50, null=False)
-    manifests = JSONField(null=False)
+    manifests = models.JSONField(null=False)
     image = models.ForeignKey(DockerImage, on_delete=models.CASCADE)
     reference = models.CharField(max_length=150, unique=True, null=False)
 
@@ -139,10 +140,17 @@ class DockerTag(models.Model):
     def date(self):
         if self.manifests is None:
             return None
+        if isinstance(self.manifests, dict):
+            manifests = self.manifests
+        else:
+            try:
+                manifests = json.loads(self.manifests)
+            except json.JSONDecodeError:
+                return None
         try:
-            value = self.manifests["history"][0]["v1Compatibility"]
+            value = manifests["history"][0]["v1Compatibility"]
             time = json.loads(value)
             created = time["created"].split(".")
             return datetime.strptime(created[0], "%Y-%m-%dT%H:%M:%S")
-        except Exception:
+        except json.JSONDecodeError:
             return None

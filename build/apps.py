@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -17,3 +17,7 @@ from django.apps import AppConfig
 
 class ReleaseConfig(AppConfig):
     name = "build"
+
+    def ready(self):
+        # Implicitly connect a signal handlers decorated with @receiver.
+        from . import signals  # noqa

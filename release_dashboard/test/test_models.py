@@ -11,7 +11,7 @@
 # more details.
 #
 # You should have received a copy of the GNU General Public License along
-# with this prograproj.  If not, see <http://www.gnu.org/licenses/>.
+# with this program.  If not, see <http://www.gnu.org/licenses/>.
 import copy
 
 from django.test import TestCase
@@ -81,6 +81,10 @@ class ProjectTestCase(TestCase):
     def test_filtered_json(self):
         res = Project._get_filtered_json(GERRIT_REST_TAGS)
         self.assertEqual(res, FILTERED_TAGS)
+
+    def test_filter_values_null(self):
+        res = Project._filter_values(None, "^refs/tags/(.+)$")
+        self.assertIsInstance(res, list)
 
     def test_filter_values(self):
         values = copy.deepcopy(FILTERED_TAGS)

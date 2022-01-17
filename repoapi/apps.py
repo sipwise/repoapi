@@ -13,7 +13,21 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.apps import AppConfig
+from django.db.models.signals import post_save
 
 
 class RepoAPIConfig(AppConfig):
     name = "repoapi"
+
+    def ready(self):
+        from .conf import settings
+
+        # Implicitly connect a signal handlers decorated with @receiver.
+        from . import signals
+
+        if settings.WORKFRONT_NOTE:
+            post_save.connect(
+                signals.workfront_note_manage,
+                sender="repoapi.JenkinsBuildInfo",
+                dispatch_uid="workfront_note_manage",
+            )

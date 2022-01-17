@@ -33,7 +33,7 @@ from .utils import jenkins_remove_project_ppa
 logger = structlog.get_logger(__name__)
 
 
-@app.task(bind=True)
+@shared_task(bind=True)
 def jenkins_remove_project(self, jbi_id):
     JenkinsBuildInfo = apps.get_model("repoapi", "JenkinsBuildInfo")
     jbi = JenkinsBuildInfo.objects.get(id=jbi_id)
