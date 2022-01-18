@@ -1,3 +1,3 @@
 -r common.txt
-psycopg2
 django-auth-ldap
+psycopg2>=2.8,<2.9
