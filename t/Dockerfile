@@ -8,7 +8,7 @@ FROM docker.mgm.sipwise.com/sipwise-bullseye:latest
 ENV REFRESHED_AT 2022-01-19
 
 RUN apt-get update && apt-get install --assume-yes python3 python3-dev \
-	python3-pytest python3-pytest-django python3-pytest-pep8 \
+	python3-pytest python3-pytest-pep8 \
 	python3-pytest-pylint python3-pytest-cov python3-junitxml \
 	python3-pip python3-virtualenv virtualenv sqlite3 git tmux
 
