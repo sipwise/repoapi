@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,9 +12,9 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from mock import call
-from mock import mock_open
-from mock import patch
+from unittest.mock import call
+from unittest.mock import mock_open
+from unittest.mock import patch
 
 from hotfix import models
 from hotfix import utils

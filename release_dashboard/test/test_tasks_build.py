@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-20222 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -11,9 +11,10 @@
 # more details.
 #
 # You should have received a copy of the GNU General Public License along
-# with this prograproj.  If not, see <http://www.gnu.org/licenses/>.
+# with this program.  If not, see <http://www.gnu.org/licenses/>.
+from unittest.mock import patch
+
 from django.test import SimpleTestCase
-from mock import patch
 
 from release_dashboard import tasks
 

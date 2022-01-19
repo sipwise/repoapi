@@ -1,4 +1,4 @@
-# Copyright (C) 2016 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,8 +12,9 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from unittest.mock import patch
+
 from django.conf import settings
-from mock import patch
 
 from repoapi.models import JenkinsBuildInfo
 from repoapi.models import WorkfrontNoteInfo
