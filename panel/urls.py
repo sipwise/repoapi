@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,28 +12,28 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 app_name = "panel"
 urlpatterns = [
-    url(r"^$", views.index, name="index"),
-    url(
+    re_path(r"^$", views.index, name="index"),
+    re_path(
         r"^release/(?P<_uuid>[^/]+)/$", views.release_uuid, name="release-uuid"
     ),
-    url(r"^(?P<_release>[^/]+)/$", views.release, name="release-view"),
-    url(
+    re_path(r"^(?P<_release>[^/]+)/$", views.release, name="release-view"),
+    re_path(
         r"^(?P<_release>[^/]+)/(?P<_project>[^/]+)/$",
         views.project,
         name="project-view",
     ),
-    url(
+    re_path(
         r"^(?P<_release>[^/]+)/(?P<_project>[^/]+)/latest/$",
         views.latest_uuid,
         name="latest_uuid-view",
     ),
-    url(
+    re_path(
         r"^(?P<_release>[^/]+)/(?P<_project>[^/]+)/(?P<_uuid>[^/]+)/$",
         views.uuid,
         name="uuid-view",

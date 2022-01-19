@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,9 +12,9 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from django.conf.urls import include
-from django.conf.urls import url
 from django.contrib import admin
+from django.urls import include
+from django.urls import re_path
 from rest_framework.urlpatterns import format_suffix_patterns
 
 from build import views as build_views
@@ -23,92 +23,95 @@ from release_dashboard.views import docker
 from repoapi import views
 
 api_patterns = [
-    url(r"^$", views.api_root, name="index"),
-    url(
+    re_path(r"^$", views.api_root, name="index"),
+    re_path(
         r"^jenkinsbuildinfo/$",
         views.JenkinsBuildInfoList.as_view(),
         name="jenkinsbuildinfo-list",
     ),
-    url(
+    re_path(
         r"^jenkinsbuildinfo/(?P<pk>[0-9]+)/$",
         views.JenkinsBuildInfoDetail.as_view(),
         name="jenkinsbuildinfo-detail",
     ),
-    url(r"^release/$", views.ReleaseList.as_view(), name="release-list"),
-    url(
+    re_path(r"^release/$", views.ReleaseList.as_view(), name="release-list"),
+    re_path(
         r"^release/(?P<release>[^/]+)/$",
         views.ProjectList.as_view(),
         name="project-list",
     ),
-    url(
+    re_path(
         r"^release_jobs/(?P<release_uuid>[^/]+)/$",
         build_views.ReleaseJobs.as_view(),
         name="release-job-list",
     ),
-    url(
+    re_path(
         r"^release_jobs/(?P<release_uuid>[^/]+)/(?P<job>[^/]+)/$",
         build_views.ReleaseJobsUUID.as_view(),
         name="release-job-uuid-list",
     ),
-    url(
+    re_path(
         r"^release_jobs_full/(?P<release_uuid>[^/]+)/$",
         build_views.ReleaseJobsFull.as_view(),
         name="release-job-full-list",
     ),
-    url(
+    re_path(
         r"^release_full/(?P<release>[^/]+)/$",
         views.ProjectFullList.as_view(),
         name="project-fulllist",
     ),
-    url(
+    re_path(
         r"^release/(?P<release>[^/]+)/(?P<project>[^/]+)/latest/$",
         views.LatestUUID.as_view(),
         name="latestuuid-list",
     ),
-    url(
+    re_path(
         r"^release/(?P<release>[^/]+)/(?P<project>[^/]+)/$",
         views.ProjectUUIDList.as_view(),
         name="projectuuid-list",
     ),
-    url(
+    re_path(
         r"^release/(?P<release>[^/]+)" "/(?P<project>[^/]+)/(?P<uuid>[^/]+)/$",
         views.UUIDInfoList.as_view(),
         name="uuidinfo-list",
     ),
-    url(
+    re_path(
         r"^docker/image/$",
         docker.DockerImageList.as_view(),
         name="dockerimage-list",
     ),
-    url(
+    re_path(
         r"^docker/image/(?P<pk>[0-9]+)/$",
         docker.DockerImageDetail.as_view(),
         name="dockerimage-detail",
     ),
-    url(
+    re_path(
         r"^docker/tag/(?P<pk>[0-9]+)/$",
         docker.DockerTagDetail.as_view(),
         name="dockertag-detail",
     ),
-    url(
+    re_path(
         r"^gerrit/refresh/$",
         rd_api.RefreshGerritInfo.as_view(),
         name="gerrit-refresh",
     ),
-    url(r"^build/", include("build.urls")),
-    url(r"^release_changed/", include("release_changed.urls")),
+    re_path(r"^build/", include("build.urls")),
+    re_path(r"^release_changed/", include("release_changed.urls")),
 ]
 
 api_patterns = format_suffix_patterns(api_patterns)
 
 urlpatterns = [
-    url(r"^admin/", admin.site.urls),
-    url(r"^", include(api_patterns)),
-    url(
+    re_path(r"^admin/", admin.site.urls),
+    re_path(r"^", include(api_patterns)),
+    re_path(
         r"^api-auth/",
         include("rest_framework.urls", namespace="rest_framework"),
     ),
-    url(r"^docs/", views.schema_view),
-    url(r"^panel/", include("panel.urls")),
-    url(r"^release_panel/", include("release_dashboard.urls"),),
+    re_path(r"^docs/", views.schema_view),
+    re_path(r"^panel/", include("panel.urls")),
+    re_path(
+        r"^release_panel/",
+        include("release_dashboard.urls"),
+    ),
 ]

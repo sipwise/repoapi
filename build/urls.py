@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,19 +12,19 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from django.conf.urls import url
+from django.urls import re_path
 
 from . import views
 
 app_name = "build"
 urlpatterns = [
-    url(r"^$", views.BuildReleaseList.as_view(), name="list"),
-    url(
+    re_path(r"^$", views.BuildReleaseList.as_view(), name="list"),
+    re_path(
         r"^(?P<pk>[0-9]+)/?$",
         views.BuildReleaseDetail.as_view(),
         name="detail",
     ),
-    url(
+    re_path(
         r"^(?P<release_uuid>[^/]+)/(?P<project>[^/]+)/$",
         views.BuildProject.as_view(),
         name="build_project",
