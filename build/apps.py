@@ -19,5 +19,7 @@ class ReleaseConfig(AppConfig):
     name = "build"
 
     def ready(self):
+        from .conf import settings  # noqa
+
         # Implicitly connect a signal handlers decorated with @receiver.
         from . import signals  # noqa

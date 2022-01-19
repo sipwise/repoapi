@@ -17,3 +17,6 @@ from django.apps import AppConfig
 
 class ReleaseDashboardConfig(AppConfig):
     name = "release_dashboard"
+
+    def ready(self):
+        from .conf import settings  # noqa

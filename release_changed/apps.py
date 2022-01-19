@@ -17,3 +17,6 @@ from django.apps import AppConfig
 
 class ReleaseChangedConfig(AppConfig):
     name = "release_changed"
+
+    def ready(self):
+        from .conf import settings  # noqa

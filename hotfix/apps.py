@@ -17,3 +17,6 @@ from django.apps import AppConfig
 
 class HotfixConfig(AppConfig):
     name = "hotfix"
+
+    def ready(self):
+        from .conf import settings  # noqa
