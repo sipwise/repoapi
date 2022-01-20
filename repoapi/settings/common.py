@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework_api_key",
-    "rest_framework_swagger",
+    "drf_spectacular",
     "django_assets",
     "django_celery_results",
     "django_extensions",
@@ -112,15 +112,20 @@ REST_FRAMEWORK = {
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
-SWAGGER_SETTINGS = {
-    "api_version": "0.1",
-    "info": {
-        "contact": "dev@sipwise.com",
-        "description": "repoapi, one ring to rule them all",
-        "license": "GPL 3.0",
-        "title": "RepoApi",
+SPECTACULAR_SETTINGS = {
+    "TITLE": "RepoApi",
+    "DESCRIPTION": "repoapi, one ring to rule them all",
+    "VERSION": "1.0.0",
+    "CONTACT": {
+        "email": "development@sipwise.com",
+        "url": "https://www.sipwise.com/",
+    },
+    "LICENSE": {
+        "name": "GPLv3",
+        "url": "https://www.gnu.org/licenses/gpl-3.0.en.html",
     },
 }
 

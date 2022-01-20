@@ -8,15 +8,16 @@ django-extensions
 django-filter
 django-import-export
 django-jsonify
-django-rest-swagger
 django-structlog
 django-timezone-field
 djangorestframework>=3.6
+drf-spectacular
 drfapikey
 flower>=0.9.5
 markdown
 natsort
 python-debian
 PyYAML
+requests
 six>=1.9
 webassets

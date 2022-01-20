@@ -1,4 +1,4 @@
-# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -16,23 +16,12 @@ import django_filters
 from rest_framework import generics
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.decorators import renderer_classes
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework.schemas import SchemaGenerator
 from rest_framework.views import APIView
-from rest_framework_swagger.renderers import OpenAPIRenderer
-from rest_framework_swagger.renderers import SwaggerUIRenderer
 
 from . import serializers
 from .models import JenkinsBuildInfo as jbi
-
-
-@api_view()
-@renderer_classes([OpenAPIRenderer, SwaggerUIRenderer])
-def schema_view(request):
-    generator = SchemaGenerator()
-    return Response(generator.get_schema(request=request))
 
 
 @api_view(("GET",))

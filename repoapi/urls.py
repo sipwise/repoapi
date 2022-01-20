@@ -14,13 +14,17 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.contrib import admin
 from django.urls import include
+from django.urls import path
 from django.urls import re_path
+from drf_spectacular.views import SpectacularAPIView
+from drf_spectacular.views import SpectacularRedocView
+from drf_spectacular.views import SpectacularSwaggerView
 from rest_framework.urlpatterns import format_suffix_patterns
 
+from . import views
 from build import views as build_views
 from release_dashboard.views import api as rd_api
 from release_dashboard.views import docker
-from repoapi import views
 
 api_patterns = [
     re_path(r"^$", views.api_root, name="index"),
@@ -108,7 +112,15 @@ urlpatterns = [
         r"^api-auth/",
         include("rest_framework.urls", namespace="rest_framework"),
     ),
-    re_path(r"^docs/", views.schema_view),
+    path("api-schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "docs/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path(
+        "redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"
+    ),
     re_path(r"^panel/", include("panel.urls")),
     re_path(
         r"^release_panel/",
