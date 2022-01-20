@@ -21,10 +21,10 @@ from django.db.models import Q
 from django.forms.models import model_to_dict
 from django.utils import timezone
 
-from ..conf import settings
-from build.exceptions import BuildReleaseUnique
-from build.utils import get_simple_release
-from build.utils import ReleaseConfig
+from .conf import settings
+from .exceptions import BuildReleaseUnique
+from .utils import get_simple_release
+from .utils import ReleaseConfig
 from repoapi.models import JenkinsBuildInfo
 
 logger = structlog.get_logger(__name__)
@@ -154,7 +154,7 @@ class BuildRelease(models.Model):
 
     def resume(self):
         if not self.done:
-            from build.tasks import build_resume
+            from .tasks import build_resume
 
             build_resume.delay(self.id)
 

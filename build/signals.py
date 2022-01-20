@@ -20,10 +20,9 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 from .conf import settings
-from .models.br import BuildRelease
-from build.tasks import build_release
-from build.tasks import build_resume
-from repoapi.models import JenkinsBuildInfo
+from .models import BuildRelease
+from .tasks import build_release
+from .tasks import build_resume
 
 logger = structlog.get_logger(__name__)
 
@@ -46,7 +45,11 @@ def br_manage(sender, **kwargs):
             logger.debug("BuildRelease:%s triggered", instance)
 
 
-@receiver(post_save, sender=JenkinsBuildInfo, dispatch_uid="build_jbi_manage")
+@receiver(
+    post_save,
+    sender="repoapi.JenkinsBuildInfo",
+    dispatch_uid="build_jbi_manage",
+)
 def jbi_manage(sender, **kwargs):
     if not kwargs["created"]:
         return

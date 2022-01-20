@@ -16,9 +16,9 @@ import structlog
 from celery import shared_task
 
 from .conf import settings
-from build.models.br import BuildRelease
-from build.utils import trigger_build
-from build.utils import trigger_copy_deps
+from .models import BuildRelease
+from .utils import trigger_build
+from .utils import trigger_copy_deps
 from repoapi.celery import app
 
 logger = structlog.get_logger(__name__)

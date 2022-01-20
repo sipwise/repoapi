@@ -18,7 +18,7 @@ from django.core.management.base import BaseCommand
 from django.core.management.base import CommandError
 
 from build.models import BuildRelease
-from build.models.br import regex_mrXX
+from build.models import regex_mrXX
 from build.utils import ReleaseConfig
 
 
