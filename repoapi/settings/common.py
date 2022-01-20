@@ -37,12 +37,12 @@ INSTALLED_APPS = [
     "django_filters",
     "jsonify",
     "import_export",
-    "repoapi.apps.RepoAPIConfig",
-    "hotfix.apps.HotfixConfig",
-    "panel.apps.PanelConfig",
-    "release_dashboard.apps.ReleaseDashboardConfig",
-    "build.apps.ReleaseConfig",
-    "release_changed.apps.ReleaseChangedConfig",
+    "hotfix",
+    "panel",
+    "release_dashboard",
+    "build",
+    "release_changed",
+    "repoapi",
 ]
 
 MIDDLEWARE = (
@@ -91,6 +91,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
