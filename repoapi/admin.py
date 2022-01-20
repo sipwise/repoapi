@@ -1,27 +1,40 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
-
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
+#
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
 # Software Foundation, either version 3 of the License, or (at your option)
 # any later version.
-
+#
 # This program is distributed in the hope that it will be useful, but WITHOUT
 # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 # more details.
-
+#
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 from django.contrib import admin
-from repoapi import models
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
+
+from . import models
+
+
+class JenkinsBuildInfoResource(resources.ModelResource):
+    class Meta:
+        model = models.JenkinsBuildInfo
+
+
+class GerritRepoInfoResource(resources.ModelResource):
+    class Meta:
+        model = models.GerritRepoInfo
 
 
 @admin.register(models.JenkinsBuildInfo)
-class JenkinsBuildInfoAdmin(admin.ModelAdmin):
-    list_filter = ('param_release', 'projectname')
+class JenkinsBuildInfoAdmin(ImportExportModelAdmin):
+    resource_class = JenkinsBuildInfoResource
+    list_filter = ("param_release", "projectname")
 
 
 @admin.register(models.GerritRepoInfo)
-class GerritRepoInfoAdmin(admin.ModelAdmin):
-    pass
+class GerritRepoInfoAdmin(ImportExportModelAdmin):
+    resource_class = GerritRepoInfoResource

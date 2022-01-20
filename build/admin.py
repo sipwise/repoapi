@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,12 +13,20 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.contrib import admin
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 
 from . import models
 
 
+class BuildReleaseResource(resources.ModelResource):
+    class Meta:
+        model = models.BuildRelease
+
+
 @admin.register(models.BuildRelease)
-class BuildReleaseAdmin(admin.ModelAdmin):
+class BuildReleaseAdmin(ImportExportModelAdmin):
+    resource_class = BuildReleaseResource
     list_filter = ("release",)
     readonly_fields = ("projects",)
     modify_readonly_fields = (

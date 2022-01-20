@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -19,11 +19,11 @@ from import_export.admin import ImportExportModelAdmin
 from . import models
 
 
-class ReleaseChangedResource(resources.ModelResource):
+class WorkfrontNoteInfoResource(resources.ModelResource):
     class Meta:
-        model = models.ReleaseChanged
+        model = models.WorkfrontNoteInfo
 
 
-@admin.register(models.ReleaseChanged)
-class ReleaseChangedAdmin(ImportExportModelAdmin):
-    resource_class = ReleaseChangedResource
+@admin.register(models.WorkfrontNoteInfo)
+class WorkfrontNoteInfoAdmin(ImportExportModelAdmin):
+    resource_class = WorkfrontNoteInfoResource
