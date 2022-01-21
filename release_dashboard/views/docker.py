@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -28,14 +28,14 @@ from . import _common_versions
 from . import _hash_versions
 from . import _projects_versions
 from . import regex_mr
+from .. import serializers
+from .. import tasks
 from ..conf import settings
-from release_dashboard import serializers
-from release_dashboard import tasks
-from release_dashboard.forms.docker import BuildDockerForm
-from release_dashboard.models import DockerImage
-from release_dashboard.models import DockerTag
-from release_dashboard.models import Project
-from release_dashboard.utils import docker
+from ..forms.docker import BuildDockerForm
+from ..models import DockerImage
+from ..models import DockerTag
+from ..models import Project
+from ..utils import docker
 
 logger = logging.getLogger(__name__)
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -18,8 +18,8 @@ from django.views.generic.base import TemplateView
 from natsort import humansorted
 
 from ..conf import settings
-from release_dashboard.utils import get_branches
-from release_dashboard.utils import get_tags
+from ..utils import get_branches
+from ..utils import get_tags
 
 regex_hotfix = re.compile(r"^mr[0-9]+\.[0-9]+\.[0-9]+$")
 regex_mr = re.compile(r"^mr.+$")

@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -26,8 +26,8 @@ from django.db import models
 from django.db.models import Q
 from django.forms.models import model_to_dict
 
+from ..conf import settings
 from debian import deb822
-from repoapi.conf import settings
 
 logger = structlog.get_logger(__name__)
 workfront_re = re.compile(r"TT#(\d+)")
