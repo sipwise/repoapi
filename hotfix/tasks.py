@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,16 +12,17 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import structlog
 from celery import shared_task
-from celery.utils.log import get_task_logger
+from django.apps import apps
 
 from .utils import process_hotfix
-from repoapi.models import JenkinsBuildInfo
 
-logger = get_task_logger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 @shared_task(ignore_result=True)
 def hotfix_released(jbi_id, path):
+    JenkinsBuildInfo = apps.get_model("repoapi", "JenkinsBuildInfo")
     jbi = JenkinsBuildInfo.objects.get(pk=jbi_id)
     process_hotfix(str(jbi), jbi.projectname, path)

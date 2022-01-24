@@ -15,19 +15,21 @@
 from datetime import timedelta
 
 import structlog
+from django.apps import apps
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 
 from .conf import settings
-from .models import BuildRelease
 from .tasks import build_release
 from .tasks import build_resume
 
 logger = structlog.get_logger(__name__)
 
 
-@receiver(post_save, sender=BuildRelease, dispatch_uid="build_br_manage")
+@receiver(
+    post_save, sender="build.BuildRelease", dispatch_uid="build_br_manage"
+)
 def br_manage(sender, **kwargs):
     if kwargs["created"]:
         instance = kwargs["instance"]
@@ -51,6 +53,7 @@ def br_manage(sender, **kwargs):
     dispatch_uid="build_jbi_manage",
 )
 def jbi_manage(sender, **kwargs):
+    BuildRelease = apps.get_model("build", "BuildRelease")
     if not kwargs["created"]:
         return
     jbi = kwargs["instance"]

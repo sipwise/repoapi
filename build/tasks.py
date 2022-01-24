@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -14,18 +14,18 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import structlog
 from celery import shared_task
+from django.apps import apps
 
 from .conf import settings
-from .models import BuildRelease
 from .utils import trigger_build
 from .utils import trigger_copy_deps
-from repoapi.celery import app
 
 logger = structlog.get_logger(__name__)
 
 
-@app.task(bind=True)
+@shared_task(bind=True)
 def build_release(self, pk):
+    BuildRelease = apps.get_model("build", "BuildRelease")
     log = logger.bind(pk=pk)
     br = BuildRelease.objects
     try:
@@ -47,6 +47,7 @@ def build_release(self, pk):
 
 @shared_task(ignore_result=True)
 def build_project(pk, project):
+    BuildRelease = apps.get_model("build", "BuildRelease")
     log = logger.bind(project=project, pk=pk)
     try:
         br = BuildRelease.objects.get(id=pk)
@@ -66,6 +67,7 @@ def build_project(pk, project):
 
 @shared_task(ignore_result=True)
 def build_resume(pk):
+    BuildRelease = apps.get_model("build", "BuildRelease")
     log = logger.bind(pk=pk)
     try:
         br = BuildRelease.objects.get(id=pk)

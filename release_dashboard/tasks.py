@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,17 +12,15 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import structlog
 from celery import shared_task
-from celery.utils.log import get_task_logger
+from django.apps import apps
 
 from .conf import settings
-from .models import DockerImage
-from .models import DockerTag
-from .models import Project
 from .utils import build
 from .utils import docker
 
-logger = get_task_logger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 @shared_task(ignore_result=True)
@@ -38,6 +36,8 @@ def gerrit_fetch_all():
 
 @shared_task(ignore_result=True)
 def docker_fetch_info(imagename):
+    DockerImage = apps.get_model("release_dashboard", "DockerImage")
+    DockerTag = apps.get_model("release_dashboard", "DockerTag")
     image = DockerImage.objects.get(name=imagename)
     tags = docker.get_docker_tags(imagename)
     for tagname in tags:
@@ -50,6 +50,8 @@ def docker_fetch_info(imagename):
 
 @shared_task(ignore_result=True)
 def docker_fetch_project(projectname):
+    DockerImage = apps.get_model("release_dashboard", "DockerImage")
+    Project = apps.get_model("release_dashboard", "Project")
     DockerImage.objects.filter(project__name=projectname).delete()
     images = docker.get_docker_repositories()
     project = Project.objects.get(name=projectname)
@@ -61,6 +63,8 @@ def docker_fetch_project(projectname):
 
 @shared_task(ignore_result=True)
 def docker_fetch_all():
+    DockerImage = apps.get_model("release_dashboard", "DockerImage")
+    Project = apps.get_model("release_dashboard", "Project")
     DockerImage.objects.all().delete()
     images = docker.get_docker_repositories()
     logger.debug("images: %s" % images)
@@ -74,6 +78,7 @@ def docker_fetch_all():
 
 @shared_task(ignore_result=True)
 def docker_remove_tag(image_name, tag_name):
+    DockerTag = apps.get_model("release_dashboard", "DockerTag")
     tag = DockerTag.objects.get(name=tag_name, image__name=image_name)
     docker.delete_tag(image_name, tag.reference, tag_name)
     tag.delete()

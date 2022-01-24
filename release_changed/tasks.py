@@ -1,4 +1,4 @@
-# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -14,18 +14,17 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import json
 
+import structlog
 from celery import shared_task
-from celery.utils.log import get_task_logger
 from django.apps import apps
 
-from .models import ReleaseChanged
-
-logger = get_task_logger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 @shared_task(ignore_result=True)
 def process_result(jbi_id, path_envVars):
     JenkinsBuildInfo = apps.get_model("repoapi", "JenkinsBuildInfo")
+    ReleaseChanged = apps.get_model("release_changed", "ReleaseChanged")
     jbi = JenkinsBuildInfo.objects.get(id=jbi_id)
     with open(path_envVars) as data_file:
         data = json.load(data_file)
