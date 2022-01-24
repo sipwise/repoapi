@@ -4,6 +4,7 @@ django-appconf
 django-assets
 django-celery-beat
 django-celery-results
+django-crispy-forms
 django-extensions
 django-filter
 django-import-export

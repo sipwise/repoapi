@@ -17,13 +17,16 @@ venv_dev: requirements/dev.txt
 		pip3 install -r ./requirements/dev.txt | tee install.log
 ###################################
 
-test:
+test: test_templates
 	RESULTS=$(RESULTS) pytest-3 -ra --junitxml=$(RESULTS)/junit.xml \
 		--cov=. --cov-report=xml:$(RESULTS)/coverage.xml --pep8
 
 test_pylint:
 	RESULTS=$(RESULTS) pytest-3 --junitxml=$(RESULTS)/junit.xml \
 		--pylint --pylint-rcfile=pylint.cfg --pylint-jobs=4
+
+test_templates:
+	./manage.py validate_templates --settings="repoapi.settings.test"
 
 ###################################
 
