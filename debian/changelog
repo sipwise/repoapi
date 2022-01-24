@@ -1,3 +1,23 @@
+repoapi (0.4.4) unstable; urgency=medium
+
+  * TT#121955 pre-commit: update plugins
+  * TT#121955 update django to 3.0
+  * TT#121955 replace django-export with django-import-export
+  * TT#121955 fix issue with postgresql and django 3.0
+  * TT#121955 update Django 3.1
+  * TT#121955 use mock from unittest
+  * TT#121955 django.conf.urls.url() removed
+  * TT#121955 use recent pytest-django instead of the one from Debian
+  * TT#121955 import conf from AppConfig.ready()
+  * TT#121955 django-rest-swagger is deprecated
+  * TT#121955 define resources for django-import-export
+  * TT#121955 build: remove module models
+  * TT#121955 force explicit relative import everywhere
+  * TT#121955 update Django to 3.2
+  * TT#121955 decouple tasks and signals from models
+
+ -- Victor Seva <vseva@debian.org>  Mon, 24 Jan 2022 16:34:27 +0100
+
 repoapi (0.4.3) unstable; urgency=medium
 
   [ Victor Seva ]
