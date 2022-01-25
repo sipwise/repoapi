@@ -18,6 +18,7 @@ from os.path import join
 from unittest.mock import patch
 
 from django.test import override_settings
+from django.utils.timezone import make_aware
 
 from repoapi import tasks
 from repoapi.conf import settings
@@ -34,7 +35,7 @@ class TasksTestCase(BaseTest):
     def test_purge(self):
         prev_count = JenkinsBuildInfo.objects.count()
         jbi = JenkinsBuildInfo.objects.get(pk=1)
-        jbi.date = datetime.now()
+        jbi.date = make_aware(datetime.now())
         jbi.save()
         self.assertEqual(JenkinsBuildInfo.objects.count(), prev_count)
         tasks.jbi_purge.delay("mr3.1-fake", 3)

@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -16,6 +16,7 @@ from datetime import datetime
 from datetime import timedelta
 
 from django.utils.dateparse import parse_datetime
+from django.utils.timezone import make_aware
 
 from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
@@ -79,7 +80,7 @@ class JBIQueriesTestCase(BaseTest):
     def test_purge_release(self):
         prev_count = JenkinsBuildInfo.objects.count()
         jbi = JenkinsBuildInfo.objects.get(pk=1)
-        jbi.date = datetime.now()
+        jbi.date = make_aware(datetime.now())
         jbi.save()
         self.assertEqual(JenkinsBuildInfo.objects.count(), prev_count)
         JenkinsBuildInfo.objects.purge_release(
