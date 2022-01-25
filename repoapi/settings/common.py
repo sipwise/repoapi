@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,13 +13,13 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
-from os.path import dirname
+from pathlib import Path
 
 import structlog
 
-BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -105,7 +105,7 @@ STATICFILES_FINDERS = (
     "django_assets.finders.AssetsFinder",
 )
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static_media/")
+STATIC_ROOT = BASE_DIR / "static_media/"
 
 REST_FRAMEWORK = {
     "PAGE_SIZE": 10,
@@ -180,5 +180,5 @@ JENKINS_TOKEN = "sipwise_jenkins_ci"
 
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
-CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_BACKEND = "django-db"

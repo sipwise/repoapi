@@ -16,8 +16,7 @@
 # Build paths inside the project like this: join(BASE_DIR, ...)
 import os
 from configparser import RawConfigParser
-from os.path import dirname
-from os.path import join
+from pathlib import Path
 from urllib.parse import urlparse
 
 from celery.schedules import crontab
@@ -26,10 +25,11 @@ from .common import *  # noqa
 
 # pylint: disable=W0401,W0614
 
-BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
-VAR_DIR = "/var/lib/repoapi"
-if not os.path.exists(VAR_DIR):
+VAR_DIR = Path("/var/lib/repoapi")
+if not VAR_DIR.exists():
     VAR_DIR = BASE_DIR
 
 # Quick-start development settings - unsuitable for production
@@ -37,7 +37,7 @@ if not os.path.exists(VAR_DIR):
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # read it from external file
-SECRET_KEY = open(join(VAR_DIR, ".secret_key")).read().strip()
+SECRET_KEY = (VAR_DIR / ".secret_key").read_text().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -49,7 +49,7 @@ LOGGING["loggers"]["repoapi"]["level"] = os.getenv(  # noqa
 )  # noqa
 
 server_config = RawConfigParser()
-server_config.read(join(VAR_DIR, "server.ini"))
+server_config.read(VAR_DIR / "server.ini")
 
 JENKINS_URL = server_config.get("jenkins", "URL")
 JENKINS_HTTP_USER = server_config.get("jenkins", "HTTP_USER")
@@ -89,12 +89,14 @@ STATICFILES_STORAGE = (
     "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 )
 GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
-WORKFRONT_CREDENTIALS = join(BASE_DIR, "/etc/jenkins_jobs/workfront.ini")
+WORKFRONT_CREDENTIALS = BASE_DIR / "/etc/jenkins_jobs/workfront.ini"
 WORKFRONT_NOTE = True
 
 # build app
 BUILD_KEY_AUTH = True
-BUILD_REPOS_SCRIPTS_CONFIG_DIR = "/usr/share/sipwise-repos-scripts/config"
+BUILD_REPOS_SCRIPTS_CONFIG_DIR = Path(
+    "/usr/share/sipwise-repos-scripts/config"
+)
 
 # celery
 CELERY_BROKER_URL = server_config.get("server", "BROKER_URL")
@@ -113,7 +115,7 @@ CELERY_BEAT_SCHEDULE = {
 }
 CELERY_TIMEZONE = "UTC"
 
-JBI_BASEDIR = join(VAR_DIR, "jbi_files")
+JBI_BASEDIR = VAR_DIR / "jbi_files"
 JBI_ARTIFACT_JOBS = [
     "release-tools-runner",
 ]

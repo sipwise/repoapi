@@ -12,7 +12,6 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import os
 from unittest.mock import call
 from unittest.mock import mock_open
 from unittest.mock import patch
@@ -62,21 +61,17 @@ class TestJBICelery(BaseTest):
         param = self.get_defaults()
         param["jobname"] = "fake-me"
         jbi = JenkinsBuildInfo.objects.create(**param)
-        base_path = os.path.join(
-            settings.JBI_BASEDIR, jbi.jobname, str(jbi.buildnumber)
-        )
-        self.assertTrue(os.path.isdir(base_path), base_path)
+        base_path = self.path.joinpath(jbi.jobname, str(jbi.buildnumber))
+        self.assertTrue(base_path.is_dir(), base_path)
 
     @patch("builtins.open", mock_open(read_data=artifacts_json))
     @patch("repoapi.utils.dlfile")
     def test_jbi_console(self, dlfile):
         param = self.get_defaults()
         jbi = JenkinsBuildInfo.objects.create(**param)
-        base_path = os.path.join(
-            settings.JBI_BASEDIR, jbi.jobname, str(jbi.buildnumber)
-        )
+        base_path = self.path.joinpath(jbi.jobname, str(jbi.buildnumber))
 
-        path = os.path.join(base_path, "console.txt")
+        path = base_path.joinpath("console.txt")
         url = JBI_CONSOLE_URL.format(
             settings.JENKINS_URL, jbi.jobname, jbi.buildnumber
         )
@@ -87,8 +82,8 @@ class TestJBICelery(BaseTest):
             jbi.buildnumber,
             "builddeps.list",
         )
-        artifact_base_path = os.path.join(base_path, "artifact")
-        path = os.path.join(artifact_base_path, "builddeps.list")
+        artifact_base_path = base_path.joinpath("artifact")
+        path = artifact_base_path.joinpath("builddeps.list")
         self.assertNotIn(call(url, path), dlfile.call_args_list)
 
     @patch("builtins.open", mock_open(read_data=artifacts_json))
@@ -96,13 +91,11 @@ class TestJBICelery(BaseTest):
     def test_jbi_buildinfo(self, dlfile):
         param = self.get_defaults()
         jbi = JenkinsBuildInfo.objects.create(**param)
-        base_path = os.path.join(
-            settings.JBI_BASEDIR, jbi.jobname, str(jbi.buildnumber)
-        )
+        base_path = self.path.joinpath(jbi.jobname, str(jbi.buildnumber))
         url = JBI_BUILD_URL.format(
             settings.JENKINS_URL, jbi.jobname, jbi.buildnumber
         )
-        path = os.path.join(base_path, "build.json")
+        path = base_path.joinpath("build.json")
         dlfile.assert_any_call(url, path)
         url = JBI_ARTIFACT_URL.format(
             settings.JENKINS_URL,
@@ -110,8 +103,8 @@ class TestJBICelery(BaseTest):
             jbi.buildnumber,
             "builddeps.list",
         )
-        artifact_base_path = os.path.join(base_path, "artifact")
-        path = os.path.join(artifact_base_path, "builddeps.list")
+        artifact_base_path = base_path.joinpath("artifact")
+        path = artifact_base_path.joinpath("builddeps.list")
         self.assertNotIn(call(url, path), dlfile.call_args_list)
 
     @patch("builtins.open", mock_open(read_data=artifacts_json))
@@ -120,17 +113,15 @@ class TestJBICelery(BaseTest):
         param = self.get_defaults()
         param["jobname"] = "fake-release-tools-runner"
         jbi = JenkinsBuildInfo.objects.create(**param)
-        base_path = os.path.join(
-            settings.JBI_BASEDIR, jbi.jobname, str(jbi.buildnumber)
-        )
+        base_path = self.path.joinpath(jbi.jobname, str(jbi.buildnumber))
         url = JBI_ARTIFACT_URL.format(
             settings.JENKINS_URL,
             jbi.jobname,
             jbi.buildnumber,
             "builddeps.list",
         )
-        artifact_base_path = os.path.join(base_path, "artifact")
-        path = os.path.join(artifact_base_path, "builddeps.list")
+        artifact_base_path = base_path.joinpath("artifact")
+        path = artifact_base_path.joinpath("builddeps.list")
         dlfile.assert_any_call(url, path)
 
     @patch("builtins.open", mock_open(read_data=artifacts_json))
@@ -138,13 +129,11 @@ class TestJBICelery(BaseTest):
     def test_jbi_envVars(self, dlfile):
         param = self.get_defaults()
         jbi = JenkinsBuildInfo.objects.create(**param)
-        base_path = os.path.join(
-            settings.JBI_BASEDIR, jbi.jobname, str(jbi.buildnumber)
-        )
+        base_path = self.path.joinpath(jbi.jobname, str(jbi.buildnumber))
         url = JBI_ENVVARS_URL.format(
             settings.JENKINS_URL, jbi.jobname, jbi.buildnumber
         )
-        path = os.path.join(base_path, "envVars.json")
+        path = base_path.joinpath("envVars.json")
         dlfile.assert_any_call(url, path)
 
 
@@ -162,13 +151,11 @@ class TestJBIReleaseChangedCelery(BaseTest):
             "/check-ngcp-release-changed",
         }
         jbi = JenkinsBuildInfo.objects.create(**param)
-        base_path = os.path.join(
-            settings.JBI_BASEDIR, jbi.jobname, str(jbi.buildnumber)
-        )
+        base_path = self.path.joinpath(jbi.jobname, str(jbi.buildnumber))
         url = JBI_ENVVARS_URL.format(
             settings.JENKINS_URL, jbi.jobname, jbi.buildnumber
         )
-        path = os.path.join(base_path, "envVars.json")
+        path = base_path.joinpath("envVars.json")
         dlfile.assert_any_call(url, path)
         app.send_task.assert_called_once_with(
             "release_changed.tasks.process_result", args=[jbi.id, path]

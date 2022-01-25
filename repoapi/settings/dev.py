@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -29,7 +29,7 @@ LOGGING["loggers"]["repoapi"]["level"] = os.getenv(  # noqa
 BROKER_BACKEND = "amqp"
 CELERY_TASK_ALWAYS_EAGER = False
 CELERY_BROKER_URL = "amqp://guest:guest@rabbit"
-JBI_BASEDIR = os.path.join(BASE_DIR, "jbi_files")  # noqa
+JBI_BASEDIR = BASE_DIR / "jbi_files"  # noqa
 
 # Enable access when not accessing from localhost:
 ALLOWED_HOSTS = [

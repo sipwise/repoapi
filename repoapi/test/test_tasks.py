@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -14,7 +14,6 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from copy import deepcopy
 from datetime import datetime
-from os.path import join
 from unittest.mock import patch
 
 from django.test import override_settings
@@ -26,7 +25,7 @@ from repoapi.models import GerritRepoInfo
 from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
 
-FIXTURES_PATH = join(settings.BASE_DIR, "repoapi", "fixtures", "jbi_files")
+FIXTURES_PATH = settings.BASE_DIR.joinpath("repoapi", "fixtures", "jbi_files")
 
 
 class TasksTestCase(BaseTest):

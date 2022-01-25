@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,10 +12,9 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import os
 import re
 import subprocess
-from distutils.dir_util import mkpath
+from pathlib import Path
 
 import requests
 import structlog
@@ -53,7 +52,7 @@ def get_jenkins_response(url):
     return response
 
 
-def dlfile(url, path):
+def dlfile(url, path: Path):
     log = logger.bind(
         url=url,
         path=path,
@@ -123,9 +122,9 @@ def jenkins_remove_project_ppa(repo, source):
         open_jenkins_url(url)
 
 
-def _jenkins_get(url, base_path, filename):
-    mkpath(base_path)
-    path = os.path.join(base_path, filename)
+def _jenkins_get(url, base_path: Path, filename) -> Path:
+    base_path.mkdir(parents=True, exist_ok=True)
+    path = base_path.joinpath(filename)
     log = logger.bind(
         base_path=base_path,
         filename=filename,
@@ -138,19 +137,19 @@ def _jenkins_get(url, base_path, filename):
 
 def jenkins_get_console(jobname, buildnumber):
     url = JBI_CONSOLE_URL.format(settings.JENKINS_URL, jobname, buildnumber)
-    base_path = os.path.join(settings.JBI_BASEDIR, jobname, str(buildnumber))
+    base_path = settings.JBI_BASEDIR.joinpath(jobname, str(buildnumber))
     return _jenkins_get(url, base_path, "console.txt")
 
 
 def jenkins_get_build(jobname, buildnumber):
     url = JBI_BUILD_URL.format(settings.JENKINS_URL, jobname, buildnumber)
-    base_path = os.path.join(settings.JBI_BASEDIR, jobname, str(buildnumber))
+    base_path = settings.JBI_BASEDIR.joinpath(jobname, str(buildnumber))
     return _jenkins_get(url, base_path, "build.json")
 
 
 def jenkins_get_env(jobname, buildnumber):
     url = JBI_ENVVARS_URL.format(settings.JENKINS_URL, jobname, buildnumber)
-    base_path = os.path.join(settings.JBI_BASEDIR, jobname, str(buildnumber))
+    base_path = settings.JBI_BASEDIR.joinpath(jobname, str(buildnumber))
     return _jenkins_get(url, base_path, "envVars.json")
 
 
@@ -161,8 +160,8 @@ def jenkins_get_artifact(jobname, buildnumber, artifact_info):
         buildnumber,
         artifact_info["relativePath"],
     )
-    base_path = os.path.join(
-        settings.JBI_BASEDIR, jobname, str(buildnumber), "artifact"
+    base_path = settings.JBI_BASEDIR.joinpath(
+        jobname, str(buildnumber), "artifact"
     )
     return _jenkins_get(url, base_path, artifact_info["fileName"])
 

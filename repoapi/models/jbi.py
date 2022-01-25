@@ -18,7 +18,6 @@ import re
 from collections import OrderedDict
 from datetime import datetime
 from datetime import timedelta
-from os.path import join
 from urllib.parse import urlparse
 
 import structlog
@@ -252,11 +251,13 @@ class JenkinsBuildInfo(models.Model):
 
     @property
     def build_path(self):
-        return join(settings.JBI_BASEDIR, self.jobname, str(self.buildnumber))
+        return settings.JBI_BASEDIR.joinpath(
+            self.jobname, str(self.buildnumber)
+        )
 
     @property
     def build_info(self):
-        path = join(self.build_path, "build.json")
+        path = self.build_path.joinpath("build.json")
         try:
             with open(path, "r") as data_file:
                 data = json.load(data_file)
@@ -278,8 +279,8 @@ class JenkinsBuildInfo(models.Model):
             return getattr(self, "_source")
         except AttributeError:
             pass
-        path = join(self.build_path, "artifact")
-        dscs = glob.glob(join(path, "*.dsc"))
+        path = self.build_path.joinpath("artifact")
+        dscs = glob.glob(str(path.joinpath("*.dsc")))
         if len(dscs) != 1:
             logger.error("more than one dsc file on artifact dir", path=path)
             return None

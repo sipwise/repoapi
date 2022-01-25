@@ -1,4 +1,4 @@
-# Copyright (C) 2015 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,18 +13,17 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Build paths inside the project like this: join(BASE_DIR, ...)
 import os
-from os.path import dirname
-from os.path import join
+from pathlib import Path
 
 from .common import *  # noqa
 
 # pylint: disable=W0401,W0614
 
-BASE_DIR = dirname(dirname(dirname(os.path.abspath(__file__))))
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 os.environ.setdefault("RESULTS", "/tmp")
-RESULTS_DIR = os.environ["RESULTS"]
+RESULTS_DIR = Path(os.environ["RESULTS"])
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -43,7 +42,7 @@ ALLOWED_HOSTS = []
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": join(BASE_DIR, "db.sqlite3"),
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -57,7 +56,7 @@ GERRIT_URL = "https://gerrit.local/{}"
 GERRIT_REST_HTTP_USER = "jenkins"
 GERRIT_REST_HTTP_PASSWD = "verysecrethttppasswd"
 GITWEB_URL = "https://git.local/gitweb/?p={}.git;a=commit;h={}"
-WORKFRONT_CREDENTIALS = join(BASE_DIR, ".workfront.ini")
+WORKFRONT_CREDENTIALS = BASE_DIR / ".workfront.ini"
 WORKFRONT_NOTE = True
 DOCKER_REGISTRY_URL = "https://localhost:5000/v2/{}"
 # fake info
@@ -96,13 +95,15 @@ RELEASE_DASHBOARD_DOCKER_IMAGES = {
 
 # build app
 BUILD_KEY_AUTH = True
-BUILD_REPOS_SCRIPTS_CONFIG_DIR = join(BASE_DIR, "build", "fixtures", "config")
+BUILD_REPOS_SCRIPTS_CONFIG_DIR = BASE_DIR.joinpath(
+    "build", "fixtures", "config"
+)
 
 # celery
 CELERY_BROKER_URL = "memory://localhost/"
 CELERY_TASK_ALWAYS_EAGER = True
 CELERY_TASK_EAGER_PROPAGATES = True
-JBI_BASEDIR = join(RESULTS_DIR, "jbi_files")
+JBI_BASEDIR = RESULTS_DIR / "jbi_files"
 JBI_ARTIFACT_JOBS = [
     "fake-release-tools-runner",
 ]

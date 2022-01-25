@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -14,7 +14,6 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import json
 from datetime import timedelta
-from pathlib import Path
 
 import structlog
 from celery import shared_task
@@ -54,7 +53,7 @@ def jenkins_remove_project(self, jbi_id):
 
 @shared_task(ignore_result=True)
 def jbi_get_artifact(jbi_id, jobname, buildnumber, artifact_info):
-    path = Path(jenkins_get_artifact(jobname, buildnumber, artifact_info))
+    path = jenkins_get_artifact(jobname, buildnumber, artifact_info)
     if path.name == settings.HOTFIX_ARTIFACT:
         jbi_parse_hotfix.delay(jbi_id, str(path))
 

@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,9 +13,9 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import logging
-import os
 import re
 import urllib
+from os import walk
 from pathlib import Path
 from uuid import uuid4
 
@@ -180,15 +180,11 @@ class ReleaseConfig(object):
     def supported_releases(cls):
         skip_files = ["{}.yml".format(x) for x in settings.BUILD_RELEASES_SKIP]
         res = []
-        for root, dirs, files in os.walk(
-            settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR
-        ):
+        for root, dirs, files in walk(settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR):
             if "trunk.yml" in files:
                 files.remove("trunk.yml")
                 cfg = cls.load_config(
-                    os.path.join(
-                        settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR, "trunk.yml"
-                    )
+                    settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR / "trunk.yml"
                 )
                 for dist in cfg["distris"]:
                     res.append(dist)
@@ -217,8 +213,8 @@ class ReleaseConfig(object):
         if filename is None:
             filename = name
         self.config_file = "{}.yml".format(filename)
-        self.config_path = os.path.join(
-            settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR, self.config_file
+        self.config_path = (
+            settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR / self.config_file
         )
         self.config = self.load_config(self.config_path)
         try:

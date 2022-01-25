@@ -12,7 +12,6 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from os.path import join
 from unittest.mock import mock_open
 from unittest.mock import patch
 
@@ -22,7 +21,7 @@ from .base import BaseTest
 from repoapi.conf import settings
 from repoapi.models import JenkinsBuildInfo
 
-FIXTURES_PATH = join(settings.BASE_DIR, "repoapi", "fixtures", "jbi_files")
+FIXTURES_PATH = settings.BASE_DIR.joinpath("repoapi", "fixtures", "jbi_files")
 JBI_HOST = "https://%s/job/fake-gerrit/"
 ARTIFACTS_JSON = """{
     "artifacts": [
@@ -107,7 +106,7 @@ class JenkinsBuildInfoProperties(BaseTest):
         self.jbi = JenkinsBuildInfo.objects.get(id=1)
 
     def test_build_path(self):
-        self.assertRegex(self.jbi.build_path, "^.+/fake-source/1$")
+        self.assertRegex(str(self.jbi.build_path), "^.+/fake-source/1$")
 
     @patch("builtins.open", mock_open(read_data="{}"))
     def test_build_info(self):
