@@ -47,6 +47,9 @@ DATABASES = {
     }
 }
 
+# needed for django-coverage-plugin
+TEMPLATES[0]["OPTIONS"]["debug"] = True  # noqa
+
 DJANGO_LOG_LEVEL = "DEBUG"
 
 JENKINS_URL = "http://localhost"
