@@ -19,8 +19,8 @@ import structlog
 from celery import shared_task
 from django.apps import apps
 
-from .celery import app
 from .celery import jbi_parse_hotfix
+from .celery import process_result
 from .conf import settings
 from .utils import is_download_artifacts
 from .utils import jenkins_get_artifact
@@ -77,9 +77,7 @@ def get_jbi_files(jbi_id, jobname, buildnumber):
     else:
         log.debug("skip artifacts download")
     if jobname in settings.RELEASE_CHANGED_JOBS:
-        app.send_task(
-            "release_changed.tasks.process_result", args=[jbi_id, path_envVars]
-        )
+        process_result.delay(jbi_id, path_envVars)
 
 
 @shared_task(ignore_result=True)

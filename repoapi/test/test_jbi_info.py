@@ -140,8 +140,8 @@ class TestJBICelery(BaseTest):
 class TestJBIReleaseChangedCelery(BaseTest):
     @patch("builtins.open", mock_open(read_data=artifacts_json))
     @patch("repoapi.utils.dlfile")
-    @patch("repoapi.tasks.app")
-    def test_jbi_release_changed(self, app, dlfile):
+    @patch("repoapi.tasks.process_result")
+    def test_jbi_release_changed(self, process_result, dlfile):
         param = {
             "projectname": "check-ngcp-release-changes",
             "jobname": "check-ngcp-release-changes",
@@ -157,6 +157,4 @@ class TestJBIReleaseChangedCelery(BaseTest):
         )
         path = base_path.joinpath("envVars.json")
         dlfile.assert_any_call(url, path)
-        app.send_task.assert_called_once_with(
-            "release_changed.tasks.process_result", args=[jbi.id, path]
-        )
+        process_result.delay.assert_called_once_with(jbi.id, path)

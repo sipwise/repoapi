@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -92,3 +92,10 @@ def receiver_setup_logging(loglevel, logfile, format, colorize, **kwargs):
 @app.task()
 def jbi_parse_hotfix(jbi_id, path):
     app.send_task("hotfix.tasks.hotfix_released", args=[jbi_id, path])
+
+
+@app.task()
+def process_result(jbi_id, path_envVars):
+    app.send_task(
+        "release_changed.tasks.process_result", args=[jbi_id, path_envVars]
+    )
