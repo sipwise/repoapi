@@ -216,6 +216,7 @@ class ReleaseConfigTestCase(SimpleTestCase):
 
 
 @patch("build.utils.open_jenkins_url")
+@override_settings(DEBUG=False)
 class TriggerBuild(SimpleTestCase):
     def test_project_build(self, openurl):
         params = {
