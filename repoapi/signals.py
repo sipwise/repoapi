@@ -13,13 +13,11 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import structlog
+from django.apps import apps
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from . import utils
-from .models import GerritRepoInfo
-from .models import JenkinsBuildInfo
-from .models import WorkfrontNoteInfo
 from .models.wni import workfront_re_branch
 from .tasks import get_jbi_files
 from .tasks import jenkins_remove_project
@@ -28,7 +26,9 @@ from release_dashboard.utils.build import is_ngcp_project
 logger = structlog.get_logger(__name__)
 
 
-@receiver(post_save, sender=JenkinsBuildInfo, dispatch_uid="jbi_manage")
+@receiver(
+    post_save, sender="repoapi.JenkinsBuildInfo", dispatch_uid="jbi_manage"
+)
 def jbi_manage(sender, **kwargs):
     if kwargs["created"]:
         instance = kwargs["instance"]
@@ -45,6 +45,7 @@ def gerrit_repo_add(instance):
     if instance.param_ppa == "$ppa":
         log.warn("ppa unset, skip removal")
         return
+    GerritRepoInfo = apps.get_model("repoapi", "GerritRepoInfo")
     gri = GerritRepoInfo.objects
     ppa, created = gri.get_or_create(
         param_ppa=instance.param_ppa,
@@ -66,6 +67,7 @@ def gerrit_repo_del(instance):
     if instance.param_ppa == "$ppa":
         log.warn("ppa unset, skip removal")
         return
+    GerritRepoInfo = apps.get_model("repoapi", "GerritRepoInfo")
     gri = GerritRepoInfo.objects
     try:
         ppa = gri.get(
@@ -92,7 +94,9 @@ def gerrit_repo_del(instance):
 
 
 @receiver(
-    post_save, sender=JenkinsBuildInfo, dispatch_uid="gerrit_repo_manage"
+    post_save,
+    sender="repoapi.JenkinsBuildInfo",
+    dispatch_uid="gerrit_repo_manage",
 )
 def gerrit_repo_manage(sender, **kwargs):
     if kwargs["created"]:
@@ -138,6 +142,7 @@ def workfront_release_target(instance, wid):
 
 
 def workfront_note_add(instance, message, release_target=False):
+    WorkfrontNoteInfo = apps.get_model("repoapi", "WorkfrontNoteInfo")
     wni = WorkfrontNoteInfo.objects
     workfront_ids = WorkfrontNoteInfo.getIds(instance.git_commit_msg)
     from django.conf import settings
