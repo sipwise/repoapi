@@ -12,18 +12,18 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import logging
 import urllib
 import uuid
 
 import requests
+import structlog
 from requests.auth import HTTPBasicAuth
 
 from ..conf import settings
 from ..models import Project
 from repoapi.utils import open_jenkins_url
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 project_url = (
     "{base}/job/{job}/buildWithParameters?"

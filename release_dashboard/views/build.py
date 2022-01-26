@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,9 +13,9 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import json
-import logging
 import uuid
 
+import structlog
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseNotFound
 from django.http import HttpResponseRedirect
@@ -44,7 +44,7 @@ from ..utils import build
 from build.models import BuildRelease
 from build.utils import ReleaseConfig
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 @login_required

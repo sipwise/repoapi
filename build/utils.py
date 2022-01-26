@@ -12,13 +12,13 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import logging
 import re
 import urllib
 from os import walk
 from pathlib import Path
 from uuid import uuid4
 
+import structlog
 from yaml import load
 from yaml import Loader
 
@@ -26,7 +26,7 @@ from . import exceptions as err
 from .conf import settings
 from repoapi.utils import open_jenkins_url
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 base_url = (
     "{base}/job/{job}/buildWithParameters?"

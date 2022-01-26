@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import json
-import logging
 import re
 from datetime import datetime
 
@@ -21,8 +20,6 @@ from django.db import models
 from django_extensions.db.fields import ModificationDateTimeField
 
 from .conf import settings
-
-logger = logging.getLogger(__name__)
 
 
 class Project(models.Model):

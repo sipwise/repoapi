@@ -1,4 +1,4 @@
-# Copyright (C) 2016 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,8 +12,9 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import logging
 import re
+
+import structlog
 
 from .models import WorkfrontNoteInfo
 from debian.changelog import Changelog
@@ -21,7 +22,7 @@ from repoapi import utils
 
 hotfix_re_release = re.compile(r".+~(mr[0-9]+\.[0-9]+\.[0-9]+.[0-9]+)$")
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 def process_hotfix(jbi_info, projectname, path):

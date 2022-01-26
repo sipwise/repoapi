@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,16 +13,16 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import json
-import logging
 import urllib
 import uuid
 
 import requests
+import structlog
 
 from ..conf import settings
 from repoapi.utils import open_jenkins_url
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 docker_url = (
     "{base}/job/build-project-docker/buildWithParameters?"

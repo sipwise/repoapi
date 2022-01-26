@@ -12,9 +12,9 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import logging
 import re
 
+import structlog
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.http import JsonResponse
@@ -37,7 +37,7 @@ from ..models import DockerTag
 from ..models import Project
 from ..utils import docker
 
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 def _get_docker_tags(project, tag=None):
@@ -50,7 +50,7 @@ def _get_docker_tags(project, tag=None):
         res = {"name": image}
         tags = docker.get_docker_tags(image)
         if tag:
-            logger.degug("non filtered tags: %s" % tags)
+            logger.debug("non filtered tags: %s" % tags)
             tags = filter(re.compile(tag).match, tags)
         res["tags"] = tags
         docker_tags.append(res)
