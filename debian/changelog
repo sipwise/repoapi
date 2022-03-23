@@ -1,3 +1,19 @@
+repoapi (0.4.5) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [69c44c4] TT#121955 add validate_templates test
+  * [abff367] TT#121955 repoapi: fix RuntimeWarning on tests
+  * [67f0932] TT#121955 py-test: define cache_dir to avoid
+    PytestCacheWarning
+  * [df32d43] TT#121955 py-test: add coverage for django templates
+  * [d832e32] TT#121955 migrate to pathlib
+  * [e4aa31a] TT#121955 repoapi: don't use send_task directly
+  * [987c13b] TT#121955 decouple tasks and signals from models, take two
+  * [504110f] TT#121955 test: override DEBUG value
+  * [6f043a0] TT#121955 migrate missing files to structlog
+
+ -- Michael Prokop <mprokop@sipwise.com>  Wed, 23 Mar 2022 09:36:26 +0100
+
 repoapi (0.4.4) unstable; urgency=medium
 
   * TT#121955 pre-commit: update plugins
