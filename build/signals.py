@@ -68,7 +68,7 @@ def jbi_manage(sender, **kwargs):
     if jbi.jobname in settings.BUILD_RELEASE_JOBS:
         if not release.startswith("release-"):
             release = "release-{}".format(jbi.param_release)
-    if jbi.param_release_uuid in [None, "none", ""]:
+    if jbi.param_release_uuid in [None, "none", "", "$release_uuid"]:
         log.debug("no ReleaseBuild link, skip")
         return
     try:
