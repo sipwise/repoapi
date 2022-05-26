@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -25,7 +25,7 @@ class NoConfigReleaseFile(Error):
 
 
 class NoJenkinsJobsInfo(Error):
-    """ release config.yml has no jenkins-jobs entry """
+    """release config.yml has no jenkins-jobs entry"""
 
     pass
 
@@ -39,6 +39,12 @@ class NoDistrisInfo(Error):
 
 
 class BuildReleaseUnique(Error):
-    """ mrX.Y.Z release should be built just once """
+    """mrX.Y.Z release should be built just once"""
+
+    pass
+
+
+class PreviousBuildNotDone(Error):
+    """same release is building right now"""
 
     pass

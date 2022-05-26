@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -23,6 +23,7 @@ from django.utils import timezone
 
 from .conf import settings
 from .exceptions import BuildReleaseUnique
+from .exceptions import PreviousBuildNotDone
 from .utils import get_simple_release
 from .utils import ReleaseConfig
 from repoapi.models import JenkinsBuildInfo
@@ -32,6 +33,9 @@ logger = structlog.get_logger(__name__)
 regex_mrXXX = re.compile(r"^mr[0-9]+\.[0-9]+\.[0-9]+$")
 regex_mrXX = re.compile(r"^mr[0-9]+\.[0-9]+$")
 regex_mrXX_up = re.compile(r"^release-mr[0-9]+\.[0-9]+-update$")
+
+build_release_jobs = ",".join(settings.BUILD_RELEASE_JOBS)
+release_jobs_len = len(build_release_jobs) + 1
 
 
 class BuildReleaseManager(models.Manager):
@@ -63,6 +67,10 @@ class BuildReleaseManager(models.Manager):
                     "set {} as release"
                 )
                 log.info(msg.format(config.branch, release_ok))
+            if not br.last().done:
+                msg = f"release:{release} is already building"
+                log.info(msg)
+                raise PreviousBuildNotDone(msg)
         projects = ",".join(config.projects)
         if fake:
             start_date = timezone.make_aware(datetime.datetime(1977, 1, 1))
@@ -143,7 +151,6 @@ class BuildRelease(models.Model):
     failed_projects = models.TextField(null=True, editable=False)
     pool_size = models.SmallIntegerField(default=0, editable=False)
     objects = BuildReleaseManager()
-    release_jobs_len = len(",".join(settings.BUILD_RELEASE_JOBS)) + 1
 
     def __str__(self):
         return "%s[%s]" % (self.release, self.uuid)
@@ -176,7 +183,7 @@ class BuildRelease(models.Model):
         if self.is_update:
             return built_len == len(self.projects)
         else:
-            return built_len == self.release_jobs_len + len(self.projects)
+            return built_len == release_jobs_len + len(self.projects)
 
     @property
     def projects_list(self):

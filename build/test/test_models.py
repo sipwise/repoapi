@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -20,9 +20,20 @@ from django.test import override_settings
 from django.utils import timezone
 
 from build.exceptions import BuildReleaseUnique
+from build.exceptions import PreviousBuildNotDone
+from build.models import build_release_jobs
 from build.models import BuildRelease
 from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
+
+
+def set_build_done(qs):
+    for br in qs:
+        if br.is_update:
+            br.built_projects = br.projects
+        else:
+            br.built_projects = build_release_jobs + "," + br.projects
+        br.save()
 
 
 @override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
@@ -60,7 +71,13 @@ class BuildReleaseManagerTestCase(BaseTest):
         br = BuildRelease.objects.create_build_release("AAA", "mr8.1")
         self.assertEqual(br.release, "release-mr8.1")
 
+    def test_create_mrXX_update_building(self, dlf):
+        """mr8.1 is building, don't allow a new build"""
+        with self.assertRaises(PreviousBuildNotDone):
+            BuildRelease.objects.create_build_release("AAA", "mr8.1")
+
     def test_create_mrXX_update(self, dlf):
+        set_build_done(BuildRelease.objects.filter(release="release-mr8.1"))
         br = BuildRelease.objects.create_build_release("AAA", "mr8.1")
         self.assertEqual(br.release, "release-mr8.1-update")
 
@@ -97,6 +114,7 @@ class BuildReleaseManagerTestCase(BaseTest):
 
     def test_release(self, dlf):
         prev = BuildRelease.objects.filter(release="release-mr8.1")
+        set_build_done(prev)
         br = BuildRelease.objects.create_build_release("BBB", "mr8.1")
         self.assertEqual(br.release, "release-mr8.1-update")
         qs = BuildRelease.objects.release("release-mr8.1", "buster")
@@ -160,12 +178,14 @@ class BuildReleaseTestCase(BaseTest):
         self.assertFalse(build.is_update)
 
     def test_is_update_ok(self):
+        set_build_done(BuildRelease.objects.filter(release="release-mr8.1"))
         build = BuildRelease.objects.create_build_release("AAA", "mr8.1")
         self.assertEqual(build.branch_or_tag, "branch/mr8.1")
         self.assertEqual(build.release, "release-mr8.1-update")
         self.assertTrue(build.is_update)
 
     def test_done_update(self):
+        set_build_done(BuildRelease.objects.filter(release="release-mr8.1"))
         build = BuildRelease.objects.create_build_release("AAA", "mr8.1")
         build.built_projects = build.projects
         self.assertTrue(build.done)
@@ -478,6 +498,7 @@ class BRManageTest(BaseTest):
     @patch("build.tasks.trigger_copy_deps")
     @patch("build.signals.build_resume")
     def test_br_manage_ko(self, build_resume, trigger_copy_deps):
+        set_build_done(BuildRelease.objects.filter(release="release-mr8.1"))
         br = BuildRelease.objects.create_build_release("UUID1", "mr8.1")
         build_resume.delay.assert_called_once_with(br.id)
         trigger_copy_deps.assert_not_called()
