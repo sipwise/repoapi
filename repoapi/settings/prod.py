@@ -93,7 +93,6 @@ WORKFRONT_CREDENTIALS = BASE_DIR / "/etc/jenkins_jobs/workfront.ini"
 WORKFRONT_NOTE = True
 
 # build app
-BUILD_KEY_AUTH = True
 BUILD_REPOS_SCRIPTS_CONFIG_DIR = Path(
     "/usr/share/sipwise-repos-scripts/config"
 )

@@ -94,7 +94,6 @@ RELEASE_DASHBOARD_DOCKER_IMAGES = {
 }
 
 # build app
-BUILD_KEY_AUTH = True
 BUILD_REPOS_SCRIPTS_CONFIG_DIR = BASE_DIR.joinpath(
     "build", "fixtures", "config"
 )

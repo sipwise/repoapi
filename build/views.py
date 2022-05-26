@@ -19,21 +19,12 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework_api_key.permissions import HasAPIAccess
+from rest_framework_api_key.permissions import HasAPIKey
 
 from . import models
 from . import serializers
 from . import tasks
-from .conf import settings
 from repoapi.serializers import JenkinsBuildInfoSerializer as JBISerializer
-
-
-class BuildAccess(HasAPIAccess, IsAuthenticated):
-    def has_permission(self, request, view):
-        res = IsAuthenticated.has_permission(self, request, view)
-        if settings.BUILD_KEY_AUTH and not res:
-            res = HasAPIAccess.has_permission(self, request, view)
-        return res
 
 
 class BuildReleaseFilter(django_filters.FilterSet):
@@ -46,14 +37,14 @@ class BuildReleaseFilter(django_filters.FilterSet):
 
 
 class BuildReleaseList(generics.ListCreateAPIView):
-    permission_classes = (BuildAccess,)
+    permission_classes = [HasAPIKey | IsAuthenticated]
     queryset = models.BuildRelease.objects.all().order_by("id")
     serializer_class = serializers.BuildReleaseSerializer
     filter_class = BuildReleaseFilter
 
 
 class BuildReleaseDetail(generics.RetrieveDestroyAPIView):
-    permission_classes = (BuildAccess,)
+    permission_classes = [HasAPIKey | IsAuthenticated]
     queryset = models.BuildRelease.objects.all().order_by("id")
     serializer_class = serializers.BuildReleaseSerializer
 
@@ -78,7 +69,7 @@ class BuildReleaseDetail(generics.RetrieveDestroyAPIView):
 
 
 class BuildProject(APIView):
-    permission_classes = (BuildAccess,)
+    permission_classes = [HasAPIKey | IsAuthenticated]
 
     def post(self, request, release_uuid, project):
         br = get_object_or_404(models.BuildRelease, uuid=release_uuid)

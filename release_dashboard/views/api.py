@@ -1,4 +1,4 @@
-# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,14 +13,15 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.http import JsonResponse
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
+from rest_framework_api_key.permissions import HasAPIKey
 
 from .. import tasks
-from build.views import BuildAccess
 
 
 class RefreshGerritInfo(APIView):
-    permission_classes = (BuildAccess,)
+    permission_classes = [HasAPIKey | IsAuthenticated]
 
     def post(self, request):
         res = tasks.gerrit_fetch_all.delay()
