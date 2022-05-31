@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -60,6 +60,21 @@ class TestRest(APIAuthenticatedTestCase):
         self.assertEqual(response.data["distribution"], "buster")
         projects = response.data["projects"].split(",")
         self.assertEqual(len(projects), 73)
+
+    def test_trunk_weekly(self):
+        data = {
+            "uuid": "fake_uuid",
+            "release": "trunk-weekly",
+        }
+        response = self.client.post(self.url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["uuid"], data["uuid"])
+        self.assertEqual(response.data["release"], "release-trunk-weekly")
+        self.assertIsNone(response.data["tag"])
+        self.assertEqual(response.data["branch"], "master")
+        self.assertEqual(response.data["distribution"], "bullseye")
+        projects = response.data["projects"].split(",")
+        self.assertEqual(len(projects), 71)
 
     def test_mrXX(self):
         data = {

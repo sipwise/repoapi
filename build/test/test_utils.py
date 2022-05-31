@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -103,6 +103,7 @@ class ReleaseConfigTestCase(SimpleTestCase):
     @override_settings(BUILD_RELEASES_SKIP=["mr0.1"])
     def test_supported_releases(self):
         supported = [
+            "trunk-weekly",
             "release-trunk-buster",
             "release-trunk-bullseye",
             "mr8.1.2",
@@ -156,6 +157,10 @@ class ReleaseConfigTestCase(SimpleTestCase):
 
         rc = ReleaseConfig("trunk", "bullseye")
         self.assertEqual(rc.debian_release, "bullseye")
+
+        rc = ReleaseConfig("trunk-weekly")
+        self.assertEqual(rc.debian_release, "bullseye")
+
         # distribution parameter is only used with trunk
         rc = ReleaseConfig("release-mr8.1-update", "bullseye")
         self.assertEqual(rc.debian_release, "buster")
@@ -164,8 +169,15 @@ class ReleaseConfigTestCase(SimpleTestCase):
         rc = ReleaseConfig("trunk")
         self.assertEqual(rc.release, "trunk")
 
+        rc = ReleaseConfig("trunk-weekly")
+        self.assertEqual(rc.release, "release-trunk-weekly")
+
     def test_branch_tag_value_trunk(self):
         rc = ReleaseConfig("trunk")
+        self.assertEqual(rc.branch, "master")
+        self.assertIsNone(rc.tag)
+
+        rc = ReleaseConfig("trunk-weekly")
         self.assertEqual(rc.branch, "master")
         self.assertIsNone(rc.tag)
 

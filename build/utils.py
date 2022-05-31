@@ -46,16 +46,19 @@ re_release_trunk = re.compile(r"^release-trunk-(\w+)$")
 def is_release_trunk(version):
     match = re_release_trunk.search(version)
     if match:
-        return (True, match.group(1))
-    else:
-        return (False, None)
+        value = match.group(1)
+        if value != "weekly":
+            return (True, value)
+    return (False, None)
 
 
 def get_simple_release(version):
     match = re_release.search(version.replace("-update", ""))
     if match:
         return match.group(1)
-    if version.startswith("release-trunk-"):
+    if version == "release-trunk-weekly":
+        return "trunk-weekly"
+    elif version.startswith("release-trunk-"):
         return "trunk"
 
 
@@ -239,7 +242,7 @@ class ReleaseConfig(object):
     @property
     def branch(self):
         release = self.release
-        if release == "trunk":
+        if release in ("trunk", "release-trunk-weekly"):
             return "master"
         release_count = release.count(".")
         if release_count in [1, 2]:
@@ -255,9 +258,11 @@ class ReleaseConfig(object):
     @property
     def release(self):
         for dist in self.config["distris"]:
+            if dist == "release-trunk-weekly":
+                return dist
             if dist.startswith("release-trunk-"):
                 return "trunk"
-            if dist.startswith("release-"):
+            elif dist.startswith("release-"):
                 return dist
 
     @property
