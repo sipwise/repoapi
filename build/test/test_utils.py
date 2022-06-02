@@ -76,6 +76,9 @@ class CommonReleaseTest(SimpleTestCase):
         val = get_common_release("release-trunk-buster")
         self.assertEqual(val, "master")
 
+        val = get_common_release("trunk-weekly")
+        self.assertEqual(val, "master")
+
     def test_branch_release(self):
         val = get_common_release("release-mr8.0")
         self.assertEqual(val, "mr8.0")

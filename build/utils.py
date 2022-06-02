@@ -66,7 +66,10 @@ def get_common_release(version):
     match = re_release_common.search(version)
     if match:
         return match.group(2)
-    if version.startswith("release-trunk-") or version == "trunk":
+    if version.startswith("release-trunk-") or version in (
+        "trunk",
+        "trunk-weekly",
+    ):
         return "master"
 
 
