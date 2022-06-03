@@ -101,6 +101,7 @@ class ReleaseDashboardConf(AppConf):
         "ngcp-api-tools",
         "ngcp-csc",
         "ngcp-csc-ui",
+        "ngcp-cve-scanner",
         "ngcp-exporter",
         "ngcp-fauditd",
         "ngcp-inventory",
