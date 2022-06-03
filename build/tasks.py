@@ -18,6 +18,7 @@ from django.apps import apps
 
 from .conf import settings
 from .utils import trigger_build
+from .utils import trigger_build_matrix
 from .utils import trigger_copy_deps
 
 logger = structlog.get_logger(__name__)
@@ -93,4 +94,7 @@ def build_resume(pk):
             br.append_triggered(prj)
         else:
             log.debug("BuildRelease has no next")
+            if br.release == "release-trunk-weekly":
+                url = trigger_build_matrix()
+                log.info("build_matrix triggered", instance=str(br), url=url)
             break

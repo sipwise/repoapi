@@ -1,0 +1,16 @@
+[
+{
+  "model": "build.buildrelease",
+  "pk": 1,
+  "fields": {
+    "uuid": "dbe569f7-eab6-4532-a6d1-d31fb559649b",
+    "start_date": "2017-07-14T07:55:11.714Z",
+    "tag": "",
+    "branch": "master",
+    "release": "release-trunk-weekly",
+    "distribution": "bullseye",
+    "projects": "asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,installer,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-admin-ui,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-js-api-client,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rest-api,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcp-web-tests-e2e,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,py-ngcp-kamailio,rate-o-mat,reminder,rtpengine,sems,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket",
+    "built_projects": "release-copy-debs-yml,sipwise-base,data-hal,libswrate,libinewrate,libtcap,system-tools,ngcpcfg,check-tools,ngcp-schema,ngcp-panel,cdr-exporter,bootenv,backup-tools,asterisk-voicemail,bulk-processor-projects,cleanup-tools,bulk-processor,csta-testsuite,dhtest,deployment-iso,cloudpbx-sources,faxserver,db-schema,installer,keyring,cfg-schema,klish,license-client,mediator,lnpd,lua-ngcp-kamailio,kamailio-config-tests,metapackages,monitoring-tools,documentation,megacli,ngcp-api-tools,ngcp-fauditd,ngcp-exporter,ngcp-inventory,ngcp-admin-ui,kamailio,ngcp-js-api-client,ngcp-klish-config,ngcp-sudo-plugin,ngcp-status,ngcp-logfs,ngcp-user-framework,ngcp-support,ngcp-web-tests-e2e,ngcpcfg-api,ngcpcfg-ha,ngcp-rest-api,ngrep-sip,ngcp-csc-ui,pushd,prosody,reminder,rate-o-mat,py-ngcp-kamailio,snmp-agent,system-tests,rtpengine,vmnotify,voisniff-ng,sems,templates,sems-pbx,websocket,upgrade"
+  }
+}
+]

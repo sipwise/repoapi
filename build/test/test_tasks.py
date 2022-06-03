@@ -262,3 +262,34 @@ class JBIManageTest(BaseTest):
         self.assertEqual(br.triggered_projects, "ngcp-schema")
         params["project"] = "ngcp-schema-get-code"
         tb.assert_called_with(**params)
+
+
+@override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
+@patch("repoapi.utils.dlfile")
+@patch("build.tasks.trigger_build")
+@patch("build.tasks.trigger_build_matrix")
+class WeeklyTest(BaseTest):
+    fixtures = [
+        "test_weekly",
+    ]
+    release = "release-trunk-weekly"
+    release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559649b"
+
+    @override_settings(BUILD_POOL=2)
+    def test_jbi_manage_trigger_matrix(self, tbm, tb, dl):
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/ngcp-prompts-repos/",
+            projectname="ngcp-prompts",
+            jobname="ngcp-prompts-repos",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.get(pk=br.pk)
+        self.assertTrue(br.built_projects.endswith("ngcp-prompts"))
+        self.assertEqual(br.pool_size, 0)
+        tb.assert_not_called()
+        tbm.assert_called_once_with()

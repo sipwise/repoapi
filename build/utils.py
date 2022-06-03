@@ -28,15 +28,13 @@ from repoapi.utils import open_jenkins_url
 
 logger = structlog.get_logger(__name__)
 
-base_url = (
-    "{base}/job/{job}/buildWithParameters?"
-    "token={token}&cause={cause}&uuid={uuid}&"
-    "release_uuid={release_uuid}"
-)
+_url = "{base}/job/{job}/buildWithParameters?" "token={token}&cause={cause}"
+base_url = _url + "&uuid={uuid}&release_uuid={release_uuid}"
 project_url = (
     base_url + "&branch={branch}&tag={tag}&release={release}&"
     "distribution={distribution}"
 )
+build_matrix_url = _url
 copy_deps_url = base_url + "&release={release}&internal={internal}"
 re_release = re.compile(r"^release-(mr[0-9]+\.[0-9]+(\.[0-9]+)?)$")
 re_release_common = re.compile(r"^(release-)?(mr[0-9]+\.[0-9]+)(\.[0-9]+)?$")
@@ -71,6 +69,21 @@ def get_common_release(version):
         "trunk-weekly",
     ):
         return "master"
+
+
+def trigger_build_matrix():
+    params = {
+        "base": settings.JENKINS_URL,
+        "token": urllib.parse.quote(settings.JENKINS_TOKEN),
+        "job": "weekly-build-matrix-trunk-weekly",
+        "cause": "repoapi finished to build trunk-weekly",
+    }
+    url = _url.format(**params)
+    if settings.DEBUG:
+        logger.info("Debug mode, would trigger: %s", url)
+    else:
+        open_jenkins_url(url)
+    return "{base}/job/{job}/".format(**params)
 
 
 def trigger_copy_deps(release, internal, release_uuid, uuid=None):
