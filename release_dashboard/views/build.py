@@ -76,6 +76,7 @@ def build_release(request, release):
         else:
             done = build_releases.first().done
         context = {
+            "gerrit_url": settings.GERRIT_URL.format("gitweb?p="),
             "config": release_config,
             "build_releases": build_releases,
             "build_deps": list(release_config.build_deps.keys()),

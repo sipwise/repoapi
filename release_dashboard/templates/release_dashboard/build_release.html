@@ -66,7 +66,9 @@
         <div class="panel-body">
             <ul class="list-group" style="column-count: 4;">
               {% for prj in config.projects %}
-                <li class="list-group-item {% if prj in build_deps %}list-group-item-warning{% endif %}">{{ prj }}</li>
+                <li class="list-group-item {% if prj in build_deps %}list-group-item-warning{% endif %}">
+                  <a href="{{ gerrit_url }}{{ prj }}.git;a=shortlog;h=refs/heads/{{ config.branch }}">{{ prj }}</a>
+                </li>
               {% endfor %}
             </ul>
         </div>
