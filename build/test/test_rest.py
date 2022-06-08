@@ -74,7 +74,7 @@ class TestRest(APIAuthenticatedTestCase):
         self.assertEqual(response.data["branch"], "master")
         self.assertEqual(response.data["distribution"], "bullseye")
         projects = response.data["projects"].split(",")
-        self.assertEqual(len(projects), 71)
+        self.assertEqual(len(projects), 72)
 
     def test_mrXX(self):
         data = {

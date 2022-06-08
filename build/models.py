@@ -26,6 +26,7 @@ from .exceptions import BuildReleaseUnique
 from .exceptions import PreviousBuildNotDone
 from .utils import get_simple_release
 from .utils import ReleaseConfig
+from .utils import remove_from_textlist
 from repoapi.models import JenkinsBuildInfo
 
 logger = structlog.get_logger(__name__)
@@ -157,8 +158,21 @@ class BuildRelease(models.Model):
         return "%s[%s]" % (self.release, self.uuid)
 
     def refresh_projects(self):
+        old_projects = set(self.projects_list)
         self.projects = ",".join(self.config.projects)
+        new_list = set(self.projects_list)
+        append_list = [item for item in new_list if item not in old_projects]
+        removed_list = [item for item in old_projects if item not in new_list]
+        for project in removed_list:
+            remove_from_textlist(self, "built_projects", project)
+            remove_from_textlist(self, "triggered_projects", project)
+            remove_from_textlist(self, "failed_projects", project)
+        JenkinsBuildInfo.objects.filter(
+            projectname__in=removed_list,
+            param_release_uuid=self.uuid,
+        ).delete()
         self.save()
+        return (append_list, removed_list)
 
     def resume(self):
         if not self.done:
@@ -274,16 +288,7 @@ class BuildRelease(models.Model):
         return True
 
     def remove_triggered(self, jbi):
-        value = jbi.projectname
-        triggered_list = self.triggered_projects_list
-        if value in triggered_list:
-            triggered_list.remove(value)
-            tl = ",".join(triggered_list)
-            if len(tl) > 0:
-                self.triggered_projects = tl
-            else:
-                self.triggered_projects = None
-            self.save()
+        remove_from_textlist(self, "triggered_projects", jbi.projectname)
 
     def append_built(self, jbi):
         jobname = jbi.jobname

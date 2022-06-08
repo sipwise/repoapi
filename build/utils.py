@@ -41,6 +41,18 @@ re_release_common = re.compile(r"^(release-)?(mr[0-9]+\.[0-9]+)(\.[0-9]+)?$")
 re_release_trunk = re.compile(r"^release-trunk-(\w+)$")
 
 
+def remove_from_textlist(br, orig, value):
+    _list = getattr(br, f"{orig}_list")
+    if value in _list:
+        _list.remove(value)
+        tl = ",".join(_list)
+        if len(tl) > 0:
+            setattr(br, orig, tl)
+        else:
+            setattr(br, orig, None)
+        br.save()
+
+
 def is_release_trunk(version):
     match = re_release_trunk.search(version)
     if match:

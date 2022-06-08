@@ -156,6 +156,7 @@ jenkins-jobs:
     - ngcp-admin-ui
     - ngcp-api-tools
     - ngcp-csc-ui
+    - ngcp-cve-scanner
     - ngcp-exporter
     - ngcp-fauditd
     - ngcp-inventory
@@ -210,6 +211,7 @@ release_mirror:
       - ngcp-check-tools
       - ngcp-cleanup-tools
       - ngcp-csc-ui
+      - ngcp-cve-scanner
       - ngcp-db-schema
       - ngcp-deployment-iso
       - ngcp-dhtest

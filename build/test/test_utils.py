@@ -25,6 +25,7 @@ from build.utils import get_common_release
 from build.utils import get_simple_release
 from build.utils import is_release_trunk
 from build.utils import ReleaseConfig
+from build.utils import remove_from_textlist
 from build.utils import trigger_build
 from build.utils import trigger_build_matrix
 from build.utils import trigger_copy_deps
@@ -381,3 +382,21 @@ class TriggerBuildMatrix(BaseTest):
         res = trigger_build_matrix(br)
         self.assertIsNone(res)
         openurl.assert_not_called()
+
+
+@override_settings(DEBUG=False)
+class RemoveList(BaseTest):
+    fixtures = [
+        "test_weekly",
+    ]
+    release = "release-trunk-weekly"
+    release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559649b"
+
+    def setUp(self):
+        BuildRelease = apps.get_model("build", "BuildRelease")
+        self.br = BuildRelease.objects.get(uuid=self.release_uuid)
+
+    def test_remove_from_textlist(self):
+        self.br.triggered_projects = "fake-project"
+        remove_from_textlist(self.br, "triggered_projects", "fake-project")
+        self.assertIsNone(self.br.triggered_projects)

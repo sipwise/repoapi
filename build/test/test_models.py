@@ -556,3 +556,70 @@ class BuildReleaseRetriggerTest(BaseTest):
         self.assertTrue(self.br.append_built(self.jbi))
         self.assertEqual(self.br.built_projects, "data-hal,libinewrate")
         self.assertIsNone(self.br.failed_projects)
+
+
+@override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
+class RefreshProjects(BaseTest):
+    fixtures = [
+        "test_weekly",
+    ]
+    release = "release-trunk-weekly"
+    release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559649b"
+
+    def setUp(self):
+        self.br = BuildRelease.objects.get(uuid=self.release_uuid)
+
+    def test_refresh_append(self):
+        self.assertNotIn("ngcp-cve-scanner", self.br.projects_list)
+        self.assertIn("ngcp-cve-scanner", self.br.config.projects)
+        _append, _removed = self.br.refresh_projects()
+        self.assertEqual(_append, ["ngcp-cve-scanner"])
+        self.assertEqual(_removed, [])
+        self.assertIn("ngcp-cve-scanner", self.br.projects_list)
+
+    @patch("repoapi.utils.dlfile")
+    @patch("build.signals.build_resume")
+    def test_refresh_remove(self, build_resume, dl):
+        self.br.projects += ",fake-project"
+        self.assertIn("fake-project", self.br.projects_list)
+        self.br.save()
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/fake-project-repos/",
+            projectname="fake-project",
+            jobname="fake-project-repos",
+            param_tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/data-hal-source/",
+            projectname="data-hal",
+            jobname="data-hal-source",
+            param_tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="FAILURE",
+        )
+        self.br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertIn("fake-project", self.br.built_projects_list)
+        self.assertIn("data-hal", self.br.failed_projects_list)
+        _append, _removed = self.br.refresh_projects()
+        self.assertNotIn("fake-project", self.br.projects_list)
+        self.assertEqual(_append, ["ngcp-cve-scanner"])
+        self.assertEqual(
+            _removed,
+            [
+                "fake-project",
+            ],
+        )
+        self.assertNotIn("fake-project", self.br.projects_list)
+        self.assertNotIn("fake-project", self.br.built_projects_list)
+        self.assertNotIn("fake-project", self.br.triggered_projects_list)
+        self.assertNotIn("fake-project", self.br.failed_projects_list)
+        res = JenkinsBuildInfo.objects.filter(
+            param_release_uuid=self.release_uuid
+        ).count()
+        self.assertEqual(1, res)
