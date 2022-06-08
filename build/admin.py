@@ -28,12 +28,18 @@ class BuildReleaseResource(resources.ModelResource):
 class BuildReleaseAdmin(ImportExportModelAdmin):
     resource_class = BuildReleaseResource
     list_filter = ("release",)
-    readonly_fields = ("projects",)
+    readonly_fields = (
+        "projects",
+        "triggered_projects",
+        "built_projects",
+        "failed_projects",
+        "pool_size",
+        "triggered_jobs",
+    )
     modify_readonly_fields = (
         "uuid",
         "release",
-        "projects",
-    )
+    ) + readonly_fields
 
     def get_readonly_fields(self, request, obj=None):
         if obj is None:
