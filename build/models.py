@@ -150,6 +150,7 @@ class BuildRelease(models.Model):
     triggered_projects = models.TextField(null=True, editable=False)
     failed_projects = models.TextField(null=True, editable=False)
     pool_size = models.SmallIntegerField(default=0, editable=False)
+    triggered_jobs = models.TextField(null=True, editable=False)
     objects = BuildReleaseManager()
 
     def __str__(self):
@@ -212,6 +213,22 @@ class BuildRelease(models.Model):
         if self.triggered_projects is not None:
             return [x.strip() for x in self.triggered_projects.split(",")]
         return []
+
+    @property
+    def triggered_jobs_list(self):
+        if self.triggered_jobs is not None:
+            return [x.strip() for x in self.triggered_jobs.split(",")]
+        return []
+
+    def append_triggered_job(self, value):
+        if value in self.triggered_jobs_list:
+            return False
+        if self.triggered_jobs is None:
+            self.triggered_jobs = value
+        else:
+            self.triggered_jobs += ",{}".format(value)
+        self.save()
+        return True
 
     def append_triggered(self, value):
         if value in self.triggered_projects_list:

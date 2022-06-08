@@ -408,6 +408,32 @@ class BuildReleaseStepsTest(BaseTest):
         )
         self.assertIsNone(self.br.next)
 
+    def test_append_triggered_jobs(self):
+        self.assertIsNone(self.br.triggered_jobs)
+        res = self.br.append_triggered_job("fake-external-job")
+        self.assertTrue(res)
+        self.assertEqual(self.br.triggered_jobs, "fake-external-job")
+        self.assertEqual(
+            self.br.triggered_jobs_list,
+            [
+                "fake-external-job",
+            ],
+        )
+
+        res = self.br.append_triggered_job("fake-external-job")
+        self.assertFalse(res)
+        self.assertEqual(self.br.triggered_jobs, "fake-external-job")
+
+        res = self.br.append_triggered_job("other-external-job")
+        self.assertTrue(res)
+        self.assertEqual(
+            self.br.triggered_jobs, "fake-external-job,other-external-job"
+        )
+        self.assertEqual(
+            self.br.triggered_jobs_list,
+            ["fake-external-job", "other-external-job"],
+        )
+
 
 @override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
 @patch("repoapi.utils.dlfile")

@@ -292,4 +292,4 @@ class WeeklyTest(BaseTest):
         self.assertTrue(br.built_projects.endswith("ngcp-prompts"))
         self.assertEqual(br.pool_size, 0)
         tb.assert_not_called()
-        tbm.assert_called_once_with()
+        tbm.assert_called_once_with(br)

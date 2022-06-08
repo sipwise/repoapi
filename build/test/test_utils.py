@@ -15,6 +15,7 @@
 import re
 from unittest.mock import patch
 
+from django.apps import apps
 from django.test import override_settings
 from django.test import SimpleTestCase
 
@@ -25,7 +26,9 @@ from build.utils import get_simple_release
 from build.utils import is_release_trunk
 from build.utils import ReleaseConfig
 from build.utils import trigger_build
+from build.utils import trigger_build_matrix
 from build.utils import trigger_copy_deps
+from repoapi.test.base import BaseTest
 
 
 class SimpleIsReleaseTrunkTest(SimpleTestCase):
@@ -337,3 +340,44 @@ class TriggerBuild(SimpleTestCase):
         params["token"] = settings.JENKINS_TOKEN
         self.assertEqual(res, "{base}/job/{project}/".format(**params))
         openurl.assert_called_once_with(url.format(**params))
+
+
+@patch("build.utils.open_jenkins_url")
+@override_settings(DEBUG=False)
+class TriggerBuildMatrix(BaseTest):
+    fixtures = [
+        "test_weekly",
+    ]
+    release = "release-trunk-weekly"
+    release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559649b"
+
+    def test_trigger_build_matrix(self, openurl):
+        BuildRelease = apps.get_model("build", "BuildRelease")
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        params = {
+            "base": settings.JENKINS_URL,
+            "token": settings.JENKINS_TOKEN,
+            "job": "weekly-build-matrix-trunk-weekly",
+            "cause": "repoapi finished to build trunk-weekly",
+        }
+        url = (
+            "{base}/job/{job}/buildWithParameters?token={token}&cause={cause}"
+        )
+        res = trigger_build_matrix(br)
+        self.assertEqual(res, "{base}/job/{job}/".format(**params))
+        openurl.assert_called_once_with(url.format(**params))
+
+    def test_trigger_build_matrix_ko(self, openurl):
+        BuildRelease = apps.get_model("build", "BuildRelease")
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        params = {
+            "base": settings.JENKINS_URL,
+            "token": settings.JENKINS_TOKEN,
+            "job": "weekly-build-matrix-trunk-weekly",
+            "cause": "repoapi finished to build trunk-weekly",
+        }
+        res = br.append_triggered_job(params["job"])
+        self.assertTrue(res)
+        res = trigger_build_matrix(br)
+        self.assertIsNone(res)
+        openurl.assert_not_called()

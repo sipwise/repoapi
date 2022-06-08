@@ -95,6 +95,9 @@ def build_resume(pk):
         else:
             log.debug("BuildRelease has no next")
             if br.release == "release-trunk-weekly":
-                url = trigger_build_matrix()
-                log.info("build_matrix triggered", instance=str(br), url=url)
+                url = trigger_build_matrix(br)
+                if url is not None:
+                    log.info(
+                        "build_matrix triggered", instance=str(br), url=url
+                    )
             break

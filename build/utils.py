@@ -71,7 +71,7 @@ def get_common_release(version):
         return "master"
 
 
-def trigger_build_matrix():
+def trigger_build_matrix(br):
     params = {
         "base": settings.JENKINS_URL,
         "token": urllib.parse.quote(settings.JENKINS_TOKEN),
@@ -79,6 +79,9 @@ def trigger_build_matrix():
         "cause": "repoapi finished to build trunk-weekly",
     }
     url = _url.format(**params)
+    if not br.append_triggered_job(params["job"]):
+        logger.info("{} already triggered, skip".format(params["job"]))
+        return
     if settings.DEBUG:
         logger.info("Debug mode, would trigger: %s", url)
     else:
