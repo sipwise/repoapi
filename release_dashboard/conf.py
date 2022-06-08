@@ -30,17 +30,6 @@ class ReleaseDashboardConf(AppConf):
         "wheezy",
         "squeeze",
     )
-    BUILD_DEPS = (
-        "check-tools",
-        "data-hal",
-        "libswrate",
-        "sipwise-base",
-        "mediaproxy-ng",
-        "ngcp-schema",
-        "rtpengine",
-        "libtcap",
-        "libinewrate",
-    )
     PROJECTS = (
         "acc-cdi",
         "asterisk",
@@ -146,26 +135,6 @@ class ReleaseDashboardConf(AppConf):
         "vmnotify",
         "voisniff-ng",
         "websocket",
-        "www_admin",
-        "www_csc",
-    )
-    ABANDONED = (
-        "asterisk",
-        "asterisk-sounds",
-        "cloudpbx-devices",
-        "collectd-mod-redis",
-        "comx",
-        "comx-sip",
-        "comx-xmpp",
-        "diva-drivers",
-        "hylafaxplus",
-        "iaxmodem",
-        "mediaproxy-ng",
-        "mediaproxy-redis",
-        "rtpengine-redis",
-        "ossbss",
-        "sems-prompts",
-        "sipsak",
         "www_admin",
         "www_csc",
     )

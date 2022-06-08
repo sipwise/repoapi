@@ -15,7 +15,3 @@
 from ..conf import settings
 
 projects = set(settings.RELEASE_DASHBOARD_PROJECTS)
-abandoned = set(settings.RELEASE_DASHBOARD_ABANDONED)
-build_deps = set(settings.RELEASE_DASHBOARD_BUILD_DEPS)
-trunk_projects = sorted(projects - abandoned - build_deps)
-trunk_build_deps = sorted(build_deps - abandoned)

@@ -30,9 +30,6 @@ debian_releases = []
 for debian_release in settings.RELEASE_DASHBOARD_DEBIAN_RELEASES:
     if debian_release != "auto":
         debian_releases.append(debian_release)
-regex_master = re.compile(
-    r"^master$|^(%s)/master$" % "|".join(map(re.escape, debian_releases))
-)
 
 
 def _projects_versions(

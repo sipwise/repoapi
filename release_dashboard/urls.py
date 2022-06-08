@@ -21,27 +21,6 @@ from .views import Index
 app_name = "release_dashboard"
 urlpatterns = [
     re_path(r"^$", Index.as_view(), name="index"),
-    re_path(r"^old/$", Index.as_view(old_links=True), name="index_old"),
-    re_path(
-        r"^old/build/$", build.build_release_old, name="build_release_old"
-    ),
-    re_path(r"^old/build_deps/$", build.build_deps_old, name="build_deps_old"),
-    re_path(
-        r"^old/build_trunk_deps/$",
-        build.build_trunk_deps_old,
-        name="build_trunk_deps_old",
-    ),
-    re_path(
-        r"^old/build_trunk/$",
-        build.build_trunk_release_old,
-        name="build_trunk_release_old",
-    ),
-    re_path(
-        r"^old/build_tag/$",
-        build.build_release_old,
-        {"tag_only": True},
-        name="build_release_tag_old",
-    ),
     re_path(r"^build/$", build.index, name="build_index"),
     re_path(
         r"^build/(?P<release>[^/]+)/$",

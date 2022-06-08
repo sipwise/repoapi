@@ -24,19 +24,9 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 
-from . import _common_versions
-from . import _hash_versions
 from . import _projects_versions
 from . import regex_hotfix
-from . import regex_master
-from . import regex_mr
 from ..conf import settings
-from ..forms import trunk_build_deps
-from ..forms import trunk_projects
-from ..forms.build import BuildDepForm
-from ..forms.build import BuildReleaseForm
-from ..forms.build import BuildTrunkDepForm
-from ..forms.build import BuildTrunkReleaseForm
 from ..models import Project
 from ..tasks import gerrit_fetch_all
 from ..tasks import gerrit_fetch_info
@@ -108,57 +98,9 @@ def hotfix_build(request, branch, project):
     push = json_data.get("push", "no")
     empty = json_data.get("empty", False)
     if push == "no":
-        logger.warn("dryrun for %s:%s", project, branch)
+        logger.warn("dry-run for %s:%s", project, branch)
     urls = build.trigger_hotfix(project, branch, request.user, push, empty)
     return JsonResponse({"urls": urls})
-
-
-def _build_logic(form, projects):
-    version_release = form.cleaned_data["version_release"]
-    distribution = form.cleaned_data["distribution"]
-    result = _hash_versions(form.cleaned_data, projects)
-    context = {"projects": [], "release": version_release}
-    flow_uuid = uuid.uuid4()
-    msg = "trying to trigger release %s, project %s"
-    for pro in projects:
-        try:
-            logger.debug(msg, version_release, pro)
-            url = build.trigger_build(
-                "%s-get-code" % pro,
-                version_release,
-                result[pro],
-                distribution,
-                flow_uuid,
-            )
-            context["projects"].append({"name": pro, "url": url})
-        except KeyError:
-            msg = "Houston, we have a problem with trigger for %s"
-            logger.error(msg, pro)
-            context["projects"].append({"name": pro, "url": None})
-    return context
-
-
-@login_required
-def build_deps_old(request, tag_only=False):
-    if request.method == "POST":
-        form = BuildDepForm(request.POST)
-        if form.is_valid():
-            context = _build_logic(form, settings.RELEASE_DASHBOARD_BUILD_DEPS)
-        else:
-            context = {"error": "form validation error"}
-        return render(request, "release_dashboard/build_result.html", context)
-    else:
-        context = {
-            "projects": _projects_versions(
-                settings.RELEASE_DASHBOARD_BUILD_DEPS,
-                regex_mr,
-                True,
-                not tag_only,
-            ),
-            "debian": settings.RELEASE_DASHBOARD_DEBIAN_RELEASES,
-        }
-        _common_versions(context, True, not tag_only)
-        return render(request, "release_dashboard/build_deps.html", context)
 
 
 @login_required
@@ -168,32 +110,6 @@ def hotfix(request):
     )
     context = {"projects": prj_list}
     return render(request, "release_dashboard/hotfix.html", context)
-
-
-@login_required
-def build_release_old(request, tag_only=False):
-
-    if request.method == "POST":
-        form = BuildReleaseForm(request.POST)
-        if form.is_valid():
-            context = _build_logic(form, settings.RELEASE_DASHBOARD_PROJECTS)
-        else:
-            context = {"error": "form validation error"}
-        return render(request, "release_dashboard/build_result.html", context)
-    else:
-        context = {
-            "projects": _projects_versions(
-                settings.RELEASE_DASHBOARD_PROJECTS,
-                regex_mr,
-                True,
-                not tag_only,
-            ),
-            "debian": settings.RELEASE_DASHBOARD_DEBIAN_RELEASES,
-        }
-        _common_versions(context, True, not tag_only)
-        if tag_only:
-            return render(request, "release_dashboard/build_tag.html", context)
-        return render(request, "release_dashboard/build.html", context)
 
 
 @login_required
@@ -214,46 +130,3 @@ def refresh_all(request):
 def refresh(request, project):
     res = gerrit_fetch_info.delay(project)
     return JsonResponse({"url": "/flower/task/%s" % res.id})
-
-
-@login_required
-def build_trunk_deps_old(request):
-    if request.method == "POST":
-        form = BuildTrunkDepForm(request.POST)
-        if form.is_valid():
-            context = _build_logic(form, settings.RELEASE_DASHBOARD_BUILD_DEPS)
-        else:
-            context = {"error": "form validation error"}
-        return render(request, "release_dashboard/build_result.html", context)
-    else:
-        template = "release_dashboard/build_trunk_deps.html"
-        context = {
-            "projects": _projects_versions(
-                trunk_build_deps,
-                regex_master,
-            ),
-            "common_versions": {"tags": [], "branches": ["master"]},
-            "debian": settings.RELEASE_DASHBOARD_DEBIAN_RELEASES,
-        }
-        return render(request, template, context)
-
-
-@login_required
-def build_trunk_release_old(request):
-    if request.method == "POST":
-        form = BuildTrunkReleaseForm(request.POST)
-        if form.is_valid():
-            context = _build_logic(form, trunk_projects)
-        else:
-            context = {"error": "form validation error"}
-        return render(request, "release_dashboard/build_result.html", context)
-    else:
-        context = {
-            "projects": _projects_versions(
-                trunk_projects,
-                regex_master,
-            ),
-            "common_versions": {"tags": [], "branches": ["master"]},
-            "debian": settings.RELEASE_DASHBOARD_DEBIAN_RELEASES,
-        }
-        return render(request, "release_dashboard/build_trunk.html", context)
