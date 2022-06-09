@@ -17,10 +17,11 @@ import re
 from django.views.generic.base import TemplateView
 from natsort import humansorted
 
+from ..conf import settings
 from ..utils import get_branches
 from ..utils import get_tags
 
-regex_hotfix = re.compile(r"^mr[0-9]+\.[0-9]+\.[0-9]+$")
+regex_hotfix = re.compile(settings.RELEASE_DASHBOARD_FILTER_MRXXX)
 regex_mr = re.compile(r"^mr.+$")
 
 

@@ -1,0 +1,66 @@
+{% extends "release_dashboard/base.html" %}
+{% load static %}
+{% block title %}Release Dashboard{% endblock %}
+{% block navlist %}
+<li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
+<li><a href="{% url 'release_dashboard:build_index'%}">Build Release</a></li>
+<li><a href="{% url 'release_dashboard:build_release' config.release %}">{{ config.release }}</a></li>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Version</th>
+                <th>Push</th>
+                <th>Empty</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        <form class="form-inline">{% csrf_token %}</form>
+      {% for p in config.projects %}
+          <tr class="repo">
+            <th><label for="version_{{ p }}">{{ p }}</label></th>
+            <td class="version">
+                <select class="form-control" id="version_{{ p }}" name="version_{{ p }}">
+                    <option value="ignore">ignore</option>
+                    <option value="branch/{{ config.branch }}">branch/{{ config.branch }}</option>
+                </select>
+            </td>
+            <td>
+              <select class="form-control" id="push_{{ p }}">
+                <option value="yes" selected="selected">yes</option>
+                <option value="no">no</option>
+              </select>
+            </td>
+            <td>
+              <input id="empty_{{ p }}" type="checkbox">
+            </td>
+            <td>
+              <button type="button" id="hotfix_{{ p }}" class="btn btn-warning hotfix" disabled="disabled">Select branch to hotfix</button>
+            </td>
+            <td>
+              <span class="text-danger" id="hotfix_error_{{ p }}"></span>
+              <div id="links_{{ p }}" class="hidden">
+                <div class="btn-group btn-group-sm" role="group" aria-label="grp1">
+                    <a class="btn btn-default btn-success" type="button" role="group" id="link_done_{{ p }}">Done</a>
+                </div>
+                <div class="btn-group btn-group-sm" role="group" aria-label="grp2">
+                    <a class="btn btn-default btn-info" type="button" role="group" id="link_latest_{{ p }}">latest Build</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+      {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}
+{% block extrajs %}
+<script src="{% static 'release_dashboard/js/csrf.js' %}"></script>
+<script src="{% static 'release_dashboard/js/hotfix_release.js' %}"></script>
+{% endblock %}

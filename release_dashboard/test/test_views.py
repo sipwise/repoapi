@@ -1,4 +1,4 @@
-# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -68,6 +68,68 @@ class TestHotfix(TestCase):
         self.assertEqual(res.context["projects"], expected)
 
 
+class TestHotfixRelease(TestCase):
+    def test_no_login(self):
+        res = self.client.get(
+            reverse(
+                "release_dashboard:hotfix_release", args=["release-mr7.5.2"]
+            )
+        )
+        self.assertNotEqual(res.status_code, 200)
+
+    def test_login_ok(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        res = self.client.get(
+            reverse(
+                "release_dashboard:hotfix_release", args=["release-mr7.5.2"]
+            )
+        )
+        self.assertEqual(res.status_code, 200)
+
+    def test_no_mrXXX(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        res = self.client.get(
+            reverse("release_dashboard:hotfix_release", args=["release-mr7.5"])
+        )
+        self.assertNotEqual(res.status_code, 200)
+
+        res = self.client.get(
+            reverse(
+                "release_dashboard:hotfix_release",
+                args=["release-trunk-buster"],
+            )
+        )
+        self.assertNotEqual(res.status_code, 200)
+
+    def test_project_ok(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        res = self.client.post(
+            reverse(
+                "release_dashboard:hotfix_release_build",
+                args=["release-mr7.5.2", "data-hal"],
+            ),
+            {"push": "no"},
+            content_type="application/json",
+        )
+        self.assertEqual(res.status_code, 200)
+
+    def test_project_wrong(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        res = self.client.post(
+            reverse(
+                "release_dashboard:hotfix_release_build",
+                args=["release-mr7.5.2", "fake-project"],
+            ),
+            {"push": "no"},
+            content_type="application/json",
+        )
+        self.assertNotEqual(res.status_code, 200)
+
+
 class TestDocker(TestCase):
     def test_no_login(self):
         res = self.client.get(reverse("release_dashboard:docker_images"))
@@ -81,17 +143,17 @@ class TestDocker(TestCase):
 
 
 class TestBuildRelease(BaseTest):
-    fixtures = ['test_build_release']
+    fixtures = ["test_build_release"]
 
     def test_no_login(self):
-        url = reverse("release_dashboard:build_release", args=['trunk'])
+        url = reverse("release_dashboard:build_release", args=["trunk"])
         res = self.client.get(url)
         self.assertNotEqual(res.status_code, 200)
 
     def test_login_ok(self):
         user = User.objects.create_user(username="test")
         self.client.force_login(user)
-        url = reverse("release_dashboard:build_release", args=['trunk'])
+        url = reverse("release_dashboard:build_release", args=["trunk"])
         res = self.client.get(url)
         self.assertEqual(res.status_code, 200)
 
@@ -99,10 +161,10 @@ class TestBuildRelease(BaseTest):
         user = User.objects.create_user(username="test")
         self.client.force_login(user)
         # no build yet
-        url = reverse("release_dashboard:build_release", args=['mr8.1'])
+        url = reverse("release_dashboard:build_release", args=["mr8.1"])
         res = self.client.get(url)
         self.assertEqual(res.status_code, 200)
-        self.assertTrue(res.context['done'])
+        self.assertTrue(res.context["done"])
 
     def test_context_not_done(self):
         user = User.objects.create_user(username="test")
@@ -112,7 +174,7 @@ class TestBuildRelease(BaseTest):
         )
         br.built_projects = None
         br.save()
-        url = reverse("release_dashboard:build_release", args=['trunk'])
+        url = reverse("release_dashboard:build_release", args=["trunk"])
         res = self.client.get(url)
         self.assertEqual(res.status_code, 200)
-        self.assertFalse(res.context['done'])
+        self.assertFalse(res.context["done"])

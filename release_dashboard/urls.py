@@ -27,6 +27,16 @@ urlpatterns = [
         build.build_release,
         name="build_release",
     ),
+    re_path(
+        r"^hotfix_release/(?P<release>[^/]+)/$",
+        build.hotfix_release,
+        name="hotfix_release",
+    ),
+    re_path(
+        r"^hotfix_release/(?P<release>[^/]+)/(?P<project>[^/]+)/$",
+        build.hotfix_release_build,
+        name="hotfix_release_build",
+    ),
     re_path(r"^hotfix/$", build.hotfix, name="hotfix"),
     re_path(
         r"^hotfix/(?P<branch>[^/]+)/(?P<project>[^/]+)/$", build.hotfix_build

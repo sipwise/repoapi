@@ -113,6 +113,44 @@ def hotfix(request):
 
 
 @login_required
+@require_http_methods(["POST"])
+def hotfix_release_build(request, release, project):
+    release_config = ReleaseConfig(release)
+    if project not in release_config.projects:
+        error = f"project:{project} not in {release_config.release}"
+        logger.error(error)
+        return HttpResponseNotFound(error)
+
+    if not regex_hotfix.match(release_config.branch):
+        error = f"branch:{release_config.branch} not valid. Not mrX.X.X format"
+        logger.error(error)
+        return HttpResponseNotFound(error)
+    logger.debug(body=request.body)
+    json_data = json.loads(request.body.decode("utf-8"))
+    push = json_data.get("push", "no")
+    empty = json_data.get("empty", False)
+    if push == "no":
+        logger.warn(f"dry-run for {project}:{release_config.branch}")
+    urls = build.trigger_hotfix(
+        project, release_config.branch, request.user, push, empty
+    )
+    return JsonResponse({"urls": urls})
+
+
+@login_required
+def hotfix_release(request, release):
+    release_config = ReleaseConfig(release)
+    if not regex_hotfix.match(release_config.branch):
+        error = (
+            "branch:%s not valid. Not mrX.X.X format" % release_config.branch
+        )
+        logger.error(error)
+        return HttpResponseNotFound(error)
+    context = {"config": release_config}
+    return render(request, "release_dashboard/hotfix_release.html", context)
+
+
+@login_required
 def refresh_all(request):
     if request.method == "POST":
         res = gerrit_fetch_all.delay()
