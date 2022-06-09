@@ -78,7 +78,7 @@ class BuildProject(APIView):
 
 
 class ReleaseJobs(APIView):
-    def get(self, request, release_uuid):
+    def get(self, request, release_uuid, format=None):
         br = get_object_or_404(models.BuildRelease, uuid=release_uuid)
         res = models.BuildRelease.objects.release_jobs(br.uuid)
         if res is None:
@@ -87,7 +87,7 @@ class ReleaseJobs(APIView):
 
 
 class ReleaseJobsFull(APIView):
-    def get(self, request, release_uuid):
+    def get(self, request, release_uuid, format=None):
         br = get_object_or_404(models.BuildRelease, uuid=release_uuid)
         res = models.BuildRelease.objects.release_jobs_full(br.uuid)
         if res is None:
@@ -96,7 +96,7 @@ class ReleaseJobsFull(APIView):
 
 
 class ReleaseJobsUUID(APIView):
-    def get(self, request, release_uuid, job):
+    def get(self, request, release_uuid, job, format=None):
         br = get_object_or_404(models.BuildRelease, uuid=release_uuid)
         jbis = models.BuildRelease.objects.release_jobs_uuids(br.uuid, job)
         if jbis is None:

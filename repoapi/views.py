@@ -25,18 +25,16 @@ from .models import JenkinsBuildInfo as jbi
 
 
 @api_view(("GET",))
-def api_root(request, _format=None):
+def api_root(request, format=None):
     return Response(
         {
             "jenkinsbuildinfo": reverse(
-                "jenkinsbuildinfo-list", request=request, format=_format
+                "jenkinsbuildinfo-list", request=request, format=format
             ),
-            "release": reverse(
-                "release-list", request=request, format=_format
-            ),
-            "build": reverse("build:list", request=request, format=_format),
+            "release": reverse("release-list", request=request, format=format),
+            "build": reverse("build:list", request=request, format=format),
             "release_changed": reverse(
-                "release_changed:list", request=request, format=_format
+                "release_changed:list", request=request, format=format
             ),
         }
     )
@@ -61,7 +59,7 @@ class JenkinsBuildInfoDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ReleaseList(APIView):
-    def get(self, request, _format=None):
+    def get(self, request, format=None):
         releases = jbi.objects.releases(flat=False)
         if releases is None:
             return Response([])
@@ -75,7 +73,7 @@ class ReleaseList(APIView):
 
 
 class ProjectList(APIView):
-    def get(self, request, release):
+    def get(self, request, release, format=None):
         params = {"flat": False}
         if "release_uuid" in self.request.query_params:
             params["release_uuid"] = self.request.query_params["release_uuid"]
@@ -92,7 +90,7 @@ class ProjectList(APIView):
 
 
 class ProjectFullList(APIView):
-    def get(self, request, release):
+    def get(self, request, release, format=None):
         params = {}
         if "release_uuid" in self.request.query_params:
             params["release_uuid"] = self.request.query_params["release_uuid"]
@@ -101,7 +99,7 @@ class ProjectFullList(APIView):
 
 
 class ProjectUUIDList(APIView):
-    def get(self, request, release, project):
+    def get(self, request, release, project, format=None):
         params = {"flat": False}
         if "release_uuid" in self.request.query_params:
             params["release_uuid"] = self.request.query_params["release_uuid"]
@@ -119,7 +117,7 @@ class ProjectUUIDList(APIView):
 
 
 class UUIDInfoList(APIView):
-    def get(self, request, release, project, uuid):
+    def get(self, request, release, project, uuid, format=None):
         res = list()
         jbis = serializers.JenkinsBuildInfoSerializer
         jobs = jbi.objects.jobs_by_uuid(release, project, uuid)
@@ -130,7 +128,7 @@ class UUIDInfoList(APIView):
 
 
 class LatestUUID(APIView):
-    def get(self, request, release, project):
+    def get(self, request, release, project, format=None):
         params = {}
         if "release_uuid" in self.request.query_params:
             params["release_uuid"] = self.request.query_params["release_uuid"]

@@ -94,11 +94,6 @@ api_patterns = [
         docker.DockerTagDetail.as_view(),
         name="dockertag-detail",
     ),
-    re_path(
-        r"^gerrit/refresh/$",
-        rd_api.RefreshGerritInfo.as_view(),
-        name="gerrit-refresh",
-    ),
     re_path(r"^build/", include("build.urls")),
     re_path(r"^release_changed/", include("release_changed.urls")),
 ]
@@ -107,7 +102,7 @@ api_patterns = format_suffix_patterns(api_patterns)
 
 urlpatterns = [
     re_path(r"^admin/", admin.site.urls),
-    re_path(r"^", include(api_patterns)),
+    path("", include(api_patterns)),
     re_path(
         r"^api-auth/",
         include("rest_framework.urls", namespace="rest_framework"),
@@ -120,6 +115,11 @@ urlpatterns = [
     ),
     path(
         "redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"
+    ),
+    re_path(
+        r"^gerrit/refresh/$",
+        rd_api.RefreshGerritInfo.as_view(),
+        name="gerrit-refresh",
     ),
     re_path(r"^panel/", include("panel.urls")),
     re_path(
