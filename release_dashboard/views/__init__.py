@@ -17,19 +17,11 @@ import re
 from django.views.generic.base import TemplateView
 from natsort import humansorted
 
-from ..conf import settings
 from ..utils import get_branches
 from ..utils import get_tags
 
 regex_hotfix = re.compile(r"^mr[0-9]+\.[0-9]+\.[0-9]+$")
 regex_mr = re.compile(r"^mr.+$")
-
-# support "master" + "$supported_debian_releases/master" for branch selection,
-# e.g. for trunk builds when not everything might build against master
-debian_releases = []
-for debian_release in settings.RELEASE_DASHBOARD_DEBIAN_RELEASES:
-    if debian_release != "auto":
-        debian_releases.append(debian_release)
 
 
 def _projects_versions(
@@ -78,9 +70,3 @@ def _hash_versions(data, projects):
 
 class Index(TemplateView):
     template_name = "release_dashboard/index.html"
-    old_links = False
-
-    def get_context_data(self, *args, **kwargs):
-        context = super(Index, self).get_context_data(*args, **kwargs)
-        context["old_links"] = self.old_links
-        return context

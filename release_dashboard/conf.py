@@ -21,15 +21,6 @@ class ReleaseDashboardConf(AppConf):
     FILTER_BRANCHES = r"^refs/heads/(.+)$"
     FILTER_MRXX = r"^mr[0-9]+\.[0-9]+$"
     FILTER_MRXXX = r"^mr[0-9]+\.[0-9]+\.[0-9]+$"
-    DEBIAN_RELEASES = (
-        "auto",
-        "bullseye",
-        "buster",
-        "stretch",
-        "jessie",
-        "wheezy",
-        "squeeze",
-    )
     PROJECTS = (
         "acc-cdi",
         "asterisk",

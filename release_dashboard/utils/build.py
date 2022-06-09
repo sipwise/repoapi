@@ -79,53 +79,6 @@ def trigger_hotfix(project, branch, user, push="yes", empty=False):
     return res
 
 
-def trigger_build(
-    project,
-    trigger_release=None,
-    trigger_branch_or_tag=None,
-    trigger_distribution=None,
-    flow_uuid=uuid.uuid4(),
-):
-    if trigger_branch_or_tag == "ignore":
-        logger.debug(
-            "ignoring request to trigger project %s due"
-            " to request of version 'ignore'",
-            project,
-        )
-        return
-    params = {
-        "base": settings.JENKINS_URL,
-        "job": project,
-        "token": urllib.parse.quote(settings.JENKINS_TOKEN),
-        "cause": urllib.parse.quote(trigger_release),
-        "branch": "none",
-        "tag": "none",
-        "release": urllib.parse.quote(trigger_release),
-        "distribution": urllib.parse.quote(trigger_distribution),
-        "uuid": flow_uuid,
-    }
-    if trigger_branch_or_tag.startswith("tag/"):
-        tag = trigger_branch_or_tag.split("tag/")[1]
-        params["tag"] = urllib.parse.quote(tag)
-
-        # branch is like tag but removing the last element,
-        # e.g. tag=mr5.5.2.1 -> branch=mr5.5.2
-        branch = ".".join(tag.split(".")[0:-1])
-        params["branch"] = urllib.parse.quote(branch)
-    elif trigger_branch_or_tag.startswith("branch/"):
-        branch = trigger_branch_or_tag.split("branch/")[1]
-        params["branch"] = urllib.parse.quote(branch)
-    else:
-        params["branch"] = urllib.parse.quote(trigger_branch_or_tag)
-
-    url = project_url.format(**params)
-    if settings.DEBUG:
-        logger.debug("Debug mode, would trigger: %s", url)
-    else:
-        open_jenkins_url(url)
-    return "{base}/job/{job}/".format(**params)
-
-
 def fetch_gerrit_info(projectname):
     project, _ = Project.objects.get_or_create(name=projectname)
     project.tags = get_gerrit_tags(projectname)

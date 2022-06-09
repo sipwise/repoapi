@@ -19,9 +19,9 @@ class TestReleaseDashboardConf(SimpleTestCase):
     def test_django_settings(self):
         from django.conf import settings
 
-        self.assertIsNotNone(settings.RELEASE_DASHBOARD_DEBIAN_RELEASES)
+        self.assertIsNotNone(settings.RELEASE_DASHBOARD_FILTER_TAGS)
 
     def test_release_dashboard_settings(self):
         from release_dashboard.conf import settings
 
-        self.assertIsNotNone(settings.RELEASE_DASHBOARD_DEBIAN_RELEASES)
+        self.assertIsNotNone(settings.RELEASE_DASHBOARD_FILTER_TAGS)
