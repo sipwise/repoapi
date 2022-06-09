@@ -1,10 +1,11 @@
 {% extends "panel/base.html" %}
 {% load jsonify %}
 {% load static %}
-{% block title %}{{ release }}{% endblock %}
+{% block title %}{{ build_release.release }}{% endblock %}
 {% block navlist %}
     <li><a href="{% url 'panel:index' %}">Panel</a></li>
-    <li class="active"><a href="#">{{ release }}</a></li>
+    <li><a href="{% url 'release_dashboard:build_index'%}">Build Release</a></li>
+    <li><a href="{% url 'release_dashboard:build_release' build_release.release %}">{{ build_release.release }}</a></li>
 {% endblock %}
 {% block content %}
 <div class="container">
