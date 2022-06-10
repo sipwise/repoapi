@@ -11,17 +11,20 @@
           <h3 class="panel-title">Supported Releases</h3>
       </div>
       <div class="panel-body">
-        {% regroup releases|dictsortreversed:"base" by base as releases_list %}
+        {% regroup releases by base as releases_list %}
         <ul class="nav nav-pills" role="tablist">
         {% for base, data_list in releases_list %}
+        {% if base != 'master' %}
           <li role="presentation">
             <a href="#{{base|cut:'.'}}" aria-controls="{{base|cut:'.'}}"
                role="tab" data-toggle="tab">{{base}}</a>
           </li>
+        {% endif %}
         {% endfor %}
         </ul>
       <div class="tab-content col-md-8">
         {% for base, data_list in releases_list %}
+        {% if base != 'master' %}
         <div role="tabpanel" class="tab-pane" id="{{base|cut:'.'}}">
           <ul class="list-group row">
             {% for data in data_list %}
@@ -29,13 +32,33 @@
               <a href="{% url 'release_dashboard:build_release' release=data.release %}">
                 {{ data.release }}
               </a>
+              {% if data.release == base %}<span class="label label-primary">mrX.X</span>{% endif %}
             </li>
             {% endfor %}
           </ul>
         </div>
+        {% endif %}
         {% endfor %}
       </div>
       </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Master Releases</h3>
+    </div>
+    <div class="panel-body">
+      {% for base, data_list in releases_list %}
+      {% if base == 'master' %}
+      <div class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
+        {% for data in data_list %}
+        <a class="btn btn-default {% if data.release in builds %}btn-info{% endif %}" role="button" href="{% url 'release_dashboard:build_release' release=data.release %}">
+          {{ data.release }}
+        </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
   </div>
 </div>
 {% endblock %}

@@ -113,6 +113,9 @@ class ReleaseConfigTestCase(SimpleTestCase):
             "trunk-weekly",
             "release-trunk-buster",
             "release-trunk-bullseye",
+            "mr10.1.1",
+            "mr10.1",
+            "mr10.0",
             "mr8.1.2",
             "mr8.1",
             "mr7.5.3",
@@ -126,10 +129,10 @@ class ReleaseConfigTestCase(SimpleTestCase):
     @patch.object(ReleaseConfig, "supported_releases")
     def test_supported_releases_dict(self, sr):
         res_ok = [
-            {"release": "release-trunk-buster", "base": "master"},
-            {"release": "mr8.0", "base": "mr8.0"},
-            {"release": "mr8.0.1", "base": "mr8.0"},
-            {"release": "mr7.5.1", "base": "mr7.5"},
+            {"base": "master", "release": "release-trunk-buster"},
+            {"base": "mr8.0", "release": "mr8.0.1"},
+            {"base": "mr8.0", "release": "mr8.0"},
+            {"base": "mr7.5", "release": "mr7.5.1"},
         ]
         sr.return_value = [
             "release-trunk-buster",

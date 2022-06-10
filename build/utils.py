@@ -19,6 +19,7 @@ from pathlib import Path
 from uuid import uuid4
 
 import structlog
+from natsort import humansorted
 from yaml import load
 from yaml import Loader
 
@@ -228,16 +229,19 @@ class ReleaseConfig(object):
                     continue
                 if name not in skip_files:
                     res.append(path_name.stem)
-        res.sort(reverse=True)
-        return res
+        return humansorted(res, reverse=True)
 
     @classmethod
     def supported_releases_dict(cls):
         sr = cls.supported_releases()
-        return [
-            {"release": version, "base": get_common_release(version)}
+        res = [
+            {
+                "release": version,
+                "base": get_common_release(version),
+            }
             for version in sr
         ]
+        return humansorted(res, lambda x: x["release"], reverse=True)
 
     def __init__(self, name, distribution=None):
         ok, self.distribution = is_release_trunk(name)

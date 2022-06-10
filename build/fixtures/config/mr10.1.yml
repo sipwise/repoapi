@@ -1,0 +1,263 @@
+distris:
+ - release-mr10.1
+ - bullseye
+
+debian_release: bullseye
+
+release-mr10.1: &packages
+ # TT#44190 needed by ngcp-panel
+ - grafana: 7.3.1
+ # MT#13097 + TT#11775 + TT#44117 needed by libinewrate
+ - libactivemq-cpp: 3.9.4-0.1~bpo11+1sipwise1
+ # TT#69950 needed by bulk-processor, not available in Debian (project abandoned upstream)
+ - libexcel-reader-xlsx-perl: 0.00~git20161017.3b576a55-0.1sipwise1~bpo11+1
+ # TT#73105 system testing
+ - goss: 0.3.14-0.1~bpo11+1sipwise1
+ # TT#44918 Needed for PRO/Carrier
+ - ngcp-pxe-boot: 0.7.1.1+0~sipwise20210719
+ # TT#126500: Fix race in reboot uptime timestamp computation and comparison
+ - monit: 5.27.2-1sipwise1~bpo11+1
+ # TT#59330 rebuild of package pulled from non-free, required for snmp-agent
+ - snmp-mibs-downloader: 1.5~bpo11+1
+ # MT#19499, TT#126650: local robustness patches
+ - net-snmp: 5.9+dfsg-3sipwise1~bpo11+2
+ # TT#120600 Reintroduce as source got permanentely removed from Debian/testing.
+ - janus: 0.11.1-1~bpo11+1
+
+bullseye: *packages
+
+repository-verify:
+  white-list: []
+
+jenkins-jobs:
+  ignore:
+    - heartbeat-binaries
+    - heartbeat-tap-test
+  build_deps:
+    data-hal:
+      - ngcp-panel
+    ngcp-schema:
+      - ngcp-panel
+    libinewrate:
+      - sems-pbx
+    libswrate:
+      - kamailio
+      - sems-pbx
+    libtcap:
+      - kamailio
+      - lnpd
+    sipwise-base:
+      - ngcp-panel
+      - ngcp-schema
+    check-tools:
+      - snmp-agent
+    ngcpcfg:
+      - bootenv # libngcp-template-perl needed on Dockerfile
+    sems-pbx:
+      - sems-modules # ngcp-sems-pbx-libsems1-dev needed on Dockerfile
+    ngcp-panel:
+      - csta-testsuite # ngcp-api-testframework needed on Dockerfile
+  projects:
+    - asterisk-voicemail
+    - backup-tools
+    - bulk-processor
+    - bulk-processor-projects
+    - bootenv
+    - cdr-exporter
+    - cfg-schema
+    - check-tools
+    - cleanup-tools
+    - cloudpbx-sources
+    - comx-fileshare-service
+    - csta-testsuite
+    - data-hal
+    - db-schema
+    - deployment-iso
+    - dhtest
+    - documentation
+    - faxserver
+    - heartbeat
+    - installer
+    - janus-admin
+    - janus-client
+    - kamailio
+    - kamailio-config-tests
+    - keyring
+    - klish
+    - libinewrate
+    - libswrate
+    - libtcap
+    - license-client
+    - lnpd
+    - lua-ngcp-kamailio
+    - mediator
+    - megacli
+    - metapackages
+    - monitoring-tools
+    - ngcp-admin-ui
+    - ngcp-api-tools
+    - ngcp-csc-ui
+    - ngcp-exporter
+    - ngcp-fauditd
+    - ngcp-inventory
+    - ngcp-js-api-client
+    - ngcp-logfs
+    - ngcp-klish-config
+    - ngcp-panel
+    - ngcp-prompts
+    - ngcp-rest-api
+    - ngcp-rtcengine
+    - ngcp-schema
+    - ngcp-status
+    - ngcp-sudo-plugin
+    - ngcp-support
+    - ngcp-user-framework
+    - ngcp-web-tests-e2e
+    - ngcpcfg
+    - ngcpcfg-api
+    - ngcpcfg-ha
+    - ngrep-sip
+    - prosody
+    - pushd
+    - py-ngcp-kamailio
+    - rate-o-mat
+    - reminder
+    - rtpengine
+    - sems
+    - sems-modules
+    - sems-pbx
+    - sipwise-base
+    - snmp-agent
+    - system-tests
+    - system-tools
+    - templates
+    - upgrade
+    - vmnotify
+    - voisniff-ng
+    - websocket
+
+release_mirror:
+  common:
+    copysrc:
+      - kamailio-config-tests
+      - klish
+      - libdata-hal-perl
+      - libsipwise-base-perl
+      - lua-ngcp-kamailio
+      - ngcp-admin-ui
+      - ngcp-api-tools
+      - ngcp-asterisk-voicemail
+      - ngcp-bulk-processor
+      - ngcp-cdr-exporter
+      - ngcp-cfg-schema
+      - ngcp-check-tools
+      - ngcp-cleanup-tools
+      - ngcp-csc-ui
+      - ngcp-db-schema
+      - ngcp-deployment-iso
+      - ngcp-dhtest
+      - ngcp-handbook
+      - ngcp-installer
+      - ngcp-js-api-client
+      - ngcp-kamailio
+      - ngcp-keyring
+      - ngcp-klish-config
+      - ngcp-libswrate
+      - ngcp-libtcap
+      - ngcp-license-client
+      - ngcp-mediator
+      - ngcp-metapackages
+      - ngcp-ngcpcfg
+      - ngcp-panel
+      - ngcp-prompts
+      - ngcp-prosody-modules
+      - ngcp-rate-o-mat
+      - ngcp-reminder
+      - ngcp-rest-api
+      - ngcp-rtpengine
+      - ngcp-schema
+      - ngcp-status
+      - ngcp-support
+      - ngcp-system-tests
+      - ngcp-system-tools
+      - ngcp-templates
+      - ngcp-upgrade
+      - ngcp-vmnotify
+      - ngcp-web-tests-e2e
+      - ngrep-sip
+      - py-ngcp-kamailio
+    remove:
+      source:
+        - ngcp-handbook
+        - ngcp-installer
+        - ngcp-libswrate
+        - ngcp-license-client
+        - ngcp-prompts
+        - ngcp-templates
+        - ngcp-upgrade
+      binary:
+        - ngcp-handbook-internal
+        - ngcp-handbook-pdf-internal
+      matched: []
+  ce:
+    copysrc:
+      - ngcp-sems
+    remove:
+      source: []
+      binary:
+        - ngcp-ngcpcfg-testsuite
+      matched:
+        - '*-carrier'
+        - '*-pro'
+        - '*-pro-dbgsym'
+  pro:
+    backports: []
+    copysrc:
+      - heartbeat-2
+      - janus-admin
+      - janus-client
+      - megacli
+      - ngcp-backup-tools
+      - ngcp-bootenv
+      - ngcp-bulk-processor-projects
+      - ngcp-cloudpbx-devices
+      - ngcp-comx-fileshare-service
+      - ngcp-csta-testsuite
+      - ngcp-exporter
+      - ngcp-fauditd
+      - ngcp-faxserver
+      - ngcp-inventory
+      - ngcp-libinewrate
+      - ngcp-lnpd
+      - ngcp-logfs
+      - ngcp-monitoring-tools
+      - ngcp-ngcpcfg-ha
+      - ngcp-pushd
+      - ngcp-rtcengine
+      - ngcp-sems-modules
+      - ngcp-sems-pbx
+      - ngcp-snmp
+      - ngcp-sudo-plugin
+      - ngcp-user-framework
+      - ngcp-voisniff
+      - ngcp-websocket
+      - ngcpcfg-api
+    remove:
+      binary: []
+      source:
+        - ngcp-cloudpbx-devices
+        - ngcp-csta-testsuite
+        - ngcp-fauditd
+        - ngcp-logfs
+        - ngcp-monitoring-tools
+        - ngcp-ngcpcfg-ha
+        - ngcp-pushd
+        - ngcp-sems-modules
+        - ngcp-sems-pbx
+        - ngcp-sudo-plugin
+        - ngcp-user-framework
+        - ngcp-voisniff
+        - ngcpcfg-api
+      matched:
+        - '*ngcp*-ce'
+        - '*ngcp*-ce-*'
