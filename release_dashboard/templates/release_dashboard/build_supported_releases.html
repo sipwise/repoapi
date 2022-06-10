@@ -1,5 +1,6 @@
 {% extends "release_dashboard/base.html" %}
 {% load static %}
+{% load rd_extras %}
 {% block title %}Build release{% endblock %}
 {% block navlist %}
     <li><a href="{% url 'release_dashboard:index'%}">Release Dashboard</a></li>
@@ -16,7 +17,7 @@
         {% for base, data_list in releases_list %}
         {% if base != 'master' %}
           <li role="presentation">
-            <a href="#{{base|cut:'.'}}" aria-controls="{{base|cut:'.'}}"
+            <a href="#{{base|replace_dots:'_'}}" aria-controls="{{base|replace_dots:'_'}}"
                role="tab" data-toggle="tab">{{base}}</a>
           </li>
         {% endif %}
@@ -25,7 +26,7 @@
       <div class="tab-content col-md-8">
         {% for base, data_list in releases_list %}
         {% if base != 'master' %}
-        <div role="tabpanel" class="tab-pane" id="{{base|cut:'.'}}">
+        <div role="tabpanel" class="tab-pane" id="{{base|replace_dots:'_'}}">
           <ul class="list-group row">
             {% for data in data_list %}
             <li class="list-group-item col-xs-2 {% if data.release in builds %}list-group-item-info{% endif %}">
