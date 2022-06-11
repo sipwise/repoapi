@@ -1,0 +1,231 @@
+- model: repoapi.jenkinsbuildinfo
+  pk: 336
+  fields:
+    tag: e750560b-3cd9-48ff-afa3-3251fbfc7690
+    projectname: release-copy-debs-yml
+    jobname: release-copy-debs-yml
+    buildnumber: 92
+    date: 2022-06-02 09:57:57+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/release-copy-debs-yml/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    param_tag: ''
+    param_branch: ''
+    param_release: release-trunk-weekly
+    param_release_uuid: 16726366-93fa-4050-91fd-d496bf9acabf
+    param_distribution: ''
+    param_ppa: ''
+    repo_name: ''
+    git_commit_msg: ''
+- model: repoapi.jenkinsbuildinfo
+  pk: 444
+  fields:
+    tag: 695a834c-fac2-4706-9b73-fc7eab74c12d
+    projectname: asterisk-voicemail
+    jobname: asterisk-voicemail-get-code
+    buildnumber: 19
+    date: 2022-06-02 10:19:28+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/asterisk-voicemail-get-code/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    param_tag: none
+    param_branch: master
+    param_release: release-trunk-weekly
+    param_release_uuid: 16726366-93fa-4050-91fd-d496bf9acabf
+    param_distribution: bullseye
+    param_ppa: ''
+    repo_name: ''
+    git_commit_msg: 6a88300 Release new version 16.16.1+0~mr10.5.0.0
+- model: repoapi.jenkinsbuildinfo
+  pk: 445
+  fields:
+    tag: 695a834c-fac2-4706-9b73-fc7eab74c12d
+    projectname: asterisk-voicemail
+    jobname: asterisk-voicemail-manage-docker
+    buildnumber: 19
+    date: 2022-06-02 10:19:29+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/asterisk-voicemail-manage-docker/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    param_tag: none
+    param_branch: master
+    param_release: release-trunk-weekly
+    param_release_uuid: 16726366-93fa-4050-91fd-d496bf9acabf
+    param_distribution: bullseye
+    param_ppa: $ppa
+    repo_name: ''
+    git_commit_msg: 6a88300 Release new version 16.16.1+0~mr10.5.0.0
+- model: repoapi.jenkinsbuildinfo
+  pk: 446
+  fields:
+    tag: 695a834c-fac2-4706-9b73-fc7eab74c12d
+    projectname: asterisk-voicemail
+    jobname: asterisk-voicemail-debian-check
+    buildnumber: 2
+    date: 2022-06-02 10:19:29+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/asterisk-voicemail-debian-check/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    param_tag: none
+    param_branch: master
+    param_release: release-trunk-weekly
+    param_release_uuid: 16726366-93fa-4050-91fd-d496bf9acabf
+    param_distribution: bullseye
+    param_ppa: $ppa
+    repo_name: ''
+    git_commit_msg: 6a88300 Release new version 16.16.1+0~mr10.5.0.0
+- model: repoapi.jenkinsbuildinfo
+  pk: 447
+  fields:
+    tag: 695a834c-fac2-4706-9b73-fc7eab74c12d
+    projectname: asterisk-voicemail
+    jobname: asterisk-voicemail-tap-test
+    buildnumber: 19
+    date: 2022-06-02 10:19:35+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/asterisk-voicemail-tap-test/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    param_tag: none
+    param_branch: master
+    param_release: release-trunk-weekly
+    param_release_uuid: 16726366-93fa-4050-91fd-d496bf9acabf
+    param_distribution: bullseye
+    param_ppa: $ppa
+    repo_name: ''
+    git_commit_msg: 6a88300 Release new version 16.16.1+0~mr10.5.0.0
+- model: repoapi.jenkinsbuildinfo
+  pk: 448
+  fields:
+    tag: 695a834c-fac2-4706-9b73-fc7eab74c12d
+    projectname: asterisk-voicemail
+    jobname: asterisk-voicemail-source-tests
+    buildnumber: 19
+    date: 2022-06-02 10:19:35+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/asterisk-voicemail-source-tests/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    param_tag: none
+    param_branch: master
+    param_release: release-trunk-weekly
+    param_release_uuid: 16726366-93fa-4050-91fd-d496bf9acabf
+    param_distribution: bullseye
+    param_ppa: $ppa
+    repo_name: ''
+    git_commit_msg: 6a88300 Release new version 16.16.1+0~mr10.5.0.0
+- model: repoapi.jenkinsbuildinfo
+  pk: 449
+  fields:
+    tag: 695a834c-fac2-4706-9b73-fc7eab74c12d
+    projectname: asterisk-voicemail
+    jobname: asterisk-voicemail-source
+    buildnumber: 19
+    date: 2022-06-02 10:19:38+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/asterisk-voicemail-source/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    param_tag: none
+    param_branch: master
+    param_release: release-trunk-weekly
+    param_release_uuid: 16726366-93fa-4050-91fd-d496bf9acabf
+    param_distribution: bullseye
+    param_ppa: $ppa
+    repo_name: ''
+    git_commit_msg: 6a88300 Release new version 16.16.1+0~mr10.5.0.0
+- model: repoapi.jenkinsbuildinfo
+  pk: 451
+  fields:
+    tag: 695a834c-fac2-4706-9b73-fc7eab74c12d
+    projectname: asterisk-voicemail
+    jobname: asterisk-voicemail-binaries
+    buildnumber: 19
+    date: 2022-06-02 10:20:07+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/asterisk-voicemail-binaries/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    param_tag: none
+    param_branch: master
+    param_release: release-trunk-weekly
+    param_release_uuid: 16726366-93fa-4050-91fd-d496bf9acabf
+    param_distribution: bullseye
+    param_ppa: $ppa
+    repo_name: ''
+    git_commit_msg: 6a88300 Release new version 16.16.1+0~mr10.5.0.0
+- model: repoapi.jenkinsbuildinfo
+  pk: 452
+  fields:
+    tag: 695a834c-fac2-4706-9b73-fc7eab74c12d
+    projectname: asterisk-voicemail
+    jobname: asterisk-voicemail-repos
+    buildnumber: 18
+    date: 2022-06-02 10:20:08+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/asterisk-voicemail-repos/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    param_tag: none
+    param_branch: master
+    param_release: release-trunk-weekly
+    param_release_uuid: 16726366-93fa-4050-91fd-d496bf9acabf
+    param_distribution: bullseye
+    param_ppa: $ppa
+    repo_name: ''
+    git_commit_msg: 6a88300 Release new version 16.16.1+0~mr10.5.0.0
+- model: repoapi.jenkinsbuildinfo
+  pk: 453
+  fields:
+    tag: 695a834c-fac2-4706-9b73-fc7eab74c12d
+    projectname: asterisk-voicemail
+    jobname: asterisk-voicemail-docker-ppa
+    buildnumber: 18
+    date: 2022-06-02 10:20:09+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/asterisk-voicemail-docker-ppa/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    param_tag: none
+    param_branch: master
+    param_release: release-trunk-weekly
+    param_release_uuid: 16726366-93fa-4050-91fd-d496bf9acabf
+    param_distribution: bullseye
+    param_ppa: $ppa
+    repo_name: ''
+    git_commit_msg: 6a88300 Release new version 16.16.1+0~mr10.5.0.0
+- model: repoapi.jenkinsbuildinfo
+  pk: 466
+  fields:
+    tag: 695a834c-fac2-4706-9b73-fc7eab74c12d
+    projectname: asterisk-voicemail
+    jobname: asterisk-voicemail-piuparts
+    buildnumber: 18
+    date: 2022-06-02 10:21:20+00:00
+    result: SUCCESS
+    job_url: https://jenkins-dev.mgm.sipwise.com/job/asterisk-voicemail-piuparts/
+    gerrit_patchset: none_might-be-direct-push
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    param_tag: none
+    param_branch: master
+    param_release: release-trunk-weekly
+    param_release_uuid: 16726366-93fa-4050-91fd-d496bf9acabf
+    param_distribution: bullseye
+    param_ppa: $ppa
+    repo_name: ''
+    git_commit_msg: 6a88300 Release new version 16.16.1+0~mr10.5.0.0
