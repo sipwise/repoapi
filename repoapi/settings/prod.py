@@ -52,6 +52,11 @@ ALLOWED_HOSTS = [".mgm.sipwise.com"]
 LOGGING["loggers"]["repoapi"]["level"] = os.getenv(  # noqa
     "DJANGO_LOG_LEVEL", "INFO"
 )  # noqa
+# for now lets see debug for auth ldap
+LOGGING["loggers"]["django_auth_ldap"] = {  # noqa
+    "level": "DEBUG",
+    "handlers": ["console"],
+}
 
 server_config = RawConfigParser()
 server_config.read(VAR_DIR / "server.ini")
@@ -73,10 +78,21 @@ AUTH_LDAP_REQUIRE_GROUP_LIST = server_config.get(
 ).split(",")
 require_grp_list_size = len(AUTH_LDAP_REQUIRE_GROUP_LIST)
 AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s," + AUTH_LDAP_USER_BASE
+AUTH_LDAP_USER_ATTR_MAP = {
+    "first_name": "givenName",
+    "last_name": "sn",
+    "email": "mail",
+}
+AUTH_LDAP_ALWAYS_UPDATE_USER = True
 AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
     AUTH_LDAP_GROUP_BASE, ldap.SCOPE_SUBTREE, "(objectClass=posixGroup)"
 )
 AUTH_LDAP_GROUP_TYPE = PosixGroupType()
+AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+    "is_staff": f"cn=devops,{AUTH_LDAP_GROUP_BASE}",
+}
+AUTH_LDAP_FIND_GROUP_PERMS = True
+AUTH_LDAP_CACHE_TIMEOUT = 3600
 
 if require_grp_list_size > 1:
     AUTH_LDAP_REQUIRE_GROUP = reduce(

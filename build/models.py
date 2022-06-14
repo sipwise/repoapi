@@ -154,6 +154,12 @@ class BuildRelease(models.Model):
     triggered_jobs = models.TextField(null=True, editable=False)
     objects = BuildReleaseManager()
 
+    class Meta:
+        permissions = [
+            ("can_trigger", "can trigger build releases"),
+            ("can_trigger_hotfix", "can trigger hotfix builds"),
+        ]
+
     def __str__(self):
         return "%s[%s]" % (self.release, self.uuid)
 
