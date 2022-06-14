@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -16,10 +16,15 @@
 # Build paths inside the project like this: join(BASE_DIR, ...)
 import os
 from configparser import RawConfigParser
+from functools import reduce
 from pathlib import Path
 from urllib.parse import urlparse
 
+import ldap
 from celery.schedules import crontab
+from django_auth_ldap.config import LDAPGroupQuery
+from django_auth_ldap.config import LDAPSearch
+from django_auth_ldap.config import PosixGroupType
 
 from .common import *  # noqa
 
@@ -62,7 +67,29 @@ GERRIT_REST_HTTP_PASSWD = server_config.get("gerrit", "HTTP_PASSWD")
 DOCKER_REGISTRY_URL = server_config.get("server", "DOCKER_REGISTRY_URL")
 AUTH_LDAP_SERVER_URI = server_config.get("server", "AUTH_LDAP_SERVER_URI")
 AUTH_LDAP_USER_BASE = server_config.get("server", "AUTH_LDAP_USER_BASE")
+AUTH_LDAP_GROUP_BASE = server_config.get("server", "AUTH_LDAP_GROUP_BASE")
+AUTH_LDAP_REQUIRE_GROUP_LIST = server_config.get(
+    "server", "AUTH_LDAP_REQUIRE_GROUP_LIST"
+).split(",")
+require_grp_list_size = len(AUTH_LDAP_REQUIRE_GROUP_LIST)
 AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s," + AUTH_LDAP_USER_BASE
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
+    AUTH_LDAP_GROUP_BASE, ldap.SCOPE_SUBTREE, "(objectClass=posixGroup)"
+)
+AUTH_LDAP_GROUP_TYPE = PosixGroupType()
+
+if require_grp_list_size > 1:
+    AUTH_LDAP_REQUIRE_GROUP = reduce(
+        lambda x, y: LDAPGroupQuery(f"cn={x},{AUTH_LDAP_GROUP_BASE}")
+        | LDAPGroupQuery(f"cn={y},{AUTH_LDAP_GROUP_BASE}"),
+        AUTH_LDAP_REQUIRE_GROUP_LIST,
+    )
+elif require_grp_list_size == 1:
+    for x in AUTH_LDAP_REQUIRE_GROUP_LIST:
+        AUTH_LDAP_REQUIRE_GROUP = LDAPGroupQuery(
+            f"cn={x},{AUTH_LDAP_GROUP_BASE}"
+        )
+
 BUILD_POOL = server_config.getint("server", "BUILD_POOL")
 
 # Keep ModelBackend around for per-user permissions and maybe a local
