@@ -16,11 +16,12 @@
       <td>{{ build_release.branch }}</td>
       <td>{{ build_release.start_date }}</td>
       <td id="action_list">
+        {% if perms.build.can_trigger %}
         <button type="button" id="resume"
                 disabled="disabled"
                 onclick="click_resume(event, '{{ build_release.id }}')"
                 class="btn btn-primary">Resume</button>
-      </td>
+        {% endif %}
       </td>
     </tr>
   </table>

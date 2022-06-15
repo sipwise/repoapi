@@ -3,10 +3,12 @@
       <a class="link" name="" href=""></a>
     </span>
     <div class="pull-right">
+      {% if perms.build.can_trigger %}
       <form method="POST" class="form-inline">
         {% csrf_token %}
         <button class="btn-default btn-info retrigger-project-url hidden">Retrigger</button>
       </form>
+      {% endif %}
       <a class="badge latest-uuid-url" href="">latest</a>
     </div>
 </div>

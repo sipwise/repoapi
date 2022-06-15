@@ -14,7 +14,9 @@
 # with this prograproj.  If not, see <http://www.gnu.org/licenses/>.
 from unittest.mock import patch
 
+from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.test import override_settings
 from django.test import TestCase
 from django.urls import reverse
@@ -23,13 +25,26 @@ from build.models import BuildRelease
 from repoapi.test.base import BaseTest
 
 
+def add_perm(user, model, codename):
+    ct = ContentType.objects.get_for_model(model)
+    perm = Permission.objects.get(content_type=ct, codename=codename)
+    user.user_permissions.add(perm)
+
+
 class TestHotfix(TestCase):
     def test_no_login(self):
         res = self.client.get(reverse("release_dashboard:hotfix"))
         self.assertNotEqual(res.status_code, 200)
 
+    def test_login_no_perm(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        res = self.client.get(reverse("release_dashboard:hotfix"))
+        self.assertEqual(res.status_code, 403)
+
     def test_login_ok(self):
         user = User.objects.create_user(username="test")
+        add_perm(user, BuildRelease, "can_trigger_hotfix")
         self.client.force_login(user)
         res = self.client.get(reverse("release_dashboard:hotfix"))
         self.assertEqual(res.status_code, 200)
@@ -39,6 +54,7 @@ class TestHotfix(TestCase):
     @patch("release_dashboard.views.get_branches")
     def test_natural_sort(self, gb, gt):
         user = User.objects.create_user(username="test")
+        add_perm(user, BuildRelease, "can_trigger_hotfix")
         self.client.force_login(user)
         gt.return_value = []
         gb.return_value = [
@@ -77,8 +93,19 @@ class TestHotfixRelease(TestCase):
         )
         self.assertNotEqual(res.status_code, 200)
 
+    def test_login_no_perm(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        res = self.client.get(
+            reverse(
+                "release_dashboard:hotfix_release", args=["release-mr7.5.2"]
+            )
+        )
+        self.assertEqual(res.status_code, 403)
+
     def test_login_ok(self):
         user = User.objects.create_user(username="test")
+        add_perm(user, BuildRelease, "can_trigger_hotfix")
         self.client.force_login(user)
         res = self.client.get(
             reverse(
@@ -89,6 +116,7 @@ class TestHotfixRelease(TestCase):
 
     def test_no_mrXXX(self):
         user = User.objects.create_user(username="test")
+        add_perm(user, BuildRelease, "can_trigger_hotfix")
         self.client.force_login(user)
         res = self.client.get(
             reverse("release_dashboard:hotfix_release", args=["release-mr7.5"])
@@ -105,6 +133,7 @@ class TestHotfixRelease(TestCase):
 
     def test_project_ok(self):
         user = User.objects.create_user(username="test")
+        add_perm(user, BuildRelease, "can_trigger_hotfix")
         self.client.force_login(user)
         res = self.client.post(
             reverse(
@@ -118,6 +147,7 @@ class TestHotfixRelease(TestCase):
 
     def test_project_wrong(self):
         user = User.objects.create_user(username="test")
+        add_perm(user, BuildRelease, "can_trigger_hotfix")
         self.client.force_login(user)
         res = self.client.post(
             reverse(

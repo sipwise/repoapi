@@ -17,6 +17,8 @@ import uuid
 
 import structlog
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseNotFound
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
@@ -52,6 +54,8 @@ def index(request):
 def build_release(request, release):
     release_config = ReleaseConfig(release)
     if request.method == "POST":
+        if not request.user.has_perm("build.can_trigger"):
+            raise PermissionDenied()
         release_uuid = uuid.uuid4()
         BuildRelease.objects.create_build_release(release_uuid, release)
         return HttpResponseRedirect(
@@ -77,6 +81,7 @@ def build_release(request, release):
 
 @login_required
 @require_http_methods(["POST"])
+@permission_required("build.can_trigger_hotfix", raise_exception=True)
 def hotfix_build(request, branch, project):
     if project not in settings.RELEASE_DASHBOARD_PROJECTS:
         error = "repo:%s not valid" % project
@@ -104,6 +109,7 @@ def hotfix_build(request, branch, project):
 
 
 @login_required
+@permission_required("build.can_trigger_hotfix", raise_exception=True)
 def hotfix(request):
     prj_list = _projects_versions(
         settings.RELEASE_DASHBOARD_PROJECTS, regex_hotfix
@@ -114,6 +120,7 @@ def hotfix(request):
 
 @login_required
 @require_http_methods(["POST"])
+@permission_required("build.can_trigger_hotfix", raise_exception=True)
 def hotfix_release_build(request, release, project):
     release_config = ReleaseConfig(release)
     if project not in release_config.projects:
@@ -138,6 +145,7 @@ def hotfix_release_build(request, release, project):
 
 
 @login_required
+@permission_required("build.can_trigger_hotfix", raise_exception=True)
 def hotfix_release(request, release):
     release_config = ReleaseConfig(release)
     if not regex_hotfix.match(release_config.branch):
@@ -164,6 +172,7 @@ def refresh_all(request):
         return render(request, template, {"projects": projects})
 
 
+@login_required
 @require_http_methods(["POST"])
 def refresh(request, project):
     res = gerrit_fetch_info.delay(project)

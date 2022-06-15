@@ -7,7 +7,7 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-    <div class="panel panel-default">
+  <div class="panel panel-default">
       <div class="panel-heading">
           <h2 class="panel-title"><b>{{ config.release }}</b></h2>
       </div>
@@ -27,7 +27,7 @@
             <form method="POST" class="form-inline">
               {% csrf_token %}
               <button type="submit" class="btn btn-primary" id="build_button"
-                {% if not done %}disabled="disabled"{% endif %}>Build</button>
+                {% if not done or not perms.build.can_trigger %}disabled="disabled"{% endif %}>Build</button>
             </form>
             </td>
           </tr>
@@ -47,10 +47,11 @@
             <td>{{ br.last_update }}</td>
             <td>
               <button type="button" id="refresh_{{ br.id }}"
-                onclick="click_refresh_projects(event, '{{ br.id }}')"
-                class="btn btn-primary">Refresh projects</button>
+                {% if perms.build.can_trigger %}onclick="click_refresh_projects(event, '{{ br.id }}')"{% endif %}
+                class="btn btn-primary" {% if not perms.build.can_trigger %}disabled="disabled"{% endif %}>Refresh projects</button>
               <button type="button"
-                onclick="click_delete(event, '{{ br.id }}')" class="btn btn-danger">Delete</button>
+                {% if perms.build.can_trigger %}onclick="click_delete(event, '{{ br.id }}')"{% endif %}
+                class="btn btn-danger" {% if not perms.build.can_trigger %}disabled="disabled"{% endif %}>Delete</button>
             </td>
           </tr>
           {% endfor %}
@@ -64,7 +65,8 @@
           <div class="row">
             <h3 class="col-xs-10 panel-title">Projects to build</h3>
             <div class="col-xs-1 hidden" id="hotfix">
-              <a href="{% url 'release_dashboard:hotfix_release' config.release %}" class="btn btn-primary right">Hotfixes</a>
+              <a href="{% url 'release_dashboard:hotfix_release' config.release %}"
+                class="btn btn-primary right" {% if not perms.build.can_trigger_hotfix %}disabled="disabled"{% endif %}>Hotfixes</a>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -16,7 +16,7 @@ import django_filters
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_api_key.permissions import HasAPIKey
@@ -37,14 +37,14 @@ class BuildReleaseFilter(django_filters.FilterSet):
 
 
 class BuildReleaseList(generics.ListCreateAPIView):
-    permission_classes = [HasAPIKey | IsAuthenticated]
+    permission_classes = [HasAPIKey | DjangoModelPermissions]
     queryset = models.BuildRelease.objects.all().order_by("id")
     serializer_class = serializers.BuildReleaseSerializer
     filter_class = BuildReleaseFilter
 
 
 class BuildReleaseDetail(generics.RetrieveDestroyAPIView):
-    permission_classes = [HasAPIKey | IsAuthenticated]
+    permission_classes = [HasAPIKey | DjangoModelPermissions]
     queryset = models.BuildRelease.objects.all().order_by("id")
     serializer_class = serializers.BuildReleaseSerializer
 
@@ -69,7 +69,7 @@ class BuildReleaseDetail(generics.RetrieveDestroyAPIView):
 
 
 class BuildProject(APIView):
-    permission_classes = [HasAPIKey | IsAuthenticated]
+    permission_classes = [HasAPIKey | DjangoModelPermissions]
 
     def post(self, request, release_uuid, project):
         br = get_object_or_404(models.BuildRelease, uuid=release_uuid)
