@@ -171,6 +171,28 @@ class TestDocker(TestCase):
         res = self.client.get(reverse("release_dashboard:docker_images"))
         self.assertEqual(res.status_code, 200)
 
+    def test_index(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        res = self.client.get(reverse("release_dashboard:index"))
+        self.assertEqual(res.status_code, 200)
+
+    @patch("release_dashboard.views.docker.docker_fetch_project")
+    def test_refresh(self, dfp):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        res = self.client.post(
+            reverse("release_dashboard:refresh_docker", args=["fake"])
+        )
+        self.assertEqual(res.status_code, 201)
+        dfp.delay.assert_called_once_with("fake")
+
+    def test_build(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        res = self.client.get(reverse("release_dashboard:build_docker_images"))
+        self.assertEqual(res.status_code, 200)
+
 
 class TestBuildRelease(BaseTest):
     fixtures = ["test_build_release"]

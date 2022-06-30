@@ -29,12 +29,14 @@ from . import _hash_versions
 from . import _projects_versions
 from . import regex_mr
 from .. import serializers
-from .. import tasks
 from ..conf import settings
 from ..forms.docker import BuildDockerForm
 from ..models import DockerImage
 from ..models import DockerTag
 from ..models import Project
+from ..tasks import docker_fetch_all
+from ..tasks import docker_fetch_project
+from ..tasks import docker_remove_tag
 from ..utils import docker
 
 logger = structlog.get_logger(__name__)
@@ -107,7 +109,7 @@ def build_docker_images(request):
 @login_required
 def refresh_all(request):
     if request.method == "POST":
-        res = tasks.docker_fetch_all.delay()
+        res = docker_fetch_all.delay()
         return JsonResponse({"url": "/flower/task/%s" % res.id}, status=201)
     else:
         template = "release_dashboard/refresh_docker.html"
@@ -121,7 +123,7 @@ def refresh_all(request):
 @login_required
 @require_http_methods(["POST"])
 def refresh(request, project):
-    res = tasks.docker_fetch_project.delay(project)
+    res = docker_fetch_project.delay(project)
     return JsonResponse({"url": "/flower/task/%s" % res.id}, status=201)
 
 
@@ -189,5 +191,5 @@ class DockerTagDetail(generics.RetrieveDestroyAPIView):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        tasks.docker_remove_tag.delay(instance.image.name, instance.name)
+        docker_remove_tag.delay(instance.image.name, instance.name)
         return Response(status=status.HTTP_202_ACCEPTED)
