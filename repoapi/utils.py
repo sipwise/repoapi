@@ -55,7 +55,7 @@ def get_jenkins_response(url):
 def dlfile(url, path: Path):
     log = logger.bind(
         url=url,
-        path=path,
+        path=str(path),
     )
     if settings.DEBUG:
         log.info("_NOT_ calling due to DEBUG is set")
@@ -126,7 +126,7 @@ def _jenkins_get(url, base_path: Path, filename) -> Path:
     base_path.mkdir(parents=True, exist_ok=True)
     path = base_path.joinpath(filename)
     log = logger.bind(
-        base_path=base_path,
+        base_path=str(base_path),
         filename=filename,
         url=url,
     )
