@@ -87,7 +87,7 @@ def build_docker_images(request):
             )
         else:
             context = {"error": "form validation error"}
-        return render(request, "release_dashboard/build_result.html", context)
+        return render(request, "release_dashboard/docker_result.html", context)
     else:
         context = {
             "projects": _projects_versions(
