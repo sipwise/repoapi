@@ -157,4 +157,4 @@ class TestJBIReleaseChangedCelery(BaseTest):
         )
         path = base_path.joinpath("envVars.json")
         dlfile.assert_any_call(url, path)
-        process_result.delay.assert_called_once_with(jbi.id, path)
+        process_result.delay.assert_called_once_with(jbi.id, str(path))

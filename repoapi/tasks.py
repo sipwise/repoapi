@@ -77,7 +77,7 @@ def get_jbi_files(jbi_id, jobname, buildnumber):
     else:
         log.debug("skip artifacts download")
     if jobname in settings.RELEASE_CHANGED_JOBS:
-        process_result.delay(jbi_id, path_envVars)
+        process_result.delay(jbi_id, str(path_envVars))
 
 
 @shared_task(ignore_result=True)

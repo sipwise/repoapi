@@ -90,12 +90,13 @@ def receiver_setup_logging(loglevel, logfile, format, colorize, **kwargs):
 
 
 @app.task()
-def jbi_parse_hotfix(jbi_id, path):
+def jbi_parse_hotfix(jbi_id: str, path: str):
     app.send_task("hotfix.tasks.hotfix_released", args=[jbi_id, path])
 
 
 @app.task()
-def process_result(jbi_id, path_envVars):
+def process_result(jbi_id: str, path_envVars: str):
     app.send_task(
-        "release_changed.tasks.process_result", args=[jbi_id, path_envVars]
+        "release_changed.tasks.process_result",
+        args=[jbi_id, path_envVars],
     )
