@@ -18,6 +18,7 @@ from unittest.mock import patch
 from django.test import override_settings
 
 from build.models import BuildRelease
+from build.utils import remove_from_textlist
 from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
 
@@ -293,3 +294,55 @@ class WeeklyTest(BaseTest):
         self.assertEqual(br.pool_size, 0)
         tb.assert_not_called()
         tbm.assert_called_once_with(br)
+
+    @override_settings(BUILD_POOL=2)
+    def test_jbi_manage_failed(self, tbm, tb, dl):
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        remove_from_textlist(br, "built_projects", "installer")
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/installer-repos/",
+            projectname="installer",
+            jobname="installer-repos",
+            tag="UUIDB",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="FAILURE",
+        )
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/ngcp-prompts-repos/",
+            projectname="ngcp-prompts",
+            jobname="ngcp-prompts-repos",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.get(pk=br.pk)
+        self.assertTrue(br.built_projects.endswith("ngcp-prompts"))
+        self.assertEqual(br.pool_size, 0)
+        tb.assert_not_called()
+        tbm.assert_not_called()
+
+    @override_settings(BUILD_POOL=2)
+    def test_jbi_manage_building(self, tbm, tb, dl):
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        remove_from_textlist(br, "built_projects", "installer")
+        br.append_triggered("installer")
+        self.assertEqual(br.pool_size, 1)
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/ngcp-prompts-repos/",
+            projectname="ngcp-prompts",
+            jobname="ngcp-prompts-repos",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.get(pk=br.pk)
+        self.assertTrue(br.built_projects.endswith("ngcp-prompts"))
+        self.assertEqual(br.pool_size, 0)
+        tb.assert_not_called()
+        tbm.assert_not_called()

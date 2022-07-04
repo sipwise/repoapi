@@ -94,6 +94,9 @@ def build_resume(pk):
             br.append_triggered(prj)
         else:
             log.debug("BuildRelease has no next")
+            if not br.done:
+                log.debug("not done yet")
+                continue
             if br.release == "release-trunk-weekly":
                 url = trigger_build_matrix(br)
                 if url is not None:
