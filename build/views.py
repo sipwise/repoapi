@@ -70,6 +70,7 @@ class BuildReleaseDetail(generics.RetrieveDestroyAPIView):
 
 class BuildProject(APIView):
     permission_classes = [HasAPIKey | DjangoModelPermissions]
+    queryset = models.BuildRelease.objects.all().order_by("id")
 
     def post(self, request, release_uuid, project):
         br = get_object_or_404(models.BuildRelease, uuid=release_uuid)
