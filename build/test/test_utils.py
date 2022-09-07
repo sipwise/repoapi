@@ -113,6 +113,7 @@ class ReleaseConfigTestCase(SimpleTestCase):
             "trunk-weekly",
             "release-trunk-buster",
             "release-trunk-bullseye",
+            "mr11.0",
             "mr10.1.1",
             "mr10.1",
             "mr10.0",
@@ -154,7 +155,6 @@ class ReleaseConfigTestCase(SimpleTestCase):
     def test_ok(self):
         rc = ReleaseConfig("trunk")
         self.assertIsNotNone(rc.config)
-        self.assertListEqual(list(rc.build_deps.keys()), self.build_deps)
         self.assertEqual(rc.debian_release, "buster")
         self.assertEqual(len(rc.projects), 73)
 
@@ -203,38 +203,147 @@ class ReleaseConfigTestCase(SimpleTestCase):
 
     def test_build_deps(self):
         rc = ReleaseConfig("trunk")
-        build_deps = [
-            "data-hal",
-            "ngcp-schema",
-            "libinewrate",
-            "libswrate",
-            "libtcap",
-            "sipwise-base",
-            "check-tools",
-        ]
-        self.assertListEqual(list(rc.build_deps.keys()), build_deps)
+        self.assertListEqual(list(rc.build_deps.keys()), self.build_deps)
 
     def test_build_deps_iter_step_1(self):
         rc = ReleaseConfig("trunk")
         build_deps = [
+            "check-tools",
             "data-hal",
             "libinewrate",
             "libswrate",
             "libtcap",
             "sipwise-base",
-            "check-tools",
         ]
         values = []
-        for prj in rc.wanna_build_deps(0):
+        res = rc.wanna_build_deps(0)
+        self.assertListEqual(build_deps, res.list_no_deps[0])
+        self.assertListEqual(["ngcp-schema"], res.list_deps[0])
+        for prj in res:
             values.append(prj)
         self.assertListEqual(build_deps, values)
 
     def test_build_deps_iter_step_2(self):
         rc = ReleaseConfig("trunk")
+        build_deps = ["ngcp-schema"]
         values = []
-        for prj in rc.wanna_build_deps(1):
+        res = rc.wanna_build_deps(1)
+        self.assertListEqual([], res.list_deps[1])
+        self.assertListEqual(build_deps, res.list_no_deps[1])
+        for prj in res:
             values.append(prj)
-        self.assertListEqual(["ngcp-schema"], values)
+        self.assertListEqual(build_deps, values)
+
+    def test_build_deps_iter_step_3(self):
+        rc = ReleaseConfig("trunk")
+        values = []
+        for prj in rc.wanna_build_deps(2):
+            values.append(prj)
+        self.assertListEqual([], values)
+
+    def test_build_deps_mr11_0(self):
+        rc = ReleaseConfig("mr11.0")
+        build_deps = [
+            "system-tests",
+            "system-tools",
+            "data-hal",
+            "ngcp-schema",
+            "libswrate",
+            "libtcap",
+            "sipwise-base",
+            "check-tools",
+            "ngcpcfg",
+            "ngcp-panel",
+        ]
+        self.assertListEqual(list(rc.build_deps.keys()), build_deps)
+
+    def test_build_deps_mr11_0_iter_step_1(self):
+        rc = ReleaseConfig("mr11.0")
+        build_deps = [
+            "ngcpcfg",
+            "system-tests",
+        ]
+        values = []
+        res = rc.wanna_build_deps(0)
+        self.assertListEqual(
+            [
+                "check-tools",
+                "data-hal",
+                "libswrate",
+                "libtcap",
+                "ngcp-panel",
+                "ngcp-schema",
+                "sipwise-base",
+                "system-tools",
+            ],
+            res.list_deps[0],
+        )
+        self.assertListEqual(build_deps, res.list_no_deps[0])
+        for prj in res:
+            values.append(prj)
+        self.assertListEqual(build_deps, values)
+
+    def test_build_deps_mr11_0_iter_step_2(self):
+        rc = ReleaseConfig("mr11.0")
+        build_deps = [
+            "data-hal",
+            "libswrate",
+            "libtcap",
+            "sipwise-base",
+            "system-tools",
+        ]
+        values = []
+        res = rc.wanna_build_deps(1)
+        self.assertListEqual(
+            [
+                "check-tools",
+                "ngcp-panel",
+                "ngcp-schema",
+            ],
+            res.list_deps[1],
+        )
+        self.assertListEqual(build_deps, res.list_no_deps[1])
+        for prj in res:
+            values.append(prj)
+        self.assertListEqual(build_deps, values)
+
+    def test_build_deps_mr11_0_iter_step_3(self):
+        rc = ReleaseConfig("mr11.0")
+        build_deps = [
+            "check-tools",
+            "ngcp-schema",
+        ]
+        values = []
+        res = rc.wanna_build_deps(2)
+        self.assertListEqual(
+            ["ngcp-panel"],
+            res.list_deps[2],
+        )
+        self.assertListEqual(build_deps, res.list_no_deps[2])
+        for prj in res:
+            values.append(prj)
+        self.assertListEqual(build_deps, values)
+
+    def test_build_deps_mr11_0_iter_step_4(self):
+        rc = ReleaseConfig("mr11.0")
+        build_deps = ["ngcp-panel"]
+        values = []
+        res = rc.wanna_build_deps(3)
+        self.assertListEqual(
+            [],
+            res.list_deps[3],
+        )
+        self.assertListEqual(build_deps, res.list_no_deps[3])
+        for prj in res:
+            values.append(prj)
+        self.assertListEqual(build_deps, values)
+
+    def test_build_deps_mr11_0_iter_step_5(self):
+        rc = ReleaseConfig("mr11.0")
+        values = []
+        for prj in rc.wanna_build_deps(4):
+            values.append(prj)
+        self.assertListEqual([], values)
 
 
 @patch("build.utils.open_jenkins_url")

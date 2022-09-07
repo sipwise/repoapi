@@ -202,16 +202,38 @@ class BuildReleaseTestCase(BaseTest):
     def test_build_deps(self):
         build_deps = [
             [
+                "check-tools",
                 "data-hal",
                 "libinewrate",
                 "libswrate",
                 "libtcap",
                 "sipwise-base",
-                "check-tools",
             ],
             ["ngcp-schema"],
         ]
         build = BuildRelease.objects.create_build_release("AAA", "trunk")
+        self.assertListEqual(build.build_deps, build_deps)
+
+    def test_build_deps_mr11_0(self):
+        build_deps = [
+            [
+                "ngcpcfg",
+                "system-tests",
+            ],
+            [
+                "data-hal",
+                "libswrate",
+                "libtcap",
+                "sipwise-base",
+                "system-tools",
+            ],
+            [
+                "check-tools",
+                "ngcp-schema",
+            ],
+            ["ngcp-panel"],
+        ]
+        build = BuildRelease.objects.create_build_release("AAA", "mr11.0")
         self.assertListEqual(build.build_deps, build_deps)
 
 
@@ -330,17 +352,17 @@ class BuildReleaseStepsTest(BaseTest):
         self.assertIsNone(self.br.next)
 
     def test_next_empty(self):
-        self.assertEqual(self.br.next, "data-hal")
+        self.assertEqual(self.br.next, "check-tools")
 
     def test_next_build_deps(self):
         build_deps = [
             [
+                "check-tools",
                 "data-hal",
                 "libinewrate",
                 "libswrate",
                 "libtcap",
                 "sipwise-base",
-                "check-tools",
             ],
             ["ngcp-schema"],
         ]
@@ -364,12 +386,12 @@ class BuildReleaseStepsTest(BaseTest):
 
     def test_next_build_deps_stop(self):
         build_deps = [
+            "check-tools",
             "data-hal",
             "libinewrate",
             "libswrate",
             "libtcap",
             "sipwise-base",
-            "check-tools",
         ]
         i = 1
         self.jbi.projectname = "release-copy-debs-yml"

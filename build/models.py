@@ -365,10 +365,13 @@ class BuildRelease(models.Model):
     @property
     def build_deps(self):
         if getattr(self, "_build_deps", None) is None:
-            self._build_deps = [
-                list(self.config.wanna_build_deps(0)),
-                list(self.config.wanna_build_deps(1)),
-            ]
+            self._build_deps = []
+            step = 0
+            deps = list(self.config.wanna_build_deps(step))
+            while len(deps) > 0:
+                self._build_deps.append(deps)
+                step = step + 1
+                deps = list(self.config.wanna_build_deps(step))
         return self._build_deps
 
     @property

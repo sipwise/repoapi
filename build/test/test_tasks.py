@@ -47,7 +47,7 @@ class JBIManageTest(BaseTest):
             result="SUCCESS",
         )
         params = {
-            "project": "data-hal-get-code",
+            "project": "check-tools-get-code",
             "release_uuid": br.uuid,
             "trigger_release": br.release,
             "trigger_branch_or_tag": br.branch_or_tag,
@@ -56,7 +56,7 @@ class JBIManageTest(BaseTest):
         tb.assert_called_once_with(**params)
         br = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertEqual(br.pool_size, 1)
-        self.assertEqual(br.triggered_projects, "data-hal")
+        self.assertEqual(br.triggered_projects, "check-tools")
 
     @override_settings(BUILD_POOL=2)
     def test_jbi_manage_pool(self, tb, dl):
@@ -75,25 +75,38 @@ class JBIManageTest(BaseTest):
         br = BuildRelease.objects.get(id=br.pk)
         self.assertEqual(br.built_projects, "release-copy-debs-yml")
         params = {
-            "project": "data-hal-get-code",
+            "project": "check-tools-get-code",
             "release_uuid": br.uuid,
             "trigger_release": br.release,
             "trigger_branch_or_tag": br.branch_or_tag,
             "trigger_distribution": br.distribution,
         }
         calls = [call(**params)]
-        params["project"] = "libinewrate-get-code"
+        params["project"] = "data-hal-get-code"
         calls.append(call(**params))
         tb.assert_has_calls(calls)
         br = BuildRelease.objects.get(pk=br.pk)
         self.assertEqual(br.pool_size, 2)
-        self.assertEqual(br.triggered_projects, "data-hal,libinewrate")
+        self.assertEqual(br.triggered_projects, "check-tools,data-hal")
 
     @override_settings(BUILD_POOL=2)
     def test_jbi_manage_pool_building(self, tb, dl):
         self.test_jbi_manage_pool()
         br = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertEqual(br.pool_size, 2)
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/check-tools-binaries/",
+            projectname="check-tools",
+            jobname="check-tools-binaries",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.get(id=br.pk)
+        self.assertEqual(br.pool_size, 2)
+        self.assertEqual(br.triggered_projects, "check-tools,data-hal")
         JenkinsBuildInfo.objects.create(
             job_url="http://fake.local/job/data-hal-binaries/",
             projectname="data-hal",
@@ -104,22 +117,9 @@ class JBIManageTest(BaseTest):
             buildnumber=1,
             result="SUCCESS",
         )
-        br = BuildRelease.objects.get(id=br.pk)
-        self.assertEqual(br.pool_size, 2)
-        self.assertEqual(br.triggered_projects, "data-hal,libinewrate")
-        JenkinsBuildInfo.objects.create(
-            job_url="http://fake.local/job/libinewrate-binaries/",
-            projectname="libinewrate",
-            jobname="libinewrate-binaries",
-            tag="UUIDA",
-            param_release=self.release,
-            param_release_uuid=self.release_uuid,
-            buildnumber=1,
-            result="SUCCESS",
-        )
         br = BuildRelease.objects.get(pk=br.pk)
         self.assertEqual(br.pool_size, 2)
-        self.assertEqual(br.triggered_projects, "data-hal,libinewrate")
+        self.assertEqual(br.triggered_projects, "check-tools,data-hal")
 
     @override_settings(BUILD_POOL=2)
     def test_jbi_manage_pool_next(self, tb, dl):
@@ -127,9 +127,9 @@ class JBIManageTest(BaseTest):
         br = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertEqual(br.pool_size, 2)
         JenkinsBuildInfo.objects.create(
-            job_url="http://fake.local/job/data-hal-repos/",
-            projectname="data-hal",
-            jobname="data-hal-repos",
+            job_url="http://fake.local/job/check-tools-repos/",
+            projectname="check-tools",
+            jobname="check-tools-repos",
             tag="UUIDA",
             param_release=self.release,
             param_release_uuid=self.release_uuid,
@@ -137,9 +137,11 @@ class JBIManageTest(BaseTest):
             result="SUCCESS",
         )
         br = BuildRelease.objects.get(pk=br.pk)
-        self.assertEqual(br.built_projects, "release-copy-debs-yml,data-hal")
+        self.assertEqual(
+            br.built_projects, "release-copy-debs-yml,check-tools"
+        )
         params = {
-            "project": "libswrate-get-code",
+            "project": "libinewrate-get-code",
             "release_uuid": br.uuid,
             "trigger_release": br.release,
             "trigger_branch_or_tag": br.branch_or_tag,
@@ -147,7 +149,7 @@ class JBIManageTest(BaseTest):
         }
         tb.assert_called_once_with(**params)
         self.assertEqual(br.pool_size, 2)
-        self.assertEqual(br.triggered_projects, "libinewrate,libswrate")
+        self.assertEqual(br.triggered_projects, "data-hal,libinewrate")
 
     @override_settings(BUILD_POOL=3)
     def test_jbi_manage_pool_deps(self, tb, dl):
@@ -164,31 +166,39 @@ class JBIManageTest(BaseTest):
             result="SUCCESS",
         )
         params = {
-            "project": "data-hal-get-code",
+            "project": "check-tools-get-code",
             "release_uuid": br.uuid,
             "trigger_release": br.release,
             "trigger_branch_or_tag": br.branch_or_tag,
             "trigger_distribution": br.distribution,
         }
         calls = [call(**params)]
+        params["project"] = "data-hal-get-code"
+        calls.append(call(**params))
         params["project"] = "libinewrate-get-code"
         calls.append(call(**params))
-        params["project"] = "libswrate-get-code"
-        calls.append(call(**params))
         tb.assert_has_calls(calls)
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(
+            br.triggered_projects, "check-tools,data-hal,libinewrate"
+        )
 
         JenkinsBuildInfo.objects.create(
-            job_url="http://fake.local/job/data-hal-repos/",
-            projectname="data-hal",
-            jobname="data-hal-repos",
+            job_url="http://fake.local/job/check-tools-repos/",
+            projectname="check-tools",
+            jobname="check-tools-repos",
             tag="UUIDA",
             param_release=self.release,
             param_release_uuid=self.release_uuid,
             buildnumber=1,
             result="SUCCESS",
         )
-        params["project"] = "libtcap-get-code"
+        params["project"] = "libswrate-get-code"
         tb.assert_called_with(**params)
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(
+            br.triggered_projects, "data-hal,libinewrate,libswrate"
+        )
 
         JenkinsBuildInfo.objects.create(
             job_url="http://fake.local/job/libswrate-repos/",
@@ -200,13 +210,15 @@ class JBIManageTest(BaseTest):
             buildnumber=1,
             result="SUCCESS",
         )
-        params["project"] = "sipwise-base-get-code"
+        params["project"] = "libtcap-get-code"
         tb.assert_called_with(**params)
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(br.triggered_projects, "data-hal,libinewrate,libtcap")
 
         JenkinsBuildInfo.objects.create(
-            job_url="http://fake.local/job/libinewrate-repos/",
-            projectname="libinewrate",
-            jobname="libinewrate-repos",
+            job_url="http://fake.local/job/data-hal-repos/",
+            projectname="data-hal",
+            jobname="data-hal-repos",
             tag="UUIDA",
             param_release=self.release,
             param_release_uuid=self.release_uuid,
@@ -215,9 +227,9 @@ class JBIManageTest(BaseTest):
         )
         br = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertEqual(
-            br.triggered_projects, "libtcap,sipwise-base,check-tools"
+            br.triggered_projects, "libinewrate,libtcap,sipwise-base"
         )
-        params["project"] = "check-tools-get-code"
+        params["project"] = "sipwise-base-get-code"
         tb.assert_called_with(**params)
         tb.reset_mock()
 
@@ -232,13 +244,13 @@ class JBIManageTest(BaseTest):
             result="SUCCESS",
         )
         br = BuildRelease.objects.get(uuid=self.release_uuid)
-        self.assertEqual(br.triggered_projects, "sipwise-base,check-tools")
+        self.assertEqual(br.triggered_projects, "libinewrate,sipwise-base")
         tb.assert_not_called()
 
         JenkinsBuildInfo.objects.create(
-            job_url="http://fake.local/job/check-tools-repos/",
-            projectname="check-tools",
-            jobname="check-tools-repos",
+            job_url="http://fake.local/job/libinewrate-repos/",
+            projectname="libinewrate",
+            jobname="libinewrate-repos",
             tag="UUIDA",
             param_release=self.release,
             param_release_uuid=self.release_uuid,
@@ -263,6 +275,31 @@ class JBIManageTest(BaseTest):
         self.assertEqual(br.triggered_projects, "ngcp-schema")
         params["project"] = "ngcp-schema-get-code"
         tb.assert_called_with(**params)
+        tb.reset_mock()
+
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/ngcp-schema-repos/",
+            projectname="ngcp-schema",
+            jobname="ngcp-schema-repos",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(
+            br.triggered_projects,
+            "asterisk-voicemail,lua-ngcp-kamailio,ngcp-panel",
+        )
+
+        params["project"] = "asterisk-voicemail-get-code"
+        calls = [call(**params)]
+        params["project"] = "lua-ngcp-kamailio-get-code"
+        calls.append(call(**params))
+        params["project"] = "ngcp-panel-get-code"
+        calls.append(call(**params))
+        tb.assert_has_calls(calls)
 
 
 @override_settings(JBI_ALLOWED_HOSTS=["fake.local"])

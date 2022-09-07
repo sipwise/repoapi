@@ -173,30 +173,53 @@ def trigger_build(
 
 class ReleaseConfig(object):
     class WannaBuild:
-        def __init__(self, config, step=1):
+        def _step_deps(self, level):
+            no_deps = dict()
+            deps = dict()
+            if level == 0:
+                search_map = self.build_deps
+            else:
+                search_map = self.deps[level - 1]
+            for name in search_map:
+                flag = False
+                for prj, values in search_map.items():
+                    if name == prj:
+                        continue
+                    if name in values:
+                        flag = True
+                        deps[name] = search_map[name]
+                        logger.debug(f"{name} has dependency on {prj}")
+                        break
+                if not flag:
+                    no_deps[name] = search_map[name]
+                    logger.debug(f"** {name} has NO dependency")
+            self.deps.append(deps)
+            self.list_deps.append(humansorted(deps.keys()))
+            self.no_deps.append(no_deps)
+            self.list_no_deps.append(humansorted(no_deps.keys()))
+
+        def __init__(self, config, step):
             self.config = config
+            self.list_no_deps = []
+            self.list_deps = []
             self.no_deps = []
             self.deps = []
             self.step = step
-            build_deps = self.config.build_deps
-            for name in build_deps.keys():
-                flag = False
-                for prj, values in build_deps.items():
-                    if name in values:
-                        flag = True
-                        self.deps.append(name)
-                        break
-                if not flag:
-                    self.no_deps.append(name)
+            self.build_deps = self.config.build_deps
+            level = 0
+            while self.step - level >= 0:
+                logger.debug(f"--- level:{level} ---")
+                self._step_deps(level)
+                level = level + 1
 
         def __iter__(self):
             return self
 
         def __next__(self):
-            if self.step == 0:
-                list_prj = self.no_deps
-            else:
-                list_prj = self.deps
+            try:
+                list_prj = self.list_no_deps[self.step]
+            except IndexError:
+                raise StopIteration
 
             if len(list_prj) > 0:
                 return list_prj.pop(0)
