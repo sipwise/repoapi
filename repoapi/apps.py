@@ -1,4 +1,4 @@
-# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -20,12 +20,12 @@ class RepoAPIConfig(AppConfig):
     name = "repoapi"
 
     def ready(self):
-        from .conf import settings
+        from .conf import settings, Tracker
 
         # Implicitly connect a signal handlers decorated with @receiver.
         from . import signals
 
-        if settings.WORKFRONT_NOTE:
+        if settings.REPOAPI_TRACKER == Tracker.WORKFRONT:
             post_save.connect(
                 signals.workfront_note_manage,
                 sender="repoapi.JenkinsBuildInfo",

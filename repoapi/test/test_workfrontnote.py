@@ -15,12 +15,15 @@
 from unittest.mock import patch
 
 from django.conf import settings
+from django.test import override_settings
 
+from repoapi.conf import Tracker
 from repoapi.models import JenkinsBuildInfo
 from repoapi.models import WorkfrontNoteInfo
 from repoapi.test.base import BaseTest
 
 
+@override_settings(REPOAPI_TRACKER=Tracker.WORKFRONT)
 class WorkfrontNoteTestCase(BaseTest):
     def test_getID(self):
         res = WorkfrontNoteInfo.getIds("jojo TT#0891 whatever")

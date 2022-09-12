@@ -1,4 +1,4 @@
-# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,14 +12,23 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from enum import Enum, unique
 from django.conf import settings  # noqa
 from appconf import AppConf
+
+
+@unique
+class Tracker(Enum):
+    NONE = "None"
+    MANTIS = "Mantis"
+    WORKFRONT = "WorkFront"
 
 
 class RepoAPIConf(AppConf):
     ARTIFACT_JOB_REGEX = [
         ".*-repos$",
     ]
+    TRACKER = Tracker.NONE
 
     class Meta:
         prefix = "repoapi"

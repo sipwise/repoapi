@@ -133,7 +133,6 @@ STATICFILES_STORAGE = (
 )
 GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = BASE_DIR / "/etc/jenkins_jobs/workfront.ini"
-WORKFRONT_NOTE = True
 
 # build app
 BUILD_REPOS_SCRIPTS_CONFIG_DIR = Path(

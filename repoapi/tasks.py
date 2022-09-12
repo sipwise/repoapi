@@ -22,6 +22,7 @@ from django.apps import apps
 from .celery import jbi_parse_hotfix
 from .celery import process_result
 from .conf import settings
+from .conf import Tracker
 from .utils import is_download_artifacts
 from .utils import jenkins_get_artifact
 from .utils import jenkins_get_build
@@ -53,8 +54,15 @@ def jenkins_remove_project(self, jbi_id):
 
 @shared_task(ignore_result=True)
 def jbi_get_artifact(jbi_id, jobname, buildnumber, artifact_info):
+    log = logger.bind(
+        jbi_id=jbi_id,
+        jobname=jobname,
+    )
     path = jenkins_get_artifact(jobname, buildnumber, artifact_info)
     if path.name == settings.HOTFIX_ARTIFACT:
+        if settings.REPOAPI_TRACKER == Tracker.NONE:
+            log.info("no tracker defined, skip hotfix management")
+            return
         jbi_parse_hotfix.delay(jbi_id, str(path))
 
 

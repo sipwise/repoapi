@@ -17,6 +17,7 @@ import shutil
 from pathlib import Path
 from tempfile import mkdtemp
 
+from django.apps import apps
 from django.test import override_settings
 from django.test import TestCase
 from rest_framework.test import APITestCase
@@ -34,6 +35,8 @@ class BaseTest(TestCase):
         cls.path = Path(settings.JBI_BASEDIR)
 
     def setUp(self, *args, **kwargs):
+        RepoAPIConfig = apps.get_app_config("repoapi")
+        RepoAPIConfig.ready()
         super(BaseTest, self).setUp()
         self.path.mkdir(parents=True, exist_ok=True)
 

@@ -57,7 +57,6 @@ GERRIT_REST_HTTP_USER = "jenkins"
 GERRIT_REST_HTTP_PASSWD = "verysecrethttppasswd"
 GITWEB_URL = "https://git.local/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = BASE_DIR / ".workfront.ini"
-WORKFRONT_NOTE = True
 DOCKER_REGISTRY_URL = "https://localhost:5000/v2/{}"
 # fake info
 DOCKER_REGISTRY = """
