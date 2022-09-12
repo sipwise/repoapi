@@ -363,16 +363,8 @@ class BuildRelease(models.Model):
                 return res
 
     @property
-    def build_deps(self):
-        if getattr(self, "_build_deps", None) is None:
-            self._build_deps = []
-            step = 0
-            deps = list(self.config.wanna_build_deps(step))
-            while len(deps) > 0:
-                self._build_deps.append(deps)
-                step = step + 1
-                deps = list(self.config.wanna_build_deps(step))
-        return self._build_deps
+    def build_deps(self) -> list:
+        return self.config.levels_build_deps
 
     @property
     def config(self):

@@ -183,8 +183,6 @@ class ReleaseConfig(object):
             for name in search_map:
                 flag = False
                 for prj, values in search_map.items():
-                    if name == prj:
-                        continue
                     if name in values:
                         flag = True
                         deps[name] = search_map[name]
@@ -224,6 +222,18 @@ class ReleaseConfig(object):
             if len(list_prj) > 0:
                 return list_prj.pop(0)
             raise StopIteration
+
+    def check_circular_dependencies(self):
+        levels = self.levels_build_deps
+        builds = list(self.build_deps.keys())
+        print(f"{levels}")
+        for vals in levels:
+            for prj in vals:
+                builds.remove(prj)
+        if len(builds) > 0:
+            raise err.CircularBuildDependencies(
+                f"problems detected with {builds}"
+            )
 
     @classmethod
     def load_config(cls, config_path):
@@ -289,13 +299,26 @@ class ReleaseConfig(object):
         except KeyError:
             msg = "{} has no 'distris' info"
             raise err.NoDistrisInfo(msg.format(self.config_file))
+        self.check_circular_dependencies()
 
     @property
-    def build_deps(self):
+    def build_deps(self) -> dict:
         return self.jenkins_jobs.get("build_deps", dict())
 
     def wanna_build_deps(self, step=0):
         return ReleaseConfig.WannaBuild(self, step)
+
+    @property
+    def levels_build_deps(self) -> list:
+        if getattr(self, "_levels_build_deps", None) is None:
+            self._levels_build_deps = []
+            step = 0
+            deps = list(self.wanna_build_deps(step))
+            while len(deps) > 0:
+                self._levels_build_deps.append(deps)
+                step = step + 1
+                deps = list(self.wanna_build_deps(step))
+        return self._levels_build_deps
 
     @property
     def branch(self):

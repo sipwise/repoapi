@@ -512,3 +512,80 @@ class RemoveList(BaseTest):
         self.br.triggered_projects = "fake-project"
         remove_from_textlist(self.br, "triggered_projects", "fake-project")
         self.assertIsNone(self.br.triggered_projects)
+
+
+class WannaBuildTestCase(SimpleTestCase):
+    class FakeConfig(ReleaseConfig):
+        build_deps = dict()
+
+        def __init__(self, build_deps=None):
+            if build_deps:
+                self.build_deps = build_deps
+
+    def test_deps(self):
+        build_deps = {
+            "A": ["A1", "A2", "A3"],
+            "B": ["A2"],
+            "C": ["A2", "B"],
+            "A2": ["D"],
+        }
+        config = self.FakeConfig(build_deps)
+        wb = ReleaseConfig.WannaBuild(config, 0)
+        self.assertListEqual(list(wb), ["A", "C"])
+        wb = ReleaseConfig.WannaBuild(config, 1)
+        self.assertListEqual(list(wb), ["B"])
+        wb = ReleaseConfig.WannaBuild(config, 2)
+        self.assertListEqual(list(wb), ["A2"])
+        wb = ReleaseConfig.WannaBuild(config, 3)
+        self.assertListEqual(list(wb), [])
+
+    def test_deps_ko(self):
+        build_deps = {"A": ["A1", "A2", "A3", "A"]}
+        config = self.FakeConfig(build_deps)
+        wb = ReleaseConfig.WannaBuild(config, 0)
+        self.assertListEqual(list(wb), [])
+
+    def test_circular_simple_deps(self):
+        build_deps = {
+            "A": ["A1", "A2", "A3"],
+            "B": ["A2"],
+            "C": ["A2", "B"],
+            "A2": ["A"],
+        }
+        config = self.FakeConfig(build_deps)
+        with self.assertRaisesRegex(
+            err.CircularBuildDependencies, r"\['A', 'A2'\]"
+        ):
+            config.check_circular_dependencies()
+
+    def test_circular_simple_deps_more(self):
+        build_deps = {
+            "A": ["A1", "A2", "A3"],
+            "B": ["A2"],
+            "C": ["A2", "B"],
+            "A2": ["A3"],
+            "A3": ["C"],
+        }
+        config = self.FakeConfig(build_deps)
+        with self.assertRaisesRegex(
+            err.CircularBuildDependencies, r"\['B', 'C', 'A2', 'A3'\]"
+        ):
+            config.check_circular_dependencies()
+
+    def test_circular_simple(self):
+        build_deps = {
+            "A": ["A1", "A2", "A3", "A"],
+        }
+        config = self.FakeConfig(build_deps)
+        with self.assertRaisesRegex(err.CircularBuildDependencies, r"\['A'\]"):
+            config.check_circular_dependencies()
+
+    def test_circular_deps_ok(self):
+        build_deps = {
+            "A": ["A1", "A2", "A3"],
+            "B": ["A2"],
+            "C": ["A2", "B"],
+            "A2": ["D"],
+        }
+        config = self.FakeConfig(build_deps)
+        config.check_circular_dependencies()

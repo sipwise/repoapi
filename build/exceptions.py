@@ -48,3 +48,7 @@ class PreviousBuildNotDone(Error):
     """same release is building right now"""
 
     pass
+
+
+class CircularBuildDependencies(Error):
+    pass
