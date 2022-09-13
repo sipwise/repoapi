@@ -29,5 +29,7 @@ Depends:
  uwsgi-plugin-python3,
  virtualenv,
  ${misc:Depends},
+Recomends:
+ sipwise-workfront-tools,
 Description: REST API webapp
  This package provides repoapi webapp.

@@ -69,6 +69,10 @@ GERRIT_URL = server_config.get("gerrit", "URL")
 GERRIT_REST_HTTP_USER = server_config.get("gerrit", "HTTP_USER")
 GERRIT_REST_HTTP_PASSWD = server_config.get("gerrit", "HTTP_PASSWD")
 
+MANTIS_URL = server_config.get("mantis", "URL")
+MANTIS_TOKEN = server_config.get("mantis", "TOKEN")
+MANTIS_TARGET_RELEASE["id"] = 75  # noqa
+
 DOCKER_REGISTRY_URL = server_config.get("server", "DOCKER_REGISTRY_URL")
 AUTH_LDAP_SERVER_URI = server_config.get("server", "AUTH_LDAP_SERVER_URI")
 AUTH_LDAP_USER_BASE = server_config.get("server", "AUTH_LDAP_USER_BASE")

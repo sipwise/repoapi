@@ -16,8 +16,11 @@ from unittest.mock import call
 from unittest.mock import mock_open
 from unittest.mock import patch
 
+from django.test import override_settings
+
 from hotfix import models
 from hotfix import utils
+from hotfix.conf import Tracker
 from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
 
@@ -54,26 +57,12 @@ class TestHotfixReleased(BaseTest):
         }
         return defaults
 
-    @patch("builtins.open", mock_open(read_data=debian_changelog))
-    def test_parse_changelog(self):
-        ids, changelog = utils.parse_changelog("/tmp/fake.txt")
-        self.assertCountEqual(ids, ["345", "123"])
-        self.assertEqual(changelog.full_version, "3.8.7.4+0~mr3.8.7.4")
-        self.assertEqual(changelog.package, "ngcp-fake")
-
-    def test_get_target_release(self):
-        val = utils.get_target_release("3.8.7.4+0~mr3.8.7.4")
-        self.assertEqual(val, "mr3.8.7.4")
-
-    def test_get_target_release_ko(self):
-        val = utils.get_target_release("3.8.7.4-1")
-        self.assertIsNone(val)
-
+    @override_settings(REPOAPI_TRACKER=Tracker.WORKFRONT)
     @patch("builtins.open", mock_open(read_data=debian_changelog))
     @patch("repoapi.utils.dlfile")
     @patch("repoapi.utils.workfront_set_release_target")
     @patch("repoapi.utils.workfront_note_send")
-    def test_hotfixreleased(self, wns, wsrt, dlfile):
+    def test_hotfixreleased_wf(self, wns, wsrt, dlfile):
         param = self.get_defaults()
         jbi = JenkinsBuildInfo.objects.create(**param)
         utils.process_hotfix(str(jbi), jbi.projectname, "/tmp/fake.txt")
@@ -100,5 +89,78 @@ class TestHotfixReleased(BaseTest):
         wns.assert_has_calls(calls, any_order=True)
         wsrt.assert_has_calls(
             [call("345", "mr3.8.7.4"), call("123", "mr3.8.7.4")],
+            any_order=True,
+        )
+
+    @override_settings(REPOAPI_TRACKER=Tracker.MANTIS)
+    @patch("builtins.open", mock_open(read_data=debian_changelog))
+    @patch("repoapi.utils.dlfile")
+    @patch("repoapi.utils.mantis_set_release_target")
+    @patch("repoapi.utils.mantis_note_send")
+    def test_hotfixreleased_mantis(self, mns, msrt, dlfile):
+        param = self.get_defaults()
+        jbi = JenkinsBuildInfo.objects.create(**param)
+        utils.process_hotfix(str(jbi), jbi.projectname, "/tmp/fake.txt")
+        projectname = "fake"
+        version = "3.8.7.4+0~mr3.8.7.4"
+        gri = models.MantisNoteInfo.objects.filter(
+            projectname=projectname, version=version
+        )
+        self.assertEqual(gri.count(), 2)
+        gri = models.MantisNoteInfo.objects.filter(
+            mantis_id="8989", projectname=projectname, version=version
+        )
+        self.assertEqual(gri.count(), 1)
+        msg = "hotfix %s.git %s triggered" % (projectname, version)
+        calls = [
+            call("8989", msg),
+        ]
+        gri = models.MantisNoteInfo.objects.filter(
+            mantis_id="21499", projectname=projectname, version=version
+        )
+        self.assertEqual(gri.count(), 1)
+        msg = "hotfix %s.git %s triggered" % (projectname, version)
+        calls.append(call("21499", msg))
+        mns.assert_has_calls(calls, any_order=True)
+        msrt.assert_has_calls(
+            [call("8989", "mr3.8.7.4"), call("21499", "mr3.8.7.4")],
+            any_order=True,
+        )
+
+    @override_settings(REPOAPI_TRACKER=Tracker.MANTIS)
+    @patch("builtins.open", mock_open(read_data=debian_changelog))
+    @patch("repoapi.utils.dlfile")
+    @patch("repoapi.utils.mantis_set_release_target")
+    @patch("repoapi.utils.mantis_note_send")
+    def test_hotfixreleased_mantis_versions(self, mns, msrt, dlfile):
+        param = self.get_defaults()
+        jbi = JenkinsBuildInfo.objects.create(**param)
+        projectname = "fake"
+        version = "3.8.7.4+0~mr3.8.7.4"
+        other_version = "5.8.7.4+0~mr5.8.7.4"
+        gri = models.MantisNoteInfo.objects.create(
+            mantis_id="8989", projectname=projectname, version=other_version
+        )
+        utils.process_hotfix(str(jbi), jbi.projectname, "/tmp/fake.txt")
+        gri = models.MantisNoteInfo.objects.filter(
+            mantis_id="8989", projectname=projectname
+        )
+        self.assertEqual(gri.count(), 2)
+        msg = "hotfix %s.git %s triggered" % (projectname, version)
+        calls = [
+            call("8989", msg),
+        ]
+        gri = models.MantisNoteInfo.objects.filter(
+            mantis_id="21499", projectname=projectname, version=version
+        )
+        self.assertEqual(gri.count(), 1)
+        msg = "hotfix %s.git %s triggered" % (projectname, version)
+        calls.append(call("21499", msg))
+        mns.assert_has_calls(calls, any_order=True)
+        msrt.assert_has_calls(
+            [
+                call("8989", "mr3.8.7.4,mr5.8.7.4"),
+                call("21499", "mr3.8.7.4"),
+            ],
             any_order=True,
         )

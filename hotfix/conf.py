@@ -1,4 +1,4 @@
-# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -15,9 +15,15 @@
 from django.conf import settings  # noqa
 from appconf import AppConf
 
+from repoapi.conf import Tracker
+
 
 class HotfixConf(AppConf):
-    WF_REGEX = r"TT#(\d+)"
+    REGEX = {
+        Tracker.NONE: r"#(\d+)",
+        Tracker.WORKFRONT: r"TT#(\d+)",
+        Tracker.MANTIS: r"MT#(\d+)",
+    }
     ARTIFACT = "debian_changelog.txt"
 
     class Meta:

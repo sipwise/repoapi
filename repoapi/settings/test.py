@@ -17,6 +17,7 @@ import os
 from pathlib import Path
 
 from .common import *  # noqa
+from repoapi.conf import Tracker
 
 # pylint: disable=W0401,W0614
 
@@ -58,6 +59,8 @@ GERRIT_REST_HTTP_PASSWD = "verysecrethttppasswd"
 GITWEB_URL = "https://git.local/gitweb/?p={}.git;a=commit;h={}"
 WORKFRONT_CREDENTIALS = BASE_DIR / ".workfront.ini"
 DOCKER_REGISTRY_URL = "https://localhost:5000/v2/{}"
+MANTIS_URL = "https://support.local/api/rest/{}"
+
 # fake info
 DOCKER_REGISTRY = """
 {"repositories":["comx-fs-test-jessie","data-hal-jessie","documentation-jessie","janus-admin-jessie","janus-client-jessie","jenkins-configs","jenkins-configs-jessie","kamailio-config-tests-jessie","libswrate-jessie","libtcap-jessie","lua-ngcp-kamailio","lua-ngcp-kamailio-jenkins","lua-ngcp-kamailio-jessie","ngcp-csc-jessie","ngcp-panel-selenium","ngcp-panel-tests-rest-api-jessie","ngcp-panel-tests-selenium-jessie","ngcp-rate-o-mat-unit-tests-jessie","ngcp-rtcengine-test-jessie","ngcp-rtcengine-tests-selenium-jessie","ngcp-rtcengine-tests-selenium-stretch","ngcp-sipwise-snmp-mibs-jessie","ngcp-snmp-jessie","ngcpcfg-jessie","ossbss-perl-testing-wheezy","puppet-octocatalog-diff","puppet-sipwise-jessie","rate-o-mat-functional-tests-jessie","rate-o-mat-jessie","release-dashboard","repoapi-jessie","repos-scripts-jessie","rtpengine-jessie","sipphone-android","sipwise/ce-trunk","sipwise/mr3.8.10","sipwise/mr3.8.2","sipwise/mr3.8.3","sipwise/mr3.8.4","sipwise/mr3.8.5","sipwise/mr3.8.6","sipwise/mr3.8.7","sipwise/mr3.8.8","sipwise/mr3.8.9","sipwise/mr4.0.1","sipwise/mr4.0.2","sipwise/mr4.1.1","sipwise/mr4.1.2","sipwise/mr4.2.1","sipwise/mr4.2.2","sipwise/mr4.3.1","sipwise/mr4.3.2","sipwise/mr4.4.1","sipwise/mr4.4.2","sipwise/mr4.5.1","sipwise/mr4.5.2","sipwise/mr4.5.3","sipwise/mr4.5.4","sipwise/mr5.0.1","sipwise/mr5.0.2","sipwise/mr5.1.1","sipwise/mr5.1.2","sipwise/mr5.2.1","sipwise/mr5.3.1","sipwise-jessie","sipwise-stretch","sipwise-webpage-soap-docker-jessie","sipwise-webpage-soap-jessie","sipwise-wheezy","system-tools-jessie"]}
@@ -107,3 +110,6 @@ JBI_ARTIFACT_JOBS = [
 ]
 REPOAPI_ARTIFACT_JOB_REGEX = []
 JBI_ALLOWED_HOSTS = ["jenkins-dev.mgm.sipwise.com"]
+
+# no tracker
+REPOAPI_TRACKER = Tracker.NONE

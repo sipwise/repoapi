@@ -12,6 +12,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import json
 import re
 import subprocess
 from pathlib import Path
@@ -28,6 +29,10 @@ JBI_CONSOLE_URL = "{}/job/{}/{}/consoleText"
 JBI_BUILD_URL = "{}/job/{}/{}/api/json"
 JBI_ARTIFACT_URL = "{}/job/{}/{}/artifact/{}"
 JBI_ENVVARS_URL = "{}/job/{}/{}/injectedEnvVars/api/json"
+MANTIS_HEADERS = {
+    "Authorization": settings.MANTIS_TOKEN,
+    "Content-Type": "application/json",
+}
 
 
 def executeAndReturnOutput(command, env=None):
@@ -225,3 +230,43 @@ def is_download_artifacts(jobname):
         if re.search(check, jobname) is not None:
             return True
     return False
+
+
+def mantis_query(method, url, payload):
+    logger.bind(
+        method=method,
+        url=url,
+        payload=payload,
+    )
+    response = requests.request(
+        f"{method}", url, headers=MANTIS_HEADERS, data=payload
+    )
+    response.raise_for_status()
+    return response
+
+
+def mantis_note_send(_id, message):
+    url = settings.MANTIS_URL.format(f"issues/{_id}/notes")
+    payload = json.dumps(
+        {"text": f"{message}", "view_state": {"name": "private"}}
+    )
+    mantis_query("POST", url, payload)
+
+
+def mantis_set_release_target(_id, msg):
+    url = settings.MANTIS_URL.format(f"issues/{_id}")
+    cf = settings.MANTIS_TARGET_RELEASE
+    payload = json.dumps(
+        {
+            "custom_fields": [
+                {
+                    "field": {
+                        "id": cf["id"],
+                        "name": cf["name"],
+                    },
+                    "value": f"{msg}",
+                },
+            ]
+        }
+    )
+    mantis_query("PATCH", url, payload)

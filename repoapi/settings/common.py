@@ -177,6 +177,11 @@ structlog.configure(
 )
 
 JENKINS_TOKEN = "sipwise_jenkins_ci"
+MANTIS_TOKEN = "fake_mantis_token"
+MANTIS_TARGET_RELEASE = {
+    "id": 77,
+    "name": "Target Release",
+}
 
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
