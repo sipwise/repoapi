@@ -38,3 +38,23 @@ class JenkinsBuildInfoAdmin(ImportExportModelAdmin):
 @admin.register(models.GerritRepoInfo)
 class GerritRepoInfoAdmin(ImportExportModelAdmin):
     resource_class = GerritRepoInfoResource
+
+
+class WorkfrontNoteInfoResource(resources.ModelResource):
+    class Meta:
+        model = models.WorkfrontNoteInfo
+
+
+@admin.register(models.WorkfrontNoteInfo)
+class WorkfrontNoteInfoAdmin(ImportExportModelAdmin):
+    resource_class = WorkfrontNoteInfoResource
+
+
+class MantisNoteInfoResource(resources.ModelResource):
+    class Meta:
+        model = models.MantisNoteInfo
+
+
+@admin.register(models.MantisNoteInfo)
+class MantisNoteInfoAdmin(ImportExportModelAdmin):
+    resource_class = MantisNoteInfoResource

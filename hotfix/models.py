@@ -15,19 +15,20 @@
 import re
 
 from django.db import models
-from natsort import humansorted
 
 from .conf import settings
-from .conf import Tracker
-from .exceptions import TrackerNotDefined
+from tracker.conf import Tracker
+from tracker.exceptions import TrackerNotDefined
+from tracker.models import MantisInfo
+from tracker.models import TrackerInfo
+from tracker.models import WorkfrontInfo
 
 hotfix_re_release = re.compile(r".+~(mr[0-9]+\.[0-9]+\.[0-9]+.[0-9]+)$")
 
 
-class NoteInfo(models.Model):
+class NoteInfo(TrackerInfo):
     projectname = models.CharField(max_length=50, null=False)
     version = models.CharField(max_length=50, null=False)
-    tracker_re = re.compile(settings.HOTFIX_REGEX[Tracker.NONE])
 
     class Meta:
         abstract = True
@@ -44,9 +45,9 @@ class NoteInfo(models.Model):
 
     @staticmethod
     def get_model():
-        if settings.REPOAPI_TRACKER == Tracker.MANTIS:
+        if settings.TRACKER_PROVIDER == Tracker.MANTIS:
             return MantisNoteInfo
-        elif settings.REPOAPI_TRACKER == Tracker.WORKFRONT:
+        elif settings.TRACKER_PROVIDER == Tracker.WORKFRONT:
             return WorkfrontNoteInfo
         return NoteInfo
 
@@ -68,73 +69,32 @@ class NoteInfo(models.Model):
     @classmethod
     def get_or_create(cls, defaults=None, **kwargs):
         field_id = kwargs.pop("field_id")
-        if settings.REPOAPI_TRACKER == Tracker.MANTIS:
+        if settings.TRACKER_PROVIDER == Tracker.MANTIS:
             model = MantisNoteInfo
             kwargs["mantis_id"] = field_id
-        elif settings.REPOAPI_TRACKER == Tracker.WORKFRONT:
+        elif settings.TRACKER_PROVIDER == Tracker.WORKFRONT:
             model = WorkfrontNoteInfo
             kwargs["workfront_id"] = field_id
         else:
             raise TrackerNotDefined()
         return model.objects.get_or_create(defaults, **kwargs)
 
-    @classmethod
-    def getIds(cls, change):
-        """
-        parses text searching for tracker occurrences
-        returns a list of IDs
-        """
-        if change:
-            res = cls.tracker_re.findall(change)
-            return set(res)
-        else:
-            return set()
 
-
-class WorkfrontNoteInfo(NoteInfo):
-    workfront_id = models.CharField(max_length=50, null=False)
-    tracker_re = re.compile(settings.HOTFIX_REGEX[Tracker.WORKFRONT])
-
+class WorkfrontNoteInfo(NoteInfo, WorkfrontInfo):
     class Meta:
         unique_together = ["workfront_id", "projectname", "version"]
 
-    def send(self, msg: str):
-        from repoapi import utils
-
-        utils.workfront_note_send(self.workfront_id, msg)
-
     def set_target_release(self):
-        from repoapi import utils
-
-        utils.workfront_set_release_target(
-            self.workfront_id, self.target_release
+        return super(WorkfrontNoteInfo, self).set_target_release(
+            self.target_release
         )
 
 
-class MantisNoteInfo(NoteInfo):
-    mantis_id = models.CharField(max_length=50, null=False)
-    tracker_re = re.compile(settings.HOTFIX_REGEX[Tracker.MANTIS])
-
+class MantisNoteInfo(NoteInfo, MantisInfo):
     class Meta:
         unique_together = ["mantis_id", "projectname", "version"]
 
-    def send(self, msg: str):
-        from repoapi import utils
-
-        utils.mantis_note_send(self.mantis_id, msg)
-
     def set_target_release(self):
-        """reconstruct value without asking for previous value"""
-        from repoapi import utils
-
-        qs = MantisNoteInfo.objects.filter(mantis_id=self.mantis_id)
-        values = qs.values_list("version", flat=True)
-        versions = set()
-        for val in values:
-            target_release = self.get_target_release(val)
-            if target_release:
-                versions.add(target_release)
-        if len(versions) > 0:
-            utils.mantis_set_release_target(
-                self.mantis_id, ",".join(humansorted(versions))
-            )
+        return super(MantisNoteInfo, self).set_target_release(
+            self.target_release
+        )

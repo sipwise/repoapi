@@ -20,7 +20,7 @@ from django.test import SimpleTestCase
 from natsort import humansorted
 
 from hotfix import utils
-from hotfix.conf import Tracker
+from tracker.conf import Tracker
 
 debian_changelog = """ngcp-fake (3.8.7.4+0~mr3.8.7.4) unstable; urgency=medium
   [ Kirill Solomko ]
@@ -34,7 +34,7 @@ debian_changelog = """ngcp-fake (3.8.7.4+0~mr3.8.7.4) unstable; urgency=medium
 
 
 class TestUtils(SimpleTestCase):
-    @override_settings(REPOAPI_TRACKER=Tracker.NONE)
+    @override_settings(TRACKER_PROVIDER=Tracker.NONE)
     @patch("builtins.open", mock_open(read_data=debian_changelog))
     def test_parse_changelog_none(self):
         ids, changelog = utils.parse_changelog("/tmp/fake.txt")
@@ -42,7 +42,7 @@ class TestUtils(SimpleTestCase):
         self.assertEqual(changelog.full_version, "3.8.7.4+0~mr3.8.7.4")
         self.assertEqual(changelog.package, "ngcp-fake")
 
-    @override_settings(REPOAPI_TRACKER=Tracker.WORKFRONT)
+    @override_settings(TRACKER_PROVIDER=Tracker.WORKFRONT)
     @patch("builtins.open", mock_open(read_data=debian_changelog))
     def test_parse_changelog_wf(self):
         ids, changelog = utils.parse_changelog("/tmp/fake.txt")
@@ -50,7 +50,7 @@ class TestUtils(SimpleTestCase):
         self.assertEqual(changelog.full_version, "3.8.7.4+0~mr3.8.7.4")
         self.assertEqual(changelog.package, "ngcp-fake")
 
-    @override_settings(REPOAPI_TRACKER=Tracker.MANTIS)
+    @override_settings(TRACKER_PROVIDER=Tracker.MANTIS)
     @patch("builtins.open", mock_open(read_data=debian_changelog))
     def test_parse_changelog_mantis(self):
         ids, changelog = utils.parse_changelog("/tmp/fake.txt")

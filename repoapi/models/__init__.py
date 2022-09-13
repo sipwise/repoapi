@@ -14,4 +14,5 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from .gri import GerritRepoInfo  # noqa
 from .jbi import JenkinsBuildInfo  # noqa
+from .wni import MantisNoteInfo  # noqa
 from .wni import WorkfrontNoteInfo  # noqa

@@ -69,9 +69,8 @@ GERRIT_URL = server_config.get("gerrit", "URL")
 GERRIT_REST_HTTP_USER = server_config.get("gerrit", "HTTP_USER")
 GERRIT_REST_HTTP_PASSWD = server_config.get("gerrit", "HTTP_PASSWD")
 
-MANTIS_URL = server_config.get("mantis", "URL")
-MANTIS_TOKEN = server_config.get("mantis", "TOKEN")
-MANTIS_TARGET_RELEASE["id"] = 75  # noqa
+TRACKER_MANTIS_URL = server_config.get("mantis", "URL")
+TRACKER_MANTIS_TOKEN = server_config.get("mantis", "TOKEN")
 
 DOCKER_REGISTRY_URL = server_config.get("server", "DOCKER_REGISTRY_URL")
 AUTH_LDAP_SERVER_URI = server_config.get("server", "AUTH_LDAP_SERVER_URI")
@@ -136,7 +135,7 @@ STATICFILES_STORAGE = (
     "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 )
 GITWEB_URL = "https://git.mgm.sipwise.com/gitweb/?p={}.git;a=commit;h={}"
-WORKFRONT_CREDENTIALS = BASE_DIR / "/etc/jenkins_jobs/workfront.ini"
+TRACKER_WORKFRONT_CREDENTIALS = BASE_DIR / "/etc/jenkins_jobs/workfront.ini"
 
 # build app
 BUILD_REPOS_SCRIPTS_CONFIG_DIR = Path(

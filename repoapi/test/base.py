@@ -34,13 +34,13 @@ class BaseTest(TestCase):
 
         cls.path = Path(settings.JBI_BASEDIR)
 
-    def setUp(self, *args, **kwargs):
+    def setUp(self):
         RepoAPIConfig = apps.get_app_config("repoapi")
         RepoAPIConfig.ready()
         super(BaseTest, self).setUp()
         self.path.mkdir(parents=True, exist_ok=True)
 
-    def tearDown(self, *args, **kwargs):
+    def tearDown(self):
         if self.path.exists():
             shutil.rmtree(self.path)
 

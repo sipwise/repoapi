@@ -17,30 +17,14 @@ from unittest.mock import patch
 from django.conf import settings
 from django.test import override_settings
 
-from repoapi.conf import Tracker
 from repoapi.models import JenkinsBuildInfo
 from repoapi.models import WorkfrontNoteInfo
 from repoapi.test.base import BaseTest
+from tracker.conf import Tracker
 
 
-@override_settings(REPOAPI_TRACKER=Tracker.WORKFRONT)
+@override_settings(TRACKER_PROVIDER=Tracker.WORKFRONT)
 class WorkfrontNoteTestCase(BaseTest):
-    def test_getID(self):
-        res = WorkfrontNoteInfo.getIds("jojo TT#0891 whatever")
-        self.assertCountEqual(res, ["0891"])
-
-    def test_getID_multiple(self):
-        res = WorkfrontNoteInfo.getIds("jojo TT#0891 whatever TT#0001")
-        self.assertCountEqual(res, ["0891", "0001"])
-
-    def test_getID_multiple_duplicate(self):
-        res = WorkfrontNoteInfo.getIds("jojo TT#0891 whatever TT#0001 TT#0891")
-        self.assertCountEqual(res, ["0891", "0001"])
-
-    def test_getCommit(self):
-        res = WorkfrontNoteInfo.getCommit("1234567 TT#67676 whatever")
-        self.assertEqual(res, "1234567")
-
     def get_defaults(self):
         defaults = {
             "tag": "edc90cd9-37f3-4613-9748-ed05a32031c2",
@@ -68,9 +52,9 @@ class WorkfrontNoteTestCase(BaseTest):
         del defaults["gerrit_eventtype"]
         return defaults
 
-    @patch("repoapi.utils.workfront_set_release_target")
+    @patch("tracker.utils.workfront_set_release_target")
     @patch("repoapi.utils.get_next_release")
-    @patch("repoapi.utils.workfront_note_send")
+    @patch("tracker.utils.workfront_note_send")
     def test_note_gerrit(self, wns, gnr, wsrt):
         param = self.get_defaults()
         JenkinsBuildInfo.objects.create(**param)
@@ -97,9 +81,9 @@ class WorkfrontNoteTestCase(BaseTest):
         gnr.assert_not_called()
         wns.assert_called_once_with("0001", msg)
 
-    @patch("repoapi.utils.workfront_set_release_target")
+    @patch("tracker.utils.workfront_set_release_target")
     @patch("repoapi.utils.get_next_release")
-    @patch("repoapi.utils.workfront_note_send")
+    @patch("tracker.utils.workfront_note_send")
     def test_note_merge(self, wns, gnr, wsrt):
         param = self.get_defaults()
         JenkinsBuildInfo.objects.create(**param)
@@ -157,9 +141,9 @@ class WorkfrontNoteTestCase(BaseTest):
         gnr.assert_called_once_with("master")
         wns.assert_called_with("0001", msg)
 
-    @patch("repoapi.utils.workfront_set_release_target")
+    @patch("tracker.utils.workfront_set_release_target")
     @patch("repoapi.utils.get_next_release")
-    @patch("repoapi.utils.workfront_note_send")
+    @patch("tracker.utils.workfront_note_send")
     def test_note_commit(self, wns, gnr, wsrt):
         param = self.get_non_gerrit_defaults()
         param["jobname"] = "kamailio-get-code"
@@ -188,9 +172,9 @@ class WorkfrontNoteTestCase(BaseTest):
         gnr.assert_called_once_with("master")
         wns.assert_called_once_with("0001", msg)
 
-    @patch("repoapi.utils.workfront_set_release_target")
+    @patch("tracker.utils.workfront_set_release_target")
     @patch("repoapi.utils.get_next_release")
-    @patch("repoapi.utils.workfront_note_send")
+    @patch("tracker.utils.workfront_note_send")
     def test_note_commit_mrXX(self, wns, gnr, wsrt):
         param = self.get_non_gerrit_defaults()
         param["jobname"] = "kamailio-get-code"
@@ -221,9 +205,9 @@ class WorkfrontNoteTestCase(BaseTest):
         gnr.assert_called_once_with("mr5.5")
         wns.assert_called_once_with("0001", msg)
 
-    @patch("repoapi.utils.workfront_set_release_target")
+    @patch("tracker.utils.workfront_set_release_target")
     @patch("repoapi.utils.get_next_release")
-    @patch("repoapi.utils.workfront_note_send")
+    @patch("tracker.utils.workfront_note_send")
     def test_note_commit_mrXXX(self, wns, gnr, wsrt):
         param = self.get_non_gerrit_defaults()
         param["jobname"] = "kamailio-get-code"
@@ -252,9 +236,9 @@ class WorkfrontNoteTestCase(BaseTest):
         gnr.assert_not_called()
         wns.assert_called_once_with("0001", msg)
 
-    @patch("repoapi.utils.workfront_set_release_target")
+    @patch("tracker.utils.workfront_set_release_target")
     @patch("repoapi.utils.get_next_release")
-    @patch("repoapi.utils.workfront_note_send")
+    @patch("tracker.utils.workfront_note_send")
     def test_note_commit_next_distri(self, wns, gnr, wsrt):
         param = self.get_non_gerrit_defaults()
         param["jobname"] = "kamailio-get-code"
@@ -286,9 +270,9 @@ class WorkfrontNoteTestCase(BaseTest):
         wsrt.assert_not_called()
         wns.assert_called_once_with("0001", msg)
 
-    @patch("repoapi.utils.workfront_set_release_target")
+    @patch("tracker.utils.workfront_set_release_target")
     @patch("repoapi.utils.get_next_release")
-    @patch("repoapi.utils.workfront_note_send")
+    @patch("tracker.utils.workfront_note_send")
     def test_note_commit_non_ngcp(self, wns, gnr, wsrt):
         param = self.get_non_gerrit_defaults()
         param["projectname"] = "fake"

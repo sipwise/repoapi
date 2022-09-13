@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,21 +12,17 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-from django.apps import AppConfig
-from django.db.models.signals import post_save
 
 
-class RepoAPIConfig(AppConfig):
-    name = "repoapi"
+class Error(Exception):
+    """Base class for exceptions in this module."""
 
-    def ready(self):
-        from .conf import settings  # noqa
+    pass
 
-        # Implicitly connect a signal handlers decorated with @receiver.
-        from . import signals
 
-        post_save.connect(
-            signals.note_manager,
-            sender="repoapi.JenkinsBuildInfo",
-            dispatch_uid="tracker_note_manager",
-        )
+class TrackerNotDefined(Error):
+    pass
+
+
+class IssueNotFound(Error):
+    pass

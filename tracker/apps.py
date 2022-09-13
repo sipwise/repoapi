@@ -12,13 +12,12 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from django.apps import AppConfig
 
 
-class Error(Exception):
-    """Base class for exceptions in this module."""
+class TrackerConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "tracker"
 
-    pass
-
-
-class TrackerNotDefined(Error):
-    pass
+    def ready(self):
+        from .conf import settings  # noqa

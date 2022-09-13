@@ -1,0 +1,85 @@
+{'note': {'id': 406459, 'reporter': {'id': 281, 'name': 'vseva', 'real_name': 'Victor Seva (Sipwise)', 'email': 'vseva@sipwise.com'
+    }, 'text': 'hotfix fake_project.git fake_version triggered', 'view_state': {'id': 50, 'name': 'private', 'label': 'private'
+    }, 'attachments': [], 'type': 'note', 'created_at': '2022-09-13T12: 10: 22+02: 00', 'updated_at': '2022-09-13T12: 10: 22+02: 00'
+  }, 'issue': {'id': 13503, 'summary': 'Test custom support queue flag', 'description': 'is_support_queue should be true', 'project': {'id': 3, 'name': 'test project'
+    }, 'category': {'id': 1, 'name': 'None'
+    }, 'reporter': {'id': 125, 'name': 'gfuchs', 'real_name': 'Gernot Fuchs'
+    }, 'handler': {'id': 125, 'name': 'gfuchs', 'real_name': 'Gernot Fuchs'
+    }, 'status': {'id': 80, 'name': 'resolved', 'label': 'resolved', 'color': '#d2f5b0'
+    }, 'resolution': {'id': 20, 'name': 'fixed', 'label': 'fixed'
+    }, 'view_state': {'id': 10, 'name': 'public', 'label': 'public'
+    }, 'priority': {'id': 30, 'name': 'P3-normal', 'label': 'P3-normal'
+    }, 'severity': {'id': 50, 'name': 'minor', 'label': 'minor'
+    }, 'reproducibility': {'id': 70, 'name': 'have not tried', 'label': 'have not tried'
+    }, 'sticky': False, 'created_at': '2015-06-19T11: 01: 42+02: 00', 'updated_at': '2022-09-13T12: 10: 22+02: 00', 'notes': [
+      {'id': 406459, 'reporter': {'id': 281, 'name': 'vseva', 'real_name': 'Victor Seva (Sipwise)', 'email': 'vseva@sipwise.com'
+        }, 'text': 'hotfix fake_project.git fake_version triggered', 'view_state': {'id': 50, 'name': 'private', 'label': 'private'
+        }, 'attachments': [], 'type': 'note', 'created_at': '2022-09-13T12: 10: 22+02: 00', 'updated_at': '2022-09-13T12: 10: 22+02: 00'
+      }
+    ], 'custom_fields': [
+      {'field': {'id': 11, 'name': 'Classification'
+        }, 'value': ''
+      },
+      {'field': {'id': 23, 'name': 'Dev Related Tickets'
+        }, 'value': ''
+      },
+      {'field': {'id': 7, 'name': 'Log Time'
+        }, 'value': '0.5'
+      },
+      {'field': {'id': 24, 'name': 'NGCP Version'
+        }, 'value': ''
+      },
+      {'field': {'id': 38, 'name': 'Product Version'
+        }, 'value': ''
+      },
+      {'field': {'id': 52, 'name': 'Status Details'
+        }, 'value': ''
+      }
+    ], 'monitors': [
+      {'id': 125, 'name': 'gfuchs', 'real_name': 'Gernot Fuchs'
+      }
+    ], 'history': [
+      {'created_at': '2015-06-19T11: 01: 42+02: 00', 'user': {'id': 125, 'name': 'gfuchs', 'real_name': 'Gernot Fuchs'
+        }, 'type': {'id': 1, 'name': 'issue-new'
+        }, 'message': 'New Issue'
+      },
+      {'created_at': '2015-06-19T11: 01: 42+02: 00', 'user': {'id': 125, 'name': 'gfuchs', 'real_name': 'Gernot Fuchs'
+        }, 'type': {'id': 12, 'name': 'monitor-added'
+        }, 'old_value': '125', 'new_value': '', 'message': 'Issue Monitored: Gernot Fuchs'
+      },
+      {'created_at': '2015-06-19T11: 05: 01+02: 00', 'user': {'id': 125, 'name': 'gfuchs', 'real_name': 'Gernot Fuchs'
+        }, 'field': {'name': 'handler', 'label': 'Assigned To'
+        }, 'type': {'id': 0, 'name': 'field-updated'
+        }, 'old_value': {'id': 0
+        }, 'new_value': {'id': 125, 'name': 'gfuchs', 'real_name': 'Gernot Fuchs'
+        }, 'message': 'Assigned To', 'change': ' => Gernot Fuchs'
+      },
+      {'created_at': '2015-06-19T11: 05: 01+02: 00', 'user': {'id': 125, 'name': 'gfuchs', 'real_name': 'Gernot Fuchs'
+        }, 'field': {'name': 'status', 'label': 'Status'
+        }, 'type': {'id': 0, 'name': 'field-updated'
+        }, 'old_value': {'id': 10, 'name': 'new', 'label': 'new', 'color': '#fcbdbd'
+        }, 'new_value': {'id': 50, 'name': 'assigned', 'label': 'assigned', 'color': '#c2dfff'
+        }, 'message': 'Status', 'change': 'new => assigned'
+      },
+      {'created_at': '2015-06-19T11: 05: 09+02: 00', 'user': {'id': 125, 'name': 'gfuchs', 'real_name': 'Gernot Fuchs'
+        }, 'field': {'name': 'status', 'label': 'Status'
+        }, 'type': {'id': 0, 'name': 'field-updated'
+        }, 'old_value': {'id': 50, 'name': 'assigned', 'label': 'assigned', 'color': '#c2dfff'
+        }, 'new_value': {'id': 80, 'name': 'resolved', 'label': 'resolved', 'color': '#d2f5b0'
+        }, 'message': 'Status', 'change': 'assigned => resolved'
+      },
+      {'created_at': '2015-06-19T11: 05: 09+02: 00', 'user': {'id': 125, 'name': 'gfuchs', 'real_name': 'Gernot Fuchs'
+        }, 'field': {'name': 'resolution', 'label': 'Resolution'
+        }, 'type': {'id': 0, 'name': 'field-updated'
+        }, 'old_value': {'id': 10, 'name': 'open', 'label': 'open'
+        }, 'new_value': {'id': 20, 'name': 'fixed', 'label': 'fixed'
+        }, 'message': 'Resolution', 'change': 'open => fixed'
+      },
+      {'created_at': '2022-09-13T12: 10: 22+02: 00', 'user': {'id': 281, 'name': 'vseva', 'real_name': 'Victor Seva (Sipwise)'
+        }, 'type': {'id': 2, 'name': 'note-added'
+        }, 'note': {'id': 406459
+        }, 'message': 'Note Added: 0406459'
+      }
+    ]
+  }
+}

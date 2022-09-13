@@ -18,7 +18,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from . import utils
-from .models.wni import workfront_re_branch
+from .models.wni import NoteInfo
+from .models.wni import re_branch
 from .tasks import get_jbi_files
 from .tasks import jenkins_remove_project
 from release_dashboard.utils.build import is_ngcp_project
@@ -126,48 +127,47 @@ def gerrit_repo_manage(sender, **kwargs):
             gerrit_repo_del(instance)
 
 
-def workfront_release_target(instance, wid):
+def tracker_release_target(instance, note: NoteInfo):
     if not is_ngcp_project(instance.projectname):
         logger.info(
             "%s not a NGCP project, skip release_target", instance.projectname
         )
         return
     branch = instance.param_branch
-    if workfront_re_branch.search(branch):
+    if re_branch.search(branch):
         release = branch
     else:
         release = utils.get_next_release(branch)
     if release:
-        utils.workfront_set_release_target(wid, release)
+        note.set_target_release(release)
 
 
-def workfront_note_add(instance, message, release_target=False):
-    WorkfrontNoteInfo = apps.get_model("repoapi", "WorkfrontNoteInfo")
-    wni = WorkfrontNoteInfo.objects
-    workfront_ids = WorkfrontNoteInfo.getIds(instance.git_commit_msg)
+def tracker_note_add(instance, message, release_target=False):
+    model = NoteInfo.get_model()
+    ids = model.getIds(instance.git_commit_msg)
     from django.conf import settings
 
-    for wid in workfront_ids:
+    for id in ids:
         if not instance.gerrit_eventtype:
-            change = WorkfrontNoteInfo.getCommit(instance.git_commit_msg)
+            change = model.getCommit(instance.git_commit_msg)
             url = settings.GITWEB_URL.format(instance.projectname, change)
             eventtype = "git-commit"
         else:
             change = instance.gerrit_change
             url = settings.GERRIT_URL.format(instance.gerrit_change)
             eventtype = instance.gerrit_eventtype
-        note, created = wni.get_or_create(
-            workfront_id=wid, gerrit_change=change, eventtype=eventtype
+        note, created = NoteInfo.get_or_create(
+            field_id=id, gerrit_change=change, eventtype=eventtype
         )
         if created:
-            if not utils.workfront_note_send(wid, "%s %s " % (message, url)):
-                logger.error("remove related WorkfrontNoteInfo")
+            if not note.send(f"{message} {url} "):
+                logger.error("remove related NoteInfo")
                 note.delete()
             if release_target:
-                workfront_release_target(instance, wid)
+                tracker_release_target(instance, note)
 
 
-def workfront_note_manage(sender, **kwargs):
+def note_manager(sender, **kwargs):
     """
     <name>-get-code job is the first in the flow that has the proper
     GIT_CHANGE_SUBJECT envVar set, so git_commit_msg is fine
@@ -185,7 +185,7 @@ def workfront_note_manage(sender, **kwargs):
                 set_release_target = False
             else:
                 msg = "%s.git[%s] commit created"
-            workfront_note_add(
+            tracker_note_add(
                 instance,
                 msg % (instance.projectname, instance.param_branch),
                 set_release_target,

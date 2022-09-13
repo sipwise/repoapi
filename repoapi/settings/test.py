@@ -17,7 +17,7 @@ import os
 from pathlib import Path
 
 from .common import *  # noqa
-from repoapi.conf import Tracker
+from tracker.conf import Tracker
 
 # pylint: disable=W0401,W0614
 
@@ -57,9 +57,8 @@ GERRIT_URL = "https://gerrit.local/{}"
 GERRIT_REST_HTTP_USER = "jenkins"
 GERRIT_REST_HTTP_PASSWD = "verysecrethttppasswd"
 GITWEB_URL = "https://git.local/gitweb/?p={}.git;a=commit;h={}"
-WORKFRONT_CREDENTIALS = BASE_DIR / ".workfront.ini"
+TRACKER_WORKFRONT_CREDENTIALS = BASE_DIR / ".workfront.ini"
 DOCKER_REGISTRY_URL = "https://localhost:5000/v2/{}"
-MANTIS_URL = "https://support.local/api/rest/{}"
 
 # fake info
 DOCKER_REGISTRY = """
@@ -112,4 +111,4 @@ REPOAPI_ARTIFACT_JOB_REGEX = []
 JBI_ALLOWED_HOSTS = ["jenkins-dev.mgm.sipwise.com"]
 
 # no tracker
-REPOAPI_TRACKER = Tracker.NONE
+TRACKER_PROVIDER = Tracker.NONE

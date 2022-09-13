@@ -12,7 +12,6 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import json
 import re
 import subprocess
 from pathlib import Path
@@ -29,10 +28,6 @@ JBI_CONSOLE_URL = "{}/job/{}/{}/consoleText"
 JBI_BUILD_URL = "{}/job/{}/{}/api/json"
 JBI_ARTIFACT_URL = "{}/job/{}/{}/artifact/{}"
 JBI_ENVVARS_URL = "{}/job/{}/{}/injectedEnvVars/api/json"
-MANTIS_HEADERS = {
-    "Authorization": settings.MANTIS_TOKEN,
-    "Content-Type": "application/json",
-}
 
 
 def executeAndReturnOutput(command, env=None):
@@ -171,22 +166,6 @@ def jenkins_get_artifact(jobname, buildnumber, artifact_info):
     return _jenkins_get(url, base_path, artifact_info["fileName"])
 
 
-def workfront_note_send(_id, message):
-    command = [
-        "/usr/bin/workfront-jenkins-update",
-        "--credfile=%s" % settings.WORKFRONT_CREDENTIALS,
-        "--taskid=%s" % _id,
-        '--message="%s"' % message,
-    ]
-    res = executeAndReturnOutput(command)
-    if res[0] != 0:
-        logger.error(
-            "can't post workfront notes", stdout=res[1], stderr=res[2]
-        )
-        return False
-    return True
-
-
 def get_next_release(branch):
     command = ["/usr/bin/meta-release-helper", "--next-release", branch]
     res = executeAndReturnOutput(command)
@@ -209,20 +188,6 @@ def get_next_release(branch):
         return None
 
 
-def workfront_set_release_target(_id, release):
-    command = [
-        "/usr/bin/workfront-target-task",
-        "--credfile=%s" % settings.WORKFRONT_CREDENTIALS,
-        "--taskid=%s" % _id,
-        "--release=%s" % release,
-    ]
-    res = executeAndReturnOutput(command)
-    if res[0] != 0:
-        logger.error("can't set release target", stdout=res[1], stderr=res[2])
-        return False
-    return True
-
-
 def is_download_artifacts(jobname):
     if jobname in settings.JBI_ARTIFACT_JOBS:
         return True
@@ -230,43 +195,3 @@ def is_download_artifacts(jobname):
         if re.search(check, jobname) is not None:
             return True
     return False
-
-
-def mantis_query(method, url, payload):
-    logger.bind(
-        method=method,
-        url=url,
-        payload=payload,
-    )
-    response = requests.request(
-        f"{method}", url, headers=MANTIS_HEADERS, data=payload
-    )
-    response.raise_for_status()
-    return response
-
-
-def mantis_note_send(_id, message):
-    url = settings.MANTIS_URL.format(f"issues/{_id}/notes")
-    payload = json.dumps(
-        {"text": f"{message}", "view_state": {"name": "private"}}
-    )
-    mantis_query("POST", url, payload)
-
-
-def mantis_set_release_target(_id, msg):
-    url = settings.MANTIS_URL.format(f"issues/{_id}")
-    cf = settings.MANTIS_TARGET_RELEASE
-    payload = json.dumps(
-        {
-            "custom_fields": [
-                {
-                    "field": {
-                        "id": cf["id"],
-                        "name": cf["name"],
-                    },
-                    "value": f"{msg}",
-                },
-            ]
-        }
-    )
-    mantis_query("PATCH", url, payload)

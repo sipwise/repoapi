@@ -9,3 +9,4 @@ repoapi usr/share/repoapi
 repoapi.ini etc/uwsgi/apps-available
 requirements usr/share/repoapi
 static_media usr/share/repoapi
+tracker usr/share/repoapi

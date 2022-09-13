@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -16,30 +16,44 @@ import re
 
 from django.db import models
 
-workfront_re = re.compile(r"TT#(\d+)")
-workfront_re_branch = re.compile(r"^mr[0-9]+\.[0-9]+\.[0-9]+$")
+from repoapi.conf import settings
+from tracker.conf import Tracker
+from tracker.exceptions import TrackerNotDefined
+from tracker.models import MantisInfo
+from tracker.models import TrackerInfo
+from tracker.models import WorkfrontInfo
+
+re_branch = re.compile(r"^mr[0-9]+\.[0-9]+\.[0-9]+$")
 commit_re = re.compile(r"^(\w{7}) ")
 
 
-class WorkfrontNoteInfo(models.Model):
-    workfront_id = models.CharField(max_length=50, null=False)
+class NoteInfo(TrackerInfo):
     gerrit_change = models.CharField(max_length=50, null=False)
     eventtype = models.CharField(max_length=50, null=False)
 
     class Meta:
-        unique_together = ["workfront_id", "gerrit_change", "eventtype"]
+        abstract = True
 
     @staticmethod
-    def getIds(git_comment):
-        """
-        parses git_commit_msg searching for Workfront TT# occurrences
-        returns a list of IDs
-        """
-        if git_comment:
-            res = workfront_re.findall(git_comment)
-            return set(res)
+    def get_model():
+        if settings.TRACKER_PROVIDER == Tracker.MANTIS:
+            return MantisNoteInfo
+        elif settings.TRACKER_PROVIDER == Tracker.WORKFRONT:
+            return WorkfrontNoteInfo
+        return NoteInfo
+
+    @classmethod
+    def get_or_create(cls, defaults=None, **kwargs):
+        field_id = kwargs.pop("field_id")
+        if settings.TRACKER_PROVIDER == Tracker.MANTIS:
+            model = MantisNoteInfo
+            kwargs["mantis_id"] = field_id
+        elif settings.TRACKER_PROVIDER == Tracker.WORKFRONT:
+            model = WorkfrontNoteInfo
+            kwargs["workfront_id"] = field_id
         else:
-            return set()
+            raise TrackerNotDefined()
+        return model.objects.get_or_create(defaults, **kwargs)
 
     @staticmethod
     def getCommit(git_comment):
@@ -52,4 +66,14 @@ class WorkfrontNoteInfo(models.Model):
                 return res.group(1)
 
     def __str__(self):
-        return "%s:%s" % (self.workfront_id, self.gerrit_change)
+        return "%s:%s" % (self.field_id, self.gerrit_change)
+
+
+class WorkfrontNoteInfo(NoteInfo, WorkfrontInfo):
+    class Meta:
+        unique_together = ["workfront_id", "gerrit_change", "eventtype"]
+
+
+class MantisNoteInfo(NoteInfo, MantisInfo):
+    class Meta:
+        unique_together = ["mantis_id", "gerrit_change", "eventtype"]

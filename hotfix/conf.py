@@ -15,15 +15,8 @@
 from django.conf import settings  # noqa
 from appconf import AppConf
 
-from repoapi.conf import Tracker
-
 
 class HotfixConf(AppConf):
-    REGEX = {
-        Tracker.NONE: r"#(\d+)",
-        Tracker.WORKFRONT: r"TT#(\d+)",
-        Tracker.MANTIS: r"MT#(\d+)",
-    }
     ARTIFACT = "debian_changelog.txt"
 
     class Meta:

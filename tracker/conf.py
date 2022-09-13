@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,14 +12,35 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from enum import Enum, unique
 from django.conf import settings  # noqa
 from appconf import AppConf
 
 
-class RepoAPIConf(AppConf):
+@unique
+class Tracker(Enum):
+    NONE = "None"
+    MANTIS = "Mantis"
+    WORKFRONT = "WorkFront"
+
+
+class TrackerConf(AppConf):
+    REGEX = {
+        Tracker.NONE: r"#(\d+)",
+        Tracker.WORKFRONT: r"TT#(\d+)",
+        Tracker.MANTIS: r"MT#(\d+)",
+    }
     ARTIFACT_JOB_REGEX = [
         ".*-repos$",
     ]
+    WORKFRONT_CREDENTIALS = "fake.txt"
+    MANTIS_URL = "https://support.local/api/rest/{}"
+    MANTIS_TOKEN = "fake_mantis_token"
+    MANTIS_TARGET_RELEASE = {
+        "id": 75,
+        "name": "Target Release",
+    }
+    PROVIDER = Tracker.MANTIS
 
     class Meta:
-        prefix = "repoapi"
+        prefix = "tracker"

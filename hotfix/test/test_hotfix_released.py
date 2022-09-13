@@ -20,9 +20,9 @@ from django.test import override_settings
 
 from hotfix import models
 from hotfix import utils
-from hotfix.conf import Tracker
 from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
+from tracker.conf import Tracker
 
 debian_changelog = """ngcp-fake (3.8.7.4+0~mr3.8.7.4) unstable; urgency=medium
 
@@ -57,11 +57,11 @@ class TestHotfixReleased(BaseTest):
         }
         return defaults
 
-    @override_settings(REPOAPI_TRACKER=Tracker.WORKFRONT)
+    @override_settings(TRACKER_PROVIDER=Tracker.WORKFRONT)
     @patch("builtins.open", mock_open(read_data=debian_changelog))
     @patch("repoapi.utils.dlfile")
-    @patch("repoapi.utils.workfront_set_release_target")
-    @patch("repoapi.utils.workfront_note_send")
+    @patch("tracker.utils.workfront_set_release_target")
+    @patch("tracker.utils.workfront_note_send")
     def test_hotfixreleased_wf(self, wns, wsrt, dlfile):
         param = self.get_defaults()
         jbi = JenkinsBuildInfo.objects.create(**param)
@@ -92,11 +92,11 @@ class TestHotfixReleased(BaseTest):
             any_order=True,
         )
 
-    @override_settings(REPOAPI_TRACKER=Tracker.MANTIS)
+    @override_settings(TRACKER_PROVIDER=Tracker.MANTIS)
     @patch("builtins.open", mock_open(read_data=debian_changelog))
     @patch("repoapi.utils.dlfile")
-    @patch("repoapi.utils.mantis_set_release_target")
-    @patch("repoapi.utils.mantis_note_send")
+    @patch("tracker.utils.mantis_set_release_target")
+    @patch("tracker.utils.mantis_note_send")
     def test_hotfixreleased_mantis(self, mns, msrt, dlfile):
         param = self.get_defaults()
         jbi = JenkinsBuildInfo.objects.create(**param)
@@ -127,25 +127,21 @@ class TestHotfixReleased(BaseTest):
             any_order=True,
         )
 
-    @override_settings(REPOAPI_TRACKER=Tracker.MANTIS)
+    @override_settings(TRACKER_PROVIDER=Tracker.MANTIS)
     @patch("builtins.open", mock_open(read_data=debian_changelog))
     @patch("repoapi.utils.dlfile")
-    @patch("repoapi.utils.mantis_set_release_target")
-    @patch("repoapi.utils.mantis_note_send")
+    @patch("tracker.utils.mantis_set_release_target")
+    @patch("tracker.utils.mantis_note_send")
     def test_hotfixreleased_mantis_versions(self, mns, msrt, dlfile):
         param = self.get_defaults()
         jbi = JenkinsBuildInfo.objects.create(**param)
         projectname = "fake"
         version = "3.8.7.4+0~mr3.8.7.4"
-        other_version = "5.8.7.4+0~mr5.8.7.4"
-        gri = models.MantisNoteInfo.objects.create(
-            mantis_id="8989", projectname=projectname, version=other_version
-        )
         utils.process_hotfix(str(jbi), jbi.projectname, "/tmp/fake.txt")
         gri = models.MantisNoteInfo.objects.filter(
             mantis_id="8989", projectname=projectname
         )
-        self.assertEqual(gri.count(), 2)
+        self.assertEqual(gri.count(), 1)
         msg = "hotfix %s.git %s triggered" % (projectname, version)
         calls = [
             call("8989", msg),
@@ -159,7 +155,7 @@ class TestHotfixReleased(BaseTest):
         mns.assert_has_calls(calls, any_order=True)
         msrt.assert_has_calls(
             [
-                call("8989", "mr3.8.7.4,mr5.8.7.4"),
+                call("8989", "mr3.8.7.4"),
                 call("21499", "mr3.8.7.4"),
             ],
             any_order=True,
