@@ -24,6 +24,12 @@ class Tracker(Enum):
     WORKFRONT = "WorkFront"
 
 
+@unique
+class MapperType(Enum):
+    ISSUE = "Issue"
+    TASK = "Task"
+
+
 class TrackerConf(AppConf):
     REGEX = {
         Tracker.NONE: r"#(\d+)",

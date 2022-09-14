@@ -17,6 +17,7 @@ import re
 from django.db import models
 
 from . import utils
+from .conf import MapperType
 from .conf import Tracker
 from .conf import TrackerConf
 
@@ -74,3 +75,15 @@ class MantisInfo(TrackerInfo):
 
     def set_target_release(self, release):
         return utils.mantis_set_release_target(self.mantis_id, release)
+
+
+class TrackerMapper(models.Model):
+    mapper_type = models.CharField(
+        max_length=15, choices=[(tag, tag.value) for tag in MapperType]
+    )
+    mantis_id = models.CharField(max_length=50, null=False, unique=True)
+    workfront_id = models.CharField(max_length=50, null=False, unique=True)
+    workfront_uuid = models.CharField(max_length=50, null=False, unique=True)
+
+    def __str__(self):
+        return f"{self.mapper_type}:TT#{self.workfront_id}:MT#{self.mantis_id}"
