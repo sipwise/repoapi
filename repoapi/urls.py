@@ -126,4 +126,5 @@ urlpatterns = [
         r"^release_panel/",
         include("release_dashboard.urls"),
     ),
+    path("tracker/", include("tracker.urls")),
 ]

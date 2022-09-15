@@ -15,6 +15,7 @@
 import re
 
 from django.db import models
+from django.db.models import Q
 
 from . import utils
 from .conf import MapperType
@@ -77,6 +78,20 @@ class MantisInfo(TrackerInfo):
         return utils.mantis_set_release_target(self.mantis_id, release)
 
 
+class TrackerMapperManager(models.Manager):
+    def get_workfront_issue_qs(self, _id):
+        return self.get_queryset().filter(
+            Q(workfront_id=_id) | Q(workfront_uuid=_id),
+            mapper_type=MapperType.ISSUE,
+        )
+
+    def get_workfront_task_qs(self, _id):
+        return self.get_queryset().filter(
+            Q(workfront_id=_id) | Q(workfront_uuid=_id),
+            mapper_type=MapperType.TASK,
+        )
+
+
 class TrackerMapper(models.Model):
     mapper_type = models.CharField(
         max_length=50, choices=[(tag, tag.value) for tag in MapperType]
@@ -84,6 +99,7 @@ class TrackerMapper(models.Model):
     mantis_id = models.CharField(max_length=50, null=False, unique=True)
     workfront_id = models.CharField(max_length=50, null=False, unique=True)
     workfront_uuid = models.CharField(max_length=50, null=False, unique=True)
+    objects = TrackerMapperManager()
 
     def __str__(self):
         return f"{self.mapper_type}:TT#{self.workfront_id}:MT#{self.mantis_id}"

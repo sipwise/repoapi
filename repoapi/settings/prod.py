@@ -71,7 +71,11 @@ GERRIT_REST_HTTP_PASSWD = server_config.get("gerrit", "HTTP_PASSWD")
 
 TRACKER_MANTIS_URL = server_config.get("mantis", "URL")
 TRACKER_MANTIS_TOKEN = server_config.get("mantis", "TOKEN")
-
+mantis_parsed = urlparse(TRACKER_MANTIS_URL)
+TRACKER_MANTIS_MAPPER_URL = (
+    f"{mantis_parsed.scheme}://{mantis_parsed.netloc}/view.php?id="
+    + "{mantis_id}"
+)
 DOCKER_REGISTRY_URL = server_config.get("server", "DOCKER_REGISTRY_URL")
 AUTH_LDAP_SERVER_URI = server_config.get("server", "AUTH_LDAP_SERVER_URI")
 AUTH_LDAP_USER_BASE = server_config.get("server", "AUTH_LDAP_USER_BASE")

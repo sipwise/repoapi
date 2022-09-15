@@ -1,0 +1,28 @@
+- model: tracker.trackermapper
+  pk: 22203
+  fields:
+    mapper_type: MapperType.ISSUE
+    mantis_id: '33066'
+    workfront_id: '1022'
+    workfront_uuid: 577a4dfb004111d28a015ed5a24512a4
+- model: tracker.trackermapper
+  pk: 22204
+  fields:
+    mapper_type: MapperType.ISSUE
+    mantis_id: '33067'
+    workfront_id: '1409'
+    workfront_uuid: 578361d400272e6da7322db6892afad7
+- model: tracker.trackermapper
+  pk: 44403
+  fields:
+    mapper_type: MapperType.TASK
+    mantis_id: '55281'
+    workfront_id: '190550'
+    workfront_uuid: 631a44c3003b6b837d569b4f15a2d4dd
+- model: tracker.trackermapper
+  pk: 44404
+  fields:
+    mapper_type: MapperType.TASK
+    mantis_id: '55282'
+    workfront_id: '190650'
+    workfront_uuid: 631ee19a0283b8913a3ed6e6938bbd6d
