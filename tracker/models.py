@@ -79,7 +79,7 @@ class MantisInfo(TrackerInfo):
 
 class TrackerMapper(models.Model):
     mapper_type = models.CharField(
-        max_length=15, choices=[(tag, tag.value) for tag in MapperType]
+        max_length=50, choices=[(tag, tag.value) for tag in MapperType]
     )
     mantis_id = models.CharField(max_length=50, null=False, unique=True)
     workfront_id = models.CharField(max_length=50, null=False, unique=True)
