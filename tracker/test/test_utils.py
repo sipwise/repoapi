@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import json
+from pathlib import Path
+from unittest.mock import call
 from unittest.mock import patch
 
 from django.conf import settings
@@ -28,8 +30,19 @@ MANTIS_ISSUE_ID = 36018
 tracker_settings = TrackerConf()
 
 
-class FakeResponse(object):
-    def __init__(self, filepath):
+class FakeResponse:
+    def __init__(self, _json: dict):
+        self._json = _json
+
+    def json(self):
+        return self._json
+
+    def raise_for_status(self):
+        return False
+
+
+class FakeResponseFile:
+    def __init__(self, filepath: Path):
         self.filepath = filepath
 
     def json(self):
@@ -38,9 +51,17 @@ class FakeResponse(object):
         return res
 
 
+class TestFakeResponseFile(SimpleTestCase):
+    def test_json(self):
+        fake = FakeResponseFile(MANTIS_ISSUE_JSON)
+        res = fake.json()
+        self.assertTrue(len(res["issues"]), 1)
+        self.assertEqual(res["issues"][0]["id"], MANTIS_ISSUE_ID)
+
+
 class TestFakeResponse(SimpleTestCase):
     def test_json(self):
-        fake = FakeResponse(MANTIS_ISSUE_JSON)
+        fake = FakeResponse(FakeResponseFile(MANTIS_ISSUE_JSON).json())
         res = fake.json()
         self.assertTrue(len(res["issues"]), 1)
         self.assertEqual(res["issues"][0]["id"], MANTIS_ISSUE_ID)
@@ -51,27 +72,35 @@ def set_target_release_value(issue, value):
     for val in cf:
         if val["field"]["id"] == tracker_settings.MANTIS_TARGET_RELEASE["id"]:
             val["value"] = value
+            return val
+
+
+def get_target_release_value(issue):
+    cf = issue["custom_fields"]
+    for val in cf:
+        if val["field"]["id"] == tracker_settings.MANTIS_TARGET_RELEASE["id"]:
+            return val["value"]
 
 
 class TestUtils(SimpleTestCase):
+    ISSUE_URL = "https://support.local/api/rest/issues/36018"
+
     @patch(
         "tracker.utils.mantis_query",
-        return_value=FakeResponse(MANTIS_ISSUE_JSON),
+        return_value=FakeResponseFile(MANTIS_ISSUE_JSON),
     )
     def test_mantis_get_issue_ok(self, mq):
         res = utils.mantis_get_issue(MANTIS_ISSUE_ID)
         self.assertEqual(res["id"], MANTIS_ISSUE_ID)
-        mq.assert_called_once_with(
-            "GET", "https://support.local/api/rest/issues/36018"
-        )
+        mq.assert_called_once_with("GET", self.ISSUE_URL)
 
     def test_mantis_get_issue_id(self):
-        fake = FakeResponse(MANTIS_ISSUE_JSON)
+        fake = FakeResponseFile(MANTIS_ISSUE_JSON)
         res = utils.mantis_get_issue_id(fake.json(), MANTIS_ISSUE_ID)
         self.assertEqual(res["id"], MANTIS_ISSUE_ID)
 
     def test_mantis_get_target_releases(self):
-        fake = FakeResponse(MANTIS_ISSUE_JSON)
+        fake = FakeResponseFile(MANTIS_ISSUE_JSON)
         issue = utils.mantis_get_issue_id(fake.json(), MANTIS_ISSUE_ID)
         set_target_release_value(issue, "mr10.1")
         res = utils.mantis_get_target_releases(issue)
@@ -84,3 +113,33 @@ class TestUtils(SimpleTestCase):
         set_target_release_value(issue, "mr10.1, mr8.5.1,,")
         res = utils.mantis_get_target_releases(issue)
         self.assertListEqual(res, ["mr8.5.1", "mr10.1"])
+
+    @patch(
+        "tracker.utils.mantis_query",
+        return_value=FakeResponseFile(MANTIS_ISSUE_JSON),
+    )
+    def test_mantis_set_release_targets(self, mq):
+        fake_issue_patched = utils.mantis_get_issue_id(
+            FakeResponseFile(MANTIS_ISSUE_JSON).json(), MANTIS_ISSUE_ID
+        )
+        value = set_target_release_value(fake_issue_patched, "mr10.1")
+        payload = {"custom_fields": [value]}
+
+        utils.mantis_set_release_target(MANTIS_ISSUE_ID, "mr10.1")
+        calls = [
+            call("GET", self.ISSUE_URL),
+            call("PATCH", self.ISSUE_URL, json.dumps(payload)),
+        ]
+        mq.assert_has_calls(calls)
+
+    @patch("tracker.utils.mantis_query")
+    def test_mantis_set_release_target_ko(self, mq):
+        """value is already there"""
+        fake_issue_patched = utils.mantis_get_issue_id(
+            FakeResponseFile(MANTIS_ISSUE_JSON).json(), MANTIS_ISSUE_ID
+        )
+        fake_issues = {"issues": [fake_issue_patched]}
+        set_target_release_value(fake_issue_patched, "mr10.1,mr10.1.1")
+        mq.configure_mock(return_value=FakeResponse(fake_issues))
+        utils.mantis_set_release_target(MANTIS_ISSUE_ID, "mr10.1.1")
+        mq.assert_called_once_with("GET", self.ISSUE_URL)

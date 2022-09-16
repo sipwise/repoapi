@@ -83,10 +83,13 @@ def mantis_get_issue_id(res, _id: int):
 def mantis_get_issue(_id: int):
     url = tracker_settings.MANTIS_URL.format(f"issues/{_id}")
     response = mantis_query("GET", url)
-    res = mantis_get_issue_id(response.json(), _id)
+    res_json = response.json()
+    res = mantis_get_issue_id(res_json, _id)
     if res:
         return res
-    raise IssueNotFound(f"{_id} Not found in response")
+    raise IssueNotFound(
+        "{} Not found in response:{}".format(_id, res_json["issues"])
+    )
 
 
 def mantis_note_send(_id: int, message: str) -> requests.Response:
@@ -110,9 +113,21 @@ def mantis_get_target_releases(issue) -> list:
     return humansorted(res)
 
 
-def mantis_set_release_target(_id: int, release: str) -> requests.Response:
+def mantis_set_release_target(
+    _id: int, release: str, force=False
+) -> requests.Response:
     issue = mantis_get_issue(_id)
-    releases = mantis_get_target_releases(issue)
+    if force:
+        releases_val = release
+    else:
+        releases = mantis_get_target_releases(issue)
+        if release in releases:
+            logger.info(
+                "release:{release} already in target_release:{releases}"
+            )
+            return None
+        releases.append(release)
+        releases_val = ",".join(humansorted(releases))
     url = tracker_settings.MANTIS_URL.format(f"issues/{_id}")
     cf = tracker_settings.MANTIS_TARGET_RELEASE
     payload = json.dumps(
@@ -123,7 +138,7 @@ def mantis_set_release_target(_id: int, release: str) -> requests.Response:
                         "id": cf["id"],
                         "name": cf["name"],
                     },
-                    "value": f"{releases}",
+                    "value": f"{releases_val}",
                 },
             ]
         }
