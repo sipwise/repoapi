@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import filecmp
 from difflib import unified_diff
+from io import StringIO
 from pathlib import Path
 
 
@@ -32,3 +33,19 @@ def check_output(output_file, test_file):
             for line in diff:
                 print(line, end="")
         assert filecmp.cmp(output_file, test_file)
+
+
+def check_stdoutput(stdout: StringIO, test_file: Path):
+    assert test_file.exists()
+    flag = False
+    with open(test_file) as test:
+        diff = unified_diff(
+            stdout.getvalue().splitlines(),
+            test.readlines(),
+            fromfile="stdout",
+            tofile=str(test_file.absolute()),
+        )
+        for line in diff:
+            flag = True
+            print(line, end="")
+    assert not flag
