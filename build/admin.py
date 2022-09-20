@@ -35,6 +35,7 @@ class BuildReleaseAdmin(ImportExportModelAdmin):
         "failed_projects",
         "pool_size",
         "triggered_jobs",
+        "build_deps",
     )
     modify_readonly_fields = (
         "uuid",
