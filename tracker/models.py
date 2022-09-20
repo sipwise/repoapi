@@ -37,11 +37,10 @@ class TrackerInfo(models.Model):
         parses text searching for tracker occurrences
         returns a list of IDs
         """
+        res = ()
         if change:
             res = cls.tracker_re.findall(change)
-            return set(res)
-        else:
-            return set()
+        return set(res)
 
     @property
     def field_id(self):
@@ -71,6 +70,18 @@ class MantisInfo(TrackerInfo):
     class Meta:
         abstract = True
 
+    @classmethod
+    def getIds(cls, change):
+        from tracker.conf import settings
+
+        res = super().getIds(change)
+        if change and settings.TRACKER_WORKFRONT_MAPPER_IDS:
+            old_ids = WorkfrontInfo.getIds(change)
+            qs = TrackerMapper.objects.get_wf_qs(old_ids)
+            for wf in qs:
+                res.add(wf.mantis_id)
+        return res
+
     def send(self, msg: str):
         return utils.mantis_note_send(self.mantis_id, msg)
 
@@ -79,6 +90,13 @@ class MantisInfo(TrackerInfo):
 
 
 class TrackerMapperManager(models.Manager):
+    def get_wf_qs(self, _ids):
+        return (
+            self.get_queryset()
+            .filter(workfront_id__in=_ids)
+            .order_by("mantis_id")
+        )
+
     def get_workfront_issue_qs(self, _id):
         return self.get_queryset().filter(
             Q(workfront_id=_id) | Q(workfront_uuid=_id),

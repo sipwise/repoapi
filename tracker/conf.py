@@ -41,6 +41,7 @@ class TrackerConf(AppConf):
     ]
     WORKFRONT_CREDENTIALS = "fake.txt"
     MANTIS_URL = "https://support.local/api/rest/{}"
+    WORKFRONT_MAPPER_IDS = True
     MANTIS_MAPPER_URL = "https://support.local/view.php?id={mantis_id}"
     MANTIS_TOKEN = "fake_mantis_token"
     MANTIS_TARGET_RELEASE = {

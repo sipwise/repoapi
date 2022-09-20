@@ -50,7 +50,9 @@ class TestUtils(SimpleTestCase):
         self.assertEqual(changelog.full_version, "3.8.7.4+0~mr3.8.7.4")
         self.assertEqual(changelog.package, "ngcp-fake")
 
-    @override_settings(TRACKER_PROVIDER=Tracker.MANTIS)
+    @override_settings(
+        TRACKER_PROVIDER=Tracker.MANTIS, TRACKER_WORKFRONT_MAPPER_IDS=False
+    )
     @patch("builtins.open", mock_open(read_data=debian_changelog))
     def test_parse_changelog_mantis(self):
         ids, changelog = utils.parse_changelog("/tmp/fake.txt")
