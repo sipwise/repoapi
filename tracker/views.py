@@ -50,3 +50,19 @@ class WFTaskRedirectView(RedirectView):
             mapper_type=MapperType.TASK,
         )
         return self.url.format(mantis_id=issue.mantis_id)
+
+
+class WFRedirectView(RedirectView):
+    permanent = True
+    query_string = True
+    url = tracker_settings.MANTIS_MAPPER_URL
+
+    def get_redirect_url(self, *args, **kwargs):
+        wf = get_object_or_404(
+            TrackerMapper.objects.get_wf_qs(
+                [
+                    kwargs["workfront_id"],
+                ]
+            )
+        )
+        return self.url.format(mantis_id=wf.mantis_id)

@@ -28,4 +28,9 @@ urlpatterns = [
         views.WFTaskRedirectView.as_view(),
         name="mapper-tasks",
     ),
+    path(
+        "mapper/<str:workfront_id>/",
+        views.WFRedirectView.as_view(),
+        name="mapper-id",
+    ),
 ]

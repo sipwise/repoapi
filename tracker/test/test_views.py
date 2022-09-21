@@ -76,3 +76,27 @@ class TrackerMapperTest(BaseTest):
                 mantis_id=self.TASK_mantis
             ),
         )
+
+    def test_wf_id_task(self):
+        res = self.client.get(
+            reverse("tracker:mapper-id", args=[self.TASK_id])
+        )
+        self.assertEqual(res.status_code, 301)
+        self.assertEqual(
+            res.url,
+            tracker_settings.MANTIS_MAPPER_URL.format(
+                mantis_id=self.TASK_mantis
+            ),
+        )
+
+    def test_wf_id_issue(self):
+        res = self.client.get(
+            reverse("tracker:mapper-id", args=[self.ISSUE_id])
+        )
+        self.assertEqual(res.status_code, 301)
+        self.assertEqual(
+            res.url,
+            tracker_settings.MANTIS_MAPPER_URL.format(
+                mantis_id=self.ISSUE_mantis
+            ),
+        )
