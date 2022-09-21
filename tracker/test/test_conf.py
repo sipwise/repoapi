@@ -12,20 +12,17 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import unittest
 from urllib.parse import urlparse
 
 from django.test import SimpleTestCase
 
 
 class TestTrackerConf(SimpleTestCase):
-    @unittest.expectedFailure
     def test_django_settings(self):
         from django.conf import settings
 
         self.assertIsNotNone(settings.TRACKER_MANTIS_URL)
 
-    @unittest.expectedFailure
     def test_tracker_settings(self):
         from tracker.conf import settings
 

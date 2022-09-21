@@ -17,7 +17,6 @@ import os
 from pathlib import Path
 
 from .common import *  # noqa
-from tracker.conf import Tracker
 
 # pylint: disable=W0401,W0614
 
@@ -111,4 +110,4 @@ REPOAPI_ARTIFACT_JOB_REGEX = []
 JBI_ALLOWED_HOSTS = ["jenkins-dev.mgm.sipwise.com"]
 
 # no tracker
-TRACKER_PROVIDER = Tracker.NONE
+TRACKER_PROVIDER = "None"
