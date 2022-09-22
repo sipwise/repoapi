@@ -589,3 +589,35 @@ class WannaBuildTestCase(SimpleTestCase):
         }
         config = self.FakeConfig(build_deps)
         config.check_circular_dependencies()
+
+
+class CheckConfig(SimpleTestCase):
+    def setUp(self):
+        self.data = {
+            "jenkins-jobs": {},
+            "distris": ["release-trunk-buster"],
+            "release-trunk-buster": [],
+        }
+
+    def test_empty(self):
+        data = {}
+        with self.assertRaises(err.NoJenkinsJobsInfo):
+            ReleaseConfig("fake", config=data)
+
+    def test_no_distris(self):
+        data = {"jenkins-jobs": []}
+        with self.assertRaises(err.NoDistrisInfo):
+            ReleaseConfig("fake", config=data)
+
+    def test_no_release(self):
+        data = {"jenkins-jobs": [], "distris": []}
+        with self.assertRaises(err.NoReleaseInfo):
+            ReleaseConfig("fake", config=data)
+
+    def test_simple(self):
+        ReleaseConfig("fake", config=self.data)
+
+    def test_circular_dep(self):
+        self.data["jenkins-jobs"]["build_deps"] = {"A": ["A1", "A"]}
+        with self.assertRaises(err.CircularBuildDependencies):
+            ReleaseConfig("fake", config=self.data)

@@ -15,6 +15,7 @@
 from django.test import override_settings
 from django.urls import reverse
 from rest_framework import status
+from rest_framework.test import APISimpleTestCase
 
 from build import models
 from repoapi.test.base import APIAuthenticatedTestCase
@@ -216,3 +217,27 @@ class TestBuildPatchRest(APIAuthenticatedTestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         br = models.BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertEqual(br.projects, "kamailio,lua-ngcp-kamailio,ngcp-panel")
+
+
+class TestCheckConfig(APISimpleTestCase):
+    url = reverse("check-config")
+
+    def setUp(self):
+        self.data = {
+            "jenkins-jobs": {},
+            "distris": ["release-trunk-buster"],
+            "release-trunk-buster": [],
+        }
+
+    def test_empty(self):
+        response = self.client.post(self.url, {}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_406_NOT_ACCEPTABLE)
+
+    def test_clean(self):
+        response = self.client.post(self.url, self.data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_circular_deps(self):
+        self.data["jenkins-jobs"]["build_deps"] = {"A": ["A1", "A"]}
+        response = self.client.post(self.url, self.data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_406_NOT_ACCEPTABLE)

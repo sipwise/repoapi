@@ -13,6 +13,7 @@ django-structlog
 django-timezone-field
 djangorestframework>=3.6
 djangorestframework-api-key==2.*
+djangorestframework-yaml
 drf-spectacular
 flower>=0.9.5
 markdown

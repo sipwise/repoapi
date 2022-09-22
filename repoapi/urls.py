@@ -94,6 +94,11 @@ api_patterns = [
         docker.DockerTagDetail.as_view(),
         name="dockertag-detail",
     ),
+    re_path(
+        r"^config/check/$",
+        build_views.CheckConfig.as_view(),
+        name="check-config",
+    ),
     re_path(r"^build/", include("build.urls")),
     re_path(r"^release_changed/", include("release_changed.urls")),
 ]

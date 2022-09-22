@@ -16,14 +16,17 @@ import django_filters
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from rest_framework.parsers import JSONParser
 from rest_framework.permissions import DjangoModelPermissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_api_key.permissions import HasAPIKey
+from rest_framework_yaml.parsers import YAMLParser
 
 from . import models
 from . import serializers
 from . import tasks
+from . import utils
 from repoapi.serializers import JenkinsBuildInfoSerializer as JBISerializer
 
 
@@ -107,3 +110,14 @@ class ReleaseJobsUUID(APIView):
             serializer = JBISerializer(jbi, context={"request": request})
             res.append(serializer.data)
         return Response(res)
+
+
+class CheckConfig(APIView):
+    parser_classes = [YAMLParser, JSONParser]
+
+    def post(self, request, format=None):
+        try:
+            utils.ReleaseConfig("fake", config=request.data)
+            return JsonResponse({"result": "All ok"}, status=200)
+        except Exception as e:
+            return JsonResponse({"error": f"{e}"}, status=406)

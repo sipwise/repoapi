@@ -226,7 +226,7 @@ class ReleaseConfig(object):
     def check_circular_dependencies(self):
         levels = self.levels_build_deps
         builds = list(self.build_deps.keys())
-        print(f"{levels}")
+        print(f"builds:{builds} levels:{levels}")
         for vals in levels:
             for prj in vals:
                 builds.remove(prj)
@@ -276,7 +276,7 @@ class ReleaseConfig(object):
         ]
         return humansorted(res, lambda x: x["release"], reverse=True)
 
-    def __init__(self, name, distribution=None):
+    def _get_config(self, name, distribution=None):
         ok, self.distribution = is_release_trunk(name)
         if not ok and name == "trunk":
             self.distribution = distribution
@@ -288,6 +288,14 @@ class ReleaseConfig(object):
             settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR / self.config_file
         )
         self.config = self.load_config(self.config_path)
+
+    def __init__(self, name, distribution=None, config=None):
+        if config is None:
+            self._get_config(name, distribution)
+        else:
+            self.config_file = "fake.yml"
+            self.config_path = "/dev/null"
+            self.config = config
         try:
             self.jenkins_jobs = self.config["jenkins-jobs"]
         except KeyError:
