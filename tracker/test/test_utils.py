@@ -99,6 +99,11 @@ class TestUtils(SimpleTestCase):
         res = utils.mantis_get_issue_id(fake.json(), MANTIS_ISSUE_ID)
         self.assertEqual(res["id"], MANTIS_ISSUE_ID)
 
+    def test_mantis_get_issue_id_str(self):
+        fake = FakeResponseFile(MANTIS_ISSUE_JSON)
+        res = utils.mantis_get_issue_id(fake.json(), str(MANTIS_ISSUE_ID))
+        self.assertEqual(res["id"], MANTIS_ISSUE_ID)
+
     def test_mantis_get_target_releases(self):
         fake = FakeResponseFile(MANTIS_ISSUE_JSON)
         issue = utils.mantis_get_issue_id(fake.json(), MANTIS_ISSUE_ID)

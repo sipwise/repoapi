@@ -76,7 +76,7 @@ def mantis_query(method, url, payload=None) -> requests.Response:
 
 def mantis_get_issue_id(res, _id: int):
     for issue in res["issues"]:
-        if issue["id"] == _id:
+        if int(issue["id"]) == int(_id):
             return issue
 
 
