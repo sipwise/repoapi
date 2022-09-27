@@ -62,7 +62,7 @@ class BuildReleaseCleanup(APIView):
         if not build or build.done:
             return JsonResponse({}, status=200)
         res = model_to_dict(build)
-        qs.delete()
+        build.delete()
         return JsonResponse(res, status=202)
 
 

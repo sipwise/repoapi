@@ -267,6 +267,29 @@ class TestTrunkCleanup(APIAuthenticatedTestCase):
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
         self.assertEqual(qs.count(), 0)
 
+    def test_weekly_not_done_with_history(self):
+        params = {
+            "uuid": "dbe569f7-eab6-4532-a6d1-d31fb559649c",
+            "branch": "master",
+            "release": "release-trunk-weekly",
+            "distribution": "bullseye",
+            "projects": "asterisk-voicemail,backup-tools",
+            "built_projects": "release-copy-debs-yml",
+        }
+        set_build_done(
+            models.BuildRelease.objects.filter(release="release-trunk-weekly")
+        )
+        models.BuildRelease.objects.create(**params)
+        qs = models.BuildRelease.objects.filter(release="release-trunk-weekly")
+        self.assertEqual(qs.count(), 2)
+        url = reverse("build:trunk-cleanup", args=["release-trunk-weekly"])
+        response = self.client.delete(url, {}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
+        self.assertEqual(qs.count(), 1)
+        self.assertEqual(
+            qs.first().uuid, "dbe569f7-eab6-4532-a6d1-d31fb559649b"
+        )
+
     def test_weekly_done(self):
         qs = models.BuildRelease.objects.filter(release="release-trunk-weekly")
         self.assertEqual(qs.count(), 1)
