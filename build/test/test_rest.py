@@ -14,9 +14,11 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.test import override_settings
 from django.urls import reverse
+from django.urls.exceptions import NoReverseMatch
 from rest_framework import status
 from rest_framework.test import APISimpleTestCase
 
+from .test_models import set_build_done
 from build import models
 from repoapi.test.base import APIAuthenticatedTestCase
 
@@ -241,3 +243,36 @@ class TestCheckConfig(APISimpleTestCase):
         self.data["jenkins-jobs"]["build_deps"] = {"A": ["A1", "A"]}
         response = self.client.post(self.url, self.data, format="json")
         self.assertEqual(response.status_code, status.HTTP_406_NOT_ACCEPTABLE)
+
+
+@override_settings(JBI_ALLOWED_HOSTS=["fake.local"])
+class TestTrunkCleanup(APIAuthenticatedTestCase):
+    fixtures = ["test_weekly"]
+
+    def test_mrXX(self):
+        with self.assertRaises(NoReverseMatch):
+            reverse("build:trunk-cleanup", args=["mr10.1"])
+
+    def test_none(self):
+        url = reverse("build:trunk-cleanup", args=["release-trunk-wheezy"])
+        response = self.client.delete(url, {}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_weekly_not_done(self):
+        qs = models.BuildRelease.objects.filter(release="release-trunk-weekly")
+        self.assertEqual(qs.count(), 1)
+        self.assertFalse(qs.first().done)
+        url = reverse("build:trunk-cleanup", args=["release-trunk-weekly"])
+        response = self.client.delete(url, {}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
+        self.assertEqual(qs.count(), 0)
+
+    def test_weekly_done(self):
+        qs = models.BuildRelease.objects.filter(release="release-trunk-weekly")
+        self.assertEqual(qs.count(), 1)
+        set_build_done(qs)
+        self.assertTrue(qs.first().done)
+        url = reverse("build:trunk-cleanup", args=["release-trunk-weekly"])
+        response = self.client.delete(url, {}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(qs.count(), 1)

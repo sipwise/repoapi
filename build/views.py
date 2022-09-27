@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import django_filters
+from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
@@ -44,6 +45,25 @@ class BuildReleaseList(generics.ListCreateAPIView):
     queryset = models.BuildRelease.objects.all().order_by("id")
     serializer_class = serializers.BuildReleaseSerializer
     filter_class = BuildReleaseFilter
+
+
+class BuildReleaseCleanup(APIView):
+    permission_classes = [HasAPIKey | DjangoModelPermissions]
+
+    def delete(self, request, version, format=None):
+        if not version.startswith("release-trunk-"):
+            return JsonResponse(
+                {"error": f"{version} can not be removed"}, status=403
+            )
+        qs = models.BuildRelease.objects.filter(release=version).order_by(
+            "-start_date"
+        )
+        build = qs.first()
+        if not build or build.done:
+            return JsonResponse({}, status=200)
+        res = model_to_dict(build)
+        qs.delete()
+        return JsonResponse(res, status=202)
 
 
 class BuildReleaseDetail(generics.RetrieveDestroyAPIView):

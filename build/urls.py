@@ -20,6 +20,11 @@ app_name = "build"
 urlpatterns = [
     re_path(r"^$", views.BuildReleaseList.as_view(), name="list"),
     re_path(
+        r"^(?P<version>release-trunk-[^/]+)/$",
+        views.BuildReleaseCleanup.as_view(),
+        name="trunk-cleanup",
+    ),
+    re_path(
         r"^(?P<pk>[0-9]+)/?$",
         views.BuildReleaseDetail.as_view(),
         name="detail",
