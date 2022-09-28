@@ -1,0 +1,13 @@
+-   model: build.buildrelease
+    pk: 1
+    fields:
+        uuid: 3f25fa3f-7ffd-464c-97e1-4b0ce1568ef5
+        start_date: 2020-03-09 11:18:02.265202+00:00
+        tag: mr8.1.2.1
+        branch: mr8.1.2
+        release: release-mr8.1.2
+        distribution: buster
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,comx-fileshare-service,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,heartbeat,installer,janus-admin,janus-client,kamailio,kamailio-config-tests,keyring,klish,libinewrate,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-api-tools,ngcp-csc-ui,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rtcengine,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-ha,sems-modules,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml,data-hal,libinewrate,libswrate,libtcap,sipwise-base,check-tools
+        failed_projects: templates
+        pool_size: 1

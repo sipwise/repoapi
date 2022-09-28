@@ -315,7 +315,7 @@ class BuildRelease(models.Model):
             return "tag/{}".format(self.tag)
         return "branch/{}".format(self.branch)
 
-    def _next(self):
+    def _next(self, exclude=[]):
         log = logger.bind(release=self)
         if self.built_projects is None:
             return self.build_deps[0][0]
@@ -339,6 +339,8 @@ class BuildRelease(models.Model):
                     )
                     return None
         for prj in self.projects_list:
+            if prj in exclude:
+                continue
             if prj not in built_list and prj not in t_list:
                 return prj
 
@@ -352,15 +354,10 @@ class BuildRelease(models.Model):
                 failed_projects=failed_projects,
             )
             return
-        res = self._next()
-        if res is not None:
-            if res in failed_projects:
-                log.error(
-                    "project marked as failed, stop sending jobs",
-                    project=res,
-                )
-            else:
-                return res
+        prj = self._next(exclude=failed_projects)
+        if prj in failed_projects and self.config.is_build_dep(prj):
+            return None
+        return prj
 
     @property
     def build_deps(self) -> list:

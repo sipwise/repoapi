@@ -346,6 +346,15 @@ class WeeklyTest(BaseTest):
             buildnumber=1,
             result="FAILURE",
         )
+        params = {
+            "project": "ngcp-prompts-get-code",
+            "release_uuid": br.uuid,
+            "trigger_release": br.release,
+            "trigger_branch_or_tag": br.branch_or_tag,
+            "trigger_distribution": br.distribution,
+        }
+        tb.assert_called_once_with(**params)
+        tb.reset_mock()
         JenkinsBuildInfo.objects.create(
             job_url="http://fake.local/job/ngcp-prompts-repos/",
             projectname="ngcp-prompts",

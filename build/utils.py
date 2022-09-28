@@ -309,6 +309,9 @@ class ReleaseConfig(object):
             raise err.NoDistrisInfo(msg.format(self.config_file))
         self.check_circular_dependencies()
 
+    def is_build_dep(self, prj: str) -> bool:
+        return prj in self.build_deps.keys()
+
     @property
     def build_deps(self) -> dict:
         return self.jenkins_jobs.get("build_deps", dict())

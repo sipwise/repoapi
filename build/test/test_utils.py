@@ -205,6 +205,11 @@ class ReleaseConfigTestCase(SimpleTestCase):
         rc = ReleaseConfig("trunk")
         self.assertListEqual(list(rc.build_deps.keys()), self.build_deps)
 
+    def test_is_build_dep(self):
+        rc = ReleaseConfig("trunk")
+        self.assertTrue(rc.is_build_dep("data-hal"))
+        self.assertFalse(rc.is_build_dep("templates"))
+
     def test_build_deps_iter_step_1(self):
         rc = ReleaseConfig("trunk")
         build_deps = [
