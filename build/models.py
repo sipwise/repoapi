@@ -261,7 +261,7 @@ class BuildRelease(models.Model):
         self.save()
         return True
 
-    def _append_falied(self, value):
+    def _append_failed(self, value):
         if value in self.failed_projects_list:
             return False
         if self.failed_projects is None:
@@ -301,7 +301,7 @@ class BuildRelease(models.Model):
         if jbi.result == "FAILURE":
             if jobname.endswith("-piuparts"):
                 return False
-            return self._append_falied(jbi.projectname)
+            return self._append_failed(jbi.projectname)
         is_repos = jobname.endswith("-repos")
         is_rj = jobname in settings.BUILD_RELEASE_JOBS
         if is_repos or is_rj:
