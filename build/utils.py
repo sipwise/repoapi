@@ -226,7 +226,7 @@ class ReleaseConfig(object):
     def check_circular_dependencies(self):
         levels = self.levels_build_deps
         builds = list(self.build_deps.keys())
-        print(f"builds:{builds} levels:{levels}")
+        logger.debug(f"builds:{builds} levels:{levels}")
         for vals in levels:
             for prj in vals:
                 builds.remove(prj)

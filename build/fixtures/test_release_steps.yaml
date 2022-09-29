@@ -1,0 +1,11 @@
+-   model: build.buildrelease
+    pk: 1
+    fields:
+        uuid: 5a1485a7-722e-4f85-a0fd-bc745549f19a
+        start_date: 2020-03-09 11:18:02.265202+00:00
+        branch: mr11.0
+        release: release-mr11.0
+        distribution: bullseye
+        projects: asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,installer,kamailio,kamailio-config-tests,keyring,klish,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,megacli,metapackages,monitoring-tools,ngcp-admin-ui,ngcp-api-tools,ngcp-csc-ui,ngcp-cve-scanner,ngcp-exporter,ngcp-fauditd,ngcp-inventory,ngcp-js-api-client,ngcp-logfs,ngcp-klish-config,ngcp-panel,ngcp-prompts,ngcp-rest-api,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-user-framework,ngcp-web-tests-e2e,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,py-ngcp-kamailio,rate-o-mat,reminder,rtpengine,sems,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket
+        built_projects: release-copy-debs-yml
+        pool_size: 0

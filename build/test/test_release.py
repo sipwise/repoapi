@@ -1,4 +1,4 @@
-# Copyright (C) 2017 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -15,6 +15,8 @@
 from copy import deepcopy
 from unittest.mock import MagicMock
 
+from django.test import override_settings
+
 from build.models import BuildRelease
 from repoapi.test.base import BaseTest
 
@@ -28,13 +30,13 @@ class StepsTest(BaseTest):
         self.jbi = MagicMock()
         self.jbi.result = "SUCCESS"
 
-    def append_built(self, projectname):
+    def append_built(self, projectname, size=0):
         self.jbi.projectname = projectname
         self.jbi.jobname = f"{projectname}-repos"
         self.assertTrue(self.br.append_built(self.jbi))
         self.built_projects += f",{projectname}"
         self.assertEqual(self.br.built_projects, self.built_projects)
-        self.assertEqual(self.br.pool_size, 0)
+        self.assertEqual(self.br.pool_size, size)
 
     def append_built_failed(self, projectname):
         self.jbi.projectname = projectname
@@ -47,8 +49,61 @@ class StepsTest(BaseTest):
             self.failed_projects = f"{projectname}"
         self.assertEqual(self.br.failed_projects, self.failed_projects)
 
+    def append_triggered(self, projectname, size=0):
+        self.br.append_triggered(projectname)
+        self.assertEqual(self.br.pool_size, size)
 
+
+@override_settings(BUILD_POOL=4)
 class BuildReleaseStepsTest(StepsTest):
+    """template was not build_dep and bootenv failed"""
+
+    fixtures = [
+        "test_release_steps",
+    ]
+
+    build_deps = [
+        ["ngcpcfg", "system-tests"],
+        ["data-hal", "libswrate", "libtcap", "sipwise-base", "system-tools"],
+        ["check-tools", "ngcp-schema"],
+        ["ngcp-panel"],
+    ]
+
+    def test_status(self):
+        self.assertEqual(self.br.built_projects, "release-copy-debs-yml")
+        self.assertIsNone(self.br.failed_projects)
+        self.assertEqual(self.br.pool_size, 0)
+
+    def test_levels_build_deps(self):
+        self.assertEqual(self.br.config.levels_build_deps, self.build_deps)
+
+    def test_next_one_by_one(self):
+        self.assertEqual(self.br.next, "ngcpcfg")
+        self.append_built("ngcpcfg")
+        self.assertEqual(self.br.next, "system-tests")
+        self.append_built("system-tests")
+        self.assertEqual(self.br.next, "data-hal")
+        self.append_built("data-hal")
+        self.assertEqual(self.br.next, "libswrate")
+        self.append_built("libswrate")
+
+    def test_stop_for_build_deps(self):
+        self.assertEqual(self.br.next, "ngcpcfg")
+        self.append_built("ngcpcfg")
+        self.assertEqual(self.br.next, "system-tests")
+        self.append_triggered("system-tests", 1)
+        self.assertIsNone(self.br.next)
+
+    def test_stop_for_build_deps_last(self):
+        for level in range(3):
+            for prj in self.build_deps[level]:
+                self.append_built(prj)
+        self.assertEqual(self.br.next, "ngcp-panel")
+        self.append_triggered("ngcp-panel", 1)
+        self.assertIsNone(self.br.next)
+
+
+class ChangeBuildDepsTest(StepsTest):
     """template was not build_dep and bootenv failed"""
 
     fixtures = [
