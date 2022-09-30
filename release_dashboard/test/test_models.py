@@ -78,10 +78,6 @@ class ProjectTestCase(TestCase):
         self.assertIsInstance(proj.branches, list)
         self.assertCountEqual(proj.branches, [])
 
-    def test_filtered_json(self):
-        res = Project._get_filtered_json(GERRIT_REST_TAGS)
-        self.assertEqual(res, FILTERED_TAGS)
-
     def test_filter_values_null(self):
         res = Project._filter_values(None, "^refs/tags/(.+)$")
         self.assertIsInstance(res, list)

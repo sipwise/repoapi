@@ -15,12 +15,12 @@
 import urllib
 import uuid
 
-import requests
 import structlog
-from requests.auth import HTTPBasicAuth
 
 from ..conf import settings
 from ..models import Project
+from gerrit.utils import get_gerrit_branches
+from gerrit.utils import get_gerrit_tags
 from repoapi.utils import open_jenkins_url
 
 logger = structlog.get_logger(__name__)
@@ -39,14 +39,6 @@ hotfix_url = (
     "push={push}&release_empty_hotfix={empty}&"
     "uuid={uuid}&remote_user={user}"
 )
-
-
-def get_response(url):
-    auth = HTTPBasicAuth(
-        settings.GERRIT_REST_HTTP_USER, settings.GERRIT_REST_HTTP_PASSWD
-    )
-    response = requests.get(url, auth=auth)
-    return response
 
 
 def trigger_hotfix(project, branch, user, push="yes", empty=False):
@@ -84,26 +76,6 @@ def fetch_gerrit_info(projectname):
     project.tags = get_gerrit_tags(projectname)
     project.branches = get_gerrit_branches(projectname)
     project.save()
-
-
-def get_gerrit_info(url):
-    if settings.DEBUG:
-        logger.debug("Debug mode, would trigger: %s", url)
-        return r")]}'\n[]"
-    else:
-        response = get_response(url)
-        response.raise_for_status()
-        return response.text
-
-
-def get_gerrit_tags(project, regex=None):
-    url = settings.GERRIT_URL.format("a/projects/%s/tags/" % project)
-    return get_gerrit_info(url)
-
-
-def get_gerrit_branches(project, regex=None):
-    url = settings.GERRIT_URL.format("a/projects/%s/branches/" % project)
-    return get_gerrit_info(url)
 
 
 def is_ngcp_project(projectname):

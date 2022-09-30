@@ -20,6 +20,7 @@ from django.db import models
 from django_extensions.db.fields import ModificationDateTimeField
 
 from .conf import settings
+from gerrit.utils import get_filtered_json
 
 
 class Project(models.Model):
@@ -45,13 +46,6 @@ class Project(models.Model):
                     res.add(val_ok)
         return sorted(res, reverse=True)
 
-    @classmethod
-    def _get_filtered_json(cls, text):
-        """gerrit responds with malformed json
-        https://gerrit-review.googlesource.com/Documentation/rest-api.html#output
-        """
-        return json.loads(text[5:])
-
     def __str__(self):
         return self.name
 
@@ -63,7 +57,7 @@ class Project(models.Model):
 
     @tags.setter
     def tags(self, value):
-        self.json_tags = Project._get_filtered_json(value)
+        self.json_tags = get_filtered_json(value)
 
     @property
     def branches(self):
@@ -73,7 +67,7 @@ class Project(models.Model):
 
     @branches.setter
     def branches(self, value):
-        self.json_branches = Project._get_filtered_json(value)
+        self.json_branches = get_filtered_json(value)
 
     def filter_tags(self, regex):
         return Project._filter_values(
