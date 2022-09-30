@@ -31,15 +31,11 @@ JBI_ENVVARS_URL = "{}/job/{}/{}/injectedEnvVars/api/json"
 
 
 def executeAndReturnOutput(command, env=None):
-    log = logger.bind(
-        command=command,
-        env=env,
-    )
     proc = subprocess.Popen(
         command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env
     )
     stdoutdata, stderrdata = proc.communicate()
-    log.debug("command done", stdout=stdoutdata, stderr=stderrdata)
+    logger.debug("command done", stdout=stdoutdata, stderr=stderrdata)
     return proc.returncode, stdoutdata, stderrdata
 
 
@@ -53,17 +49,17 @@ def get_jenkins_response(url):
 
 
 def dlfile(url, path: Path):
-    log = logger.bind(
+    structlog.contextvars.bind_contextvars(
         url=url,
         path=str(path),
     )
     if settings.DEBUG:
-        log.info("_NOT_ calling due to DEBUG is set")
+        logger.info("_NOT_ calling due to DEBUG is set")
     else:
         auth = HTTPBasicAuth(
             settings.JENKINS_HTTP_USER, settings.JENKINS_HTTP_PASSWD
         )
-        log.debug("get request")
+        logger.debug("get request")
         req = requests.get(url, auth=auth)
         with open(path, "wb") as local_file:
             for chunk in req.iter_content(chunk_size=128):
@@ -71,18 +67,15 @@ def dlfile(url, path: Path):
 
 
 def open_jenkins_url(url):
-    log = logger.bind(
-        url=url,
-    )
-    log.debug("Trying to retrieve")
+    logger.debug("Trying to retrieve")
     try:
         res = get_jenkins_response(url)
-        log.debug("OK", status_code=res.status_code)
+        logger.debug("OK", status_code=res.status_code)
         return True
     except requests.HTTPError as e:
-        log.error("Error %s", e, status_code=res.status_code)
+        logger.error("Error %s", e, status_code=res.status_code)
     except Exception as e:
-        log.error("Fatal error retrieving:", error=str(e))
+        logger.error("Fatal error retrieving:", error=str(e))
 
     return False
 
@@ -93,12 +86,11 @@ def jenkins_remove_ppa(repo):
         "token=%s&repository=%s"
         % (settings.JENKINS_URL, settings.JENKINS_TOKEN, repo)
     )
-    log = logger.bind(
-        repo=repo,
+    structlog.contextvars.bind_contextvars(
         url=url,
     )
     if settings.DEBUG:
-        log.debug("_NOT_ calling due to DEBUG is set")
+        logger.debug("_NOT_ calling due to DEBUG is set")
     else:
         open_jenkins_url(url)
 
@@ -109,15 +101,13 @@ def jenkins_remove_project_ppa(repo, source):
         "token=%s&repository=%s&source=%s"
         % (settings.JENKINS_URL, settings.JENKINS_TOKEN, repo, source)
     )
-    log = logger.bind(
-        repo=repo,
-        source=source,
+    structlog.contextvars.bind_contextvars(
         url=url,
     )
     if source is None:
         raise FileNotFoundError()
     if settings.DEBUG:
-        log.debug("_NOT_ calling due to DEBUG is set")
+        logger.debug("_NOT_ calling due to DEBUG is set")
     else:
         open_jenkins_url(url)
 
@@ -125,12 +115,12 @@ def jenkins_remove_project_ppa(repo, source):
 def _jenkins_get(url, base_path: Path, filename) -> Path:
     base_path.mkdir(parents=True, exist_ok=True)
     path = base_path.joinpath(filename)
-    log = logger.bind(
+    structlog.contextvars.bind_contextvars(
         base_path=str(base_path),
         filename=filename,
         url=url,
     )
-    log.debug("download file from jenkins")
+    logger.debug("download file from jenkins")
     dlfile(url, path)
     return path
 

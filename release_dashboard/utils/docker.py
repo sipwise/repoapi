@@ -48,7 +48,7 @@ def trigger_docker_build(project, branch):
 
     url = docker_url.format(**params)
     if settings.DEBUG:
-        logger.debug("Debug mode, would trigger: %s", url)
+        logger.debug(f"Debug mode, would trigger: {url}")
     else:
         open_jenkins_url(url)
     return "{base}/job/build-project-docker/".format(**params)
@@ -56,13 +56,13 @@ def trigger_docker_build(project, branch):
 
 def _get_info(url, headers=None):
     if settings.DEBUG:
-        logger.debug("Debug mode, would trigger: %s", url)
+        logger.debug(f"Debug mode, would trigger: {url}")
     else:
         if headers:
-            logger.debug("trigger: %s, headers: '%s'", url, headers)
+            logger.debug(f"trigger: {url}, headers: '{headers}'")
             response = requests.get(url, headers)
         else:
-            logger.debug("trigger: %s", url)
+            logger.debug(f"trigger: {url}")
             response = requests.get(url)
         logger.debug("response: %s" % response)
         response.raise_for_status()
@@ -84,11 +84,11 @@ def get_docker_manifests_info(url):
 
 def delete_docker_info(url):
     if settings.DEBUG:
-        logger.debug("Debug mode, would trigger: %s", url)
+        logger.debug(f"Debug mode, would trigger: {url}")
     else:
-        logger.debug("trigger: %s", url)
+        logger.debug(f"trigger:{url}")
         response = requests.delete(url)
-        logger.debug("response: %s" % response)
+        logger.debug(f"response: {response}")
         response.raise_for_status()
         return
 
@@ -101,7 +101,7 @@ def get_docker_repositories():
         url = settings.DOCKER_REGISTRY_URL.format("_catalog")
         try:
             info = get_docker_info(url)
-            logger.debug("response: %s" % info)
+            logger.debug(f"response: {info}")
             result = json.loads(info)
             return result["repositories"]
         except Exception as e:
@@ -116,14 +116,14 @@ def get_docker_tags(image):
         except KeyError:
             return []
     else:
-        url = settings.DOCKER_REGISTRY_URL.format("%s/tags/list" % image)
+        url = settings.DOCKER_REGISTRY_URL.format(f"{image}/tags/list")
         try:
             info = get_docker_info(url)
             logger.debug("response: %s" % info)
             result = json.loads(info)
             return result["tags"]
         except Exception as e:
-            logger.error("image: %s %s" % (image, e))
+            logger.error(f"image: {image} {e}")
             return []
 
 
@@ -132,34 +132,34 @@ def get_docker_manifests(image, tag):
         return ("{}", uuid.uuid4())
     else:
         dru = settings.DOCKER_REGISTRY_URL
-        url = dru.format("%s/manifests/%s" % (image, tag))
+        url = dru.format(f"{image}/manifests/{tag}")
         try:
             info, digest = get_docker_manifests_info(url)
-            logger.debug("response: %s" % info)
+            logger.debug(f"response: {info}")
             result = json.loads(info)
             return (result, digest)
         except Exception as e:
-            logger.error("image: %s tag:%s %s" % (image, tag, e))
+            logger.error(f"image: {image} tag:{tag} {e}")
             return (None, None)
 
 
 def delete_tag(image, reference, tag_name):
     try:
         dru = settings.DOCKER_REGISTRY_URL
-        url = dru.format("%s/manifests/%s" % (image, reference))
-        logger.debug("docker delete_tag(%s)" % (url))
+        url = dru.format(f"{image}/manifests/{reference}")
+        logger.debug(f"docker delete_tag({url})")
         delete_docker_info(url)
     except Exception:
         # it does not work for some, retrieve Docker-Content-Digest from
         # manifests and delete using that as reference
         dru = settings.DOCKER_REGISTRY_URL
-        url = dru.format("%s/manifests/%s" % (image, tag_name))
-        logger.debug("docker delete_tag() get_docker_manif_info(): %s" % (url))
+        url = dru.format(f"{image}/manifests/{tag_name}")
+        logger.debug(f"docker delete_tag() get_docker_manif_info(): {url}")
         response = get_docker_manifests_info(url)
         logger.debug(" - response text: %s" % (response[0]))
         logger.debug(" - response Docker-Content-Digest: %s" % (response[1]))
 
         dru = settings.DOCKER_REGISTRY_URL
         url = dru.format("%s/manifests/%s" % (image, response[1]))
-        logger.info("docker delete_tag() will delete: %s" % (url))
+        logger.info(f"docker delete_tag() will delete: {url}")
         delete_docker_info(url)

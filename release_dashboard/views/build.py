@@ -84,12 +84,12 @@ def build_release(request, release):
 @permission_required("build.can_trigger_hotfix", raise_exception=True)
 def hotfix_build(request, branch, project):
     if project not in settings.RELEASE_DASHBOARD_PROJECTS:
-        error = "repo:%s not valid" % project
+        error = f"repo:{project} not valid"
         logger.error(error)
         return HttpResponseNotFound(error)
 
     if not regex_hotfix.match(branch):
-        error = "branch:%s not valid. Not mrX.X.X format" % branch
+        error = f"branch:{branch} not valid. Not mrX.X.X format"
         logger.error(error)
         return HttpResponseNotFound(error)
     proj = Project.objects.get(name=project)
@@ -103,7 +103,7 @@ def hotfix_build(request, branch, project):
     push = json_data.get("push", "no")
     empty = json_data.get("empty", False)
     if push == "no":
-        logger.warn("dry-run for %s:%s", project, branch)
+        logger.warn(f"dry-run for {project}:{branch}")
     urls = build.trigger_hotfix(project, branch, request.user, push, empty)
     return JsonResponse({"urls": urls})
 
@@ -132,7 +132,7 @@ def hotfix_release_build(request, release, project):
         error = f"branch:{release_config.branch} not valid. Not mrX.X.X format"
         logger.error(error)
         return HttpResponseNotFound(error)
-    logger.debug(body=request.body)
+    structlog.contextvars.bind_contextvars(body=request.body)
     json_data = json.loads(request.body.decode("utf-8"))
     push = json_data.get("push", "no")
     empty = json_data.get("empty", False)

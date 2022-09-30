@@ -44,19 +44,19 @@ logger = structlog.get_logger(__name__)
 
 def _get_docker_tags(project, tag=None):
     repos = docker.get_docker_repositories()
-    r = re.compile(".*%s.*" % project)
+    r = re.compile(f".*{project}.*")
     project_repos = filter(r.match, repos)
-    logger.debug("%s: %s" % (project, project_repos))
+    logger.debug(f"{project}: {project_repos}")
     docker_tags = []
     for image in project_repos:
         res = {"name": image}
         tags = docker.get_docker_tags(image)
         if tag:
-            logger.debug("non filtered tags: %s" % tags)
+            logger.debug(f"non filtered tags: {tags}")
             tags = filter(re.compile(tag).match, tags)
         res["tags"] = tags
         docker_tags.append(res)
-    logger.debug("docker_tags: %s" % docker_tags)
+    logger.debug(f"docker_tags: {docker_tags}")
     return docker_tags
 
 
@@ -73,8 +73,8 @@ def _build_docker_logic(form, projects):
             url = docker.trigger_docker_build(pro, result[pro])
             context["projects"].append({"name": pro, "url": url})
         except KeyError:
-            msg = "Houston, we have a problem with trigger for %s"
-            logger.error(msg, pro)
+            msg = f"Houston, we have a problem with trigger for {pro}"
+            logger.error(msg)
             context["projects"].append({"name": pro, "url": None})
     return context
 

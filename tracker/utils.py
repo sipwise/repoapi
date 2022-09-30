@@ -62,11 +62,6 @@ def workfront_set_release_target(_id, release):
 
 
 def mantis_query(method, url, payload=None) -> requests.Response:
-    logger.bind(
-        method=method,
-        url=url,
-        payload=payload,
-    )
     response = requests.request(
         f"{method}", url, headers=MANTIS_HEADERS, data=payload
     )

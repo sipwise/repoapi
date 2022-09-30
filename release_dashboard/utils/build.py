@@ -61,7 +61,7 @@ def trigger_hotfix(project, branch, user, push="yes", empty=False):
 
     url = hotfix_url.format(**params)
     if settings.DEBUG:
-        logger.warn("Debug mode, would trigger: %s", url)
+        logger.warn(f"Debug mode, would trigger: {url}")
     else:
         open_jenkins_url(url)
     res = [

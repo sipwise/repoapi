@@ -57,7 +57,7 @@ def docker_fetch_project(projectname):
     project = Project.objects.get(name=projectname)
     for imagename in project.filter_docker_images(images):
         image = DockerImage.objects.create(name=imagename, project=project)
-        logger.debug("%s created" % image)
+        logger.debug(f"{image} created")
         docker_fetch_info.delay(image.name)
 
 
@@ -72,7 +72,7 @@ def docker_fetch_all():
         project, _ = Project.objects.get_or_create(name=projectname)
         for imagename in project.filter_docker_images(images):
             image = DockerImage.objects.create(name=imagename, project=project)
-            logger.debug("%s created" % image)
+            logger.debug(f"{image} created")
             docker_fetch_info.delay(image.name)
 
 

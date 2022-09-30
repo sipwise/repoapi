@@ -22,7 +22,7 @@ logger = structlog.get_logger(__name__)
 
 def process_hotfix(jbi_info, projectname, path):
     model = NoteInfo.get_model()
-    logger.info("hotfix_released[%s] %s", jbi_info, path)
+    logger.info(f"hotfix_released[{jbi_info}] {path}")
     ids, changelog = parse_changelog(path, model)
     for wid in ids:
         model.create(wid, projectname, changelog.full_version)

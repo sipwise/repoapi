@@ -35,16 +35,16 @@ def br_manage(sender, **kwargs):
         instance = kwargs["instance"]
         if instance.release.endswith("-update"):
             build_resume.delay(instance.pk)
-            logger.debug("BuildRelease:%s triggered", instance)
+            logger.debug(f"BuildRelease:{instance} triggered")
         elif timezone.now() > instance.start_date + timedelta(minutes=15):
-            logger.debug(
-                "BuildRelease:%s not triggered, is from the past:%s",
-                instance,
-                instance.start_date,
+            msg = (
+                f"BuildRelease:{instance} not triggered,",
+                f" is from the past:{instance.start_date}",
             )
+            logger.debug(msg)
         else:
             build_release.delay(instance.pk)
-            logger.debug("BuildRelease:%s triggered", instance)
+            logger.debug(f"BuildRelease:{instance} triggered")
 
 
 @receiver(
@@ -62,24 +62,24 @@ def jbi_manage(sender, **kwargs):
     if jbi.param_release_uuid is None:
         return
     release = jbi.param_release
-    log = logger.bind(
+    structlog.contextvars.bind_contextvars(
         release_uuid=jbi.param_release_uuid, release=jbi.param_release
     )
     if jbi.jobname in settings.BUILD_RELEASE_JOBS:
         if not release.startswith("release-"):
             release = "release-{}".format(jbi.param_release)
     if jbi.param_release_uuid in [None, "none", "", "$release_uuid"]:
-        log.debug("no ReleaseBuild link, skip")
+        logger.debug("no ReleaseBuild link, skip")
         return
     try:
         br = BuildRelease.objects.get(
             uuid=jbi.param_release_uuid,
         )
     except BuildRelease.DoesNotExist:
-        log.error("BuildRelease not found")
+        logger.error("BuildRelease not found")
         return
     if not br.append_built(jbi):
-        log.debug("BuildRelease:%s jbi:%s skip", br, jbi)
+        logger.debug(f"BuildRelease:{br} jbi:{jbi} skip")
         return
     br.remove_triggered(jbi)
     build_resume.delay(br.id)

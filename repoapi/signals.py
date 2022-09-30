@@ -40,11 +40,8 @@ def jbi_manage(sender, **kwargs):
 
 
 def gerrit_repo_add(instance):
-    log = logger.bind(
-        instance=str(instance),
-    )
     if instance.param_ppa == "$ppa":
-        log.warn("ppa unset, skip removal")
+        logger.warn("ppa unset, skip removal")
         return
     GerritRepoInfo = apps.get_model("repoapi", "GerritRepoInfo")
     gri = GerritRepoInfo.objects
@@ -54,19 +51,16 @@ def gerrit_repo_add(instance):
         defaults={"projectname": instance.projectname},
     )
     if created:
-        log.debug("ppa created", ppa=str(ppa))
+        logger.debug("ppa created", ppa=str(ppa))
     elif ppa.projectname == "unknown":
         ppa.projectname = instance.projectname
         ppa.save()
-        log.info("ppa projectname updated")
+        logger.info("ppa projectname updated")
 
 
 def gerrit_repo_del(instance):
-    log = logger.bind(
-        instance=str(instance),
-    )
     if instance.param_ppa == "$ppa":
-        log.warn("ppa unset, skip removal")
+        logger.warn("ppa unset, skip removal")
         return
     GerritRepoInfo = apps.get_model("repoapi", "GerritRepoInfo")
     gri = GerritRepoInfo.objects
@@ -75,7 +69,7 @@ def gerrit_repo_del(instance):
             param_ppa=instance.param_ppa, gerrit_change=instance.gerrit_change
         )
         ppa.delete()
-        log.debug("removed ppa", ppa=str(ppa))
+        logger.debug("removed ppa", ppa=str(ppa))
     except GerritRepoInfo.DoesNotExist:
         pass
     qs = gri.filter(param_ppa=instance.param_ppa)
@@ -84,10 +78,10 @@ def gerrit_repo_del(instance):
     if ppa_count == 0:
         utils.jenkins_remove_ppa(instance.param_ppa)
     elif project_ppa_count == 0:
-        log.debug("remove source+packages from ppa")
+        logger.debug("remove source+packages from ppa")
         jenkins_remove_project.delay(instance.id)
     else:
-        log.debug(
+        logger.debug(
             "nothing to do here",
             ppa_count=ppa_count,
             project_ppa_count=project_ppa_count,
@@ -102,12 +96,12 @@ def gerrit_repo_del(instance):
 def gerrit_repo_manage(sender, **kwargs):
     if kwargs["created"]:
         instance = kwargs["instance"]
-        log = logger.bind(
+        structlog.contextvars.bind_contextvars(
             instance=str(instance),
             ppa=instance.param_ppa,
         )
         if instance.param_ppa == "$ppa":
-            log.warn("ppa unset, skip")
+            logger.warn("ppa unset, skip")
             return
         if (
             instance.jobname.endswith("-repos")
@@ -123,14 +117,14 @@ def gerrit_repo_manage(sender, **kwargs):
             and instance.result == "SUCCESS"
             and instance.gerrit_eventtype == "change-abandoned"
         ):
-            log.debug("we need to count this")
+            logger.debug("we need to count this")
             gerrit_repo_del(instance)
 
 
 def tracker_release_target(instance, note: NoteInfo):
     if not is_ngcp_project(instance.projectname):
         logger.info(
-            "%s not a NGCP project, skip release_target", instance.projectname
+            "{instance.projectname} not a NGCP project, skip release_target"
         )
         return
     branch = instance.param_branch

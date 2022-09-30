@@ -50,7 +50,6 @@ class BuildReleaseManager(models.Manager):
         )
 
     def create_build_release(self, uuid, release, fake=False):
-        log = logger.bind(uuid=str(uuid), release=release, fake=fake)
         config = ReleaseConfig(release)
         qs = self.get_queryset()
         br = qs.filter(
@@ -59,18 +58,17 @@ class BuildReleaseManager(models.Manager):
         release_ok = config.release
         if br.exists():
             if regex_mrXXX.match(config.branch):
-                msg = "release[mrX.Y.Z]:{} has already a build"
-                raise BuildReleaseUnique(msg.format(release))
+                msg = f"release[mrX.Y.Z]:{release} has already a build"
+                raise BuildReleaseUnique(msg)
             elif regex_mrXX.match(config.branch):
-                release_ok = "{}-update".format(config.release)
+                release_ok = f"{config.release}-update"
                 msg = (
-                    "release[mrX.Y]:{} has already a build, "
-                    "set {} as release"
+                    f"release[mrX.Y]:{config.branch} has already a build, "
+                    f"set {release_ok} as release"
                 )
-                log.info(msg.format(config.branch, release_ok))
+                logger.info(msg)
             if not br.last().done:
-                msg = f"release:{release} is already building"
-                log.info(msg)
+                logger.info(f"release:{release} is already building")
                 raise PreviousBuildNotDone(msg)
         projects = ",".join(config.projects)
         if fake:
@@ -316,7 +314,7 @@ class BuildRelease(models.Model):
         return "branch/{}".format(self.branch)
 
     def _next(self, exclude=[]):
-        log = logger.bind(release=self)
+        structlog.contextvars.bind_contextvars(release=f"{self}")
         if self.built_projects is None:
             return self.build_deps[0][0]
         if self.done:
@@ -333,7 +331,7 @@ class BuildRelease(models.Model):
                         deps_missing.append(prj)
             else:
                 if len(deps_missing) > 0:
-                    log.info(
+                    logger.info(
                         "release has build_deps missing",
                         deps_missing=deps_missing,
                     )
@@ -347,9 +345,9 @@ class BuildRelease(models.Model):
     @property
     def next(self):
         failed_projects = self.failed_projects_list
-        log = logger.bind(release=self)
+        structlog.contextvars.bind_contextvars(release=f"{self}")
         if any(job in failed_projects for job in settings.BUILD_RELEASE_JOBS):
-            log.info(
+            logger.info(
                 "release has failed release_jobs, stop sending jobs",
                 failed_projects=failed_projects,
             )

@@ -96,7 +96,7 @@ def trigger_build_matrix(br):
         logger.info("{} already triggered, skip".format(params["job"]))
         return
     if settings.DEBUG:
-        logger.info("Debug mode, would trigger: %s", url)
+        logger.info(f"Debug mode, would trigger: {url}")
     else:
         open_jenkins_url(url)
     return "{base}/job/{job}/".format(**params)
@@ -121,7 +121,7 @@ def trigger_copy_deps(release, internal, release_uuid, uuid=None):
     }
     url = copy_deps_url.format(**params)
     if settings.DEBUG:
-        logger.info("Debug mode, would trigger: %s", url)
+        logger.info(f"Debug mode, would trigger: {url}")
     else:
         open_jenkins_url(url)
     return "{base}/job/{job}/".format(**params)
@@ -165,7 +165,7 @@ def trigger_build(
 
     url = project_url.format(**params)
     if settings.DEBUG:
-        logger.info("Debug mode, would trigger: %s", url)
+        logger.info(f"Debug mode, would trigger: {url}")
     else:
         open_jenkins_url(url)
     return "{base}/job/{job}/".format(**params)

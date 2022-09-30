@@ -37,7 +37,7 @@ logger = structlog.get_logger(__name__)
 def jenkins_remove_project(self, jbi_id):
     JenkinsBuildInfo = apps.get_model("repoapi", "JenkinsBuildInfo")
     jbi = JenkinsBuildInfo.objects.get(id=jbi_id)
-    log = logger.bind(
+    structlog.contextvars.bind_contextvars(
         jbi=str(jbi),
     )
     if (
@@ -48,42 +48,33 @@ def jenkins_remove_project(self, jbi_id):
         try:
             jenkins_remove_project_ppa(jbi.param_ppa, jbi.source)
         except FileNotFoundError as exc:
-            log.warn("source is not there yet, try again in 60 secs")
+            logger.warn("source is not there yet, try again in 60 secs")
             raise self.retry(exc=exc, countdown=60)
 
 
 @shared_task(ignore_result=True)
 def jbi_get_artifact(jbi_id, jobname, buildnumber, artifact_info):
-    log = logger.bind(
-        jbi_id=jbi_id,
-        jobname=jobname,
-    )
     path = jenkins_get_artifact(jobname, buildnumber, artifact_info)
     if path.name == settings.HOTFIX_ARTIFACT:
         if settings.TRACKER_PROVIDER == Tracker.NONE:
-            log.info("no tracker defined, skip hotfix management")
+            logger.info("no tracker defined, skip hotfix management")
             return
         jbi_parse_hotfix.delay(jbi_id, str(path))
 
 
 @shared_task(ignore_result=True)
 def get_jbi_files(jbi_id, jobname, buildnumber):
-    log = logger.bind(
-        jbi_id=jbi_id,
-        jobname=jobname,
-        buildnumber=buildnumber,
-    )
     jenkins_get_console(jobname, buildnumber)
     path_envVars = jenkins_get_env(jobname, buildnumber)
     path_build = jenkins_get_build(jobname, buildnumber)
     if is_download_artifacts(jobname):
         with open(path_build) as data_file:
             data = json.load(data_file)
-        log.debug("job_info", data=data)
+        logger.debug("job_info", data=data)
         for artifact in data["artifacts"]:
             jbi_get_artifact.delay(jbi_id, jobname, buildnumber, artifact)
     else:
-        log.debug("skip artifacts download")
+        logger.debug("skip artifacts download")
     if jobname in settings.RELEASE_CHANGED_JOBS:
         process_result.delay(jbi_id, str(path_envVars))
 
@@ -92,4 +83,4 @@ def get_jbi_files(jbi_id, jobname, buildnumber):
 def jbi_purge(release, weeks):
     JenkinsBuildInfo = apps.get_model("repoapi", "JenkinsBuildInfo")
     JenkinsBuildInfo.objects.purge_release(release, timedelta(weeks=weeks))
-    logger.info("purged release %s jbi older than %s weeks" % (release, weeks))
+    logger.info(f"purged release {release} jbi older than {weeks} weeks")
