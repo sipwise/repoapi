@@ -79,6 +79,9 @@ class NoteInfo(TrackerInfo):
             raise TrackerNotDefined()
         return model.objects.get_or_create(defaults, **kwargs)
 
+    def __str__(self):
+        return f"{self.field_id}:{self.projectname}:{self.version}"
+
 
 class WorkfrontNoteInfo(NoteInfo, WorkfrontInfo):
     class Meta:
