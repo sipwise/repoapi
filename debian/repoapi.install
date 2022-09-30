@@ -1,5 +1,6 @@
 Makefile usr/share/repoapi
 build usr/share/repoapi
+gerrit usr/share/repoapi
 hotfix usr/share/repoapi
 manage.py usr/share/repoapi
 panel usr/share/repoapi
