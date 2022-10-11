@@ -27,6 +27,7 @@ class WorkfrontNoteInfoResource(resources.ModelResource):
 @admin.register(models.WorkfrontNoteInfo)
 class WorkfrontNoteInfoAdmin(ImportExportModelAdmin):
     resource_class = WorkfrontNoteInfoResource
+    list_filter = ("projectname",)
 
 
 class MantisNoteInfoResource(resources.ModelResource):
@@ -37,3 +38,4 @@ class MantisNoteInfoResource(resources.ModelResource):
 @admin.register(models.MantisNoteInfo)
 class MantisNoteInfoAdmin(ImportExportModelAdmin):
     resource_class = MantisNoteInfoResource
+    list_filter = ("projectname",)
