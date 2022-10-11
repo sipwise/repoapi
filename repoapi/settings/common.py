@@ -152,6 +152,7 @@ LOGGING = {
         "django_structlog": {
             "handlers": ["console"],
             "level": "INFO",
+            "propagate": False,
         },
         "repoapi": {
             "handlers": ["console"],
@@ -169,10 +170,18 @@ structlog.configure(
         structlog.processors.StackInfoRenderer(),
         structlog.processors.format_exc_info,
         structlog.processors.UnicodeDecoder(),
+        structlog.processors.CallsiteParameterAdder(
+            {
+                structlog.processors.CallsiteParameter.FILENAME,
+                structlog.processors.CallsiteParameter.FUNC_NAME,
+                structlog.processors.CallsiteParameter.LINENO,
+            }
+        ),
         structlog.processors.ExceptionPrettyPrinter(),
         structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
     ],
     logger_factory=structlog.stdlib.LoggerFactory(),
+    wrapper_class=structlog.stdlib.BoundLogger,
     cache_logger_on_first_use=True,
 )
 
