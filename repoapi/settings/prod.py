@@ -21,6 +21,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 
 import ldap
+import structlog
 from celery.schedules import crontab
 from django_auth_ldap.config import LDAPGroupQuery
 from django_auth_ldap.config import LDAPSearch
@@ -168,3 +169,27 @@ JBI_ARTIFACT_JOBS = [
     "release-tools-runner",
 ]
 JBI_ALLOWED_HOSTS = [urlparse(JENKINS_URL).netloc]
+
+structlog.configure(
+    processors=[
+        structlog.contextvars.merge_contextvars,
+        structlog.stdlib.filter_by_level,
+        structlog.stdlib.add_logger_name,
+        structlog.stdlib.PositionalArgumentsFormatter(),
+        structlog.processors.StackInfoRenderer(),
+        structlog.processors.format_exc_info,
+        structlog.processors.UnicodeDecoder(),
+        structlog.processors.CallsiteParameterAdder(
+            {
+                structlog.processors.CallsiteParameter.FILENAME,
+                structlog.processors.CallsiteParameter.FUNC_NAME,
+                structlog.processors.CallsiteParameter.LINENO,
+            }
+        ),
+        structlog.processors.ExceptionPrettyPrinter(),
+        structlog.stdlib.ProcessorFormatter.wrap_for_formatter,
+    ],
+    logger_factory=structlog.stdlib.LoggerFactory(),
+    wrapper_class=structlog.stdlib.BoundLogger,
+    cache_logger_on_first_use=True,
+)

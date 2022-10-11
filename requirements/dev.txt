@@ -1,3 +1,4 @@
 -r test.txt
+rich
 watchdog
 Werkzeug==2.0.0
