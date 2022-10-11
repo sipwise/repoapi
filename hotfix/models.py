@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import re
 
+import structlog
 from django.db import models
 
 from .conf import settings
@@ -24,6 +25,7 @@ from tracker.models import TrackerInfo
 from tracker.models import WorkfrontInfo
 
 hotfix_re_release = re.compile(r".+~(mr[0-9]+\.[0-9]+\.[0-9]+.[0-9]+)$")
+logger = structlog.get_logger(__name__)
 
 
 class NoteInfo(TrackerInfo):
@@ -52,18 +54,22 @@ class NoteInfo(TrackerInfo):
         return NoteInfo
 
     @staticmethod
-    def create(wid, projectname, version):
+    def create(wid, projectname, version, force=False):
         note, created = NoteInfo.get_or_create(
             field_id=wid, projectname=projectname, version=version
         )
-        if created:
+        if created or force:
             msg = "hotfix %s.git %s triggered" % (
                 note.projectname,
                 note.version,
             )
             note.send(msg)
             target_release = note.target_release
+            structlog.contextvars.bind_contextvars(
+                target_release=target_release
+            )
             if target_release:
+                logger.info("set_target_release")
                 note.set_target_release()
 
     @classmethod

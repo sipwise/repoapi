@@ -20,12 +20,15 @@ from debian.changelog import Changelog
 logger = structlog.get_logger(__name__)
 
 
-def process_hotfix(jbi_info, projectname, path):
+def process_hotfix(jbi_info, projectname, path, force=False):
     model = NoteInfo.get_model()
-    logger.info(f"hotfix_released[{jbi_info}] {path}")
     ids, changelog = parse_changelog(path, model)
+    structlog.contextvars.bind_contextvars(
+        ids=ids, project=projectname, release=changelog.full_version
+    )
+    logger.info(f"hotfix_released[{jbi_info}] {path}")
     for wid in ids:
-        model.create(wid, projectname, changelog.full_version)
+        model.create(wid, projectname, changelog.full_version, force)
 
 
 def parse_changelog(path, model=None):

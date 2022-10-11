@@ -22,7 +22,7 @@ logger = structlog.get_logger(__name__)
 
 
 @shared_task(ignore_result=True)
-def hotfix_released(jbi_id, path):
+def hotfix_released(jbi_id, path, force=False):
     JenkinsBuildInfo = apps.get_model("repoapi", "JenkinsBuildInfo")
     jbi = JenkinsBuildInfo.objects.get(pk=jbi_id)
-    process_hotfix(str(jbi), jbi.projectname, path)
+    process_hotfix(str(jbi), jbi.projectname, path, force)
