@@ -96,6 +96,7 @@ class ReleaseDashboardConf(AppConf):
         "ngcp-status",
         "ngcp-sudo-plugin",
         "ngcp-support",
+        "ngcp-task-agent",
         "ngcp-user-framework",
         "ngcp-web-tests-e2e",
         "ngcpcfg",
