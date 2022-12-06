@@ -159,6 +159,8 @@ def trigger_build(
         params["branch"] = urllib.parse.quote(branch)
     elif trigger_branch_or_tag.startswith("branch/"):
         branch = trigger_branch_or_tag.split("branch/")[1]
+        if branch == "master":
+            branch = f"{trigger_distribution}/master"
         params["branch"] = urllib.parse.quote(branch)
     else:
         params["branch"] = urllib.parse.quote(trigger_branch_or_tag)

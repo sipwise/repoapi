@@ -430,7 +430,7 @@ class TriggerBuild(SimpleTestCase):
             "{base}/job/{project}/buildWithParameters?"
             "token={token}&cause={trigger_release}&uuid={uuid}&"
             "release_uuid={release_uuid}&"
-            "branch=master&tag=none&"
+            "branch={trigger_distribution}/master&tag=none&"
             "release=trunk&distribution={trigger_distribution}"
         )
         res = trigger_build(**params)
