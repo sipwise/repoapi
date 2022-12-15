@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "panel",
     "release_dashboard",
     "build",
+    "buildinfo",
     "release_changed",
     "repoapi",
 ]

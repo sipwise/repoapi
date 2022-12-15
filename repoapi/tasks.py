@@ -19,6 +19,7 @@ import structlog
 from celery import shared_task
 from django.apps import apps
 
+from .celery import jbi_parse_buildinfo
 from .celery import jbi_parse_hotfix
 from .celery import process_result
 from .conf import settings
@@ -67,6 +68,7 @@ def get_jbi_files(jbi_id, jobname, buildnumber):
     jenkins_get_console(jobname, buildnumber)
     path_envVars = jenkins_get_env(jobname, buildnumber)
     path_build = jenkins_get_build(jobname, buildnumber)
+    jbi_parse_buildinfo.delay(jbi_id, str(path_build))
     if is_download_artifacts(jobname):
         with open(path_build) as data_file:
             data = json.load(data_file)

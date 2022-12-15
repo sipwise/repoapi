@@ -38,6 +38,11 @@ def jbi_parse_hotfix(jbi_id: str, path: str):
 
 
 @app.task()
+def jbi_parse_buildinfo(jbi_id: str, path: str):
+    app.send_task("buildinfo.tasks.parse_buildinfo", args=[jbi_id, path])
+
+
+@app.task()
 def process_result(jbi_id: str, path_envVars: str):
     app.send_task(
         "release_changed.tasks.process_result",
