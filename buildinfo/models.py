@@ -12,13 +12,27 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from typing import Any
+
 from django.db import models
+
+from .utils import datetime
+from .utils import get_datetime
+
+
+class BuildInfoManager(models.Manager):
+    def create(self, **kwargs: Any) -> Any:
+        if "datetime" in kwargs:
+            val = kwargs.get("datetime")
+            if not isinstance(val, datetime):
+                kwargs["datetime"] = get_datetime(val)
+        return super().create(**kwargs)
 
 
 class BuildInfo(models.Model):
     builton = models.CharField(max_length=50, null=False)
-    timestamp = models.PositiveBigIntegerField(null=False)
-    duration = models.PositiveSmallIntegerField(null=False)
+    datetime = models.DateTimeField(null=False)
+    duration = models.PositiveIntegerField(null=False)
 
     projectname = models.CharField(max_length=100, null=False)
     buildnumber = models.IntegerField()
@@ -29,6 +43,7 @@ class BuildInfo(models.Model):
     param_release_uuid = models.CharField(max_length=64, null=True, blank=True)
     param_distribution = models.CharField(max_length=50, null=True, blank=True)
     param_ppa = models.CharField(max_length=50, null=True, blank=True)
+    objects = BuildInfoManager()
 
     def __str__(self):
         return (

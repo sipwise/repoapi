@@ -12,8 +12,11 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from datetime import datetime
 from unittest.mock import mock_open
 from unittest.mock import patch
+
+from django.utils import timezone
 
 from buildinfo import models
 from buildinfo import utils
@@ -45,6 +48,17 @@ build_info = """{
 
 
 class TestBuildInfo(BaseTest):
+    dt = datetime(
+        2022,
+        11,
+        10,
+        12,
+        33,
+        37,
+        940000,
+        tzinfo=timezone.get_current_timezone(),
+    )
+
     def get_defaults(self, info=False):
         defaults = {
             "projectname": "fake",
@@ -66,13 +80,16 @@ class TestBuildInfo(BaseTest):
             defaults.update(
                 {
                     "builton": "fake-slave-1",
-                    "timestamp": 0,
+                    "datetime": 1668083617940,
                     "duration": 0,
                 }
             )
             return defaults
         defaults.update(jbi_defaults)
         return defaults
+
+    def test_get_datetime(self):
+        self.assertEqual(utils.get_datetime(1668083617940), self.dt)
 
     @patch("builtins.open", mock_open(read_data=build_info))
     @patch("repoapi.utils.dlfile")
@@ -84,3 +101,4 @@ class TestBuildInfo(BaseTest):
         utils.process_buildinfo(jbi.pk, "/tmp/fake.txt")
         qs = models.BuildInfo.objects.filter(builton="jenkins-slave13")
         self.assertEqual(qs.count(), 1)
+        self.assertEqual(qs.first().datetime, self.dt)

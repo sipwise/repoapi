@@ -28,7 +28,7 @@ class TestBuildInfo(BaseTest):
             "param_distribution": "wheezy",
             "param_ppa": "gerrit_MT10339_review2054",
             "builton": "fake-slave-1",
-            "timestamp": 0,
+            "datetime": 1668083617940,
             "duration": 0,
         }
         return defaults

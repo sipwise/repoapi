@@ -13,23 +13,30 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import json
+from datetime import datetime
 
 import structlog
 from django.apps import apps
-
-from .models import BuildInfo
+from django.utils import timezone
 
 logger = structlog.get_logger(__name__)
+
+
+def get_datetime(timestamp: float) -> datetime:
+    return datetime.fromtimestamp(
+        timestamp / 1000, tz=timezone.get_current_timezone()
+    )
 
 
 def process_buildinfo(jbi_id: int, path: str):
     JenkinsBuildInfo = apps.get_model("repoapi", "JenkinsBuildInfo")
     jbi = JenkinsBuildInfo.objects.get(pk=jbi_id)
+    BuildInfo = apps.get_model("buildinfo", "BuildInfo")
     with open(path, "r") as file:
         info = json.load(file)
     BuildInfo.objects.create(
         builton=info["builtOn"],
-        timestamp=info["timestamp"],
+        datetime=info["timestamp"],
         duration=info["duration"],
         projectname=jbi.projectname,
         jobname=jbi.jobname,
