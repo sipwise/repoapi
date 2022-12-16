@@ -51,7 +51,7 @@ def gerrit_repo_add(instance):
         defaults={"projectname": instance.projectname},
     )
     if created:
-        logger.debug("ppa created", ppa=str(ppa))
+        logger.info("ppa created", ppa=str(ppa))
     elif ppa.projectname == "unknown":
         ppa.projectname = instance.projectname
         ppa.save()
@@ -62,6 +62,11 @@ def gerrit_repo_del(instance):
     if instance.param_ppa == "$ppa":
         logger.warn("ppa unset, skip removal")
         return
+    structlog.contextvars.bind_contextvars(
+        instance=str(instance),
+        ppa=instance.param_ppa,
+        gerrit_change=instance.gerrit_change,
+    )
     GerritRepoInfo = apps.get_model("repoapi", "GerritRepoInfo")
     gri = GerritRepoInfo.objects
     try:
@@ -69,8 +74,9 @@ def gerrit_repo_del(instance):
             param_ppa=instance.param_ppa, gerrit_change=instance.gerrit_change
         )
         ppa.delete()
-        logger.debug("removed ppa", ppa=str(ppa))
+        logger.info("removed ppa")
     except GerritRepoInfo.DoesNotExist:
+        logger.info("ppa already gone")
         pass
     qs = gri.filter(param_ppa=instance.param_ppa)
     ppa_count = qs.count()
@@ -78,10 +84,10 @@ def gerrit_repo_del(instance):
     if ppa_count == 0:
         utils.jenkins_remove_ppa(instance.param_ppa)
     elif project_ppa_count == 0:
-        logger.debug("remove source+packages from ppa")
+        logger.info("remove source+packages from ppa")
         jenkins_remove_project.delay(instance.id)
     else:
-        logger.debug(
+        logger.info(
             "nothing to do here",
             ppa_count=ppa_count,
             project_ppa_count=project_ppa_count,
@@ -107,7 +113,7 @@ def gerrit_repo_manage(sender, **kwargs):
             instance.jobname.endswith("-repos")
             and instance.result == "SUCCESS"
         ):
-            logger.debug("we need to count this")
+            logger.info("we need to count this")
             if instance.gerrit_eventtype == "patchset-created":
                 gerrit_repo_add(instance)
             elif instance.gerrit_eventtype == "change-merged":
@@ -117,7 +123,7 @@ def gerrit_repo_manage(sender, **kwargs):
             and instance.result == "SUCCESS"
             and instance.gerrit_eventtype == "change-abandoned"
         ):
-            logger.debug("we need to count this")
+            logger.info("we need to count this")
             gerrit_repo_del(instance)
 
 

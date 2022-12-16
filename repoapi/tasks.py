@@ -40,6 +40,8 @@ def jenkins_remove_project(self, jbi_id):
     jbi = JenkinsBuildInfo.objects.get(id=jbi_id)
     structlog.contextvars.bind_contextvars(
         jbi=str(jbi),
+        result=jbi.result,
+        gerrit_eventtype=jbi.gerrit_eventtype,
     )
     if (
         jbi.jobname.endswith("-repos")
@@ -48,9 +50,12 @@ def jenkins_remove_project(self, jbi_id):
     ):
         try:
             jenkins_remove_project_ppa(jbi.param_ppa, jbi.source)
+            logger.info("triggered job for removal")
         except FileNotFoundError as exc:
             logger.warn("source is not there yet, try again in 60 secs")
             raise self.retry(exc=exc, countdown=60)
+    else:
+        logger.info("skip removal")
 
 
 @shared_task(ignore_result=True)
