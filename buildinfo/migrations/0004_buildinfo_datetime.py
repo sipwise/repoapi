@@ -10,6 +10,7 @@ def migrate_timestamps(apps, schema_editor):
     BuildInfo = apps.get_model("buildinfo", "BuildInfo")
     for info in BuildInfo.objects.all():
         info.datetime = get_datetime(info.timestamp)
+        info.save()
 
 
 class Migration(migrations.Migration):
