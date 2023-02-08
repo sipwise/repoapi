@@ -184,7 +184,8 @@ def note_manager(sender, **kwargs):
                 msg = "%s.git[%s] review created"
                 set_release_target = False
             else:
-                msg = "%s.git[%s] commit created"
+                logger.info("build not triggered by gerrit, skip notes")
+                return
             tracker_note_add(
                 instance,
                 msg % (instance.projectname, instance.param_branch),

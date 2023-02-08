@@ -153,7 +153,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001", gerrit_change="7fg4567"
         )
-        self.assertEqual(gri.count(), 1)
+        self.assertEqual(gri.count(), 0)
 
         param["jobname"] = "kamailio-binaries"
         param["buildnumber"] = 897
@@ -162,15 +162,10 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001", gerrit_change="7fg4567"
         )
-        self.assertEqual(gri.count(), 1)
-        msg = "%s.git[%s] commit created %s " % (
-            param["projectname"],
-            param["param_branch"],
-            settings.GITWEB_URL.format("kamailio", "7fg4567"),
-        )
-        wsrt.assert_called_once_with("0001", "mr5.5.1")
-        gnr.assert_called_once_with("master")
-        wns.assert_called_once_with("0001", msg)
+        self.assertEqual(gri.count(), 0)
+        wsrt.assert_not_called()
+        gnr.assert_not_called()
+        wns.assert_not_called()
 
     @patch("tracker.utils.workfront_set_release_target")
     @patch("repoapi.utils.get_next_release")
@@ -186,7 +181,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001", gerrit_change="7fg4567"
         )
-        self.assertEqual(gri.count(), 1)
+        self.assertEqual(gri.count(), 0)
 
         param["jobname"] = "kamailio-binaries"
         param["buildnumber"] = 897
@@ -195,15 +190,10 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001", gerrit_change="7fg4567"
         )
-        self.assertEqual(gri.count(), 1)
-        msg = "%s.git[%s] commit created %s " % (
-            param["projectname"],
-            param["param_branch"],
-            settings.GITWEB_URL.format("kamailio", "7fg4567"),
-        )
-        wsrt.assert_called_once_with("0001", "mr5.5.2")
-        gnr.assert_called_once_with("mr5.5")
-        wns.assert_called_once_with("0001", msg)
+        self.assertEqual(gri.count(), 0)
+        wsrt.assert_not_called()
+        gnr.assert_not_called()
+        wns.assert_not_called()
 
     @patch("tracker.utils.workfront_set_release_target")
     @patch("repoapi.utils.get_next_release")
@@ -217,7 +207,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001", gerrit_change="7fg4567"
         )
-        self.assertEqual(gri.count(), 1)
+        self.assertEqual(gri.count(), 0)
 
         param["jobname"] = "kamailio-binaries"
         param["buildnumber"] = 897
@@ -226,15 +216,10 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001", gerrit_change="7fg4567"
         )
-        self.assertEqual(gri.count(), 1)
-        msg = "%s.git[%s] commit created %s " % (
-            param["projectname"],
-            param["param_branch"],
-            settings.GITWEB_URL.format("kamailio", "7fg4567"),
-        )
-        wsrt.assert_called_once_with("0001", "mr5.5.2")
+        self.assertEqual(gri.count(), 0)
+        wsrt.assert_not_called()
         gnr.assert_not_called()
-        wns.assert_called_once_with("0001", msg)
+        wns.assert_not_called()
 
     @patch("tracker.utils.workfront_set_release_target")
     @patch("repoapi.utils.get_next_release")
@@ -250,7 +235,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001", gerrit_change="7fg4567"
         )
-        self.assertEqual(gri.count(), 1)
+        self.assertEqual(gri.count(), 0)
 
         param["jobname"] = "kamailio-binaries"
         param["buildnumber"] = 897
@@ -259,16 +244,11 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001", gerrit_change="7fg4567"
         )
-        self.assertEqual(gri.count(), 1)
-        msg = "%s.git[%s] commit created %s " % (
-            param["projectname"],
-            param["param_branch"],
-            settings.GITWEB_URL.format("kamailio", "7fg4567"),
-        )
-        gnr.assert_called_once_with("stretch/master")
+        self.assertEqual(gri.count(), 0)
+        gnr.assert_not_called()
         self.assertCountEqual(wsrt.mock_calls, [])
         wsrt.assert_not_called()
-        wns.assert_called_once_with("0001", msg)
+        wns.assert_not_called()
 
     @patch("tracker.utils.workfront_set_release_target")
     @patch("repoapi.utils.get_next_release")
@@ -283,7 +263,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001", gerrit_change="7fg4567"
         )
-        self.assertEqual(gri.count(), 1)
+        self.assertEqual(gri.count(), 0)
 
         param["jobname"] = "fake-binaries"
         param["buildnumber"] = 897
@@ -292,12 +272,7 @@ class WorkfrontNoteTestCase(BaseTest):
         gri = WorkfrontNoteInfo.objects.filter(
             workfront_id="0001", gerrit_change="7fg4567"
         )
-        self.assertEqual(gri.count(), 1)
-        msg = "%s.git[%s] commit created %s " % (
-            param["projectname"],
-            param["param_branch"],
-            settings.GITWEB_URL.format("fake", "7fg4567"),
-        )
+        self.assertEqual(gri.count(), 0)
         wsrt.assert_not_called()
         gnr.assert_not_called()
-        wns.assert_called_once_with("0001", msg)
+        wns.assert_not_called()
