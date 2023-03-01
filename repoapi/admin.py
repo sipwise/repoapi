@@ -38,6 +38,7 @@ class JenkinsBuildInfoAdmin(ImportExportModelAdmin):
 @admin.register(models.GerritRepoInfo)
 class GerritRepoInfoAdmin(ImportExportModelAdmin):
     resource_class = GerritRepoInfoResource
+    list_filter = ("param_ppa", "projectname")
 
 
 class WorkfrontNoteInfoResource(resources.ModelResource):
