@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2023 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -192,3 +192,21 @@ class TaskGerritRepoTest(BaseTest):
         self.assertEqual(ppa.count(), 1)
         rp.assert_called_once_with("gerrit_vseva_95650", "lua-ngcp-kamailio")
         rppa.assert_not_called()
+
+    def test_ppa_merged_mrXXX(self, rppa, rp):
+        self.params["param_branch"] = "mr9.5.1"
+        self.params["gerrit_change"] = "54"
+        self.params["gerrit_patchset"] = "54"
+        JenkinsBuildInfo.objects.create(**self.params)
+        ppa = GerritRepoInfo.objects.filter(param_ppa=self.params["param_ppa"])
+        self.assertEqual(ppa.count(), 1)
+
+        self.params["jobname"] = "lua-ngcp-kamailio-gerrit"
+        ppa = GerritRepoInfo.objects.filter(param_ppa=self.params["param_ppa"])
+        self.assertEqual(ppa.count(), 1)
+
+        self.params["gerrit_eventtype"] = "change-merged"
+        JenkinsBuildInfo.objects.create(**self.params)
+        self.assertEqual(ppa.count(), 0)
+        rp.assert_not_called()
+        rppa.assert_called_with("gerrit_vseva_95650")

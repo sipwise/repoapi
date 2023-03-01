@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2023 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import datetime
-import re
 
 import structlog
 from django.db import models
@@ -28,12 +27,12 @@ from .utils import get_simple_release
 from .utils import ReleaseConfig
 from .utils import remove_from_textlist
 from repoapi.models import JenkinsBuildInfo
+from repoapi.utils import regex_mrXX
+from repoapi.utils import regex_mrXX_up
+from repoapi.utils import regex_mrXXX
 
 logger = structlog.get_logger(__name__)
 
-regex_mrXXX = re.compile(r"^mr[0-9]+\.[0-9]+\.[0-9]+$")
-regex_mrXX = re.compile(r"^mr[0-9]+\.[0-9]+$")
-regex_mrXX_up = re.compile(r"^release-mr[0-9]+\.[0-9]+-update$")
 
 build_release_jobs = ",".join(settings.BUILD_RELEASE_JOBS)
 release_jobs_len = len(build_release_jobs) + 1

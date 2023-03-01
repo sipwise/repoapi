@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2023 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -23,7 +23,6 @@ from tracker.models import MantisInfo
 from tracker.models import TrackerInfo
 from tracker.models import WorkfrontInfo
 
-re_branch = re.compile(r"^mr[0-9]+\.[0-9]+\.[0-9]+$")
 commit_re = re.compile(r"^(\w{7}) ")
 
 

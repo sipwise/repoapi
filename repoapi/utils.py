@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2023 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -23,6 +23,10 @@ from requests.auth import HTTPBasicAuth
 from .conf import settings
 
 logger = structlog.get_logger(__name__)
+
+regex_mrXXX = re.compile(r"^mr[0-9]+\.[0-9]+\.[0-9]+$")
+regex_mrXX = re.compile(r"^mr[0-9]+\.[0-9]+$")
+regex_mrXX_up = re.compile(r"^release-mr[0-9]+\.[0-9]+-update$")
 
 JBI_CONSOLE_URL = "{}/job/{}/{}/consoleText"
 JBI_BUILD_URL = "{}/job/{}/{}/api/json"

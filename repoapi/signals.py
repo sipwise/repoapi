@@ -1,4 +1,4 @@
-# Copyright (C) 2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2022-2023 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -19,9 +19,9 @@ from django.dispatch import receiver
 
 from . import utils
 from .models.wni import NoteInfo
-from .models.wni import re_branch
 from .tasks import get_jbi_files
 from .tasks import jenkins_remove_project
+from .utils import regex_mrXXX
 from release_dashboard.utils.build import is_ngcp_project
 
 logger = structlog.get_logger(__name__)
@@ -64,6 +64,7 @@ def gerrit_repo_del(instance):
         return
     structlog.contextvars.bind_contextvars(
         instance=str(instance),
+        branch=instance.param_branch,
         ppa=instance.param_ppa,
         gerrit_change=instance.gerrit_change,
     )
@@ -104,6 +105,7 @@ def gerrit_repo_manage(sender, **kwargs):
         instance = kwargs["instance"]
         structlog.contextvars.bind_contextvars(
             instance=str(instance),
+            branch=instance.param_branch,
             ppa=instance.param_ppa,
         )
         if instance.param_ppa == "$ppa":
@@ -125,6 +127,14 @@ def gerrit_repo_manage(sender, **kwargs):
         ):
             logger.info("we need to count this")
             gerrit_repo_del(instance)
+        elif (
+            instance.jobname.endswith("-gerrit")
+            and instance.result == "SUCCESS"
+            and instance.gerrit_eventtype == "change-merged"
+            and regex_mrXXX.match(instance.param_branch)
+        ):
+            logger.info("we need to count this")
+            gerrit_repo_del(instance)
 
 
 def tracker_release_target(instance, note: NoteInfo):
@@ -134,7 +144,7 @@ def tracker_release_target(instance, note: NoteInfo):
         )
         return
     branch = instance.param_branch
-    if re_branch.search(branch):
+    if regex_mrXXX.search(branch):
         release = branch
     else:
         release = utils.get_next_release(branch)
