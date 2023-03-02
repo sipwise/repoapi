@@ -50,12 +50,22 @@ def gerrit_repo_add(instance):
         gerrit_change=instance.gerrit_change,
         defaults={"projectname": instance.projectname},
     )
+    structlog.contextvars.bind_contextvars(
+        instance=str(instance),
+        branch=instance.param_branch,
+        ppa=str(ppa),
+        last_activity=ppa.modified,
+        gerrit_change=instance.gerrit_change,
+    )
     if created:
-        logger.info("ppa created", ppa=str(ppa))
+        logger.info("ppa created")
     elif ppa.projectname == "unknown":
         ppa.projectname = instance.projectname
         ppa.save()
         logger.info("ppa projectname updated")
+    else:
+        ppa.save()
+        logger.info("ppa last activity datetime saved")
 
 
 def gerrit_repo_del(instance):
