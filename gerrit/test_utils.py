@@ -1,4 +1,4 @@
-# Copyright (C) 2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2023 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,6 +12,8 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from datetime import datetime
+
 from django.test import SimpleTestCase
 
 from gerrit import utils
@@ -55,3 +57,14 @@ class GerritUtils(SimpleTestCase):
 
         res = utils.get_filtered_json(GERRIT_REST_BRANCHES)
         self.assertEqual(res, FILTERED_BRANCHES)
+
+    def test_get_datetime(self):
+        val = "2023-03-03 08:45:06.000000000"
+        expected = datetime(2023, 3, 3, 8, 45, 6)
+        res = utils.get_datetime(val)
+        self.assertEqual(res, expected)
+
+        val = "2023-03-03 09:09:25.000000000"
+        res = utils.get_datetime(val)
+        expected = datetime(2023, 3, 3, 9, 9, 25)
+        self.assertEqual(res, expected)

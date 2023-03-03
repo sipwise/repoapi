@@ -12,6 +12,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import datetime
 import json
 
 import requests
@@ -60,3 +61,16 @@ def get_gerrit_tags(project: str, regex=None):
 def get_gerrit_branches(project: str, regex=None):
     url = gerrit_settings.URL.format(f"a/projects/{project}/branches/")
     return get_gerrit_info(url)
+
+
+def get_gerrit_change(id: str) -> str:
+    url = gerrit_settings.URL.format(f"changes/{id}/")
+    return get_gerrit_info(url)
+
+
+def get_change_info(id: str):
+    return get_filtered_json(get_gerrit_info(id))
+
+
+def get_datetime(val: str) -> datetime.datetime:
+    return datetime.datetime.strptime(val, gerrit_settings.DATETIME_FMT)

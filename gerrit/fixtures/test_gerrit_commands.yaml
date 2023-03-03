@@ -1,0 +1,24 @@
+- model: repoapi.gerritrepoinfo
+  pk: 47979
+  fields:
+    created: '2023-03-03 08:46:17'
+    gerrit_change: '67631'
+    modified: '2023-03-03 09:09:25'
+    param_ppa: gerrit_alessio_56718_bis_10_5_1,
+    projectname: templates
+- model: repoapi.gerritrepoinfo
+  pk: 47877
+  fields:
+    created: '1977-01-01 00:00:00'
+    gerrit_change: '67510'
+    modified: '2023-03-02 16:24:25'
+    param_ppa: gerrit_alessio_56718_bis_11_1
+    projectname: sems-pbx
+- model: repoapi.gerritrepoinfo
+  pk: 12
+  fields:
+    created: '1977-01-01 00:00:00'
+    gerrit_change: '13200'
+    modified: '2023-03-02 07:57:21'
+    param_ppa: gerrit_pu_collectd-abolition
+    projectname: unknown

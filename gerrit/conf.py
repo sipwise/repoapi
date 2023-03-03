@@ -21,6 +21,7 @@ class GerritConf(AppConf):
     URL = "https://gerrit.local/{}"
     REST_HTTP_USER = "jenkins"
     REST_HTTP_PASSWD = "verysecrethttppasswd"
+    DATETIME_FMT = "%Y-%m-%d %H:%M:%S.%f000"
 
     class Meta:
         prefix = "gerrit"
