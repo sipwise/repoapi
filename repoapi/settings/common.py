@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "django_celery_results",
     "django_extensions",
     "django_filters",
+    "django_admin_filters",
     "crispy_forms",
     "jsonify",
     "import_export",

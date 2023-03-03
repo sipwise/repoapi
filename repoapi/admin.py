@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2023 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.contrib import admin
+from django_admin_filters import DateRange
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
@@ -35,10 +36,30 @@ class JenkinsBuildInfoAdmin(ImportExportModelAdmin):
     list_filter = ("param_release", "projectname")
 
 
+class GRIDateRange(DateRange):
+    FILTER_LABEL = "Modified range"
+    BUTTON_LABEL = "Select range"
+    FROM_LABEL = "From"
+    TO_LABEL = "To"
+    ALL_LABEL = "All"
+    CUSTOM_LABEL = "custom range"
+    DATE_FORMAT = "YYYY-MM-DD HH:mm"
+
+    is_null_option = False
+
+    day_val = 60 * 60 * 24
+    month_val = day_val * 30
+    options = (
+        ("1dp", "last 24 hours", -day_val),
+        ("1mp", "last 30 days", -month_val),
+        ("3mp", "last 3 months", -month_val * 3),
+    )
+
+
 @admin.register(models.GerritRepoInfo)
 class GerritRepoInfoAdmin(ImportExportModelAdmin):
     resource_class = GerritRepoInfoResource
-    list_filter = ("param_ppa", "projectname")
+    list_filter = (("modified", GRIDateRange), "projectname", "param_ppa")
 
 
 class WorkfrontNoteInfoResource(resources.ModelResource):
