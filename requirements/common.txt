@@ -4,7 +4,7 @@ django-appconf
 django-assets
 django-celery-beat
 django-celery-results
-django-crispy-forms
+django-crispy-forms==2.*
 django-extensions
 django-filter
 django-import-export

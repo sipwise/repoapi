@@ -163,7 +163,7 @@ LOGGING = {
 }
 
 JENKINS_TOKEN = "sipwise_jenkins_ci"
-
+CRISPY_TEMPLATE_PACK = "bootstrap3"
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_ACCEPT_CONTENT = ["application/json"]
