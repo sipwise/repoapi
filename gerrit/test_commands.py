@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import datetime
 import json
+from unittest.mock import call
 from unittest.mock import patch
 
 from django.core.management import call_command
@@ -66,3 +67,22 @@ class refreshTest(TestCase):
 
         qs_filter = qs.filter(modified__time=datetime.time(9, 9, 25))
         self.assertEqual(qs_filter.count(), 3)
+
+    @patch("repoapi.models.gri.jenkins_remove_ppa")
+    @patch("gerrit.management.commands.gerrit.get_change_info")
+    def test_cleanup(self, gci, jrp):
+        value["status"] = "MERGED"
+        gci.return_value = value
+        qs = GerritRepoInfo.objects
+        self.assertEqual(qs.count(), 3)
+        call_command(
+            "gerrit",
+            "cleanup",
+            "--today=2023-03-03",
+        )
+        calls = [
+            call("gerrit_pu_collectd-abolition"),
+            call("gerrit_alessio_56718_bis_11_1"),
+        ]
+        self.assertListEqual(jrp.mock_calls, calls)
+        self.assertEqual(qs.count(), 1)
