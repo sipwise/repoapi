@@ -30,7 +30,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("action", choices=["refresh", "cleanup"])
-        parser.add_argument("--dry-run", type=bool, default=False)
+        parser.add_argument("--dry-run", action="store_true")
         parser.add_argument(
             "--weeks",
             type=int,
