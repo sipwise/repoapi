@@ -53,7 +53,7 @@ run_dev: venv_dev
 	IP=$(shell ip a show dev eth0 scope global | grep inet | awk '{print $$2}' | cut -d/ -f1); \
 	source $(VAR_DIR)/venv_dev/bin/activate && \
 	DJANGO_LOG_LEVEL=DEBUG \
-	./manage.py runserver_plus $$IP:8000 --settings="repoapi.settings.dev"
+	./manage.py runserver_plus $$IP:8000 --settings="repoapi.settings.dev" --keep-meta-shutdown
 
 worker_dev: venv_dev
 	source $(VAR_DIR)/venv_dev/bin/activate && \
