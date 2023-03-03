@@ -74,13 +74,14 @@ class Command(BaseCommand):
         qs = manager.filter(modified__lt=max_date)
         for gri in qs.iterator():
             info = get_change_info(gri.gerrit_change)
-            if info["status"] == "MERGED":
+            status = info["status"]
+            if status in ["MERGED", "ABANDONED"]:
                 if options["dry_run"]:
                     self.stdout.write(
-                        f"{gri} merged, remove from db, [dry-run]"
+                        f"{gri} {status}, remove from db, [dry-run]"
                     )
                 else:
-                    self.stdout.write(f"{gri} merged, remove from db")
+                    self.stdout.write(f"{gri} {status}, remove from db")
                     manager.review_removed(
                         gri.param_ppa, gri.gerrit_change, gri.projectname
                     )
