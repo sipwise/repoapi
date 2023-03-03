@@ -15,6 +15,7 @@
 from datetime import date
 
 from django.core.management.base import BaseCommand
+from requests.exceptions import HTTPError
 
 from gerrit.utils import get_change_info
 from gerrit.utils import get_datetime
@@ -30,12 +31,16 @@ class Command(BaseCommand):
     def refresh(self, *args, **options):
         qs = GerritRepoInfo.objects.filter(created__date=date(1977, 1, 1))
         for gri in qs.iterator():
-            info = get_change_info(gri.gerrit_change)
-            gri.created = get_datetime(info["created"])
-            gri.modified = get_datetime(info["updated"])
-            # don't update modified field on save
-            gri.update_modified = False
-            gri.save()
+            try:
+                info = get_change_info(gri.gerrit_change)
+                gri.created = get_datetime(info["created"])
+                gri.modified = get_datetime(info["updated"])
+                # don't update modified field on save
+                gri.update_modified = False
+                gri.save()
+            except HTTPError:
+                self.stderr.write(f"{gri} not found, remove it from db")
+                gri.delete()
 
     def handle(self, *args, **options):
         action = getattr(self, options["action"])

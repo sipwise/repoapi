@@ -64,12 +64,12 @@ def get_gerrit_branches(project: str, regex=None):
 
 
 def get_gerrit_change(id: str) -> str:
-    url = gerrit_settings.URL.format(f"changes/{id}/")
+    url = gerrit_settings.URL.format(f"a/changes/{id}")
     return get_gerrit_info(url)
 
 
 def get_change_info(id: str):
-    return get_filtered_json(get_gerrit_info(id))
+    return get_filtered_json(get_gerrit_change(id))
 
 
 def get_datetime(val: str) -> datetime.datetime:
