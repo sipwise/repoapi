@@ -53,7 +53,7 @@ class WorkfrontNoteTestCase(BaseTest):
         return defaults
 
     @patch("tracker.utils.workfront_set_release_target")
-    @patch("repoapi.utils.get_next_release")
+    @patch("repoapi.signals.get_next_release")
     @patch("tracker.utils.workfront_note_send")
     def test_note_gerrit(self, wns, gnr, wsrt):
         param = self.get_defaults()
@@ -82,7 +82,7 @@ class WorkfrontNoteTestCase(BaseTest):
         wns.assert_called_once_with("0001", msg)
 
     @patch("tracker.utils.workfront_set_release_target")
-    @patch("repoapi.utils.get_next_release")
+    @patch("repoapi.signals.get_next_release")
     @patch("tracker.utils.workfront_note_send")
     def test_note_merge(self, wns, gnr, wsrt):
         param = self.get_defaults()
@@ -142,7 +142,7 @@ class WorkfrontNoteTestCase(BaseTest):
         wns.assert_called_with("0001", msg)
 
     @patch("tracker.utils.workfront_set_release_target")
-    @patch("repoapi.utils.get_next_release")
+    @patch("repoapi.signals.get_next_release")
     @patch("tracker.utils.workfront_note_send")
     def test_note_commit(self, wns, gnr, wsrt):
         param = self.get_non_gerrit_defaults()
@@ -168,7 +168,7 @@ class WorkfrontNoteTestCase(BaseTest):
         wns.assert_not_called()
 
     @patch("tracker.utils.workfront_set_release_target")
-    @patch("repoapi.utils.get_next_release")
+    @patch("repoapi.signals.get_next_release")
     @patch("tracker.utils.workfront_note_send")
     def test_note_commit_mrXX(self, wns, gnr, wsrt):
         param = self.get_non_gerrit_defaults()
@@ -196,7 +196,7 @@ class WorkfrontNoteTestCase(BaseTest):
         wns.assert_not_called()
 
     @patch("tracker.utils.workfront_set_release_target")
-    @patch("repoapi.utils.get_next_release")
+    @patch("repoapi.signals.get_next_release")
     @patch("tracker.utils.workfront_note_send")
     def test_note_commit_mrXXX(self, wns, gnr, wsrt):
         param = self.get_non_gerrit_defaults()
@@ -222,7 +222,7 @@ class WorkfrontNoteTestCase(BaseTest):
         wns.assert_not_called()
 
     @patch("tracker.utils.workfront_set_release_target")
-    @patch("repoapi.utils.get_next_release")
+    @patch("repoapi.signals.get_next_release")
     @patch("tracker.utils.workfront_note_send")
     def test_note_commit_next_distri(self, wns, gnr, wsrt):
         param = self.get_non_gerrit_defaults()
@@ -251,7 +251,7 @@ class WorkfrontNoteTestCase(BaseTest):
         wns.assert_not_called()
 
     @patch("tracker.utils.workfront_set_release_target")
-    @patch("repoapi.utils.get_next_release")
+    @patch("repoapi.signals.get_next_release")
     @patch("tracker.utils.workfront_note_send")
     def test_note_commit_non_ngcp(self, wns, gnr, wsrt):
         param = self.get_non_gerrit_defaults()

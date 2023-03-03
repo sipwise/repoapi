@@ -17,10 +17,9 @@ from django.apps import apps
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from . import utils
 from .models.wni import NoteInfo
 from .tasks import get_jbi_files
-from .tasks import jenkins_remove_project
+from .utils import get_next_release
 from .utils import regex_mrXXX
 from release_dashboard.utils.build import is_ngcp_project
 
@@ -72,37 +71,13 @@ def gerrit_repo_del(instance):
     if instance.param_ppa == "$ppa":
         logger.warn("ppa unset, skip removal")
         return
-    structlog.contextvars.bind_contextvars(
-        instance=str(instance),
-        branch=instance.param_branch,
-        ppa=instance.param_ppa,
-        gerrit_change=instance.gerrit_change,
-    )
     GerritRepoInfo = apps.get_model("repoapi", "GerritRepoInfo")
-    gri = GerritRepoInfo.objects
-    try:
-        ppa = gri.get(
-            param_ppa=instance.param_ppa, gerrit_change=instance.gerrit_change
-        )
-        ppa.delete()
-        logger.info("removed ppa")
-    except GerritRepoInfo.DoesNotExist:
-        logger.info("ppa already gone")
-        pass
-    qs = gri.filter(param_ppa=instance.param_ppa)
-    ppa_count = qs.count()
-    project_ppa_count = qs.filter(projectname=instance.projectname).count()
-    if ppa_count == 0:
-        utils.jenkins_remove_ppa(instance.param_ppa)
-    elif project_ppa_count == 0:
-        logger.info("remove source+packages from ppa")
-        jenkins_remove_project.delay(instance.id)
-    else:
-        logger.info(
-            "nothing to do here",
-            ppa_count=ppa_count,
-            project_ppa_count=project_ppa_count,
-        )
+    GerritRepoInfo.objects.review_removed(
+        instance.param_ppa,
+        instance.gerrit_change,
+        instance.projectname,
+        instance.id,
+    )
 
 
 @receiver(
@@ -157,7 +132,7 @@ def tracker_release_target(instance, note: NoteInfo):
     if regex_mrXXX.search(branch):
         release = branch
     else:
-        release = utils.get_next_release(branch)
+        release = get_next_release(branch)
     if release:
         note.set_target_release(release)
 

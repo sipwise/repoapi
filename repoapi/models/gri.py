@@ -12,9 +12,45 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import structlog
 from django.db import models
 from django_extensions.db.fields import CreationDateTimeField
 from django_extensions.db.fields import ModificationDateTimeField
+
+from ..tasks import jenkins_remove_project
+from ..utils import jenkins_remove_ppa
+
+logger = structlog.get_logger(__name__)
+
+
+class GerritRepoInfoManager(models.Manager):
+    def review_removed(self, ppa, gerrit_change, projectname, jbi_id=None):
+        qs = self.get_queryset().filter(param_ppa=ppa)
+        structlog.contextvars.bind_contextvars(
+            ppa=ppa,
+            gerrit_change=gerrit_change,
+        )
+        try:
+            gri = qs.get(gerrit_change=gerrit_change)
+            gri.delete()
+            logger.info("removed gri")
+        except GerritRepoInfo.DoesNotExist:
+            logger.info("gri already gone")
+            pass
+        ppa_count = qs.count()
+        project_ppa_count = qs.filter(projectname=projectname).count()
+        if ppa_count == 0:
+            logger.info("trigger ppa removal")
+            jenkins_remove_ppa(ppa)
+        elif project_ppa_count == 0 and jbi_id is not None:
+            logger.info("remove source+packages from ppa")
+            jenkins_remove_project.delay(jbi_id)
+        else:
+            logger.info(
+                "nothing to do here",
+                ppa_count=ppa_count,
+                project_ppa_count=project_ppa_count,
+            )
 
 
 class GerritRepoInfo(models.Model):
@@ -23,6 +59,7 @@ class GerritRepoInfo(models.Model):
     projectname = models.CharField(max_length=100)
     created = CreationDateTimeField()
     modified = ModificationDateTimeField()
+    objects = GerritRepoInfoManager()
 
     class Meta:
         unique_together = ["param_ppa", "gerrit_change"]

@@ -58,7 +58,7 @@ class TasksTestCase(BaseTest):
 
 @override_settings(JBI_BASEDIR=FIXTURES_PATH)
 @patch("repoapi.tasks.jenkins_remove_project_ppa")
-@patch("repoapi.utils.jenkins_remove_ppa")
+@patch("repoapi.models.gri.jenkins_remove_ppa")
 class TaskGerritRepoTest(BaseTest):
     default_params = {
         "gerrit_patchset": "44323",

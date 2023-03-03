@@ -19,8 +19,8 @@ from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
 
 
-@patch("repoapi.signals.jenkins_remove_project")
-@patch("repoapi.utils.jenkins_remove_ppa")
+@patch("repoapi.models.gri.jenkins_remove_project")
+@patch("repoapi.models.gri.jenkins_remove_ppa")
 class GerritRepoInfoTestCase(BaseTest):
     def get_defaults(self):
         defaults = {
