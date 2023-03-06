@@ -49,7 +49,7 @@ class BuildInfo(models.Model):
     @property
     def jenkins_url(self):
         base_url = settings.JENKINS_URL
-        return f"{base_url}/jobs/{self.projectname}/{self.buildnumber}/"
+        return f"{base_url}/jobs/{self.jobname}/{self.buildnumber}/"
 
     def __str__(self):
         return (
