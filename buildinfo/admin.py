@@ -1,4 +1,4 @@
-# Copyright (C) 2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2022-2023 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.contrib import admin
+from django.utils.html import format_html
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
@@ -33,3 +34,7 @@ class BuildInfoAdmin(ImportExportModelAdmin):
         "param_distribution",
         "builton",
     )
+    readonly_fields = ("jenkins_url",)
+
+    def jenkins_url(self, obj):
+        return format_html("<a href='{url}'>{url}</a>", url=obj.jenkins_url)

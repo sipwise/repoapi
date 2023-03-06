@@ -16,6 +16,7 @@ from typing import Any
 
 from django.db import models
 
+from .conf import settings
 from .utils import datetime
 from .utils import get_datetime
 
@@ -44,6 +45,11 @@ class BuildInfo(models.Model):
     param_distribution = models.CharField(max_length=50, null=True, blank=True)
     param_ppa = models.CharField(max_length=50, null=True, blank=True)
     objects = BuildInfoManager()
+
+    @property
+    def jenkins_url(self):
+        base_url = settings.JENKINS_URL
+        return f"{base_url}/jobs/{self.projectname}/{self.buildnumber}/"
 
     def __str__(self):
         return (
