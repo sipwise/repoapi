@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.contrib import admin
+from django.utils.html import format_html
 from django_admin_filters import DateRange
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
@@ -60,6 +61,10 @@ class GRIDateRange(DateRange):
 class GerritRepoInfoAdmin(ImportExportModelAdmin):
     resource_class = GerritRepoInfoResource
     list_filter = (("modified", GRIDateRange), "projectname", "param_ppa")
+    readonly_fields = ("gerrit_url",)
+
+    def gerrit_url(self, obj):
+        return format_html("<a href='{url}'>{url}</a>", url=obj.gerrit_url)
 
 
 class WorkfrontNoteInfoResource(resources.ModelResource):

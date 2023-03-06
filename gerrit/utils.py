@@ -74,3 +74,7 @@ def get_change_info(id: str):
 
 def get_datetime(val: str) -> datetime.datetime:
     return datetime.datetime.strptime(val, gerrit_settings.DATETIME_FMT)
+
+
+def get_gerrit_change_url(id: str, project: str) -> str:
+    return gerrit_settings.URL.format(f"c/{project}/+/{id}")

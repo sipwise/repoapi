@@ -19,6 +19,7 @@ from django_extensions.db.fields import ModificationDateTimeField
 
 from ..tasks import jenkins_remove_project
 from ..utils import jenkins_remove_ppa
+from gerrit.utils import get_gerrit_change_url
 
 logger = structlog.get_logger(__name__)
 
@@ -63,6 +64,10 @@ class GerritRepoInfo(models.Model):
 
     class Meta:
         unique_together = ["param_ppa", "gerrit_change"]
+
+    @property
+    def gerrit_url(self):
+        return get_gerrit_change_url(self.gerrit_change, self.projectname)
 
     def __str__(self):
         return "{}:{}:{}".format(
