@@ -43,11 +43,39 @@ class DurationListFilter(admin.SimpleListFilter):
                 return queryset.filter(duration__gte=value)
 
 
+class JobTypeListFilter(admin.SimpleListFilter):
+    title = "job type"
+    parameter_name = "type"
+
+    def lookups(self, request, model_admin):
+        vals = [
+            "gerrit",
+            "get-code",
+            "source-tests",
+            "debian-check",
+            "manage-docker",
+            "source",
+            "tap-test",
+            "binaries",
+            "repos",
+            "piuparts",
+            "docker-ppa",
+            "docker-ppa-dummy",
+        ]
+        return [(f"{val}", f"*-{val}") for val in vals]
+
+    def queryset(self, request, queryset):
+        value = self.value()
+        if value:
+            return queryset.filter(jobname__endswith=value)
+
+
 @admin.register(models.BuildInfo)
 class BuildInfoAdmin(ImportExportModelAdmin):
     resource_class = BuildInfoResource
     list_filter = (
         DurationListFilter,
+        JobTypeListFilter,
         "param_release",
         "projectname",
         "param_distribution",
