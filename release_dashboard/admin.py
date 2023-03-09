@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016-2023 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.contrib import admin
 from import_export import resources
+from import_export.admin import ExportActionModelAdmin
 from import_export.admin import ImportExportModelAdmin
 
 from . import models
@@ -35,15 +36,15 @@ class DockerImageResource(resources.ModelResource):
 
 
 @admin.register(models.DockerTag)
-class DockerTagAdmin(ImportExportModelAdmin):
+class DockerTagAdmin(ImportExportModelAdmin, ExportActionModelAdmin):
     resource_class = DockerTagResource
 
 
 @admin.register(models.DockerImage)
-class DockerImageAdmin(ImportExportModelAdmin):
+class DockerImageAdmin(ImportExportModelAdmin, ExportActionModelAdmin):
     resource_class = DockerImageResource
 
 
 @admin.register(models.Project)
-class ProjectAdmin(ImportExportModelAdmin):
+class ProjectAdmin(ImportExportModelAdmin, ExportActionModelAdmin):
     resource_class = ProjectResource

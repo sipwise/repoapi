@@ -1,4 +1,4 @@
-# Copyright (C) 2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2022-2023 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -14,6 +14,7 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from django.contrib import admin
 from import_export import resources
+from import_export.admin import ExportActionModelAdmin
 from import_export.admin import ImportExportModelAdmin
 
 from . import models
@@ -25,7 +26,7 @@ class WorkfrontNoteInfoResource(resources.ModelResource):
 
 
 @admin.register(models.WorkfrontNoteInfo)
-class WorkfrontNoteInfoAdmin(ImportExportModelAdmin):
+class WorkfrontNoteInfoAdmin(ImportExportModelAdmin, ExportActionModelAdmin):
     resource_class = WorkfrontNoteInfoResource
     list_filter = ("projectname",)
 
@@ -36,6 +37,6 @@ class MantisNoteInfoResource(resources.ModelResource):
 
 
 @admin.register(models.MantisNoteInfo)
-class MantisNoteInfoAdmin(ImportExportModelAdmin):
+class MantisNoteInfoAdmin(ImportExportModelAdmin, ExportActionModelAdmin):
     resource_class = MantisNoteInfoResource
     list_filter = ("projectname",)

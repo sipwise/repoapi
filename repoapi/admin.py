@@ -16,6 +16,7 @@ from django.contrib import admin
 from django.utils.html import format_html
 from django_admin_filters import DateRange
 from import_export import resources
+from import_export.admin import ExportActionModelAdmin
 from import_export.admin import ImportExportModelAdmin
 
 from . import models
@@ -32,7 +33,7 @@ class GerritRepoInfoResource(resources.ModelResource):
 
 
 @admin.register(models.JenkinsBuildInfo)
-class JenkinsBuildInfoAdmin(ImportExportModelAdmin):
+class JenkinsBuildInfoAdmin(ImportExportModelAdmin, ExportActionModelAdmin):
     resource_class = JenkinsBuildInfoResource
     list_filter = ("param_release", "projectname")
 
@@ -58,7 +59,7 @@ class GRIDateRange(DateRange):
 
 
 @admin.register(models.GerritRepoInfo)
-class GerritRepoInfoAdmin(ImportExportModelAdmin):
+class GerritRepoInfoAdmin(ImportExportModelAdmin, ExportActionModelAdmin):
     resource_class = GerritRepoInfoResource
     list_filter = (("modified", GRIDateRange), "projectname", "param_ppa")
     readonly_fields = ("gerrit_url",)
@@ -73,7 +74,7 @@ class WorkfrontNoteInfoResource(resources.ModelResource):
 
 
 @admin.register(models.WorkfrontNoteInfo)
-class WorkfrontNoteInfoAdmin(ImportExportModelAdmin):
+class WorkfrontNoteInfoAdmin(ImportExportModelAdmin, ExportActionModelAdmin):
     resource_class = WorkfrontNoteInfoResource
 
 
@@ -83,5 +84,5 @@ class MantisNoteInfoResource(resources.ModelResource):
 
 
 @admin.register(models.MantisNoteInfo)
-class MantisNoteInfoAdmin(ImportExportModelAdmin):
+class MantisNoteInfoAdmin(ImportExportModelAdmin, ExportActionModelAdmin):
     resource_class = MantisNoteInfoResource
