@@ -8,6 +8,7 @@
       <th>tag</th>
       <th>branch</th>
       <th>started_at</th>
+      <th>Last update at</th>
       <th>Action</th>
     </tr>
     <tr class="active">
@@ -15,6 +16,7 @@
       <td>{{ build_release.tag }}</td>
       <td>{{ build_release.branch }}</td>
       <td>{{ build_release.start_date }}</td>
+      <td>{{ build_release.last_update }}</td>
       <td id="action_list">
         {% if perms.build.can_trigger %}
         <button type="button" id="resume"
