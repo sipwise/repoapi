@@ -5,12 +5,13 @@ FROM docker.mgm.sipwise.com/sipwise-bullseye:latest
 # is updated with the current date. It will force refresh of all
 # of the base images and things like `apt-get update` won't be using
 # old cached versions when the Dockerfile is built.
-ENV REFRESHED_AT 2023-03-04
+ENV REFRESHED_AT 2023-03-15
 
 RUN apt-get update && apt-get install --assume-yes python3 python3-dev \
 	python3-pytest python3-pytest-pep8 \
 	python3-pytest-pylint python3-pytest-cov python3-junitxml \
-	python3-pip python3-virtualenv virtualenv sqlite3 git tmux
+	python3-pip python3-virtualenv virtualenv sqlite3 git tmux \
+	&& apt-get clean
 
 # Get pip to download and install requirements:
 ADD requirements/*.txt /tmp/
@@ -18,7 +19,6 @@ RUN pip3 install -r /tmp/test.txt
 
 RUN echo './t/testrunner' >>/root/.bash_history
 ADD .tmux.conf /root/.tmux.conf
-RUN apt-get clean
 
 WORKDIR /code/
 

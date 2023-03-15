@@ -27,7 +27,7 @@ class TrackerMapperResource(resources.ModelResource):
         use_bulk = True
         skip_unchanged = True
 
-    def skip_row(self, instance, original):
+    def skip_row(self, instance, original, row, import_validation_errors=None):
         try:
             mantis_id = int(original.mantis_id)
         except ValueError:
