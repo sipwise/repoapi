@@ -113,6 +113,7 @@ class ReleaseConfigTestCase(SimpleTestCase):
             "trunk-weekly",
             "release-trunk-buster",
             "release-trunk-bullseye",
+            "release-trunk-bookworm",
             "mr11.0",
             "mr10.1.1",
             "mr10.1",

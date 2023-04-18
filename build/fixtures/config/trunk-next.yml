@@ -1,0 +1,250 @@
+distris:
+ - release-trunk-bookworm
+
+debian_release: bookworm
+
+release-trunk-bookworm:
+ # TT#44190 TT#182900 needed by ngcp-panel
+ - grafana: 9.0.2
+ # MT#55391 MT#56601 nodejs/npm as present in Debian doesn't fit our needs
+ - nodejs: 18.14.1-deb-1nodesource1
+ # TT#73105 system testing
+ - goss: 0.3.20-0.1~bpo12+1sipwise1
+ # TT#44918 Needed for PRO/Carrier (bootenv)
+ - ngcp-pxe-boot: 0.8.0.0+0~sipwise20221201
+ # TT#69950 needed by bulk-processor, not available in Debian (project abandoned upstream)
+ - libexcel-reader-xlsx-perl: 0.00~git20161017.3b576a55-0.1sipwise1~bpo12+1
+ # TT#59330 rebuild of package pulled from non-free, required for snmp-agent
+ - snmp-mibs-downloader: 1.5~bpo12+1
+ # TT#187100 asterisk g729 (not even in Debian)
+ - asterisk-g72x: 0.0~git20201027.3855cec-1~bpo12+2
+ # TT#154255 replacement of redis, not in debian
+ - keydb: 6.2.3~git20220223.d591df1-1~bpo12+1
+ # MT#55821 needed by monitoring, currently only available on Debian sid
+ - victoriametrics: 1.75.0+ds1-1~bpo12+1
+ # MT#55888 needed by monitoring stack, new -recheck-with-time-limit option.
+ - prometheus-process-exporter: 0.7.10-2sipwise1~bpo12+1
+ # MT#57052 asterisk didn't make it into bookworm, see #1031046 + #1032092
+ - asterisk: 20.1.0~dfsg+~cs6.12.40431414-1~bpo12+1
+ # MT#57128 fix False positive "down" reports from IPv6addr "monitor" action
+ - resource-agents: 4.12.0-1.1+sipwise1~bpo12+1
+
+repository-verify:
+  white-list: []
+
+jenkins-jobs:
+  build_deps:  # projects that are build dependencies and the list of the projects that depends on it
+    system-tests:
+      - data-hal  # jenkins-tap-test-${distribution} needed for tap-test job
+      - libswrate
+      - libtcap
+      - ngcp-panel
+      - sipwise-base
+      - system-tools
+    system-tools:
+      - check-tools # libngcp-log-perl libngcp-service-perl
+    data-hal:
+      - ngcp-panel
+    ngcp-schema:
+      - ngcp-panel
+    libswrate:
+      - kamailio
+      - sems-pbx
+    libtcap:
+      - kamailio
+      - lnpd
+    sipwise-base:
+      - ngcp-panel
+      - ngcp-schema
+    check-tools:
+      - snmp-agent
+    ngcpcfg:
+      - bootenv # libngcp-template-perl needed on Dockerfile
+    ngcp-panel:
+      - csta-testsuite # ngcp-api-testframework needed on Dockerfile
+  projects:
+    - asterisk-voicemail
+    - backup-tools
+    - bulk-processor
+    - bulk-processor-projects
+    - bootenv
+    - cdr-exporter
+    - cfg-schema
+    - check-tools
+    - cleanup-tools
+    - cloudpbx-sources
+    - csta-testsuite
+    - data-hal
+    - db-schema
+    - deployment-iso
+    - dhtest
+    - documentation
+    - faxserver
+    - installer
+    - kamailio
+    - kamailio-config-tests
+    - keyring
+    - libswrate
+    - libtcap
+    - license-client
+    - lnpd
+    - lua-ngcp-kamailio
+    - mediator
+    - megacli
+    - metapackages
+    - monitoring-tools
+    - ngcp-admin-ui
+    - ngcp-api-tools
+    - ngcp-csc-ui
+    - ngcp-exporter
+    - ngcp-fauditd
+    - ngcp-inventory
+    - ngcp-js-api-client
+    - ngcp-logfs
+    - ngcp-panel
+    - ngcp-prompts
+    - ngcp-rest-api
+    - ngcp-schema
+    - ngcp-status
+    - ngcp-sudo-plugin
+    - ngcp-support
+    - ngcp-task-agent
+    - ngcp-user-framework
+    - ngcp-web-tests-e2e
+    - ngcpcfg
+    - ngcpcfg-api
+    - ngcpcfg-ha
+    - ngrep-sip
+    - prosody
+    - pushd
+    - rate-o-mat
+    - reminder
+    - rtpengine
+    - sems
+    - sems-pbx
+    - sipwise-base
+    - snmp-agent
+    - system-tests
+    - system-tools
+    - templates
+    - upgrade
+    - vmnotify
+    - voisniff-ng
+    - websocket
+
+release_mirror:
+  common:
+    copysrc:
+      - kamailio-config-tests
+      - libdata-hal-perl
+      - libsipwise-base-perl
+      - lua-ngcp-kamailio
+      - ngcp-admin-ui
+      - ngcp-api-tools
+      - ngcp-asterisk-voicemail
+      - ngcp-bulk-processor
+      - ngcp-cdr-exporter
+      - ngcp-cfg-schema
+      - ngcp-check-tools
+      - ngcp-cleanup-tools
+      - ngcp-csc-ui
+      - ngcp-db-schema
+      - ngcp-deployment-iso
+      - ngcp-dhtest
+      - ngcp-handbook
+      - ngcp-installer
+      - ngcp-js-api-client
+      - ngcp-kamailio
+      - ngcp-keyring
+      - ngcp-libswrate
+      - ngcp-libtcap
+      - ngcp-license-client
+      - ngcp-mediator
+      - ngcp-metapackages
+      - ngcp-ngcpcfg
+      - ngcp-panel
+      - ngcp-prompts
+      - ngcp-prosody-modules
+      - ngcp-rate-o-mat
+      - ngcp-reminder
+      - ngcp-rest-api
+      - ngcp-rtpengine
+      - ngcp-schema
+      - ngcp-status
+      - ngcp-support
+      - ngcp-system-tests
+      - ngcp-system-tools
+      - ngcp-task-agent
+      - ngcp-templates
+      - ngcp-upgrade
+      - ngcp-vmnotify
+      - ngcp-web-tests-e2e
+      - ngrep-sip
+    remove:
+      source:
+        - ngcp-handbook
+        - ngcp-installer
+        - ngcp-libswrate
+        - ngcp-license-client
+        - ngcp-prompts
+        - ngcp-templates
+        - ngcp-upgrade
+      binary:
+        - ngcp-handbook-internal
+        - ngcp-handbook-pdf-internal
+      matched: []
+  ce:
+    copysrc:
+      - ngcp-sems
+    remove:
+      source: []
+      binary:
+        - ngcp-ngcpcfg-testsuite
+      matched:
+        - '*-carrier'
+        - '*-pro'
+        - '*-pro-dbgsym'
+        - 'ngcp-prompts-pro*'
+  pro:
+    backports: []
+    copysrc:
+      - megacli
+      - ngcp-backup-tools
+      - ngcp-bootenv
+      - ngcp-bulk-processor-projects
+      - ngcp-cloudpbx-devices
+      - ngcp-csta-testsuite
+      - ngcp-exporter
+      - ngcp-fauditd
+      - ngcp-faxserver
+      - ngcp-inventory
+      - ngcp-lnpd
+      - ngcp-logfs
+      - ngcp-monitoring-tools
+      - ngcp-ngcpcfg-ha
+      - ngcp-pushd
+      - ngcp-sems-pbx
+      - ngcp-snmp
+      - ngcp-sudo-plugin
+      - ngcp-user-framework
+      - ngcp-voisniff
+      - ngcp-websocket
+      - ngcpcfg-api
+    remove:
+      binary: []
+      source:
+        - ngcp-cloudpbx-devices
+        - ngcp-csta-testsuite
+        - ngcp-fauditd
+        - ngcp-logfs
+        - ngcp-monitoring-tools
+        - ngcp-ngcpcfg-ha
+        - ngcp-pushd
+        - ngcp-sems-pbx
+        - ngcp-sudo-plugin
+        - ngcp-user-framework
+        - ngcp-voisniff
+        - ngcpcfg-api
+      matched:
+        - '*ngcp*-ce'
+        - '*ngcp*-ce-*'

@@ -250,14 +250,20 @@ class ReleaseConfig(object):
     def supported_releases(cls):
         skip_files = ["{}.yml".format(x) for x in settings.BUILD_RELEASES_SKIP]
         res = []
+
+        def manual(file):
+            files.remove(file)
+            cfg = cls.load_config(
+                settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR / file
+            )
+            for dist in cfg["distris"]:
+                res.append(dist)
+
         for root, dirs, files in walk(settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR):
             if "trunk.yml" in files:
-                files.remove("trunk.yml")
-                cfg = cls.load_config(
-                    settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR / "trunk.yml"
-                )
-                for dist in cfg["distris"]:
-                    res.append(dist)
+                manual("trunk.yml")
+            if "trunk-next.yml" in files:
+                manual("trunk-next.yml")
             for name in files:
                 path_name = Path(name)
                 if path_name.suffix != ".yml":
