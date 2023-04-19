@@ -43,11 +43,7 @@ class TestRest(APIAuthenticatedTestCase):
             "release": "release-trunk-stretch",
         }
         response = self.client.post(self.url, data, format="json")
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data["release"], "trunk")
-        self.assertIsNone(response.data["tag"])
-        self.assertEqual(response.data["branch"], "master")
-        self.assertEqual(response.data["distribution"], "buster")
+        self.assertNotEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_trunk(self):
         data = {

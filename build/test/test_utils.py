@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2023 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -23,6 +23,7 @@ from build import exceptions as err
 from build.conf import settings
 from build.utils import get_common_release
 from build.utils import get_simple_release
+from build.utils import guess_trunk_filename
 from build.utils import is_release_trunk
 from build.utils import ReleaseConfig
 from build.utils import remove_from_textlist
@@ -30,6 +31,8 @@ from build.utils import trigger_build
 from build.utils import trigger_build_matrix
 from build.utils import trigger_copy_deps
 from repoapi.test.base import BaseTest
+
+FIXTURES_PATH = settings.BASE_DIR.joinpath("build", "fixtures")
 
 
 class SimpleIsReleaseTrunkTest(SimpleTestCase):
@@ -113,7 +116,6 @@ class ReleaseConfigTestCase(SimpleTestCase):
             "trunk-weekly",
             "release-trunk-buster",
             "release-trunk-bullseye",
-            "release-trunk-bookworm",
             "mr11.0",
             "mr10.1.1",
             "mr10.1",
@@ -158,6 +160,14 @@ class ReleaseConfigTestCase(SimpleTestCase):
         self.assertIsNotNone(rc.config)
         self.assertEqual(rc.debian_release, "buster")
         self.assertEqual(len(rc.projects), 73)
+
+    def test_guess_trunk_filename(self):
+        res = guess_trunk_filename("release-trunk-bullseye")
+        self.assertEqual(res, "trunk")
+        res = guess_trunk_filename("release-trunk-buster")
+        self.assertEqual(res, "trunk")
+        res = guess_trunk_filename("release-trunk-weekly")
+        self.assertEqual(res, "trunk-weekly")
 
     def test_debian_release_value(self):
         rc = ReleaseConfig("trunk")
@@ -627,3 +637,33 @@ class CheckConfig(SimpleTestCase):
         self.data["jenkins-jobs"]["build_deps"] = {"A": ["A1", "A"]}
         with self.assertRaises(err.CircularBuildDependencies):
             ReleaseConfig("fake", config=self.data)
+
+
+@override_settings(
+    BUILD_REPOS_SCRIPTS_CONFIG_DIR=FIXTURES_PATH.joinpath("config.next")
+)
+class ReleaseConfigNext(SimpleTestCase):
+    def test_guess_trunk_filename(self):
+        res = guess_trunk_filename("release-trunk-bullseye")
+        self.assertEqual(res, "trunk")
+        res = guess_trunk_filename("release-trunk-bookworm")
+        self.assertEqual(res, "trunk-next")
+
+    @override_settings(BUILD_RELEASES_SKIP=["mr0.1"])
+    def test_supported_releases(self):
+        supported = [
+            "release-trunk-bullseye",
+            "release-trunk-bookworm",
+        ]
+        res = ReleaseConfig.supported_releases()
+        self.assertListEqual(res, supported)
+
+    def test_trunk_next(self):
+        rc = ReleaseConfig("trunk-next")
+        self.assertIsNotNone(rc.config)
+        self.assertEqual(rc.debian_release, "bookworm")
+        self.assertNotIn("rainbow-misc", rc.projects)
+
+        rc = ReleaseConfig("release-trunk-bookworm")
+        self.assertEqual(rc.debian_release, "bookworm")
+        self.assertNotIn("rainbow-misc", rc.projects)

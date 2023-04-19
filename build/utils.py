@@ -25,6 +25,7 @@ from yaml import Loader
 
 from . import exceptions as err
 from .conf import settings
+from repoapi.utils import executeAndReturnOutput
 from repoapi.utils import open_jenkins_url
 
 logger = structlog.get_logger(__name__)
@@ -63,14 +64,28 @@ def is_release_trunk(version):
     return (False, None)
 
 
+def guess_trunk_filename(version):
+    command_grep = [
+        "grep",
+        "-rl",
+        f"{version}:",
+        settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR,
+    ]
+    res = executeAndReturnOutput(command_grep)
+    if res[0] == 0:
+        filename = str(res[1].strip())
+        if "trunk" not in filename:
+            return None
+        name = Path(filename).stem
+        if name not in settings.BUILD_RELEASES_SKIP:
+            return name
+
+
 def get_simple_release(version):
     match = re_release.search(version.replace("-update", ""))
     if match:
         return match.group(1)
-    if version == "release-trunk-weekly":
-        return "trunk-weekly"
-    elif version.startswith("release-trunk-"):
-        return "trunk"
+    return guess_trunk_filename(version)
 
 
 def get_common_release(version):

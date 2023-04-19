@@ -21,6 +21,7 @@ from django.test import override_settings
 from django.test import TestCase
 from django.urls import reverse
 
+from build.conf import settings
 from build.models import BuildRelease
 from repoapi.test.base import BaseTest
 
@@ -196,6 +197,7 @@ class TestDocker(TestCase):
 
 class TestBuildRelease(BaseTest):
     fixtures = ["test_build_release"]
+    FIXTURES_PATH = settings.BASE_DIR.joinpath("build", "fixtures")
 
     def test_no_login(self):
         url = reverse("release_dashboard:build_release", args=["trunk"])
@@ -230,3 +232,19 @@ class TestBuildRelease(BaseTest):
         res = self.client.get(url)
         self.assertEqual(res.status_code, 200)
         self.assertFalse(res.context["done"])
+
+    @override_settings(
+        BUILD_REPOS_SCRIPTS_CONFIG_DIR=FIXTURES_PATH.joinpath("config.next")
+    )
+    def test_context_bookworm(self):
+        user = User.objects.create_user(username="test")
+        self.client.force_login(user)
+        # no build yet
+        url = reverse(
+            "release_dashboard:build_release", args=["release-trunk-bookworm"]
+        )
+        res = self.client.get(url)
+        self.assertEqual(res.status_code, 200)
+        self.assertNotIn("rainbow-misc", res.context["config"].projects)
+        self.assertIn("templates", res.context["config"].projects)
+        self.assertTrue(res.context["done"])
