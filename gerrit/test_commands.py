@@ -54,7 +54,7 @@ value = json.loads(change_info)
 class refreshTest(TestCase):
     fixtures = ["test_gerrit_commands"]
 
-    @patch("gerrit.management.commands.gerrit.get_change_info")
+    @patch("gerrit.tasks.get_change_info")
     def test_refresh(self, gci):
         gci.return_value = value
         qs = GerritRepoInfo.objects
@@ -69,7 +69,7 @@ class refreshTest(TestCase):
         self.assertEqual(qs_filter.count(), 3)
 
     @patch("repoapi.models.gri.jenkins_remove_ppa")
-    @patch("gerrit.management.commands.gerrit.get_change_info")
+    @patch("gerrit.tasks.get_change_info")
     def test_cleanup(self, gci, jrp):
         value["status"] = "MERGED"
         gci.return_value = value

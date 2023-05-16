@@ -14,15 +14,10 @@
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from datetime import date
 from datetime import datetime
-from datetime import timedelta
 
-from django.conf import settings
 from django.core.management.base import BaseCommand
-from requests.exceptions import HTTPError
 
-from gerrit.utils import get_change_info
-from gerrit.utils import get_datetime
-from repoapi.models.gri import GerritRepoInfo
+from gerrit import tasks
 
 
 class Command(BaseCommand):
@@ -45,46 +40,12 @@ class Command(BaseCommand):
         )
 
     def refresh(self, *args, **options):
-        qs = GerritRepoInfo.objects.filter(created__date=date(1977, 1, 1))
-        for gri in qs.iterator():
-            try:
-                info = get_change_info(gri.gerrit_change)
-                gri.created = get_datetime(info["created"])
-                gri.modified = get_datetime(info["updated"])
-                # don't update modified field on save
-                gri.update_modified = False
-                if options["dry_run"]:
-                    self.stdout.write(
-                        f"{gri} would be changed to "
-                        f" created:{gri.created}"
-                        f" modified:{gri.modified}"
-                    )
-                else:
-                    gri.save()
-            except HTTPError:
-                self.stderr.write(f"{gri} not found, remove it from db")
-                gri.delete()
+        tasks.refresh(options["dry_run"])
 
     def cleanup(self, *args, **options):
-        max_date = options["today"] - timedelta(weeks=options["weeks"])
-        self.stderr.write(f"max_date:{max_date}")
-        if settings.DEBUG:
-            self.stderr.write("debug ON")
-        manager = GerritRepoInfo.objects
-        qs = manager.filter(modified__lt=max_date)
-        for gri in qs.iterator():
-            info = get_change_info(gri.gerrit_change)
-            status = info["status"]
-            if status in ["MERGED", "ABANDONED"]:
-                if options["dry_run"]:
-                    self.stdout.write(
-                        f"{gri} {status}, remove from db, [dry-run]"
-                    )
-                else:
-                    self.stdout.write(f"{gri} {status}, remove from db")
-                    manager.review_removed(
-                        gri.param_ppa, gri.gerrit_change, gri.projectname
-                    )
+        tasks.cleanup(
+            options["weeks"], options["dry_run"], options["today"].isoformat()
+        )
 
     def handle(self, *args, **options):
         action = getattr(self, options["action"])
