@@ -1,3 +1,117 @@
+repoapi (0.4.6) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * TT#121955 update django to latest 3.2 release
+  * TT#121955 build: detect release_uuid empty value
+  * TT#121955 dev: pin working version of Werkzeug
+  * TT#15305 build: fix detection of build permissions
+  * TT#15305 build: don't allow trigger builds that have unfinished previous builds
+  * TT#15305 build: support trunk-weekly release
+  * TT#15305 build: fix get_common_release for trunk-weekly
+  * TT#15305 build: trigger weekly-build-matrix-trunk-weekly
+  * TT#15305 build: add links to gitweb for projects at build_release.html
+  * TT#15305 build: don't trigger already triggered external job
+  * TT#15305 build: improve refresh_projects
+  * TT#15305 build: add missing readonly fields to admin panel
+  * TT#15305 release_dashboard: remove old build process
+  * TT#15305 release_dashboard: remove unused code
+  * TT#15305 fix urls
+  * TT#15305 panel: fix navlist links at release_uuid
+  * TT#15305 release_dashboard: hotfix from release directly
+  * TT#15305 relase_dashboard: build_releases, split master releases
+  * TT#180600 release_dashboard: introduce templatetags
+  * TT#180600 repoapi: dumpdata_release
+  * TT#152750 LDAP posixGroups groups
+  * TT#152750 build: permissions
+  * TT#152750 enforce perms in views and templates
+  * TT#15305 release_dashboard: fix missing template for docker
+  * TT#121955 celery: fix problems with serialization
+  * TT#121955 extend coverage of templates
+  * TT#121955 celery: fix problems with serialization, take two
+  * TT#15305 build: don't trigger build_matrix if not done
+  * TT#121955 update django to latest 3.2.X version
+  * TT#188000 build: fix retrigger error
+  * TT#190200 build: support several levels of dependencies
+  * MT#33006 repoapi: define Tracker setting
+  * MT#3306 hotfix: add support for mantis
+  * MT#33006 repoapi: support mantis
+  * MT#33006 tracker: WF <-> MT mapper
+  * MT#33006 tracker: resize mapper_type field
+  * MT#33006 tracker: mapper views
+  * MT#33006 tracker: fix mantis_set_release_target
+  * MT#33006 tracker: mantis command helper
+  * MT#52615 build: add build_deps to admin fields
+  * MT#33006 fix test settings
+  * TT#33006 repoapi: add notes to MANTIS using old TT# IDs
+  * MT#33006 tracker: generic mapper URL
+  * TT#190200 build: detect circular dependencies
+  * TT#190200 build: provide endpoint to check release config
+  * MT#33006 tracker: compare int values at mantis_get_issue_id
+  * TT#15305 build: provide end point to delete latest build of release-trunk-{distribution}
+  * TT#15305 build: fix release-trunk-{version}
+  * TT#15305 build: fix typo in method name
+  * TT#15305 build: continue building if failure jobs are not in build_deps
+  * TT#15305 build: remove print on check_circular_dependencies
+  * MT#54973 gerrit: move everything to its own app
+  * MT#33006 hotfix: set human output for admin panel
+  * MT#33006 repoapi: upgrade structlog config (3.0+)
+  * MT#33006 debian: add gerrit app
+  * MT#33006 celery: fix logging
+  * MT#33006 hotfix: add force param to be able to process again
+  * MT#33006 settings: add more info to logger
+  * MT#33006 logging: add rich package
+  * MT#33006 hotfix: allow filter by project on admin
+  * MT#55524 build: use <distribution>/master as branch instead of master
+  * MT#55988 buildinfo: collect build information
+  * MT#56226 repoapi: increase logging in order to debug removal ppa process
+  * MT#55988 buildinfo: fix duration field
+  * MT#55988 buildinfo: fix migration of timestamp
+  * TT#121955 update django to latest 3.2.X version
+  * MT#56508 repoapi: fix jbi rows with projectname with '-gerrit'
+  * MT#56508 repoapi: fix jbi rows with projectname with '-gerrit', take two
+  * MT#56508 repoapi: add notes just for builds triggered by gerrit
+  * MT#56231 admin: support filter for GerritRepoInfo
+  * MT#56231 remove ppa for scenario mrX.X.X review merged
+  * MT#56231 gri: creatiion and mofication datetimes
+  * TT#121955 update django to latest 3.2.X version
+  * MT#56231 gerrit: command to refresh creation/modification info
+  * MT#56231 gerrit: fixes
+  * MT#56231 repoapi: refactor PPA removal logic
+  * MT#56231 gerrit: cleanup tool
+  * MT#56231 gerrit: fix dry-run option
+  * TT#121955 test: fix run_dev after upgrade to Werkzeug==2.2.3
+  * MT#56231 requirements: crispy-forms update to 2.*
+  * MT#56834 requirements: set supported version for django-import-export
+  * MT#56231 repoapi: DateRange for GerritRepoInfo
+  * MT#56231 gerrit: cleanup abandoned reviews too
+  * MT#55988 buildinfo: add clickable jenkins_url field
+  * MT#55988 gerrit: add clickeable gerrit_url to admin
+  * MT#55988 buildinfo: fix jenkins_url
+  * MT#55988 buildinfo: fix jenkins_url, take two
+  * MT#55988 buildinfo: filter by duration in secs
+  * MT#55988 buildinfo: filter by job type
+  * MT#55988 improve export process
+  * MT#55988 panel: add last_update on release build info
+  * MT#56834 tracker: changes needed for >= 3.0
+  * MT#55991 pre-commit: fix flake8 repository error
+  * MT#57181 build: support trunk-next.yml
+  * MT#57181 build: fix guessing release-trunk-* filename config
+
+  [ Guillem Jover ]
+  * TT#124273 Update packaging for bullseye
+  * TT#124273 Use execute_after_ instead of override_ for dh command
+
+  [ Sergii Kipot ]
+  * TT#172051 Add ngcp-cve-scanner repo to repoapi dashboard
+
+  [ dependabot[bot] ]
+  * TT#121955 Bump django from 3.2.14 to 3.2.15 in /requirements
+
+  [ Michael Prokop ]
+  * MT#55953 Add ngcp-task-agent to repoapi dashboard
+
+ -- Victor Seva <vseva@debian.org>  Tue, 16 May 2023 13:09:13 +0200
+
 repoapi (0.4.5) unstable; urgency=medium
 
   [ Victor Seva ]
