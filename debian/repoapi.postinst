@@ -18,7 +18,7 @@ LIB_DIR=/var/lib/repoapi
 # the debian-policy package
 
 mk_dj_secret() {
-  python -c "import random,string;print '%s'%''.join([random.SystemRandom().choice(\"{}{}{}\".format(string.ascii_letters, string.digits, string.punctuation)) for i in range(63)])" ;
+  python3 -c "import random, string; print(''.join(random.SystemRandom().choice(string.ascii_letters + string.digits + string.punctuation) for _ in range(63)))";
 }
 
 case "$1" in
