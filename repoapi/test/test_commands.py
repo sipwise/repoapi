@@ -55,3 +55,43 @@ class exportJBITest(BaseTest):
             self.cmd.append(fp.name)
             call_command(*self.cmd)
             check_output(fp.name, f"{checkfile}")
+
+
+class apikeyTest(BaseTest):
+    key = "bF5FPwbD.twrKaUDTqYck7gKu7G1EeKUCOSehU5MX"
+    hashed_key = (
+        "pbkdf2_sha256$260000$0r1aVevuWiB53I"
+        "Mr9dTWOO$oJwAul49UovnNVybhIAisO8gTNiSv/GxDBWo9hfH+Tk="
+    )
+
+    def setUp(self):
+        self.cmd = [
+            "apikey",
+        ]
+
+    def test_no_params(self):
+        with self.assertRaises(CommandError):
+            call_command(*self.cmd)
+
+    def test_verify_ko(self):
+        self.cmd.append("verify")
+        self.cmd.append("--value")
+        self.cmd.append(self.hashed_key)
+        self.cmd.append("--key")
+        self.cmd.append("noNo")
+        with self.assertRaises(CommandError):
+            call_command(*self.cmd)
+
+    def test_verify_ok(self):
+        self.cmd.append("verify")
+        self.cmd.append("--value")
+        self.cmd.append(self.hashed_key)
+        self.cmd.append("--key")
+        self.cmd.append(self.key)
+        call_command(*self.cmd)
+
+    def test_hash_ok(self):
+        self.cmd.append("hash")
+        self.cmd.append("--value")
+        self.cmd.append(self.key)
+        call_command(*self.cmd)
