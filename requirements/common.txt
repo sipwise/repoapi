@@ -19,7 +19,7 @@ drf-spectacular
 flower>=0.9.5
 markdown
 natsort
-python-debian
+python-debian<0.1.49
 PyYAML
 requests
 six>=1.9
