@@ -9,12 +9,12 @@ SHELL = /bin/bash
 venv_prod: requirements/prod.txt
 	virtualenv --python=python3 $(VAR_DIR)/venv_prod
 	source $(VAR_DIR)/venv_prod/bin/activate && \
-		pip3 install -r ./requirements/prod.txt | tee install.log
+		pip3 install -r ./requirements/prod.txt | tee -a install.log
 
 venv_dev: requirements/dev.txt
 	virtualenv --python=python3 $(VAR_DIR)/venv_dev
 	source $(VAR_DIR)/venv_dev/bin/activate && \
-		pip3 install -r ./requirements/dev.txt | tee install.log
+		pip3 install -r ./requirements/dev.txt | tee -a install.log
 ###################################
 
 test: test_templates
