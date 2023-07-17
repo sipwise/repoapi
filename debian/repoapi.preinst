@@ -1,0 +1,23 @@
+#!/bin/sh
+
+set -e
+
+LIB_DIR=/var/lib/repoapi
+
+case "$1" in
+  install|upgrade)
+    if dpkg --compare-versions "$2" le "0.4.7"; then
+      rm -rf  "${LIB_DIR}/venv_prod"
+    fi
+    ;;
+  abort-upgrade)
+    ;;
+  *)
+    echo "preinst called with unknown argument '$1'" >&2
+    exit 1
+    ;;
+esac
+
+#DEBHELPER#
+
+exit 0

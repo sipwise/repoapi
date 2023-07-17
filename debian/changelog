@@ -1,3 +1,21 @@
+repoapi (0.4.7) unstable; urgency=medium
+
+[ Victor Seva ]
+  * MT#56231 gerrit: crontab to cleanup
+  * MT#57855 add apikey commands
+  * MT#57855 requirements: stick with python-debian 0.1.48
+
+  [ Guillem Jover ]
+  * MT#33006 Fix typo in Recommends field name
+
+  [ Michael Prokop ]
+  * MT#56773 debian: support python3
+  * MT#57855 venv deployments: append output to install.log file
+  * Revert "MT#57855 requirements: stick with python-debian 0.1.48"
+  * MT#57855 venv deployments: use venv instead of virtualenv
+
+ -- Victor Seva <vseva@debian.org>  Mon, 17 Jul 2023 15:43:15 +0200
+
 repoapi (0.4.6) unstable; urgency=medium
 
   [ Victor Seva ]
