@@ -9,7 +9,7 @@ Run docker containers
 ---------------------
 
     $ docker run -d --rm --hostname repoapi-rabbit --name repoapi-rabbit rabbitmq:3
-    $ docker run --rm -i -t --link repoapi-rabbit:rabbit -v $(pwd):/code:rw docker.mgm.sipwise.com/repoapi-buster:latest bash
+    $ docker run --rm -i -t --link repoapi-rabbit:rabbit -v $(pwd):/code:rw docker.mgm.sipwise.com/repoapi-bullseye:latest bash
 
 Tmux
 ----
@@ -29,16 +29,16 @@ On your desktop, install pre-commit tool
 [pre-commit](https://pre-commit.com/)
 -------------------------------------
 
-  * sudo apt install build-essential python3-dev python3-virtualenvwrapper virtualenvwrapper npm
+  * sudo apt install build-essential python3-dev npm
   * sudo npm install -g eslint
   * npm install eslint-config-jquery
-  * mkvirtualenv repos-scritps --python=python3
-  * pip3 install pre-commit
+  * sudo apt install pre-commit || pip3 install pre-commit
   * pre-commit install
 
 virtualenv
 ----------
-Inside the repoapi-buster container run:
+
+Inside the repoapi container run:
 
 ```
   $ make venv_dev
