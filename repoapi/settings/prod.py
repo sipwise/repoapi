@@ -153,17 +153,17 @@ CELERY_BEAT_SCHEDULE = {
     # Executes every Sunday morning at 7:30 A.M
     "purge-trunk": {
         "task": "repoapi.tasks.jbi_purge",
-        "schedule": crontab(hour=7, minute=30, day_of_week="sun"),
+        "schedule": crontab(hour=7, minute=30, day_of_week=0),
         "args": ("none", 4),
     },
     "purge-none": {
         "task": "repoapi.tasks.jbi_purge",
-        "schedule": crontab(hour=7, minute=30, day_of_week="sun"),
+        "schedule": crontab(hour=7, minute=30, day_of_week=0),
         "args": (None, 1),
     },
     "gerrit-cleanup": {
+        "task": "gerrit.tasks.cleanup",
         "schedule": crontab(hour=7, minute=30, day_of_month=15),
-        "tasks": "gerrit.tasks.cleanup",
         "args": (4),
     },
 }
