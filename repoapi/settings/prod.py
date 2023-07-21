@@ -161,6 +161,11 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": crontab(hour=7, minute=30, day_of_week="sunday"),
         "args": (None, 1),
     },
+    "gerrit-cleanup": {
+        "schedule": crontab(hour=7, minute=30, day_of_month=15),
+        "tasks": "gerrit.tasks.cleanup",
+        "args": (4),
+    },
 }
 CELERY_TIMEZONE = "UTC"
 

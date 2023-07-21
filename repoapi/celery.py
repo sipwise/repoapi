@@ -15,7 +15,6 @@
 import os
 
 from celery import Celery
-from celery.schedules import crontab
 from django_structlog.celery.steps import DjangoStructLogInitStep
 
 # set the default Django settings module for the 'celery' program.
@@ -48,13 +47,4 @@ def process_result(jbi_id: str, path_envVars: str):
     app.send_task(
         "release_changed.tasks.process_result",
         args=[jbi_id, path_envVars],
-    )
-
-
-@app.on_after_configure.connect
-def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(
-        crontab(hour=7, minute=30, day_of_month=15),
-        "gerrit.tasks.cleanup",
-        args=[4],
     )

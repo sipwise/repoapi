@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "rest_framework_api_key",
     "drf_spectacular",
     "django_assets",
+    "django_celery_beat",
     "django_celery_results",
     "django_extensions",
     "django_filters",
@@ -169,5 +170,6 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_BACKEND = "django-db"
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"
 
 API_KEY_CUSTOM_HEADER = "HTTP_API_KEY"
