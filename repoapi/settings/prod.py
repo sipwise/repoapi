@@ -164,10 +164,11 @@ CELERY_BEAT_SCHEDULE = {
     "gerrit-cleanup": {
         "task": "gerrit.tasks.cleanup",
         "schedule": crontab(hour=7, minute=30, day_of_month=15),
-        "args": (4),
+        "args": ([4]),
     },
 }
 CELERY_TIMEZONE = "UTC"
+FLOWER_URL_PREFIX = "flower"
 
 JBI_BASEDIR = VAR_DIR / "jbi_files"
 JBI_ARTIFACT_JOBS = [
