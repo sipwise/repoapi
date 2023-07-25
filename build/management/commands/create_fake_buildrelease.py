@@ -27,6 +27,9 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument("version")
+        parser.add_argument(
+            "--uuid", help="release_uuid", default=uuid.uuid4()
+        )
 
     def handle(self, *args, **options):
         ver = options["version"]
@@ -41,4 +44,6 @@ class Command(BaseCommand):
             > 0
         ):
             raise CommandError("'{}' has already instances".format(release))
-        BuildRelease.objects.create_build_release(uuid.uuid4(), ver, fake=True)
+        BuildRelease.objects.create_build_release(
+            options["uuid"], ver, fake=True
+        )
