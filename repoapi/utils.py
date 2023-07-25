@@ -77,7 +77,7 @@ def open_jenkins_url(url):
         logger.debug("OK", status_code=res.status_code)
         return True
     except requests.HTTPError as e:
-        logger.error("Error %s", e, status_code=res.status_code)
+        logger.error("Error HTTP", error=str(e))
     except Exception as e:
         logger.error("Fatal error retrieving:", error=str(e))
 
