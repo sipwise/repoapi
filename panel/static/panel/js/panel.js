@@ -375,8 +375,8 @@ function create_new_uuid( release, project, values, update = true ) {
       $.release[ project ].last_uuid = uuid;
       showLatestUUID( project, uuid );
     }
+    set_project_status( project, { created: true } );
   }
-  set_project_status( project, { created: true } );
 }
 
 function create_new_project( release, project, update = true ) {
