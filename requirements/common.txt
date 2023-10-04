@@ -10,7 +10,7 @@ django-extensions
 django-filter
 django-import-export>=3.0
 django-jsonify
-django-structlog
+django-structlog>=6.0
 django-timezone-field
 djangorestframework>=3.6
 djangorestframework-api-key==2.*

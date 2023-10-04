@@ -60,8 +60,9 @@ MIDDLEWARE = (
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django_structlog.middlewares.RequestMiddleware",
-    "django_structlog.middlewares.CeleryMiddleware",
 )
+
+DJANGO_STRUCTLOG_CELERY_ENABLED = True
 
 ROOT_URLCONF = "repoapi.urls"
 LOGIN_URL = "rest_framework:login"
