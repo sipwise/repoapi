@@ -37,6 +37,7 @@ class ReleaseDashboardConf(AppConf):
         "cleanup-tools",
         "cloudpbx-devices",
         "cloudpbx-sources",
+        "codec-chain",
         "collectd-mod-redis",
         "comx",
         "comx-application",
