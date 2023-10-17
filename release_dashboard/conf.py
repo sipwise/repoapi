@@ -85,6 +85,7 @@ class ReleaseDashboardConf(AppConf):
         "ngcp-cve-scanner",
         "ngcp-exporter",
         "ngcp-fauditd",
+        "ngcp-freeswitch-appserv",
         "ngcp-inventory",
         "ngcp-js-api-client",
         "ngcp-klish-config",
