@@ -250,6 +250,10 @@ class JenkinsBuildInfo(models.Model):
         )
 
     @property
+    def has_ppa(self):
+        return self.param_ppa not in ["$ppa", None]
+
+    @property
     def build_path(self):
         return settings.JBI_BASEDIR.joinpath(
             self.jobname, str(self.buildnumber)

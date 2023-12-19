@@ -39,7 +39,7 @@ def jbi_manage(sender, **kwargs):
 
 
 def gerrit_repo_add(instance):
-    if instance.param_ppa == "$ppa":
+    if not instance.has_ppa:
         logger.warn("ppa unset, skip removal")
         return
     GerritRepoInfo = apps.get_model("repoapi", "GerritRepoInfo")
@@ -68,7 +68,7 @@ def gerrit_repo_add(instance):
 
 
 def gerrit_repo_del(instance):
-    if instance.param_ppa == "$ppa":
+    if not instance.has_ppa:
         logger.warn("ppa unset, skip removal")
         return
     GerritRepoInfo = apps.get_model("repoapi", "GerritRepoInfo")
@@ -93,7 +93,7 @@ def gerrit_repo_manage(sender, **kwargs):
             branch=instance.param_branch,
             ppa=instance.param_ppa,
         )
-        if instance.param_ppa == "$ppa":
+        if not instance.has_ppa:
             logger.warn("ppa unset, skip")
             return
         if (

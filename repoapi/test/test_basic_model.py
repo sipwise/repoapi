@@ -98,6 +98,16 @@ class JenkinsBuildInfoTestCase(BaseTest):
         job.job_url = JBI_HOST % "jenkins.local"
         self.assertTrue(job.is_job_url_allowed())
 
+    def test_creation_no_ppa(self):
+        jbi = JenkinsBuildInfo.objects.create(
+            projectname="fake",
+            jobname="fake-get-code",
+            buildnumber=1,
+            result="OK",
+        )
+        self.assertIsNone(jbi.param_ppa)
+        self.assertFalse(jbi.has_ppa)
+
 
 class JenkinsBuildInfoProperties(BaseTest):
     fixtures = ["test_model_queries"]
