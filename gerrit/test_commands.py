@@ -18,6 +18,7 @@ from unittest.mock import call
 from unittest.mock import patch
 
 from django.core.management import call_command
+from django.core.management.base import CommandError
 from django.test import TestCase
 
 from repoapi.models.gri import GerritRepoInfo
@@ -86,3 +87,19 @@ class refreshTest(TestCase):
         ]
         self.assertListEqual(jrp.mock_calls, calls)
         self.assertEqual(qs.count(), 1)
+
+    @patch("gerrit.management.commands.gerrit.tasks")
+    def test_today_format(self, tasks):
+        from datetime import datetime
+
+        val = datetime.today().strftime("%Y-%m-%d")
+        call_command("gerrit", "cleanup")
+        tasks.cleanup.assert_called_with(6, False, val)
+
+    @patch("gerrit.management.commands.gerrit.tasks")
+    def test_today_format_ko(self, tasks):
+        with self.assertRaisesRegexp(
+            CommandError, "invalid fromisoformat value"
+        ):
+            call_command("gerrit", "cleanup", "--today=2023-12-19T12:39:58")
+        tasks.cleanup.assert_not_called()

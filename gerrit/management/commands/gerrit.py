@@ -13,7 +13,6 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from datetime import date
-from datetime import datetime
 
 from django.core.management.base import BaseCommand
 
@@ -35,7 +34,7 @@ class Command(BaseCommand):
         parser.add_argument(
             "--today",
             type=date.fromisoformat,
-            default=datetime.today(),
+            default=date.today(),
             help="set today value in isoformat 'YYYY-MM-DD'",
         )
 
