@@ -70,7 +70,7 @@
     },
     {
         "fields": {
-            "buildnumber": 1,
+            "buildnumber": 2,
             "date": "2015-05-04T17:04:57.802Z",
             "gerrit_change": null,
             "gerrit_eventtype": null,

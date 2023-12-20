@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -102,6 +102,12 @@ class JBIQueriesTestCase(BaseTest):
         self.assertEqual(JenkinsBuildInfo.objects.count(), prev_count)
         JenkinsBuildInfo.objects.purge_release(None, timedelta(weeks=3))
         self.assertEqual(JenkinsBuildInfo.objects.count(), prev_count - 1)
+
+    def test_job_builds(self):
+        res = JenkinsBuildInfo.objects.job_builds("fake-get-code")
+        self.assertEqual(res.count(), 2)
+        self.assertEqual(res[0], 1)
+        self.assertEqual(res[1], 2)
 
 
 class JBIQueriesTrunk(BaseTest):

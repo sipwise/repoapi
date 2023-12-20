@@ -202,6 +202,15 @@ class JenkinsBuildInfoManager(models.Manager):
                 param_release=release, date__date__lt=_date
             ).delete()
 
+    def job_builds(self, jobname):
+        res = (
+            self.get_queryset()
+            .filter(jobname=jobname)
+            .values_list("buildnumber", flat=True)
+            .order_by("buildnumber")
+        )
+        return res
+
 
 class JenkinsBuildInfo(models.Model):
     tag = models.CharField(max_length=64, null=True)

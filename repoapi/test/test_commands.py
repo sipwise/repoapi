@@ -1,4 +1,4 @@
-# Copyright (C) 2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2022-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,6 +12,8 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import io
+import shutil
 from tempfile import NamedTemporaryFile
 
 from django.core.management import call_command
@@ -95,3 +97,108 @@ class apikeyTest(BaseTest):
         self.cmd.append("--value")
         self.cmd.append(self.key)
         call_command(*self.cmd)
+
+
+class JBIFilesTest(BaseTest):
+    def setUp(self):
+        super().setUp()
+        self.cmd = [
+            "jbi_files",
+        ]
+
+    def prepare_jbi_files(self, jobname):
+        shutil.copytree(
+            FIXTURES_PATH / "jbi_files", self.path, dirs_exist_ok=True
+        )
+        self.assertTrue((self.path / jobname).exists())
+
+    def test_cleanup(self):
+        jobname = "lua-ngcp-kamailio-repos"
+        self.prepare_jbi_files(jobname)
+        qs = JenkinsBuildInfo.objects.filter(
+            jobname=jobname,
+        )
+        self.assertEqual(qs.count(), 0)
+        self.assertTrue((self.path / jobname / "605").exists())
+        self.cmd.append("cleanup")
+        with io.StringIO() as out:
+            call_command(*self.cmd, stdout=out)
+            stdout = out.getvalue()
+            print(stdout)
+        self.assertIn(f"detected 4 missing builds files for {jobname}", stdout)
+        self.assertFalse(
+            (self.path / "lua-ngcp-kamailio-repos" / "605").exists()
+        )
+        self.assertTrue(
+            (self.archive_path / "lua-ngcp-kamailio-repos" / "605").exists()
+        )
+
+    def test_cleanup_dry_run(self):
+        jobname = "lua-ngcp-kamailio-repos"
+        self.prepare_jbi_files(jobname)
+        qs = JenkinsBuildInfo.objects.filter(
+            jobname=jobname,
+        )
+        self.assertEqual(qs.count(), 0)
+        self.assertTrue((self.path / jobname / "605").exists())
+        self.cmd.append("cleanup")
+        self.cmd.append("--dry-run")
+        with io.StringIO() as out:
+            call_command(*self.cmd, stdout=out)
+            stdout = out.getvalue()
+            print(stdout)
+        self.assertIn(f"detected 4 missing builds files for {jobname}", stdout)
+        self.assertTrue(
+            (self.path / "lua-ngcp-kamailio-repos" / "605").exists()
+        )
+        self.assertFalse(
+            (self.archive_path / "lua-ngcp-kamailio-repos" / "605").exists()
+        )
+
+    def test_cleanup_ok(self):
+        jobname = "lua-ngcp-kamailio-repos"
+        self.prepare_jbi_files(jobname)
+        params = {
+            "gerrit_patchset": "44323",
+            "gerrit_change": "44323",
+            "gerrit_eventtype": "patchset-created",
+            "tag": "de13c0b6-2e70-4c9d-b3a5-3a476149d2d1",
+            "projectname": "lua-ngcp-kamailio",
+            "git_commit_msg": "TT#95650 mocks/pv: ",
+            "job_url": "https://fake/job/lua-ngcp-kamailio-repos/",
+            "buildnumber": 605,
+            "jobname": "lua-ngcp-kamailio-repos",
+            "result": "SUCCESS",
+            "param_tag": "none",
+            "param_branch": "master",
+            "param_release": "none",
+            "param_release_uuid": "",
+            "param_distribution": "buster",
+            "param_ppa": "gerrit_vseva_95650",
+        }
+        JenkinsBuildInfo.objects.create(**params)
+        qs = JenkinsBuildInfo.objects.filter(
+            jobname=jobname,
+        )
+        self.assertEqual(qs.count(), 1)
+        self.assertTrue((self.path / jobname / "605").exists())
+        self.cmd.append("cleanup")
+        with io.StringIO() as out:
+            call_command(*self.cmd, stdout=out)
+            stdout = out.getvalue()
+            print(stdout)
+        self.assertIn(f"detected 3 missing builds files for {jobname}", stdout)
+        self.assertTrue(
+            (self.path / "lua-ngcp-kamailio-repos" / "605").exists()
+        )
+        self.assertFalse(
+            (self.archive_path / "lua-ngcp-kamailio-repos" / "605").exists()
+        )
+
+    def test_cleanup_quiet(self):
+        self.cmd.append("cleanup")
+        with io.StringIO() as out:
+            call_command(*self.cmd, stdout=out)
+            stdout = out.getvalue()
+            print(stdout)
+        self.assertEqual(stdout, "")
