@@ -1,4 +1,4 @@
-# Copyright (C) 2022-2023 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2022-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -15,10 +15,12 @@
 import structlog
 from django.apps import apps
 from django.db.models.signals import post_save
+from django.db.models.signals import pre_delete
 from django.dispatch import receiver
 
 from .models.wni import NoteInfo
 from .tasks import get_jbi_files
+from .tasks import jbi_files_cleanup
 from .utils import get_next_release
 from .utils import regex_mrXXX
 from release_dashboard.utils.build import is_ngcp_project
@@ -36,6 +38,13 @@ def jbi_manage(sender, **kwargs):
             get_jbi_files.delay(
                 instance.pk, instance.jobname, instance.buildnumber
             )
+
+
+@receiver(
+    pre_delete, sender="repoapi.JenkinsBuildInfo", dispatch_uid="jbi_cleanup"
+)
+def jbi_cleanup(sender, **kwargs):
+    jbi_files_cleanup.delay(kwargs["instance"].pk)
 
 
 def gerrit_repo_add(instance):

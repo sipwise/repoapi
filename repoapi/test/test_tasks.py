@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2023 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -54,6 +54,12 @@ class TasksTestCase(BaseTest):
         self.assertEqual(JenkinsBuildInfo.objects.count(), prev_count)
         tasks.jbi_purge.delay(None, 3)
         self.assertEqual(JenkinsBuildInfo.objects.count(), prev_count - 1)
+
+    @patch("repoapi.signals.jbi_files_cleanup")
+    def test_jbi_files_cleanup(self, jfc):
+        jbi = JenkinsBuildInfo.objects.get(pk=1)
+        jbi.delete()
+        jfc.delay.assert_called_once_with(1)
 
 
 @override_settings(JBI_BASEDIR=FIXTURES_PATH)

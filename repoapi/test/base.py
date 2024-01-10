@@ -24,29 +24,34 @@ from rest_framework.test import APITestCase
 from rest_framework_api_key.models import APIKey
 
 JBI_BASEDIR = Path(mkdtemp(dir=os.environ.get("RESULTS")))
+JBI_ARCHIVE = Path(mkdtemp(dir=os.environ.get("RESULTS")))
 
 
-@override_settings(DEBUG=True, JBI_BASEDIR=JBI_BASEDIR)
+@override_settings(
+    DEBUG=True, JBI_BASEDIR=JBI_BASEDIR, JBI_ARCHIVE=JBI_ARCHIVE
+)
 class BaseTest(TestCase):
     @classmethod
     def setUpTestData(cls):
         from repoapi.conf import settings
 
         cls.path = Path(settings.JBI_BASEDIR)
+        cls.archive_path = Path(settings.JBI_ARCHIVE)
 
     def setUp(self):
         RepoAPIConfig = apps.get_app_config("repoapi")
         RepoAPIConfig.ready()
         super(BaseTest, self).setUp()
-        self.path.mkdir(parents=True, exist_ok=True)
+        for path in [self.path, self.archive_path]:
+            path.mkdir(parents=True, exist_ok=True)
 
     def tearDown(self):
-        if self.path.exists():
-            shutil.rmtree(self.path)
+        for path in [self.path, self.archive_path]:
+            if path.exists():
+                shutil.rmtree(path)
 
 
 class APIAuthenticatedTestCase(BaseTest, APITestCase):
-
     APP_NAME = "Project Tests"
 
     def setUp(self):

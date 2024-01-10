@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -135,6 +135,29 @@ class TestJBICelery(BaseTest):
         )
         path = base_path.joinpath("envVars.json")
         dlfile.assert_any_call(url, path)
+
+
+class TestJBICleanUP(BaseTest):
+    fixtures = ["test_model_queries"]
+
+    def setUp(self):
+        super().setUp()
+        self.jbi = JenkinsBuildInfo.objects.get(id=1)
+        self.jbi.build_path.mkdir(parents=True, exist_ok=True)
+
+    @patch("repoapi.utils.shutil")
+    def test_jbi_cleanup(self, sh):
+        build_path = self.jbi.build_path
+        dst_path = settings.JBI_ARCHIVE / self.jbi.jobname
+        self.assertTrue(build_path.exists())
+        self.jbi.delete()
+        sh.move.assert_called_with(build_path, dst_path)
+
+    @patch("repoapi.signals.jbi_files_cleanup")
+    def test_jbi_cleanup_called(self, jfc):
+        jbi_id = self.jbi.id
+        self.jbi.delete()
+        jfc.delay.assert_called_with(jbi_id)
 
 
 class TestJBIReleaseChangedCelery(BaseTest):

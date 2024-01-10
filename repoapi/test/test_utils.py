@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,6 +12,7 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+from unittest.mock import Mock
 from unittest.mock import patch
 
 from django.test import override_settings
@@ -55,3 +56,32 @@ class UtilsTestCase(BaseTest):
             utils.is_download_artifacts("fake-release-tools-runner")
         )
         self.assertTrue(utils.is_download_artifacts("whatever-repos"))
+
+    @patch("repoapi.utils.shutil")
+    def test_cleanup_build_ko(self, sh):
+        dst_path = Mock()
+        dst_path.exists.return_value = True
+        build_path = Mock()
+        build_path.exists.return_value = False
+        utils.cleanup_build(build_path, dst_path)
+        sh.move.assert_not_called()
+
+    @patch("repoapi.utils.shutil")
+    def test_cleanup_build_no_dst(self, sh):
+        dst_path = Mock()
+        dst_path.exists.return_value = False
+        build_path = Mock()
+        build_path.exists.return_value = True
+        utils.cleanup_build(build_path, dst_path)
+        dst_path.mkdir.assert_called_once()
+        sh.move.assert_called_once_with(build_path, dst_path)
+
+    @patch("repoapi.utils.shutil")
+    def test_cleanup_build(self, sh):
+        dst_path = Mock()
+        dst_path.exists.return_value = True
+        build_path = Mock()
+        build_path.exists.return_value = True
+        utils.cleanup_build(build_path, dst_path)
+        dst_path.mkdir.assert_not_called()
+        sh.move.assert_called_once_with(build_path, dst_path)

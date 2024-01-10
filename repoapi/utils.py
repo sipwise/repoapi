@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2023 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import re
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -189,3 +190,11 @@ def is_download_artifacts(jobname):
         if re.search(check, jobname) is not None:
             return True
     return False
+
+
+def cleanup_build(build_path: Path, dst_path: Path):
+    if not dst_path.exists():
+        dst_path.mkdir(parents=True, exist_ok=True)
+    if build_path.exists():
+        shutil.move(build_path, dst_path)
+        logger.info(f"{build_path} stored at {dst_path}")

@@ -171,6 +171,7 @@ CELERY_TIMEZONE = "UTC"
 FLOWER_URL_PREFIX = "flower"
 
 JBI_BASEDIR = VAR_DIR / "jbi_files"
+JBI_ARCHIVE = Path("/srv/repoapi_archive")
 JBI_ARTIFACT_JOBS = [
     "release-tools-runner",
 ]

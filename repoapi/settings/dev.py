@@ -32,6 +32,7 @@ BROKER_BACKEND = "amqp"
 CELERY_TASK_ALWAYS_EAGER = False
 CELERY_BROKER_URL = "amqp://guest:guest@rabbit"
 JBI_BASEDIR = BASE_DIR / "jbi_files"  # noqa
+JBI_ARCHIVE = BASE_DIR / "jbi_archive"  # noqa
 
 # Enable access when not accessing from localhost:
 ALLOWED_HOSTS = [

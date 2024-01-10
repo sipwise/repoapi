@@ -1,4 +1,4 @@
-# Copyright (C) 2015-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2015-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -18,6 +18,7 @@ import re
 from collections import OrderedDict
 from datetime import datetime
 from datetime import timedelta
+from pathlib import Path
 from urllib.parse import urlparse
 
 import structlog
@@ -254,7 +255,7 @@ class JenkinsBuildInfo(models.Model):
         return self.param_ppa not in ["$ppa", None]
 
     @property
-    def build_path(self):
+    def build_path(self) -> Path:
         return settings.JBI_BASEDIR.joinpath(
             self.jobname, str(self.buildnumber)
         )

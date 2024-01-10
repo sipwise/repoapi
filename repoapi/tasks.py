@@ -1,4 +1,4 @@
-# Copyright (C) 2016-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2016-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -23,6 +23,7 @@ from .celery import jbi_parse_buildinfo
 from .celery import jbi_parse_hotfix
 from .celery import process_result
 from .conf import settings
+from .utils import cleanup_build
 from .utils import is_download_artifacts
 from .utils import jenkins_get_artifact
 from .utils import jenkins_get_build
@@ -91,3 +92,12 @@ def jbi_purge(release, weeks):
     JenkinsBuildInfo = apps.get_model("repoapi", "JenkinsBuildInfo")
     JenkinsBuildInfo.objects.purge_release(release, timedelta(weeks=weeks))
     logger.info(f"purged release {release} jbi older than {weeks} weeks")
+
+
+@shared_task(ignore_result=True)
+def jbi_files_cleanup(jbi_id):
+    JenkinsBuildInfo = apps.get_model("repoapi", "JenkinsBuildInfo")
+    jbi = JenkinsBuildInfo.objects.get(id=jbi_id)
+    build_path = jbi.build_path
+    dst_path = settings.JBI_ARCHIVE / jbi.jobname
+    cleanup_build(build_path, dst_path)
