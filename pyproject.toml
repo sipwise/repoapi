@@ -16,6 +16,5 @@ pep8ignore = "*.py W503"
 data_file = "/results/.coverage"
 omit = [
   "*/test/*",
-  "*/tests/*",
   "*/test_*.py",
 ]
