@@ -98,7 +98,7 @@ class refreshTest(TestCase):
 
     @patch("gerrit.management.commands.gerrit.tasks")
     def test_today_format_ko(self, tasks):
-        with self.assertRaisesRegexp(
+        with self.assertRaisesRegex(
             CommandError, "invalid fromisoformat value"
         ):
             call_command("gerrit", "cleanup", "--today=2023-12-19T12:39:58")

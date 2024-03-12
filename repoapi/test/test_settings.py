@@ -1,4 +1,4 @@
-# Copyright (C) 2020 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -12,8 +12,6 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
-import unittest
-
 from django.test import override_settings
 from django.test import SimpleTestCase
 
@@ -24,7 +22,6 @@ class SettingsTest(SimpleTestCase):
 
         self.assertTrue(DEBUG)
 
-    @unittest.expectedFailure
     def test_debug(self):
         from django.conf import settings
 

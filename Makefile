@@ -22,7 +22,8 @@ venv_dev: requirements/dev.txt
 test: test_templates
 	RESULTS=$(RESULTS) pytest-3 -ra --junitxml=$(RESULTS)/junit.xml \
 		-o cache_dir=$(CACHE_DIR) \
-		--cov=. --cov-report=xml:$(RESULTS)/coverage.xml --pep8
+		--cov=. --cov-report=xml:$(RESULTS)/coverage.xml --cov-config=pyproject.toml \
+		--pep8
 
 test_pylint:
 	RESULTS=$(RESULTS) pytest-3 --junitxml=$(RESULTS)/junit.xml \
