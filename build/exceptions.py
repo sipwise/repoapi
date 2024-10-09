@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -30,11 +30,29 @@ class NoJenkinsJobsInfo(Error):
     pass
 
 
+class NoDebianReleaseInfo(Error):
+    pass
+
+
 class NoReleaseInfo(Error):
     pass
 
 
 class NoDistrisInfo(Error):
+    pass
+
+
+class NoUniqueTrunk(Error):
+    """release config.yml has more than one release-trunk distri"""
+
+    pass
+
+
+class WrongTrunkDistribution(Error):
+    pass
+
+
+class WrongDistris(Error):
     pass
 
 

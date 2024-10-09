@@ -1,7 +1,12 @@
 distris:
  - release-trunk-buster
+ - release-trunk-bullseye
 
 debian_release: buster
+
+release-trunk-bullseye:
+ # TT#44190 needed by ngcp-panel
+ - grafana: 7.3.1
 
 release-trunk-buster:
  # TT#32916 TT#44119 bcg729 for G.729 codec support for rtpengine

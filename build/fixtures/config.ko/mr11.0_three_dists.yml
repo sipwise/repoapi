@@ -1,0 +1,319 @@
+distris:
+ - release-mr11.0
+ - bookworm
+ - bullseye
+
+debian_release: bullseye
+
+release-mr11.0: &packages
+ # TT#44190 TT#182900 needed by ngcp-panel
+ - grafana: 9.0.2
+ # TT#69950 needed by bulk-processor, not available in Debian (project abandoned upstream)
+ - libexcel-reader-xlsx-perl: 0.00~git20161017.3b576a55-0.1sipwise1~bpo11+1
+ # TT#73105 system testing
+ - goss: 0.3.14-0.1~bpo11+1sipwise1
+ # TT#44918 Needed for PRO/Carrier
+ - ngcp-pxe-boot: 0.7.2.2+0~sipwise20220607
+ # TT#126500: Fix race in reboot uptime timestamp computation and comparison
+ - monit: 5.27.2-1sipwise1~bpo11+1
+ # TT#59330 rebuild of package pulled from non-free, required for snmp-agent
+ - snmp-mibs-downloader: 1.5~bpo11+1
+ # MT#19499, TT#126650: local robustness patches
+ - net-snmp: 5.9+dfsg-3sipwise1~bpo11+2
+ # TT#149552 needed by lua-sql-kamailio
+ - lua-sql: 2.6.0-1~bpo11+1
+ # TT#154255 replacement of redis, not in debian
+ - keydb: 6.3.1-1~bpo11+1
+ # TT#140500 needed by prometheus stack
+ - dh-golang: 1.53~bpo11+1
+ - golang-1.17: 1.17.8-1~bpo11+1
+ - golang-defaults: 1.17~1~bpo11+2
+ - golang-github-alecthomas-units: 0.0~git20211218.b94a6e3-1~bpo11+1
+ - golang-github-allegro-bigcache: 2.2.5-5~bpo11+1
+ - golang-github-andybalholm-brotli: 1.0.4-3~bpo11+1
+ - golang-github-beevik-ntp: 0.3.0-4~bpo11+1
+ - golang-github-cheggaaa-pb.v3: 3.0.5-2~bpo11+1
+ - golang-github-dennwc-varint: 1.0.0-2~bpo11+1
+ - golang-github-ema-qdisc: 0.0~git20200603.62d0308-2~bpo11+1
+ - golang-github-go-kit-log: 0.2.0-3~bpo11+1
+ - golang-github-go-openapi-analysis: 0.21.2-1~bpo11+1
+ - golang-github-go-openapi-errors: 0.20.2-1~bpo11+1
+ - golang-github-go-openapi-jsonpointer: 0.19.5-3~bpo11+1
+ - golang-github-go-openapi-jsonreference: 0.19.6-2~bpo11+1
+ - golang-github-go-openapi-loads: 0.21.1-2~bpo11+1
+ - golang-github-go-openapi-runtime: 0.23.3-1~bpo11+1
+ - golang-github-go-openapi-spec: 0.20.4-1~bpo11+1
+ - golang-github-go-openapi-strfmt: 0.21.2-1~bpo11+1
+ - golang-github-go-openapi-swag: 0.21.1-1~bpo11+1
+ - golang-github-go-openapi-validate: 0.21.0-1~bpo11+1
+ - golang-github-hashicorp-go-envparse: 0.0~git20200406.d9cfd74-3~bpo11+1
+ - golang-github-hodgesds-perf-utils: 0.5.1-2~bpo11+1
+ - golang-github-josharian-native: 1.0.0-1~bpo11+1
+ - golang-github-jsimonetti-rtnetlink: 1.1.0-1~bpo11+1
+ - golang-github-mattn-go-xmlrpc: 0.0.3-2~bpo11+1
+ - golang-github-mdlayher-genetlink: 1.1.0-3~bpo11+1
+ - golang-github-mdlayher-netlink: 1.6.0-2~bpo11+1
+ - golang-github-mdlayher-socket: 0.1.1-2~bpo11+1
+ - golang-github-mdlayher-wifi: 0.0~git20200527.84f0b94-4~bpo11+1
+ - golang-github-mna-redisc: 1.1.7-3~bpo11+1
+ - golang-github-ncabatoff-go-seq: 0.0~git20180805.b08ef85-4~bpo11+1
+ - golang-github-nginxinc-nginx-plus-go-client: 0.9.0-2~bpo11+1
+ - golang-github-prometheus-client-golang: 1.11.1-1~bpo11+1
+ - golang-github-prometheus-client-model: 0.2.0-3~bpo11+1
+ - golang-github-prometheus-common: 0.32.1-6~bpo11+1
+ - golang-github-prometheus-exporter-toolkit: 0.7.1-1~bpo11+1
+ - golang-github-prometheus-procfs: 0.7.3-2~bpo11+1
+ - golang-github-soundcloud-go-runit: 0.0~git20150630.06ad41a-3~bpo11+1
+ - golang-github-valyala-fasthttp: 1.31.0-3~bpo11+1
+ - golang-github-valyala-fastjson: 1.6.3-4~bpo11+1
+ - golang-github-valyala-fastrand: 1.1.0-2~bpo11+1
+ - golang-github-valyala-fasttemplate: 1.2.1+ds1-1~bpo11+1
+ - golang-github-valyala-gozstd: 1.16.0+ds1-1~bpo11+1
+ - golang-github-valyala-histogram: 1.2.0+ds-2~bpo11+1
+ - golang-github-valyala-quicktemplate: 1.7.0+ds1-1~bpo11+1
+ - golang-github-victoriametrics-fastcache: 1.9.0+ds1-1~bpo11+1
+ - golang-github-victoriametrics-metrics: 1.18.1+ds-2~bpo11+1
+ - golang-github-victoriametrics-metricsql: 0.40.0+ds1-1~bpo11+1
+ - golang-github-xdg-go-pbkdf2: 1.0.0-2~bpo11+1
+ - golang-github-xdg-go-scram: 1.1.1-1~bpo11+1
+ - golang-github-xdg-go-stringprep: 1.0.3-1~bpo11+1
+ - golang-go-flags: 1.4.0-5~bpo11+1
+ - golang-mongodb-mongo-driver: 1.8.4+ds1-1~bpo11+1
+ - prometheus-alertmanager: 0.23.0-5~bpo11+1
+ - prometheus-haproxy-exporter: 0.13.0+ds1-2~bpo11+1
+ - prometheus-mysqld-exporter: 0.14.0-1~bpo11+1
+ - prometheus-nginx-exporter: 0.10.0-2~bpo11+1
+ - prometheus-node-exporter: 1.3.1-1~bpo11+1
+ - prometheus-process-exporter: 0.7.10-2sipwise1~bpo11+1
+ - prometheus-redis-exporter: 1.37.0-2~bpo11+1
+ - prometheus-snmp-exporter: 0.20.0-1~bpo11+1
+ - victoriametrics: 1.75.0+ds1-1~bpo11+1
+ # TT#187100 asterisk g729 (not even in Debian)
+ - asterisk-g72x: 0.0~git20201027.3855cec-1~bpo11+1
+
+bookworm: *packages
+bullseye: *packages
+
+repository-verify:
+  white-list: []
+
+jenkins-jobs:
+  build_deps:
+    system-tests:
+      - data-hal  # jenkins-tap-test-${distribution} needed for tap-test job
+      - libswrate
+      - libtcap
+      - ngcp-panel
+      - sipwise-base
+      - system-tools
+    system-tools:
+      - check-tools # libngcp-log-perl libngcp-service-perl
+    data-hal:
+      - ngcp-panel
+    ngcp-schema:
+      - ngcp-panel
+    libswrate:
+      - kamailio
+      - sems-pbx
+    libtcap:
+      - kamailio
+      - lnpd
+    sipwise-base:
+      - ngcp-panel
+      - ngcp-schema
+    check-tools:
+      - snmp-agent
+    ngcpcfg:
+      - bootenv # libngcp-template-perl needed on Dockerfile
+    ngcp-panel:
+      - csta-testsuite # ngcp-api-testframework needed on Dockerfile
+  projects:
+    - asterisk-voicemail
+    - backup-tools
+    - bulk-processor
+    - bulk-processor-projects
+    - bootenv
+    - cdr-exporter
+    - cfg-schema
+    - check-tools
+    - cleanup-tools
+    - cloudpbx-sources
+    - csta-testsuite
+    - data-hal
+    - db-schema
+    - deployment-iso
+    - dhtest
+    - documentation
+    - faxserver
+    - installer
+    - kamailio
+    - kamailio-config-tests
+    - keyring
+    - klish
+    - libswrate
+    - libtcap
+    - license-client
+    - lnpd
+    - lua-ngcp-kamailio
+    - mediator
+    - megacli
+    - metapackages
+    - monitoring-tools
+    - ngcp-admin-ui
+    - ngcp-api-tools
+    - ngcp-csc-ui
+    - ngcp-exporter
+    - ngcp-fauditd
+    - ngcp-inventory
+    - ngcp-js-api-client
+    - ngcp-logfs
+    - ngcp-klish-config
+    - ngcp-panel
+    - ngcp-prompts
+    - ngcp-rest-api
+    - ngcp-schema
+    - ngcp-status
+    - ngcp-sudo-plugin
+    - ngcp-support
+    - ngcp-user-framework
+    - ngcp-web-tests-e2e
+    - ngcpcfg
+    - ngcpcfg-api
+    - ngcpcfg-ha
+    - ngrep-sip
+    - prosody
+    - pushd
+    - py-ngcp-kamailio
+    - rate-o-mat
+    - reminder
+    - rtpengine
+    - sems
+    - sems-pbx
+    - sipwise-base
+    - snmp-agent
+    - system-tests
+    - system-tools
+    - templates
+    - upgrade
+    - vmnotify
+    - voisniff-ng
+    - websocket
+
+release_mirror:
+  common:
+    copysrc:
+      - kamailio-config-tests
+      - klish
+      - libdata-hal-perl
+      - libsipwise-base-perl
+      - lua-ngcp-kamailio
+      - ngcp-admin-ui
+      - ngcp-api-tools
+      - ngcp-asterisk-voicemail
+      - ngcp-bulk-processor
+      - ngcp-cdr-exporter
+      - ngcp-cfg-schema
+      - ngcp-check-tools
+      - ngcp-cleanup-tools
+      - ngcp-csc-ui
+      - ngcp-db-schema
+      - ngcp-deployment-iso
+      - ngcp-dhtest
+      - ngcp-handbook
+      - ngcp-installer
+      - ngcp-js-api-client
+      - ngcp-kamailio
+      - ngcp-keyring
+      - ngcp-klish-config
+      - ngcp-libswrate
+      - ngcp-libtcap
+      - ngcp-license-client
+      - ngcp-mediator
+      - ngcp-metapackages
+      - ngcp-ngcpcfg
+      - ngcp-panel
+      - ngcp-prompts
+      - ngcp-prosody-modules
+      - ngcp-rate-o-mat
+      - ngcp-reminder
+      - ngcp-rest-api
+      - ngcp-rtpengine
+      - ngcp-schema
+      - ngcp-status
+      - ngcp-support
+      - ngcp-system-tests
+      - ngcp-system-tools
+      - ngcp-templates
+      - ngcp-upgrade
+      - ngcp-vmnotify
+      - ngcp-web-tests-e2e
+      - ngrep-sip
+      - py-ngcp-kamailio
+    remove:
+      source:
+        - ngcp-handbook
+        - ngcp-installer
+        - ngcp-libswrate
+        - ngcp-license-client
+        - ngcp-prompts
+        - ngcp-templates
+        - ngcp-upgrade
+      binary:
+        - ngcp-handbook-internal
+        - ngcp-handbook-pdf-internal
+      matched: []
+  ce:
+    copysrc:
+      - ngcp-sems
+    remove:
+      source: []
+      binary:
+        - ngcp-ngcpcfg-testsuite
+      matched:
+        - '*-carrier'
+        - '*-pro'
+        - '*-pro-dbgsym'
+        - 'ngcp-prompts-pro*'
+  pro:
+    backports: []
+    copysrc:
+      - megacli
+      - ngcp-backup-tools
+      - ngcp-bootenv
+      - ngcp-bulk-processor-projects
+      - ngcp-cloudpbx-devices
+      - ngcp-csta-testsuite
+      - ngcp-exporter
+      - ngcp-fauditd
+      - ngcp-faxserver
+      - ngcp-inventory
+      - ngcp-lnpd
+      - ngcp-logfs
+      - ngcp-monitoring-tools
+      - ngcp-ngcpcfg-ha
+      - ngcp-pushd
+      - ngcp-sems-pbx
+      - ngcp-snmp
+      - ngcp-sudo-plugin
+      - ngcp-user-framework
+      - ngcp-voisniff
+      - ngcp-websocket
+      - ngcpcfg-api
+    remove:
+      binary: []
+      source:
+        - ngcp-cloudpbx-devices
+        - ngcp-csta-testsuite
+        - ngcp-fauditd
+        - ngcp-logfs
+        - ngcp-monitoring-tools
+        - ngcp-ngcpcfg-ha
+        - ngcp-pushd
+        - ngcp-sems-pbx
+        - ngcp-sudo-plugin
+        - ngcp-user-framework
+        - ngcp-voisniff
+        - ngcpcfg-api
+      matched:
+        - '*ngcp*-ce'
+        - '*ngcp*-ce-*'

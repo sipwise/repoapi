@@ -54,10 +54,10 @@ class BuildReleaseManagerTestCase(BaseTest):
 
     def test_create_release_trunk(self, dlf):
         br = BuildRelease.objects.create_build_release(
-            "AAA", "release-trunk-bullseye"
+            "AAA", "release-trunk-buster"
         )
         self.assertEqual(br.release, "trunk")
-        self.assertEqual(br.distribution, "bullseye")
+        self.assertEqual(br.distribution, "buster")
         self.assertIsNone(br.tag)
         self.assertEqual(br.branch, "master")
         self.assertNotEqual(len(br.projects), 0)

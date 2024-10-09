@@ -312,25 +312,67 @@ class ReleaseConfig(object):
         )
         self.config = self.load_config(self.config_path)
 
-    def __init__(self, name, distribution=None, config=None):
-        if config is None:
-            self._get_config(name, distribution)
-        else:
-            self.config_file = "fake.yml"
-            self.config_path = "/dev/null"
-            self.config = config
-        try:
-            self.jenkins_jobs = self.config["jenkins-jobs"]
-        except KeyError:
-            msg = "{} has no 'jenkins-jobs' info"
-            raise err.NoJenkinsJobsInfo(msg.format(self.config_file))
+    def validate(self):
         try:
             if self.release is None:
                 raise err.NoReleaseInfo()
         except KeyError:
             msg = "{} has no 'distris' info"
             raise err.NoDistrisInfo(msg.format(self.config_file))
+        try:
+            if self.debian_release is None:
+                raise err.NoDebianReleaseInfo()
+        except KeyError:
+            msg = "{} has no 'debian_release' info"
+            raise err.NoDebianReleaseInfo(msg.format(self.config_file))
+        debian_release = self.debian_release
+        # don't allow more than one release-trunk-*
+        trunks = []
+        is_release = False
+        for dist in self.config["distris"]:
+            if debian_release == dist:
+                is_release = True
+            if dist.startswith("release-trunk-"):
+                ok, _ = is_release_trunk(dist)
+                if ok:
+                    trunks.append(dist)
+        len_trunks = len(trunks)
+        if len_trunks > 1:
+            raise err.NoUniqueTrunk()
+        elif len_trunks == 1:
+            dist = trunks[0]
+            if f"release-trunk-{debian_release}" != dist:
+                msg = (
+                    f"expected release-trunk-{debian_release} "
+                    f"but {dist} found"
+                )
+                raise err.WrongTrunkDistribution(msg)
+            if is_release:
+                msg = f"{dist} found in a release config"
+                raise err.WrongDistris(msg)
+        elif is_release:
+            if len(self.config["distris"]) > 2:
+                msg = "more than two distris in a release config"
+                raise err.WrongDistris(msg)
+        else:
+            msg = f"{debian_release} not in distris in a release config"
+            raise err.WrongDistris(msg)
         self.check_circular_dependencies()
+
+    def __init__(self, name, distribution=None, config=None):
+        if config is None:
+            self._get_config(name, distribution)
+        else:
+            self.config_file = "fake.yml"
+            self.config_path = "/dev/null"
+            self.distribution = None
+            self.config = config
+        try:
+            self.jenkins_jobs = self.config["jenkins-jobs"]
+        except KeyError:
+            msg = "{} has no 'jenkins-jobs' info"
+            raise err.NoJenkinsJobsInfo(msg.format(self.config_file))
+        self.validate()
 
     def is_build_dep(self, prj: str) -> bool:
         return prj in self.build_deps.keys()

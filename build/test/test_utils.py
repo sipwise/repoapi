@@ -115,7 +115,6 @@ class ReleaseConfigTestCase(SimpleTestCase):
         supported = [
             "trunk-weekly",
             "release-trunk-buster",
-            "release-trunk-bullseye",
             "mr11.0",
             "mr10.1.1",
             "mr10.1",
@@ -162,8 +161,6 @@ class ReleaseConfigTestCase(SimpleTestCase):
         self.assertEqual(len(rc.projects), 73)
 
     def test_guess_trunk_filename(self):
-        res = guess_trunk_filename("release-trunk-bullseye")
-        self.assertEqual(res, "trunk")
         res = guess_trunk_filename("release-trunk-buster")
         self.assertEqual(res, "trunk")
         res = guess_trunk_filename("release-trunk-weekly")
@@ -173,11 +170,8 @@ class ReleaseConfigTestCase(SimpleTestCase):
         rc = ReleaseConfig("trunk")
         self.assertEqual(rc.debian_release, "buster")
 
-        rc = ReleaseConfig("release-trunk-bullseye")
-        self.assertEqual(rc.debian_release, "bullseye")
-
-        rc = ReleaseConfig("trunk", "bullseye")
-        self.assertEqual(rc.debian_release, "bullseye")
+        with self.assertRaises(err.WrongTrunkDistribution):
+            ReleaseConfig("trunk", "bullseye")
 
         rc = ReleaseConfig("trunk-weekly")
         self.assertEqual(rc.debian_release, "bullseye")
@@ -611,6 +605,7 @@ class CheckConfig(SimpleTestCase):
     def setUp(self):
         self.data = {
             "jenkins-jobs": {},
+            "debian_release": "buster",
             "distris": ["release-trunk-buster"],
             "release-trunk-buster": [],
         }
@@ -637,6 +632,63 @@ class CheckConfig(SimpleTestCase):
         self.data["jenkins-jobs"]["build_deps"] = {"A": ["A1", "A"]}
         with self.assertRaises(err.CircularBuildDependencies):
             ReleaseConfig("fake", config=self.data)
+
+    def test_no_debian_release(self):
+        del self.data["debian_release"]
+        with self.assertRaises(err.NoDebianReleaseInfo):
+            ReleaseConfig("fake", config=self.data)
+
+    def test_trunk(self):
+        ko = FIXTURES_PATH.joinpath("config", "trunk.yml")
+        data = ReleaseConfig.load_config(ko)
+        ReleaseConfig("fake", config=data)
+
+    def test_mrXY(self):
+        ko = FIXTURES_PATH.joinpath("config", "mr11.0.yml")
+        data = ReleaseConfig.load_config(ko)
+        ReleaseConfig("fake", config=data)
+
+    @override_settings(
+        BUILD_REPOS_SCRIPTS_CONFIG_DIR=FIXTURES_PATH.joinpath("config.ko")
+    )
+    def test_trunk_ko(self):
+        with self.assertRaises(err.NoUniqueTrunk):
+            ReleaseConfig("trunk")
+
+    def test_trunk_wrong_distri(self):
+        ko = FIXTURES_PATH.joinpath("config.ko", "trunk_wrong_distri.yml")
+        data = ReleaseConfig.load_config(ko)
+        with self.assertRaises(err.WrongTrunkDistribution):
+            ReleaseConfig("fake", config=data)
+
+    @override_settings(
+        BUILD_REPOS_SCRIPTS_CONFIG_DIR=FIXTURES_PATH.joinpath("config.ko")
+    )
+    def test_mrXX_ko(self):
+        match = "release-trunk-bullseye found in a release config"
+        with self.assertRaisesRegex(err.WrongDistris, match):
+            ReleaseConfig("mr11.0")
+
+    def test_mrXX_check_ko(self):
+        ko = FIXTURES_PATH.joinpath("config.ko", "mr11.0.yml")
+        data = ReleaseConfig.load_config(ko)
+        match = "release-trunk-bullseye found in a release config"
+        with self.assertRaisesRegex(err.WrongDistris, match):
+            ReleaseConfig("fake", config=data)
+
+    def test_mrXX_three_dists(self):
+        ko = FIXTURES_PATH.joinpath("config.ko", "mr11.0_three_dists.yml")
+        data = ReleaseConfig.load_config(ko)
+        match = "more than two distris in a release config"
+        with self.assertRaisesRegex(err.WrongDistris, match):
+            ReleaseConfig("fake", config=data)
+
+    def test_mrXX_no_debian(self):
+        ko = FIXTURES_PATH.joinpath("config.ko", "mr11.0_no_debian.yml")
+        data = ReleaseConfig.load_config(ko)
+        match = "bullseye not in distris in a release config"
+        with self.assertRaisesRegex(err.WrongDistris, match):
+            ReleaseConfig("fake", config=data)
 
 
 @override_settings(
