@@ -1,3 +1,39 @@
+repoapi (0.4.8) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * MT#56231 enable django-celery-beat via database
+  * MT#56231 workaround for django-celery-beat issue
+  * MT#56231 workaround for django-celery-beat issue, take two
+  * MT#56231 workaround for django-celery-beat issue, take three
+  * MT#57906 repoapi: add loaddata_release command
+  * MT#57906 build: allow uuid optional parameter on command
+  * MT#57906 repoapi: fix error on error :-(
+  * MT#57906 panel: fix retrigger button disappearing
+  * MT#59020 jbi: not all jobs define param_ppa with '$ppa' as default
+  * MT#56231 gerrit: fix default today format
+  * MT#59039 jbi: move related jbi_files to JBI_ARCHIVE on delete
+  * MT#59039 jbi_files command
+  * TT#81700 fix warning errors in jenkins
+  * TT#121955 define pytest config
+  * MT#55988 buildinfo: follow test repository policy
+
+  [ Marco Capetta ]
+  * MT#58144 Add ngcp-cudecs to repoapi dashboard
+  * MT#58529 Add ngcp-freeswitch-appserv to repoapi dashboard
+  * MT#58520 Add codec-chain to repoapi dashboard
+
+  [ Guillem Jover ]
+  * MT#58381 Use short name for GPL-3 in debian/copyright
+  * MT#58356 Update packaging for bookworm
+
+  [ Michael Prokop ]
+  * MT#58450 Support and use django-structlog versions >=6.0
+
+  [ Mykola Malkov ]
+  * MT#57453 Switch docker image to bookworm
+
+ -- Victor Seva <vseva@debian.org>  Wed, 09 Oct 2024 09:28:01 +0200
+
 repoapi (0.4.7) unstable; urgency=medium
 
 [ Victor Seva ]
