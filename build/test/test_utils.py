@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2023 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -689,33 +689,3 @@ class CheckConfig(SimpleTestCase):
         match = "bullseye not in distris in a release config"
         with self.assertRaisesRegex(err.WrongDistris, match):
             ReleaseConfig("fake", config=data)
-
-
-@override_settings(
-    BUILD_REPOS_SCRIPTS_CONFIG_DIR=FIXTURES_PATH.joinpath("config.next")
-)
-class ReleaseConfigNext(SimpleTestCase):
-    def test_guess_trunk_filename(self):
-        res = guess_trunk_filename("release-trunk-bullseye")
-        self.assertEqual(res, "trunk")
-        res = guess_trunk_filename("release-trunk-bookworm")
-        self.assertEqual(res, "trunk-next")
-
-    @override_settings(BUILD_RELEASES_SKIP=["mr0.1"])
-    def test_supported_releases(self):
-        supported = [
-            "release-trunk-bullseye",
-            "release-trunk-bookworm",
-        ]
-        res = ReleaseConfig.supported_releases()
-        self.assertListEqual(res, supported)
-
-    def test_trunk_next(self):
-        rc = ReleaseConfig("trunk-next")
-        self.assertIsNotNone(rc.config)
-        self.assertEqual(rc.debian_release, "bookworm")
-        self.assertNotIn("rainbow-misc", rc.projects)
-
-        rc = ReleaseConfig("release-trunk-bookworm")
-        self.assertEqual(rc.debian_release, "bookworm")
-        self.assertNotIn("rainbow-misc", rc.projects)

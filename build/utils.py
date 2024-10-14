@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -253,6 +253,17 @@ class ReleaseConfig(object):
             )
 
     @classmethod
+    def is_trunk_next(cls, release):
+        try:
+            path = settings.BUILD_REPOS_SCRIPTS_CONFIG_DIR / "trunk-next.yml"
+            cfg = cls.load_config(path)
+            if release in cfg["distris"]:
+                return True
+        except err.NoConfigReleaseFile:
+            pass
+        return False
+
+    @classmethod
     def load_config(cls, config_path):
         try:
             with open(config_path) as f:
@@ -399,7 +410,7 @@ class ReleaseConfig(object):
     @property
     def branch(self):
         release = self.release
-        if release in ("trunk", "release-trunk-weekly"):
+        if release in ("trunk", "trunk-next", "release-trunk-weekly"):
             return "master"
         release_count = release.count(".")
         if release_count in [1, 2]:
@@ -418,6 +429,8 @@ class ReleaseConfig(object):
             if dist == "release-trunk-weekly":
                 return dist
             if dist.startswith("release-trunk-"):
+                if self.is_trunk_next(dist):
+                    return "trunk-next"
                 return "trunk"
             elif dist.startswith("release-"):
                 return dist
