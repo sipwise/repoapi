@@ -75,7 +75,7 @@ api_patterns = [
         name="projectuuid-list",
     ),
     re_path(
-        r"^release/(?P<release>[^/]+)" "/(?P<project>[^/]+)/(?P<uuid>[^/]+)/$",
+        r"^release/(?P<release>[^/]+)/(?P<project>[^/]+)/(?P<uuid>[^/]+)/$",
         views.UUIDInfoList.as_view(),
         name="uuidinfo-list",
     ),

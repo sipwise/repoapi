@@ -19,6 +19,8 @@ from pathlib import Path
 
 import requests
 import structlog
+from django.apps import apps
+from django.shortcuts import get_object_or_404
 from requests.auth import HTTPBasicAuth
 
 from .conf import settings
@@ -181,6 +183,12 @@ def get_next_release(branch):
 
     else:
         return None
+
+
+def get_build_release(release_uuid):
+    BuildRelease = apps.get_model("build", "BuildRelease")
+    br = get_object_or_404(BuildRelease, uuid=release_uuid)
+    return br.build_release
 
 
 def is_download_artifacts(jobname):

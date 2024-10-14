@@ -8,3 +8,45 @@
       release: trunk-next
       start_date: '2024-10-14T10:28:01.000Z'
       uuid: 53f9e166-4271-4581-ae3d-b3c1bb0bb081
+- model: repoapi.jenkinsbuildinfo
+  pk: 1
+  fields:
+    buildnumber: 38542
+    date: '2024-10-14 19:31:21'
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    gerrit_patchset: none_might-be-direct-push
+    git_commit_msg: ''
+    job_url: 'https://jenkins.mgm.sipwise.com/job/release-copy-debs-yml/'
+    jobname: release-copy-debs-yml
+    param_branch: ''
+    param_distribution: ''
+    param_ppa: ''
+    param_release: release-trunk-trixie
+    param_release_uuid: 53f9e166-4271-4581-ae3d-b3c1bb0bb081
+    param_tag: ''
+    projectname: release-copy-debs-yml
+    repo_name: ''
+    result: SUCCESS,
+    tag: d9e505a5-e942-4687-9b0e-07f43a77a9aa
+- model: repoapi.jenkinsbuildinfo
+  pk: 2
+  fields:
+    buildnumber: 4056
+    date: '2024-10-14 19:33:17'
+    gerrit_change: ''
+    gerrit_eventtype: ''
+    gerrit_patchset: none_might-be-direct-push
+    git_commit_msg: 2eb90b3 Release new version 13.1.0.0+0~mr13.1.0.0
+    job_url: 'https://jenkins.mgm.sipwise.com/job/ngcpcfg-repos/'
+    jobname: ngcpcfg-repos
+    param_branch: trixie/master
+    param_distribution: trixie
+    param_ppa: $ppa
+    param_release: trunk
+    param_release_uuid: 53f9e166-4271-4581-ae3d-b3c1bb0bb081
+    param_tag: none
+    projectname: ngcpcfg
+    repo_name: ''
+    result: SUCCESS
+    tag: 7737120e-f512-4793-9c45-47eb4a4f4891

@@ -12,10 +12,15 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
+import pprint
+import sys
 from unittest.mock import patch
 
 from django.test import override_settings
 from django.test import SimpleTestCase
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase
 
 from build.conf import settings
 from build.exceptions import PreviousBuildNotDone
@@ -25,6 +30,7 @@ from build.utils import get_simple_release
 from build.utils import guess_trunk_filename
 from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
+from repoapi.utils import get_build_release
 
 FIXTURES_PATH = settings.BASE_DIR.joinpath("build", "fixtures")
 
@@ -177,3 +183,98 @@ class BuildReleaseCreate(BaseTest):
         self.assertEqual(cfg.config_file, "trunk-next.yml")
         self.assertEqual(cfg.debian_release, "bookworm")
         self.assertEqual(cfg.release, "trunk-next")
+
+
+@override_settings(
+    BUILD_REPOS_SCRIPTS_CONFIG_DIR=FIXTURES_PATH.joinpath("config.next")
+)
+@patch("repoapi.utils.dlfile")
+@patch("build.tasks.trigger_build")
+class TestViews(BaseTest, APITestCase):
+    fixtures = ["test_trunk_next"]
+    release = "trunk"
+    release_uuid = "53f9e166-4271-4581-ae3d-b3c1bb0bb081"
+
+    def test_release_ok(self, tb, dl):
+        qs = BuildRelease.objects.filter(uuid=self.release_uuid)
+        self.assertEqual(qs.count(), 1)
+
+    def test_project_list(self, tb, dl):
+        url_base = reverse("project-list", args=["trunk-next"])
+        url = f"{url_base}?release_uuid={self.release_uuid}"
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        pprint.pp(response.data, stream=sys.stderr)
+        # ngcpcfg build
+        self.assertEqual(len(response.data), 1)
+        info = response.data[0]
+        self.assertRegex(info["url"], r"http://testserver/release/trunk-next/")
+        self.assertNotIn(info["projectname"], settings.BUILD_RELEASE_JOBS)
+
+    def test_project_fulllist(self, tb, dl):
+        url_base = reverse(
+            "project-fulllist",
+            args=["trunk-next"],
+        )
+        url = f"{url_base}?release_uuid={self.release_uuid}"
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        pprint.pp(response.data, stream=sys.stderr)
+        # ngcpcfg build
+        self.assertEqual(len(response.data), 1)
+        info = response.data["ngcpcfg"]["7737120e-f512-4793-9c45-47eb4a4f4891"]
+        self.assertTrue(info["latest"])
+
+    def test_uuidinfo_list(self, tb, dl):
+        url_base = reverse(
+            "uuidinfo-list",
+            args=[
+                "trunk-next",
+                "ngcpcfg",
+                "7737120e-f512-4793-9c45-47eb4a4f4891",
+            ],
+        )
+        url = f"{url_base}?release_uuid={self.release_uuid}"
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        pprint.pp(response.data, stream=sys.stderr)
+        # ngcpcfg build
+        self.assertEqual(len(response.data), 1)
+
+    def test_latestuuid_list(self, tb, dl):
+        url_base = reverse(
+            "latestuuid-list",
+            args=["trunk-next", "ngcpcfg"],
+        )
+        url = f"{url_base}?release_uuid={self.release_uuid}"
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        pprint.pp(response.data, stream=sys.stderr)
+        self.assertEqual(
+            response.data["tag"], "7737120e-f512-4793-9c45-47eb4a4f4891"
+        )
+
+    def test_projectuuid_list(self, tb, dl):
+        url_base = reverse(
+            "projectuuid-list",
+            args=["trunk-next", "ngcpcfg"],
+        )
+        url = f"{url_base}?release_uuid={self.release_uuid}"
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        pprint.pp(response.data, stream=sys.stderr)
+        info = response.data[0]
+        self.assertRegex(info["url"], r"http://testserver/release/trunk-next/")
+        self.assertEqual(info["tag"], "7737120e-f512-4793-9c45-47eb4a4f4891")
+        self.assertTrue(info["latest"])
+
+
+@override_settings(
+    BUILD_REPOS_SCRIPTS_CONFIG_DIR=FIXTURES_PATH.joinpath("config.next")
+)
+class UtilsRelease(BaseTest):
+    fixtures = ["test_trunk_next"]
+    release_uuid = "53f9e166-4271-4581-ae3d-b3c1bb0bb081"
+
+    def test_get_build_release(self):
+        self.assertEqual(get_build_release(self.release_uuid), "trunk")

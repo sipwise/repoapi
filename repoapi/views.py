@@ -1,4 +1,4 @@
-# Copyright (C) 2020-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2020-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -22,6 +22,7 @@ from rest_framework.views import APIView
 
 from . import serializers
 from .models import JenkinsBuildInfo as jbi
+from .utils import get_build_release
 
 
 @api_view(("GET",))
@@ -77,7 +78,10 @@ class ProjectList(APIView):
         params = {"flat": False}
         if "release_uuid" in self.request.query_params:
             params["release_uuid"] = self.request.query_params["release_uuid"]
-        projects = jbi.objects.release_projects(release, **params)
+            release_build = get_build_release(params["release_uuid"])
+        else:
+            release_build = release
+        projects = jbi.objects.release_projects(release_build, **params)
         if projects is None:
             return Response({}, status=status.HTTP_404_NOT_FOUND)
         for project in projects:
@@ -94,7 +98,10 @@ class ProjectFullList(APIView):
         params = {}
         if "release_uuid" in self.request.query_params:
             params["release_uuid"] = self.request.query_params["release_uuid"]
-        projects = jbi.objects.release_projects_full(release, **params)
+            release_build = get_build_release(params["release_uuid"])
+        else:
+            release_build = release
+        projects = jbi.objects.release_projects_full(release_build, **params)
         return Response(projects)
 
 
@@ -103,9 +110,14 @@ class ProjectUUIDList(APIView):
         params = {"flat": False}
         if "release_uuid" in self.request.query_params:
             params["release_uuid"] = self.request.query_params["release_uuid"]
-        uuids = jbi.objects.release_project_uuids(release, project, **params)
+            release_build = get_build_release(params["release_uuid"])
+        else:
+            release_build = release
+        uuids = jbi.objects.release_project_uuids(
+            release_build, project, **params
+        )
         params.pop("flat")
-        latest = jbi.objects.latest_uuid(release, project, **params)
+        latest = jbi.objects.latest_uuid(release_build, project, **params)
         for uuid in uuids:
             uuid["url"] = reverse(
                 "uuidinfo-list",
@@ -118,9 +130,14 @@ class ProjectUUIDList(APIView):
 
 class UUIDInfoList(APIView):
     def get(self, request, release, project, uuid, format=None):
+        if "release_uuid" in self.request.query_params:
+            release_uuid = self.request.query_params["release_uuid"]
+            release_build = get_build_release(release_uuid)
+        else:
+            release_build = release
         res = list()
         jbis = serializers.JenkinsBuildInfoSerializer
-        jobs = jbi.objects.jobs_by_uuid(release, project, uuid)
+        jobs = jbi.objects.jobs_by_uuid(release_build, project, uuid)
         for job in jobs:
             serializer = jbis(job, context={"request": request})
             res.append(serializer.data)
@@ -132,5 +149,8 @@ class LatestUUID(APIView):
         params = {}
         if "release_uuid" in self.request.query_params:
             params["release_uuid"] = self.request.query_params["release_uuid"]
-        res = jbi.objects.latest_uuid(release, project, **params)
+            release_build = get_build_release(params["release_uuid"])
+        else:
+            release_build = release
+        res = jbi.objects.latest_uuid(release_build, project, **params)
         return Response(res)

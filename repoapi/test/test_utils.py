@@ -85,3 +85,13 @@ class UtilsTestCase(BaseTest):
         utils.cleanup_build(build_path, dst_path)
         dst_path.mkdir.assert_not_called()
         sh.move.assert_called_once_with(build_path, dst_path)
+
+
+class UtilsRelease(BaseTest):
+    fixtures = ["test_models"]
+
+    def test_get_build_release(self):
+        release_uuid = "dbe569f7-eab6-4532-a6d1-d31fb559648b"
+        self.assertEqual(
+            utils.get_build_release(release_uuid), "release-mr8.1"
+        )
