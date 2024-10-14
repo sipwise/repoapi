@@ -2,14 +2,9 @@
     pk: 1
     fields:
       branch: master
-      built_projects: release-copy-debs-yml
       distribution: bookworm
-      failed_projects: ''
       pool_size: 0
       projects: 'asterisk-voicemail,backup-tools,bulk-processor,bulk-processor-projects,bootenv,cdr-exporter,cfg-schema,check-tools,cleanup-tools,cloudpbx-sources,codec-chain,csta-testsuite,data-hal,db-schema,deployment-iso,dhtest,documentation,faxserver,installer,kamailio,kamailio-config-tests,keyring,libswrate,libtcap,license-client,lnpd,lua-ngcp-kamailio,mediator,metapackages,monitoring-tools,ngcp-admin-ui,ngcp-api-tools,ngcp-csc-ui,ngcp-cudecs,ngcp-exporter,ngcp-fauditd,ngcp-freeswitch-appserv,ngcp-inventory,ngcp-js-api-client,ngcp-logfs,ngcp-panel,ngcp-prompts,ngcp-rest-api,ngcp-schema,ngcp-status,ngcp-sudo-plugin,ngcp-support,ngcp-task-agent,ngcp-user-framework,ngcp-web-tests-e2e,ngcpcfg,ngcpcfg-api,ngcpcfg-ha,ngrep-sip,prosody,pushd,rate-o-mat,reminder,rtpengine,sems,sems-pbx,sipwise-base,snmp-agent,system-tests,system-tools,templates,upgrade,vmnotify,voisniff-ng,websocket'
       release: trunk-next
       start_date: '2024-10-14T10:28:01.000Z'
-      tag: ''
-      triggered_jobs: ''
-      triggered_projects: ''
       uuid: 53f9e166-4271-4581-ae3d-b3c1bb0bb081

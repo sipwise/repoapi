@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2022 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -56,7 +56,7 @@ def build_project(pk, project):
     url = trigger_build(
         "{}-get-code".format(project),
         br.uuid,
-        br.release,
+        br.build_release,
         trigger_branch_or_tag=br.branch_or_tag,
         trigger_distribution=br.distribution,
     )
@@ -74,7 +74,7 @@ def build_resume(pk):
         return
     params = {
         "release_uuid": br.uuid,
-        "trigger_release": br.release,
+        "trigger_release": br.build_release,
         "trigger_branch_or_tag": br.branch_or_tag,
         "trigger_distribution": br.distribution,
     }
@@ -88,7 +88,7 @@ def build_resume(pk):
         prj = br.next
         if prj:
             params["project"] = "{}-get-code".format(prj)
-            logger.debug("trigger project", project=params["project"])
+            logger.debug("trigger project", params=params)
             trigger_build(**params)
             br.append_triggered(prj)
         else:

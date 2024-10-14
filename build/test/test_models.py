@@ -161,6 +161,13 @@ class BuildReleaseTestCase(BaseTest):
         self.assertIsNotNone(config)
         self.assertIs(config, build.config)
 
+    def test_build_release(self):
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(br.build_release, "release-mr8.1")
+
+        br = BuildRelease.objects.create_build_release("AAA", "trunk")
+        self.assertEqual(br.build_release, "trunk")
+
     def test_branch_or_tag_trunk(self):
         build = BuildRelease.objects.create_build_release("AAA", "trunk")
         self.assertEqual(build.branch_or_tag, "branch/master")

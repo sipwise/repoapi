@@ -22,6 +22,7 @@ from build.models import BuildRelease
 from build.models import ReleaseConfig
 from build.utils import get_simple_release
 from build.utils import guess_trunk_filename
+from repoapi.models import JenkinsBuildInfo
 from repoapi.test.base import BaseTest
 
 FIXTURES_PATH = settings.BASE_DIR.joinpath("build", "fixtures")
@@ -36,8 +37,47 @@ class BuildReleaseTestCase(BaseTest):
 
     def test_distribution(self):
         br = BuildRelease.objects.get(uuid=self.release_uuid)
-        self.assertEqual(br.release, "trunk-next")
         self.assertEqual(br.distribution, "bookworm")
+
+    def test_build_release(self):
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(br.release, "trunk-next")
+        self.assertEqual(br.build_release, "trunk")
+
+
+@override_settings(
+    BUILD_REPOS_SCRIPTS_CONFIG_DIR=FIXTURES_PATH.joinpath("config.next"),
+    JBI_ALLOWED_HOSTS=["fake.local"],
+)
+@patch("repoapi.utils.dlfile")
+@patch("build.tasks.trigger_build")
+class BuildReleaseBuilds(BaseTest):
+    fixtures = ["test_trunk_next"]
+    release = "trunk"
+    release_uuid = "53f9e166-4271-4581-ae3d-b3c1bb0bb081"
+    project = "ngcpcfg"
+
+    def test_jbi_manage_ok_release_job(self, tb, _):
+        br = BuildRelease.objects.get(uuid=self.release_uuid)
+        self.assertEqual(br.pool_size, 0)
+        JenkinsBuildInfo.objects.create(
+            job_url="http://fake.local/job/release-copy-debs-yml/",
+            projectname="release-copy-debs-yml",
+            jobname="release-copy-debs-yml",
+            tag="UUIDA",
+            param_release=self.release,
+            param_release_uuid=self.release_uuid,
+            buildnumber=1,
+            result="SUCCESS",
+        )
+        params = {
+            "project": f"{self.project}-get-code",
+            "release_uuid": self.release_uuid,
+            "trigger_release": self.release,
+            "trigger_branch_or_tag": "branch/master",
+            "trigger_distribution": "bookworm",
+        }
+        tb.assert_called_once_with(**params)
 
 
 @override_settings(

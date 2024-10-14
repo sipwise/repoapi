@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2023 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2024 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -355,6 +355,12 @@ class BuildRelease(models.Model):
         if prj in failed_projects and self.config.is_build_dep(prj):
             return None
         return prj
+
+    @property
+    def build_release(self) -> str:
+        if self.release in ["trunk", "trunk-next"]:
+            return "trunk"
+        return self.release
 
     @property
     def build_deps(self) -> list:
