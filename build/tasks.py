@@ -33,7 +33,7 @@ def build_release(self, pk):
     except BuildRelease.DoesNotExist as exc:
         logger.warn("BuildRelease not found")
         raise self.retry(countdown=60 * 5, exc=exc)
-    if instance.release == "trunk":
+    if instance.release in ["trunk", "trunk-next"]:
         release = "release-trunk-{}".format(instance.distribution)
     else:
         release = instance.release

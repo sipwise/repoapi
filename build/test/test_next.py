@@ -103,6 +103,12 @@ class BuildReleaseCreate(BaseTest):
         )
         self.assertEqual(br.release, "trunk-next")
         self.assertEqual(br.distribution, "bookworm")
+        build_resume.delay.assert_not_called()
+        trigger_copy_deps.assert_called_once_with(
+            internal=True,
+            release="release-trunk-bookworm",
+            release_uuid=br.uuid,
+        )
 
     def test_get_simple_release(self):
         val = get_simple_release("release-trunk-bookworm")
