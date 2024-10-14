@@ -18,6 +18,7 @@ from django.test import override_settings
 from django.test import SimpleTestCase
 
 from build.conf import settings
+from build.exceptions import PreviousBuildNotDone
 from build.models import BuildRelease
 from build.models import ReleaseConfig
 from build.utils import get_simple_release
@@ -43,6 +44,12 @@ class BuildReleaseTestCase(BaseTest):
         br = BuildRelease.objects.get(uuid=self.release_uuid)
         self.assertEqual(br.release, "trunk-next")
         self.assertEqual(br.build_release, "trunk")
+
+    def test_fail(self):
+        with self.assertRaisesRegex(
+            PreviousBuildNotDone, "release:trunk-next is already building"
+        ):
+            BuildRelease.objects.create_build_release("AAA", "trunk-next")
 
 
 @override_settings(

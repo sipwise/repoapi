@@ -73,8 +73,19 @@ class BuildReleaseManagerTestCase(BaseTest):
 
     def test_create_mrXX_update_building(self, dlf):
         """mr8.1 is building, don't allow a new build"""
-        with self.assertRaises(PreviousBuildNotDone):
+        with self.assertRaisesRegex(
+            PreviousBuildNotDone,
+            r"release\[mrX\.Y\]:mr8\.1 has already a build, "
+            r"set release-mr8\.1-update as release",
+        ):
             BuildRelease.objects.create_build_release("AAA", "mr8.1")
+
+    def test_create_trunk_building(self, _):
+        BuildRelease.objects.create_build_release("AAA", "trunk")
+        with self.assertRaisesRegex(
+            PreviousBuildNotDone, "release:trunk is already building"
+        ):
+            BuildRelease.objects.create_build_release("BBB", "trunk")
 
     def test_create_mrXX_update(self, dlf):
         set_build_done(BuildRelease.objects.filter(release="release-mr8.1"))

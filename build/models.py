@@ -66,8 +66,10 @@ class BuildReleaseManager(models.Manager):
                     f"set {release_ok} as release"
                 )
                 logger.info(msg)
+            else:
+                msg = f"release:{release} is already building"
             if not br.last().done:
-                logger.info(f"release:{release} is already building")
+                logger.info(msg)
                 raise PreviousBuildNotDone(msg)
         projects = ",".join(config.projects)
         if fake:
