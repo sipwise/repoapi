@@ -58,6 +58,46 @@ function resume_build( id ) {
   } );
 }
 
+/* eslint-disable-next-line no-unused-vars*/ // used at onClick
+function click_failed( e, id ) {
+  mark_build_failed( id );
+  e.preventDefault();
+}
+
+function mark_build_failed( id ) {
+
+  function successFunc( _data, _textStatus, _jqXHR ) {
+    $( "#failed" ).prop( "disabled", true );
+    $( "#resume" ).prop( "disabled", true );
+  }
+
+  function errorFunc( _jqXHR, _status, error ) {
+    $( "#release_error" ).html( error );
+  }
+  var csrftoken = jQuery( "[name=csrfmiddlewaretoken]" ).val();
+  function csrfSafeMethod( method ) {
+
+    // these HTTP methods do not require CSRF protection
+    return ( /^(GET|HEAD|OPTIONS|TRACE)$/.test( method ) );
+  }
+  $.ajaxSetup( {
+    beforeSend: function( xhr, settings ) {
+        if ( !csrfSafeMethod( settings.type ) && !this.crossDomain ) {
+            xhr.setRequestHeader( "X-CSRFToken", csrftoken );
+        }
+    }
+  } );
+  $.ajax( {
+    url: "/build/" + id + "/?format=json",
+    data: JSON.stringify( { action: "failed" } ),
+    method: "PATCH",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: successFunc,
+    error: errorFunc
+  } );
+}
+
 function clean_all_uuids( project ) {
   for ( var uuid of $.release[ project ].uuids ) {
     $( "#" + project + "-" + uuid ).remove();

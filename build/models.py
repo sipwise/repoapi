@@ -151,6 +151,7 @@ class BuildRelease(models.Model):
     failed_projects = models.TextField(null=True, editable=False)
     pool_size = models.SmallIntegerField(default=0, editable=False)
     triggered_jobs = models.TextField(null=True, editable=False)
+    failed = models.BooleanField(default=False, editable=True)
     objects = BuildReleaseManager()
 
     class Meta:
@@ -197,6 +198,8 @@ class BuildRelease(models.Model):
 
     @property
     def done(self):
+        if self.failed:
+            return True
         if self.built_projects is None:
             return False
         built_len = len(self.built_projects)

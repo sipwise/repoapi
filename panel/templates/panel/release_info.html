@@ -23,6 +23,10 @@
                 disabled="disabled"
                 onclick="click_resume(event, '{{ build_release.id }}')"
                 class="btn btn-primary">Resume</button>
+        <button type="button" id="failed"
+          {% if build_release.failed %}disabled="disabled"{% endif %}
+                onclick="click_failed(event, '{{ build_release.id }}')"
+                class="btn btn-danger">Mark Failed</button>
         {% endif %}
       </td>
     </tr>

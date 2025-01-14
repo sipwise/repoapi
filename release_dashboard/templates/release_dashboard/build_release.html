@@ -41,14 +41,17 @@
             <th>Action</th>
           </tr>
           {% for br in build_releases %}
-          <tr class="success build_release" id="br_{{ br.id }}">
+          <tr class="{% if br.failed %}warning{% else %}success{% endif %} build_release" id="br_{{ br.id }}">
             <td><a href="{% url 'panel:release-uuid' _uuid=br.uuid %}">{{ br.uuid }}</a></td>
             <td>{{ br.start_date }}</td>
             <td>{{ br.last_update }}</td>
             <td>
               <button type="button" id="refresh_{{ br.id }}"
                 {% if perms.build.can_trigger %}onclick="click_refresh_projects(event, '{{ br.id }}')"{% endif %}
-                class="btn btn-primary" {% if not perms.build.can_trigger %}disabled="disabled"{% endif %}>Refresh projects</button>
+                class="btn btn-primary" {% if not perms.build.can_trigger or br.done %}disabled="disabled"{% endif %}>Refresh projects</button>
+                <button type="button" id="failed_{{ br.id }}"
+                {% if perms.build.can_trigger %}onclick="click_failed(event, '{{ br.id }}')"{% endif %}
+                class="btn btn-danger" {% if br.failed %}disabled="disabled"{% endif %}>Mark failed</button>
               <button type="button"
                 {% if perms.build.can_trigger %}onclick="click_delete(event, '{{ br.id }}')"{% endif %}
                 class="btn btn-danger" {% if not perms.build.can_trigger %}disabled="disabled"{% endif %}>Delete</button>
@@ -172,5 +175,48 @@ function refresh_release_projects( id ) {
     error: errorFunc
   } );
 }
+
+/* eslint-disable-next-line no-unused-vars*/ // used at onClick
+function click_failed( e, id ) {
+  mark_build_failed( id );
+  e.preventDefault();
+}
+
+function mark_build_failed( id ) {
+
+  function successFunc( _data, _textStatus, _jqXHR ) {
+    $("#br_" + id).removeClass("success");
+    $("#br_" + id).addClass("warning");
+    $("#build_button" ).removeAttr("disabled");
+    $("#failed_" + id ).attr("disabled", "disabled");
+    $("#refresh_" + id).attr("disabled", "disabled");
+  }
+
+  function errorFunc( _jqXHR, _status, error ) {
+    $( "#error" ).html( error );
+  }
+  var csrftoken = jQuery( "[name=csrfmiddlewaretoken]" ).val();
+  function csrfSafeMethod( method ) {
+    // these HTTP methods do not require CSRF protection
+    return ( /^(GET|HEAD|OPTIONS|TRACE)$/.test( method ) );
+  }
+  $.ajaxSetup( {
+    beforeSend: function( xhr, settings ) {
+      if ( !csrfSafeMethod( settings.type ) && !this.crossDomain ) {
+        xhr.setRequestHeader( "X-CSRFToken", csrftoken );
+      }
+    }
+  } );
+  $.ajax( {
+    url: "/build/" + id + "/?format=json",
+    data: JSON.stringify( { action: "failed" } ),
+    method: "PATCH",
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: successFunc,
+    error: errorFunc
+  } );
+}
+
 </script>
 {% endblock %}

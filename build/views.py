@@ -88,6 +88,11 @@ class BuildReleaseDetail(generics.RetrieveDestroyAPIView):
             instance.resume()
             serializer = self.get_serializer(instance)
             return Response(serializer.data)
+        elif action == "failed":
+            instance.failed = True
+            instance.save()
+            serializer = self.get_serializer(instance)
+            return Response(serializer.data)
         return JsonResponse({"error": "Action unknown"}, status=400)
 
 
