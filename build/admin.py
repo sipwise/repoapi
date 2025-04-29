@@ -1,4 +1,4 @@
-# Copyright (C) 2017-2023 The Sipwise Team - http://sipwise.com
+# Copyright (C) 2017-2025 The Sipwise Team - http://sipwise.com
 #
 # This program is free software: you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the Free
@@ -34,7 +34,6 @@ class BuildReleaseAdmin(ImportExportModelAdmin, ExportActionModelAdmin):
         "triggered_projects",
         "built_projects",
         "failed_projects",
-        "pool_size",
         "triggered_jobs",
         "build_deps",
     )
