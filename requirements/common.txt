@@ -1,5 +1,5 @@
 celery
-Django==3.2.18
+Django==3.2.25
 django-admin-list-filters
 django-appconf
 django-assets
@@ -8,7 +8,7 @@ django-celery-results
 django-crispy-forms==2.*
 django-extensions
 django-filter
-django-import-export>=3.0
+django-import-export>=3.0,<4.0
 django-jsonify
 django-structlog>=6.0
 django-timezone-field
