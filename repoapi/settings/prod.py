@@ -85,7 +85,11 @@ AUTH_LDAP_REQUIRE_GROUP_LIST = server_config.get(
     "server", "AUTH_LDAP_REQUIRE_GROUP_LIST"
 ).split(",")
 require_grp_list_size = len(AUTH_LDAP_REQUIRE_GROUP_LIST)
-AUTH_LDAP_USER_DN_TEMPLATE = "uid=%(user)s," + AUTH_LDAP_USER_BASE
+AUTH_LDAP_USER_SEARCH = LDAPSearch(
+    AUTH_LDAP_USER_BASE,
+    ldap.SCOPE_SUBTREE,
+    "(uid=%(user)s)"
+)
 AUTH_LDAP_USER_ATTR_MAP = {
     "first_name": "givenName",
     "last_name": "sn",
