@@ -1,5 +1,5 @@
 celery
-Django==3.2.25
+Django==5.2.5
 django-admin-list-filters
 django-appconf
 django-assets
