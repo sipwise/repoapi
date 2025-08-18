@@ -238,10 +238,10 @@ class JenkinsBuildInfo(models.Model):
     objects = JenkinsBuildInfoManager()
 
     class Meta:
-        index_together = [
-            ["param_release", "projectname"],
-            ["param_release", "projectname", "tag"],
-            ["param_release_uuid", "tag"],
+        indexes = [
+            models.Index(fields=["param_release", "projectname"]),
+            models.Index(fields=["param_release", "projectname", "tag"]),
+            models.Index(fields=["param_release_uuid", "tag"]),
         ]
 
     def is_job_url_allowed(self):
