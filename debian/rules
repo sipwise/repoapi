@@ -1,9 +1,9 @@
 #!/usr/bin/make -f
 
 # Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+#export DH_VERBOSE = 1
 
-export HOME=$(CURDIR)/$(BUILDDIR)
+export HOME = $(CURDIR)/$(BUILDDIR)
 
 %:
 	dh $@
@@ -11,7 +11,7 @@ export HOME=$(CURDIR)/$(BUILDDIR)
 override_dh_auto_test:
 
 override_dh_auto_build:
-	# fake files needed to deploy
+	# Fake files needed to deploy.
 	cp debian/secret_key .secret_key
 	cp debian/server.ini server.ini
 
@@ -27,4 +27,3 @@ override_dh_installsystemd:
 	dh_installsystemd --name=repoapi-worker
 	dh_installsystemd --name=repoapi-flower
 	dh_installsystemd --name=repoapi-beat
-

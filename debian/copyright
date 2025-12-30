@@ -2,9 +2,10 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Source: https://github.com/sipwise/repoapi.git
 Upstream-Name: repoapi
 
-Files: *
+Files:
+ *
 Copyright:
- Copyright © 2015-2024 Sipwise GmbH, Austria
+ 2015-2025 Sipwise GmbH, Austria
 License: GPL-3+
  This program is free software: you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
