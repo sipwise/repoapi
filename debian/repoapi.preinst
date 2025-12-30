@@ -3,11 +3,27 @@
 set -e
 
 LIB_DIR=/var/lib/repoapi
+VENV_DIR="${LIB_DIR}/venv_prod"
+
+python_base_version()
+{
+  printf 'import sys\nprint("%%d.%%d" %% (sys.version_info[:2]))\n' | python3 -
+}
+
+python_venv_version()
+(
+  sed -Ene 's/version = ([0-9]*\.[0-9]*)\.[0-9]*/\1/p' "${VENV_DIR}"/pyvenv.cfg
+)
 
 case "$1" in
   install|upgrade)
-    if dpkg --compare-versions "$2" le "0.4.7"; then
-      rm -rf  "${LIB_DIR}/venv_prod"
+    # Every time we upgrade the base distribution and the Python version
+    # changes, we need to force a regeneration of the virtual environment.
+    py_base_ver=$(python_base_version)
+    py_venv_ver=$(python_venv_version)
+    if [ "${py_base_ver}" -ne "${py_venv_ver}" ]; then
+      echo "Removing ${VENV_DIR}, due to major python version bump."
+      rm -rf  "${VENV_DIR}"
     fi
     ;;
   abort-upgrade)
