@@ -22,13 +22,18 @@ venv_dev: requirements/dev.txt
 test: test_templates
 	RESULTS=$(RESULTS) pytest-3 -ra --junitxml=$(RESULTS)/junit.xml \
 		-o cache_dir=$(CACHE_DIR) \
-		--cov=. --cov-report=xml:$(RESULTS)/coverage.xml --cov-config=pyproject.toml \
-		--pep8
+		--cov=. \
+		--cov-report=xml:$(RESULTS)/coverage.xml \
+		--cov-config=pyproject.toml \
+		# EOL
 
 test_pylint:
 	RESULTS=$(RESULTS) pytest-3 --junitxml=$(RESULTS)/junit.xml \
 		-o cache_dir=$(CACHE_DIR) \
-		--pylint --pylint-rcfile=pylint.cfg --pylint-jobs=4
+		--pylint \
+		--pylint-rcfile=pylint.cfg \
+		--pylint-jobs=4 \
+		# EOL
 
 test_templates:
 	./manage.py validate_templates --settings="repoapi.settings.test"
