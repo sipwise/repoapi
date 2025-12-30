@@ -25,10 +25,14 @@ case "$1" in
 
   configure)
     if ! [ -f "${LIB_DIR}/.secret_key" ] ; then
-      mk_dj_secret > "${LIB_DIR}/.secret_key"
+      printf "Generating repoapi secret_key file... "
+      (
+        umask 0077
+        mk_dj_secret >"${LIB_DIR}/.secret_key"
+      )
       chmod 600 "${LIB_DIR}/.secret_key"
       chown www-data:www-data "${LIB_DIR}/.secret_key"
-      echo "generated secret_key"
+      echo "done."
     fi
     cd "${USR_DIR}" && make venv_prod
     service uwsgi restart repoapi || true
