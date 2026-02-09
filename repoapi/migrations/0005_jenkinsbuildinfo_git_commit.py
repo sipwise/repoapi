@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('repoapi', '0004_auto_20150723_0646'),
+        ("repoapi", "0004_auto_20150723_0646"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='jenkinsbuildinfo',
-            name='git_commit_msg',
+            model_name="jenkinsbuildinfo",
+            name="git_commit_msg",
             field=models.TextField(null=True),
         ),
     ]

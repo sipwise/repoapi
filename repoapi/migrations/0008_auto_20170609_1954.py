@@ -8,21 +8,23 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('repoapi', '0007_auto_20160718_1136'),
+        ("repoapi", "0007_auto_20160718_1136"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='jenkinsbuildinfo',
-            name='param_release_uuid',
+            model_name="jenkinsbuildinfo",
+            name="param_release_uuid",
             field=models.CharField(max_length=64, null=True),
         ),
         migrations.AlterIndexTogether(
-            name='jenkinsbuildinfo',
-            index_together=set([
-                ('param_release_uuid', 'tag'),
-                ('param_release', 'projectname', 'tag'),
-                ('param_release', 'projectname')
-            ]),
+            name="jenkinsbuildinfo",
+            index_together=set(
+                [
+                    ("param_release_uuid", "tag"),
+                    ("param_release", "projectname", "tag"),
+                    ("param_release", "projectname"),
+                ]
+            ),
         ),
     ]

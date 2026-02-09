@@ -8,19 +8,20 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('repoapi', '0006_auto_20160714_1359'),
+        ("repoapi", "0006_auto_20160714_1359"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='workfrontnoteinfo',
-            name='eventtype',
-            field=models.CharField(default='patchset-created', max_length=50),
+            model_name="workfrontnoteinfo",
+            name="eventtype",
+            field=models.CharField(default="patchset-created", max_length=50),
             preserve_default=False,
         ),
         migrations.AlterUniqueTogether(
-            name='workfrontnoteinfo',
+            name="workfrontnoteinfo",
             unique_together=set(
-                [('workfront_id', 'gerrit_change', 'eventtype')]),
+                [("workfront_id", "gerrit_change", "eventtype")]
+            ),
         ),
     ]

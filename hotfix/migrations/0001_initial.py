@@ -9,26 +9,28 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='WorkfrontNoteInfo',
+            name="WorkfrontNoteInfo",
             fields=[
-                ('id', models.AutoField(
-                    auto_created=True,
-                    primary_key=True,
-                    serialize=False,
-                    verbose_name='ID')),
-                ('workfront_id', models.CharField(max_length=50)),
-                ('projectname', models.CharField(max_length=50)),
-                ('version', models.CharField(max_length=50)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("workfront_id", models.CharField(max_length=50)),
+                ("projectname", models.CharField(max_length=50)),
+                ("version", models.CharField(max_length=50)),
             ],
         ),
         migrations.AlterUniqueTogether(
-            name='workfrontnoteinfo',
-            unique_together=set(
-                [('workfront_id', 'projectname', 'version')]),
+            name="workfrontnoteinfo",
+            unique_together=set([("workfront_id", "projectname", "version")]),
         ),
     ]

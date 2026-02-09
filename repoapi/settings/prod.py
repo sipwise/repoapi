@@ -86,9 +86,7 @@ AUTH_LDAP_REQUIRE_GROUP_LIST = server_config.get(
 ).split(",")
 require_grp_list_size = len(AUTH_LDAP_REQUIRE_GROUP_LIST)
 AUTH_LDAP_USER_SEARCH = LDAPSearch(
-    AUTH_LDAP_USER_BASE,
-    ldap.SCOPE_SUBTREE,
-    "(uid=%(user)s)"
+    AUTH_LDAP_USER_BASE, ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
 )
 AUTH_LDAP_USER_ATTR_MAP = {
     "first_name": "givenName",
@@ -168,7 +166,7 @@ CELERY_BEAT_SCHEDULE = {
     "gerrit-cleanup": {
         "task": "gerrit.tasks.cleanup",
         "schedule": crontab(hour=7, minute=30, day_of_month=15),
-        "args": ([4]),
+        "args": [4],
     },
 }
 CELERY_TIMEZONE = "UTC"

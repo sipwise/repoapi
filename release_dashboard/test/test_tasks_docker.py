@@ -35,16 +35,20 @@ DOCKER_REST_CATALOG = """
 """
 
 DOCKER_REST_FAKE_TAGS = {
-    "data-hal-jessie": """{
+    "data-hal-jessie": (
+        """{
         "name": "data-hal-jessie",
         "tags":[
             "I3a899",
             "latest"]
-        }""",
-    "data-hal-selenium-jessie": """{
+        }"""
+    ),
+    "data-hal-selenium-jessie": (
+        """{
         "name":"data-hal-selenium-jessie",
         "tags":["If53a9","latest"]
-        }""",
+        }"""
+    ),
 }
 
 

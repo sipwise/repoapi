@@ -31,12 +31,14 @@ DOCKER_REST_CATALOG = """
 """
 
 DOCKER_REST_FAKE_TAGS = {
-    "fake-jessie": """{
+    "fake-jessie": (
+        """{
         "name": "fake-jessie",
         "tags":[
             "I3a899b8945688c2ef3a4be6ba6c4c1d4cbf6d548",
             "latest"]
-        }""",
+        }"""
+    ),
     "other": """{"name": "other", "tags":[]}""",
 }
 

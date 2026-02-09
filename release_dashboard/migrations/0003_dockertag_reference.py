@@ -8,15 +8,16 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('release_dashboard', '0002_dockerimage'),
+        ("release_dashboard", "0002_dockerimage"),
     ]
 
     operations = [
         migrations.RunSQL(
-            [("DELETE FROM release_dashboard_dockertag;", None)]),
+            [("DELETE FROM release_dashboard_dockertag;", None)]
+        ),
         migrations.AddField(
-            model_name='dockertag',
-            name='reference',
+            model_name="dockertag",
+            name="reference",
             field=models.CharField(max_length=150, unique=True),
         ),
     ]

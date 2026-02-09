@@ -44,8 +44,9 @@ class TestJBICelery(BaseTest):
             "jobname": "real-fake-gerrit",
             "buildnumber": 1,
             "result": "SUCCESS",
-            "job_url": "https://jenkins-dev.mgm.sipwise.com/job"
-            "/real-fake-gerrit/",
+            "job_url": (
+                "https://jenkins-dev.mgm.sipwise.com/job" "/real-fake-gerrit/"
+            ),
             "param_tag": "none",
             "param_branch": "master",
             "param_release": "none",
@@ -170,8 +171,10 @@ class TestJBIReleaseChangedCelery(BaseTest):
             "jobname": "check-ngcp-release-changes",
             "buildnumber": 1,
             "result": "SUCCESS",
-            "job_url": "https://jenkins-dev.mgm.sipwise.com/job"
-            "/check-ngcp-release-changed",
+            "job_url": (
+                "https://jenkins-dev.mgm.sipwise.com/job"
+                "/check-ngcp-release-changed"
+            ),
         }
         jbi = JenkinsBuildInfo.objects.create(**param)
         base_path = self.path.joinpath(jbi.jobname, str(jbi.buildnumber))

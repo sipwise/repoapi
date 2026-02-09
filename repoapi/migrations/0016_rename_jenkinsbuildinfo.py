@@ -6,23 +6,23 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('repoapi', '0015_gri_dates'),
+        ("repoapi", "0015_gri_dates"),
     ]
 
     operations = [
         migrations.RenameIndex(
-            model_name='jenkinsbuildinfo',
-            new_name='repoapi_jen_param_r_911f93_idx',
-            old_fields=('param_release', 'projectname'),
+            model_name="jenkinsbuildinfo",
+            new_name="repoapi_jen_param_r_911f93_idx",
+            old_fields=("param_release", "projectname"),
         ),
         migrations.RenameIndex(
-            model_name='jenkinsbuildinfo',
-            new_name='repoapi_jen_param_r_ba63c4_idx',
-            old_fields=('param_release', 'projectname', 'tag'),
+            model_name="jenkinsbuildinfo",
+            new_name="repoapi_jen_param_r_ba63c4_idx",
+            old_fields=("param_release", "projectname", "tag"),
         ),
         migrations.RenameIndex(
-            model_name='jenkinsbuildinfo',
-            new_name='repoapi_jen_param_r_fbfb1b_idx',
-            old_fields=('param_release_uuid', 'tag'),
+            model_name="jenkinsbuildinfo",
+            new_name="repoapi_jen_param_r_fbfb1b_idx",
+            old_fields=("param_release_uuid", "tag"),
         ),
     ]

@@ -10,39 +10,57 @@ import django_extensions.db.fields.json
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('release_dashboard', '0001_initial'),
+        ("release_dashboard", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='DockerImage',
+            name="DockerImage",
             fields=[
-                ('id', models.AutoField(auto_created=True,
-                                        primary_key=True,
-                                        serialize=False,
-                                        verbose_name='ID')),
-                ('name', models.CharField(max_length=50, unique=True)),
-                ('project', models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE,
-                    to='release_dashboard.Project')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, unique=True)),
+                (
+                    "project",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="release_dashboard.Project",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='DockerTag',
+            name="DockerTag",
             fields=[
-                ('id', models.AutoField(auto_created=True,
-                                        primary_key=True,
-                                        serialize=False,
-                                        verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('manifests', django_extensions.db.fields.json.JSONField()),
-                ('image', models.ForeignKey(
-                    on_delete=django.db.models.deletion.CASCADE,
-                    to='release_dashboard.DockerImage')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                ("manifests", django_extensions.db.fields.json.JSONField()),
+                (
+                    "image",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="release_dashboard.DockerImage",
+                    ),
+                ),
             ],
         ),
         migrations.AlterUniqueTogether(
-            name='dockertag',
-            unique_together=set([('name', 'image')]),
+            name="dockertag",
+            unique_together=set([("name", "image")]),
         ),
     ]

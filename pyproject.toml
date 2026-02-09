@@ -1,12 +1,17 @@
 [tool.black]
+# Match line-length expected by pycodestyle.
 line-length = 79
-py37 = true
+# Current version in Debian trixie.
+target-version = ['py313']
+# Enable preview features, expected by pycodestyle.
+preview = true
 exclude = '''
 /(
   migrations
   | __pycache__
 )/
 '''
+
 [tool.pytest.ini_options]
 #FAIL_INVALID_TEMPLATE_VARS = true
 django_debug_mode = true
@@ -15,6 +20,7 @@ filterwarnings = [
   # send_task() always goes to the broker, even in eager mode
   "ignore::celery.exceptions.AlwaysEagerIgnored",
 ]
+
 [tool.coverage.run]
 data_file = "/results/.coverage"
 omit = [
