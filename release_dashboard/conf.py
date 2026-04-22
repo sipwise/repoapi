@@ -91,6 +91,7 @@ class ReleaseDashboardConf(AppConf):
         "ngcp-js-api-client",
         "ngcp-klish-config",
         "ngcp-logfs",
+        "ngcp-logic-engine",
         "ngcp-panel",
         "ngcp-prompts",
         "ngcp-rest-api",
