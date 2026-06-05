@@ -87,6 +87,7 @@ class ReleaseDashboardConf(AppConf):
         "ngcp-exporter",
         "ngcp-fauditd",
         "ngcp-freeswitch-appserv",
+        "ngcp-freeswitch-modules",
         "ngcp-inventory",
         "ngcp-js-api-client",
         "ngcp-klish-config",
