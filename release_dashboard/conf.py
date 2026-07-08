@@ -93,6 +93,7 @@ class ReleaseDashboardConf(AppConf):
         "ngcp-klish-config",
         "ngcp-logfs",
         "ngcp-logic-engine",
+        "ngcp-management-ui",
         "ngcp-panel",
         "ngcp-prompts",
         "ngcp-rest-api",
