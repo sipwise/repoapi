@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 import django_filters
+import structlog
+
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
@@ -29,6 +31,8 @@ from . import serializers
 from . import tasks
 from . import utils
 from repoapi.serializers import JenkinsBuildInfoSerializer as JBISerializer
+
+logger = structlog.get_logger(__name__)
 
 
 class BuildReleaseFilter(django_filters.FilterSet):
@@ -145,4 +149,13 @@ class CheckConfig(APIView):
             utils.ReleaseConfig("fake", config=request.data)
             return JsonResponse({"result": "All ok"}, status=200)
         except Exception as e:
-            return JsonResponse({"error": f"{e}"}, status=406)
+            logger.exception(
+                "Config check failed (user=%s, content_type=%s, data=%r)",
+                request.user,
+                request.content_type,
+                request.data,
+            )
+            return JsonResponse(
+                {"error": str(e) or repr(e), "type": type(e).__name__},
+                status=406,
+            )
