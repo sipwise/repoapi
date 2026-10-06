@@ -17,13 +17,17 @@ python_venv_version()
 
 case "$1" in
   install|upgrade)
-    # Every time we upgrade the base distribution and the Python version
-    # changes, we need to force a regeneration of the virtual environment.
-    py_base_ver=$(python_base_version)
-    py_venv_ver=$(python_venv_version)
-    if [ "${py_base_ver}" -ne "${py_venv_ver}" ]; then
-      echo "Removing ${VENV_DIR}, due to major python version bump."
-      rm -rf  "${VENV_DIR}"
+    if ! [ -r "${VENV_DIR}"/pyvenv.cfg ] ; then
+      echo "NOTE: no ${VENV_DIR}/pyvenv.cfg present yet, ignoring venv check/removal."
+    else
+      # Every time we upgrade the base distribution and the Python version
+      # changes, we need to force a regeneration of the virtual environment.
+      py_base_ver=$(python_base_version)
+      py_venv_ver=$(python_venv_version)
+      if [ "${py_base_ver}" -ne "${py_venv_ver}" ]; then
+        echo "Removing ${VENV_DIR}, due to major python version bump."
+        rm -rf  "${VENV_DIR}"
+      fi
     fi
     ;;
   abort-upgrade)
