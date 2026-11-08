@@ -1,3 +1,54 @@
+repoapi (0.5.0) unstable; urgency=medium
+
+  [ Victor Seva ]
+  * [dc4752b] MT#61223 [build] improve validation of release configs
+  * [2768ede] MT#61223 build: fix trunk-next builds
+  * [d6d11a6] MT#61223 build: fix release at trigger_copy_deps on trunk-
+    next
+  * [222a9ed] MT#61223 build: fix release parameter for trunk-next on
+    builds
+  * [21803cf] MT#61223 build: fix UnboundLocalError
+  * [373b26d] MT#61223 repoapi: fix views for trunk-next
+  * [37b7994] MT#61875 build: support failed BuildRelease
+  * [f6a5d50] MT#62714 Latest Django release from 3.2 series
+  * [208528d] MT#62714 build: allow to change pool_size via admin panel
+  * [0481811] MT#62949 tracker README
+  * [bf25944] MT#62949 build README
+  * [6c869ce] MT#62949 buildinfo README
+  * [0ab1899] MT#62949 gerrit README
+  * [4a3a3a9] MT#62949 hotfix README
+  * [57b97ba] MT#62949 panel README
+  * [8f5d36c] MT#62949 release_changed README
+  * [4535929] MT#62949 release_dashboard README
+  * [6003292] MT#62949 repoapi README
+
+  [ Marco Capetta ]
+  * [bc9d182] MT#61390 Update logo and icon in the release.mgm pages
+
+  [ Michael Prokop ]
+  * [88b90e0] MT#63027 repoapi: use LDAP search with recursion for user
+    retrieval
+  * [f7250bd] MT#63362 Upgrade Django to v5.2.6
+  * [1f7d996] MT#64965 Add ngcp-logic-engine repository
+  * [7cf223a] MT#63385 Provide further information when failing config
+    check
+  * [01c6461] MT#62899 Debian packaging: do not fail if pyvenv.cfg is
+    missing
+  * [3f06bcd] MT#63362 Upgrade Django to v5.2.17
+  * [3b558e1] MT#63362 Bump werkzeug from 2.2.3 to 3.1.9
+
+  [ Jose Su ]
+  * [7045969] MT#63362 Upgrade Django from 3.2.25 to 5.2.5
+  * [2d7e022] MT#64974 Add ngcp-freeswitch-modules to repoapi dashboard
+  * [7191d3d] MT#65469 Add 'ngcp-management-ui' to repoapi dashboard
+
+  [ Guillem Jover ]
+  * [18505bf] MT#62763 Fix pycodestyle issues
+  * [4ef37ab] MT#62899 Improve secret key generation
+  * [3fa7dfe] MT#62899 Remove the repoapi virtual environment on upgrade
+
+ -- Michael Prokop <mprokop@sipwise.com>  Sun, 08 Nov 2026 12:38:14 +0100
+
 repoapi (0.4.8) unstable; urgency=medium
 
   [ Victor Seva ]
@@ -36,7 +87,7 @@ repoapi (0.4.8) unstable; urgency=medium
 
 repoapi (0.4.7) unstable; urgency=medium
 
-[ Victor Seva ]
+  [ Victor Seva ]
   * MT#56231 gerrit: crontab to cleanup
   * MT#57855 add apikey commands
   * MT#57855 requirements: stick with python-debian 0.1.48
