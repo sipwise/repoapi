@@ -54,6 +54,6 @@ class Command(BaseCommand):
         if result.has_errors():
             raise CommandError("error importing data")
         self.stdout.write(
-            self.style.SUCCESS(f"Successfully imported {result.totals}")
+            self.style.SUCCESS(f"Successfully imported {dict(result.totals)}")
         )
         con.close()

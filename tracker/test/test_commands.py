@@ -42,8 +42,8 @@ class mapperImportTest(TestCase):
     def test_ok(self):
         out = StringIO()
         call_command("mapper_import", DB_FILE, stdout=out)
-        self.assertIn("('new', 20)", out.getvalue())
-        self.assertIn("('error', 0)", out.getvalue())
+        self.assertIn("'new': 20", out.getvalue())
+        self.assertIn("'error': 0", out.getvalue())
         qs = TrackerMapper.objects
         val = qs.filter(mapper_type=MapperType.ISSUE).count()
         self.assertEqual(val, 10)
