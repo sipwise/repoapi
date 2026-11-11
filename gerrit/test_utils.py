@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License along
 # with this program.  If not, see <http://www.gnu.org/licenses/>.
 from datetime import datetime
+from datetime import timezone
 
 from django.test import SimpleTestCase
 
@@ -60,11 +61,11 @@ class GerritUtils(SimpleTestCase):
 
     def test_get_datetime(self):
         val = "2023-03-03 08:45:06.000000000"
-        expected = datetime(2023, 3, 3, 8, 45, 6)
+        expected = datetime(2023, 3, 3, 8, 45, 6, tzinfo=timezone.utc)
         res = utils.get_datetime(val)
         self.assertEqual(res, expected)
 
         val = "2023-03-03 09:09:25.000000000"
         res = utils.get_datetime(val)
-        expected = datetime(2023, 3, 3, 9, 9, 25)
+        expected = datetime(2023, 3, 3, 9, 9, 25, tzinfo=timezone.utc)
         self.assertEqual(res, expected)

@@ -15,6 +15,7 @@
 from datetime import date
 from datetime import datetime
 from datetime import timedelta
+from datetime import timezone
 
 import structlog
 from celery import shared_task
@@ -30,9 +31,9 @@ logger = structlog.get_logger(__name__)
 @shared_task(ignore_result=True)
 def cleanup(weeks: int, dry_run=False, today=None):
     if today is None:
-        today = datetime.now()
+        today = datetime.now(timezone.utc)
     else:
-        today = date.fromisoformat(today)
+        today = datetime.fromisoformat(today).replace(tzinfo=timezone.utc)
     max_date = today - timedelta(weeks=weeks)
     logger.debug(f"max_date:{max_date}")
     GerritRepoInfo = apps.get_model("repoapi", "GerritRepoInfo")

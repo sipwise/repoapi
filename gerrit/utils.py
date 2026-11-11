@@ -73,7 +73,9 @@ def get_change_info(id: str):
 
 
 def get_datetime(val: str) -> datetime.datetime:
-    return datetime.datetime.strptime(val, gerrit_settings.DATETIME_FMT)
+    # gerrit timestamps are in UTC
+    res = datetime.datetime.strptime(val, gerrit_settings.DATETIME_FMT)
+    return res.replace(tzinfo=datetime.timezone.utc)
 
 
 def get_gerrit_change_url(id: str, project: str) -> str:

@@ -11,7 +11,10 @@ exclude = '''
 #FAIL_INVALID_TEMPLATE_VARS = true
 django_debug_mode = true
 DJANGO_SETTINGS_MODULE = "repoapi.settings.test"
-pep8ignore = "*.py W503"
+filterwarnings = [
+  # send_task() always goes to the broker, even in eager mode
+  "ignore::celery.exceptions.AlwaysEagerIgnored",
+]
 [tool.coverage.run]
 data_file = "/results/.coverage"
 omit = [

@@ -16,7 +16,10 @@ class Migration(migrations.Migration):
             model_name="gerritrepoinfo",
             name="created",
             field=django_extensions.db.fields.CreationDateTimeField(
-                auto_now_add=True, default=datetime.datetime(1977, 1, 1, 0, 0)
+                auto_now_add=True,
+                default=datetime.datetime(
+                    1977, 1, 1, 0, 0, tzinfo=datetime.timezone.utc
+                ),
             ),
             preserve_default=False,
         ),
